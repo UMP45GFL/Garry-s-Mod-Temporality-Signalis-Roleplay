@@ -1,0 +1,8 @@
+"signalis_rp"
+{
+	"base"		"helix"
+	"title"		"Signalis RP"
+	"author"	""
+	"category"	"rp"
+	"menusystem" "1"
+}
