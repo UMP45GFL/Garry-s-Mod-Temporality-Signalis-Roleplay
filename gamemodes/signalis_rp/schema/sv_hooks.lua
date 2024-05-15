@@ -120,6 +120,7 @@ function Schema:CharacterVarChanged(character, key, oldValue, value)
 end
 
 function Schema:PlayerFootstep(client, position, foot, soundName, volume)
+	/*
 	local factionTable = ix.faction.Get(client:Team())
 
 	if (factionTable.runSounds and client:IsRunning()) then
@@ -128,7 +129,8 @@ function Schema:PlayerFootstep(client, position, foot, soundName, volume)
 	end
 
 	client:EmitSound(soundName)
-	return true
+	*/
+	return false
 end
 
 function Schema:PlayerSpawn(client)

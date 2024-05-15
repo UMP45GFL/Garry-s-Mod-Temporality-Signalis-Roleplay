@@ -10,6 +10,16 @@ ix.lang.AddTable("english", {
 	optSonicCracksEnabled = "Enable sonic cracks",
 })
 
+if CLIENT then
+	ix.option.Add("sonicCracksEnabled", ix.type.bool, true, {
+		category = "Kanade"
+	})
+end
+
+ix.config.Add("sonicCracksEnabled", true, "Whether or to adds audible sonic cracks to gunshots.", nil, {
+	category = "Kanade"
+})
+
 sound.Add(
 	{
 		name = "sonic_Crack.Light",
@@ -108,10 +118,6 @@ if SERVER then
 	util.AddNetworkString("soniccracks")
 	util.AddNetworkString("soniccracks_dist")
 
-	ix.option.Add("legsEnabled", ix.type.bool, true, {
-		category = "legs"
-	})
-
 	Ammotype = {}
 	Ammotype["Pistol"] = "sonic_Crack.Light"
 	Ammotype["357"] = "sonic_Crack.Light"
@@ -127,6 +133,8 @@ if SERVER then
 	local range_Theshold = 256
 
 	function GetTrace_sv(ent)
+		if !IsValid(ent) then return end
+
 		local Trace
 		local BIGNUMBER = 1000000
 
@@ -190,8 +198,7 @@ if SERVER then
 	end
 
 	function Talk_sv(ent, data)
-		print("asdsad")
-		if !(ix.option.Get("sonicCracksEnabled", true) then return end
+		if !(ix.config.Get("sonicCracksEnabled", true)) then return end
 
 		for k, v in pairs(player.GetAll()) do
 			local Trace = GetTrace_sv(ent)
@@ -235,8 +242,8 @@ if SERVER then
 	hook.Add("EntityFireBullets", "sc.FireBullets", Talk_sv)
 
 elseif CLIENT then
-
-	function soniccracks_cl(len, pl) 
+	function soniccracks_cl(len, pl)
+		if !(ix.option.Get("sonicCracksEnabled", true)) then return end
 		local receivedString = net.ReadString()
 		local receivedVect = net.ReadVector()
 
@@ -248,7 +255,8 @@ elseif CLIENT then
 	end
 	net.Receive("soniccracks", soniccracks_cl)
 
-	function soniccracks_dist_cl(len, pl) 
+	function soniccracks_dist_cl(len, pl)
+		if !(ix.option.Get("sonicCracksEnabled", true)) then return end
 		local receivedString = net.ReadString()
 		local receivedVect = net.ReadVector()
 
@@ -261,5 +269,3 @@ end
 
 -- Addon: https://steamcommunity.com/sharedfiles/filedetails/?id=3175942640
 -- Creator: https://steamcommunity.com/id/Dishings
-
-print("[GAMEMODE] loaded external module sh_sonic_cracks.lua loaded!")

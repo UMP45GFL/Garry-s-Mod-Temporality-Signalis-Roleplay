@@ -177,6 +177,13 @@ if (SERVER) then
 	-- @entity[opt=GetActiveWeapon()] weapon Weapon to raise or lower. You should pass this argument if you already have a
 	-- reference to this player's current weapon to avoid an expensive lookup for this player's current weapon.
 	function meta:SetWepRaised(bState, weapon)
+		if weapon.ARC9 and ix.config.Get("arc9DisableToggleRaise", false) then
+			weapon:ToggleSafety(true)
+			self:SetNetVar("raised", true)
+			self:SetNetVar("canShoot", true)
+			return
+		end
+
 		weapon = weapon or self:GetActiveWeapon()
 
 		if (IsValid(weapon)) then
