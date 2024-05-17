@@ -94,6 +94,27 @@ do
 
 		return false
 	end
+
+	function playerMeta:SetClassWhitelisted(class, whitelisted)
+		if (!whitelisted) then
+			whitelisted = nil
+		end
+
+		local data = ix.class.list[class]
+
+		if (data) then
+			local class_whitelists = self:GetData("class_whitelists", {})
+			class_whitelists[Schema.folder] = class_whitelists[Schema.folder] or {}
+			class_whitelists[Schema.folder][data.uniqueID] = whitelisted and true or nil
+
+			self:SetData("class_whitelists", class_whitelists)
+			self:SaveData()
+
+			return true
+		end
+
+		return false
+	end
 end
 
 do

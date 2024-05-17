@@ -14,6 +14,7 @@ function PANEL:Init()
 	self:ResetPayload(true)
 
 	self.factionButtons = {}
+	self.classButtons = {}
 	self.repopulatePanels = {}
 
 	-- faction selection subpanel
@@ -22,31 +23,33 @@ function PANEL:Init()
 	self.factionPanel.OnSetActive = function()
 		-- if we only have one faction, we are always selecting that one so we can skip to the description section
 		if (#self.factionButtons == 1) then
-			self:SetActiveSubpanel("description", 0)
+			self:SetActiveSubpanel("class", 0)
 		end
 	end
 
-	local modelList = self.factionPanel:Add("Panel")
-	modelList:Dock(RIGHT)
-	modelList:SetSize(halfWidth + padding * 2, halfHeight)
-
-	local proceed = modelList:Add("ixMenuButton")
-	proceed:SetText("proceed")
-	proceed:SetContentAlignment(6)
-	proceed:Dock(BOTTOM)
-	proceed:SizeToContents()
-	proceed.DoClick = function()
+	local factionProceed = self.factionPanel:Add("ixMenuButton")
+	factionProceed:SetText("proceed")
+	factionProceed:SetContentAlignment(6)
+	factionProceed:Dock(BOTTOM)
+	factionProceed:SizeToContents()
+	factionProceed.DoClick = function()
 		self.progress:IncrementProgress()
 
-		self:Populate()
-		self:SetActiveSubpanel("description")
+		local faction = ix.faction.indices[self.payload["faction"]]
+		self.classPanel.title:SetTextColor(faction.color or color_white)
+
+		self:Populate(true)
+		self:SetActiveSubpanel("class")
 	end
 
-	self.factionModel = modelList:Add("ixModelPanel")
-	self.factionModel:Dock(FILL)
-	self.factionModel:SetModel("models/error.mdl")
-	self.factionModel:SetFOV(modelFOV)
-	self.factionModel.PaintModel = self.factionModel.Paint
+	self.classPanel = self:AddSubpanel("class", true)
+	self.classPanel:SetTitle("chooseClass")
+	self.classPanel.OnSetActive = function()
+		-- if we only have one class, we are always selecting that one so we can skip to the description section
+		if (#self.classButtons == 1) then
+			self:SetActiveSubpanel("description", 0)
+		end
+	end
 
 	self.factionButtonsPanel = self.factionPanel:Add("ixCharMenuButtonList")
 	self.factionButtonsPanel:SetWide(halfWidth)
@@ -64,6 +67,46 @@ function PANEL:Init()
 
 		parent.mainPanel:Undim()
 	end
+
+	self.classButtonsPanel = self.classPanel:Add("ixCharMenuButtonList")
+	self.classButtonsPanel:SetWide(halfWidth)
+	self.classButtonsPanel:Dock(FILL)
+
+	local classProceed = self.classPanel:Add("ixMenuButton")
+	classProceed:SetText("proceed")
+	classProceed:SetContentAlignment(6)
+	classProceed:SizeToContents()
+	classProceed:Dock(BOTTOM)
+	classProceed.DoClick = function()
+		self.progress:IncrementProgress()
+
+		self:Populate()
+		self:SetActiveSubpanel("description")
+	end
+
+	local classBack = self.classPanel:Add("ixMenuButton")
+	classBack:SetText("return")
+	classBack:SizeToContents()
+	classBack:Dock(BOTTOM)
+	classBack.DoClick = function()
+		self.progress:DecrementProgress()
+
+		self:Populate()
+		self:SetActiveSubpanel("class", 0)
+		self:SlideDown()
+
+		parent.mainPanel:Undim()
+	end
+
+	local modelList = self.classPanel:Add("Panel")
+	modelList:Dock(RIGHT)
+	modelList:SetSize(halfWidth + padding * 2, halfHeight)
+
+	self.classModel = modelList:Add("ixModelPanel")
+	self.classModel:Dock(FILL)
+	self.classModel:SetModel("models/error.mdl")
+	self.classModel:SetFOV(modelFOV)
+	self.classModel.PaintModel = self.classModel.Paint
 
 	-- character customization subpanel
 	self.description = self:AddSubpanel("description")
@@ -90,7 +133,7 @@ function PANEL:Init()
 
 	self.descriptionModel = descriptionModelList:Add("ixModelPanel")
 	self.descriptionModel:Dock(FILL)
-	self.descriptionModel:SetModel(self.factionModel:GetModel())
+	self.descriptionModel:SetModel(self.classModel:GetModel())
 	self.descriptionModel:SetFOV(modelFOV - 13)
 	self.descriptionModel.PaintModel = self.descriptionModel.Paint
 
@@ -136,7 +179,7 @@ function PANEL:Init()
 
 	self.attributesModel = attributesModelList:Add("ixModelPanel")
 	self.attributesModel:Dock(FILL)
-	self.attributesModel:SetModel(self.factionModel:GetModel())
+	self.attributesModel:SetModel(self.classModel:GetModel())
 	self.attributesModel:SetFOV(modelFOV - 13)
 	self.attributesModel.PaintModel = self.attributesModel.Paint
 
@@ -162,18 +205,18 @@ function PANEL:Init()
 
 	-- setup payload hooks
 	self:AddPayloadHook("model", function(value)
-		local faction = ix.faction.indices[self.payload.faction]
+		local class = ix.class.list[self.payload.class]
 
-		if (faction) then
-			local model = faction:GetModels(LocalPlayer())[value]
+		if (class) then
+			local model = class:GetModels(LocalPlayer())[value]
 
 			-- assuming bodygroups
 			if (istable(model)) then
-				self.factionModel:SetModel(model[1], model[2] or 0, model[3])
+				self.classModel:SetModel(model[1], model[2] or 0, model[3])
 				self.descriptionModel:SetModel(model[1], model[2] or 0, model[3])
 				self.attributesModel:SetModel(model[1], model[2] or 0, model[3])
 			else
-				self.factionModel:SetModel(model)
+				self.classModel:SetModel(model)
 				self.descriptionModel:SetModel(model)
 				self.attributesModel:SetModel(model)
 			end
@@ -333,8 +376,8 @@ function PANEL:AttachCleanup(panel)
 	self.repopulatePanels[#self.repopulatePanels + 1] = panel
 end
 
-function PANEL:Populate()
-	if (!self.bInitialPopulate) then
+function PANEL:Populate(redo)
+	if (!self.bInitialPopulate or redo) then
 		-- setup buttons for the faction panel
 		-- TODO: make this a bit less janky
 		local lastSelected
@@ -361,15 +404,54 @@ function PANEL:Populate()
 				button.faction = v.index
 				button.OnSelected = function(panel)
 					local faction = ix.faction.indices[panel.faction]
-					local models = faction:GetModels(LocalPlayer())
+					--local models = faction:GetModels(LocalPlayer())
 
 					self.payload:Set("faction", panel.faction)
-					self.payload:Set("model", math.random(1, #models))
+					--self.payload:Set("model", math.random(1, #models))
 				end
 
 				if ((lastSelected and lastSelected == v.index) or (!lastSelected and v.isDefault)) then
 					button:SetSelected(true)
 					lastSelected = v.index
+				end
+			end
+		end
+
+		-- Classes
+		local lastSelected2
+
+		for _, v in pairs(self.classButtons) do
+			if (v:GetSelected()) then
+				lastSelected2 = v.class
+			end
+
+			if (IsValid(v)) then
+				v:Remove()
+			end
+		end
+
+		self.classButtons = {}
+
+		for _, v in SortedPairs(ix.class.list) do
+			if v.faction == self.payload["faction"] && ix.class.HasClassWhitelist(v.index) then
+				local button = self.classButtonsPanel:Add("ixMenuSelectionButton")
+				local faction = ix.faction.indices[self.payload["faction"]]
+				button:SetBackgroundColor(faction.color or color_white)
+				button:SetText(L(v.name):utf8upper())
+				button:SizeToContents()
+				button:SetButtonList(self.classButtons)
+				button.class = v.index
+				button.OnSelected = function(panel)
+					local class = ix.class.list[panel.class]
+					local models = class:GetModels(LocalPlayer())
+
+					self.payload:Set("class", panel.class)
+					self.payload:Set("model", math.random(1, #models))
+				end
+
+				if ((lastSelected2 and lastSelected2 == v.index) or (!lastSelected2 and v.isDefault)) then
+					button:SetSelected(true)
+					lastSelected2 = v.index
 				end
 			end
 		end
@@ -393,6 +475,7 @@ function PANEL:Populate()
 	end
 
 	self.factionButtonsPanel:SizeToContents()
+	self.classButtonsPanel:SizeToContents()
 
 	local zPos = 1
 
@@ -449,6 +532,10 @@ function PANEL:Populate()
 		-- setup progress bar segments
 		if (#self.factionButtons > 1) then
 			self.progress:AddSegment("@faction")
+		end
+		
+		if (#self.classButtons > 1) then
+			self.progress:AddSegment("@class")
 		end
 
 		self.progress:AddSegment("@description")

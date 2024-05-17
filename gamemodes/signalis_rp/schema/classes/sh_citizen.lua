@@ -1,4 +1,4 @@
-CLASS.name = "Citizen"
-CLASS.faction = FACTION_CITIZEN
+CLASS.name = "Gestalt"
+CLASS.faction = FACTION_GESTALT
 CLASS.isDefault = true
-CLASS_CITIZEN = CLASS.index
+CLASS_GESTALT = CLASS.index

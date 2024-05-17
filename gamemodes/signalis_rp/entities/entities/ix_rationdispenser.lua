@@ -134,7 +134,8 @@ if (SERVER) then
 			return
 		end
 
-		if (client:Team() == FACTION_CITIZEN) then
+		-- TODO
+		if (client:Team() == FACTION_GESTALT) then
 			if (!self:GetEnabled()) then
 				self:DisplayError(6)
 				return

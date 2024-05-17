@@ -1,7 +1,7 @@
 
-Schema.name = "HL2 RP"
-Schema.author = "nebulous.cloud"
-Schema.description = "A schema based on Half-Life 2."
+Schema.name = "Signalis RP"
+Schema.author = "Kanade"
+Schema.description = "Roleplayed based on the universe of Signalis."
 
 -- Include netstream
 ix.util.Include("libs/thirdparty/sh_netstream2.lua")
@@ -145,8 +145,8 @@ do
 
 		local chatRange = ix.config.Get("chatRange", 280)
 
-		return (speaker:Team() == FACTION_CITIZEN and listener:Team() == FACTION_CITIZEN)
-		and (speaker:GetPos() - listener:GetPos()):LengthSqr() <= (chatRange * chatRange)
+		return (speaker:GetPos() - listener:GetPos()):LengthSqr() <= (chatRange * chatRange)
+		--return (speaker:Team() == FACTION_GESTALT and listener:Team() == FACTION_GESTALT) and (speaker:GetPos() - listener:GetPos()):LengthSqr() <= (chatRange * chatRange)
 	end
 
 	function CLASS:OnChatAdd(speaker, text)

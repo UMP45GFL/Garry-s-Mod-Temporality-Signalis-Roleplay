@@ -17,6 +17,31 @@ ix.class.list = {}
 
 local charMeta = ix.meta.character
 
+local CITIZEN_MODELS = {
+	"models/humans/group01/male_01.mdl",
+	"models/humans/group01/male_02.mdl",
+	"models/humans/group01/male_04.mdl",
+	"models/humans/group01/male_05.mdl",
+	"models/humans/group01/male_06.mdl",
+	"models/humans/group01/male_07.mdl",
+	"models/humans/group01/male_08.mdl",
+	"models/humans/group01/male_09.mdl",
+	"models/humans/group02/male_01.mdl",
+	"models/humans/group02/male_03.mdl",
+	"models/humans/group02/male_05.mdl",
+	"models/humans/group02/male_07.mdl",
+	"models/humans/group02/male_09.mdl",
+	"models/humans/group01/female_01.mdl",
+	"models/humans/group01/female_02.mdl",
+	"models/humans/group01/female_03.mdl",
+	"models/humans/group01/female_06.mdl",
+	"models/humans/group01/female_07.mdl",
+	"models/humans/group02/female_01.mdl",
+	"models/humans/group02/female_03.mdl",
+	"models/humans/group02/female_06.mdl",
+	"models/humans/group01/female_04.mdl"
+}
+
 --- Loads classes from a directory.
 -- @realm shared
 -- @internal
@@ -45,6 +70,8 @@ function ix.class.LoadFromDir(directory)
 			CLASS.description = "No description available."
 			CLASS.limit = 0
 
+			CLASS.models = CLASS.models or CITIZEN_MODELS
+
 			-- For future use with plugins.
 			if (PLUGIN) then
 				CLASS.plugin = PLUGIN.uniqueID
@@ -64,6 +91,12 @@ function ix.class.LoadFromDir(directory)
 			if (!CLASS.CanSwitchTo) then
 				CLASS.CanSwitchTo = function(client)
 					return true
+				end
+			end
+
+			if (!CLASS.GetModels) then
+				function CLASS:GetModels(client)
+					return self.models
 				end
 			end
 
@@ -198,5 +231,27 @@ if (SERVER) then
 		net.Start("ixClassUpdate")
 			net.WriteEntity(client)
 		net.Broadcast()
+	end
+end
+
+if CLIENT then
+	--- Returns true if a class requires a whitelist.
+	-- @realm client
+	-- @number class Index of the faction
+	-- @treturn bool Whether or not the class requires a whitelist
+	function ix.class.HasClassWhitelist(class)
+		local data = ix.class.list[class]
+
+		if (data) then
+			if (data.isDefault) then
+				return true
+			end
+
+			local ixData = ix.localData and ix.localData.class_whitelists or {}
+
+			return ixData[Schema.folder] and ixData[Schema.folder][data.uniqueID] == true or false
+		end
+
+		return false
 	end
 end

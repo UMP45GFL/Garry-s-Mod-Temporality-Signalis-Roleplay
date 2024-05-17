@@ -59,6 +59,7 @@ if (SERVER) then
 			query:Insert("last_join_time", data.lastJoinTime)
 			query:Insert("steamid", data.steamID)
 			query:Insert("faction", data.faction or "Unknown")
+			query:Insert("class", data.class or "Unknown")
 			query:Insert("money", data.money)
 			query:Insert("data", util.TableToJSON(data.data or {}))
 			query:Callback(function(result, status, lastID)
@@ -443,10 +444,10 @@ do
 			layout:SetSpaceX(1)
 			layout:SetSpaceY(1)
 
-			local faction = ix.faction.indices[payload.faction]
+			local class = ix.class.list[payload.class]
 
-			if (faction) then
-				local models = faction:GetModels(LocalPlayer())
+			if (class) then
+				local models = class:GetModels(LocalPlayer())
 
 				for k, v in SortedPairs(models) do
 					local icon = layout:Add("SpawnIcon")
@@ -479,10 +480,10 @@ do
 			return scroll
 		end,
 		OnValidate = function(self, value, payload, client)
-			local faction = ix.faction.indices[payload.faction]
+			local class = ix.class.list[payload.class]
 
-			if (faction) then
-				local models = faction:GetModels(client)
+			if (class) then
+				local models = class:GetModels(client)
 
 				if (!payload.model or !models[payload.model]) then
 					return false, "needModel"
@@ -492,10 +493,10 @@ do
 			end
 		end,
 		OnAdjust = function(self, client, data, value, newData)
-			local faction = ix.faction.indices[data.faction]
+			local class = ix.class.list[data.class]
 
-			if (faction) then
-				local model = faction:GetModels(client)[value]
+			if (class) then
+				local model = class:GetModels(client)[value]
 
 				if (isstring(model)) then
 					newData.model = model
@@ -516,8 +517,9 @@ do
 			end
 		end,
 		ShouldDisplay = function(self, container, payload)
-			local faction = ix.faction.indices[payload.faction]
-			return #faction:GetModels(LocalPlayer()) > 1
+			local class = ix.class.list[payload["class"]]
+			if(class == nil) then return false end
+			return #class:GetModels(LocalPlayer()) > 1
 		end
 	})
 
@@ -528,7 +530,50 @@ do
 	-- @treturn number Index of the class this character is in
 	-- @function GetClass
 	ix.char.RegisterVar("class", {
+		field = "class",
+		fieldType = ix.type.string,
+		default = "Gestalt",
 		bNoDisplay = true,
+		FilterValues = function(self)
+			local values = {}
+
+			for k, v in ipairs(ix.class.list) do
+				values[k] = v.uniqueID
+			end
+
+			return values
+		end,
+		OnSet = function(self, value)
+			local client = self:GetPlayer()
+
+			if (IsValid(client)) then
+				self.vars.class = ix.class.list[value] and ix.class.list[value].uniqueID
+
+				client:SetTeam(value)
+
+				-- @todo refactor networking of character vars so this doesn't need to be repeated on every OnSet override
+				net.Start("ixCharacterVarChanged")
+					net.WriteUInt(self:GetID(), 32)
+					net.WriteString("class")
+					net.WriteType(self.vars.class)
+				net.Broadcast()
+			end
+		end,
+		OnGet = function(self, default)
+			local class = ix.class.list[self.vars.class]
+
+			return class and class.index or 0
+		end,
+		OnValidate = function(self, index, data, client)
+			if (index and client:HasClassWhitelist(index)) then
+				return true
+			end
+
+			return false
+		end,
+		OnAdjust = function(self, client, data, value, newData)
+			newData.class = ix.class.list[value].uniqueID
+		end
 	})
 
 	--- Sets this character's faction. Note that this doesn't do the initial setup for the player after the faction has been
@@ -544,7 +589,7 @@ do
 	ix.char.RegisterVar("faction", {
 		field = "faction",
 		fieldType = ix.type.string,
-		default = "Citizen",
+		default = "Gestalt",
 		bNoDisplay = true,
 		FilterValues = function(self)
 			-- make sequential table of faction unique IDs

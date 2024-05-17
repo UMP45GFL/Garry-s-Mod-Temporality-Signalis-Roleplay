@@ -88,7 +88,7 @@ local path = "kanade_footsteps/"
 if CLIENT then
     hook.Remove("Tick", "Kanade_FootstepSystem_Tick")
 
-    local function HandleFootstepsCL()
+    function Kanade_Footsteps()
         if !(ix.config.Get("FootstepSystemEnabled", true)) then return end
         for k,v in pairs(player.GetAll()) do
             local vel = math.Round(v:GetVelocity():Length())
@@ -133,58 +133,58 @@ if CLIENT then
 
                 local rnd4 = MathRandom(4)
                 
-                if surface == "dirt" then
+                if string.find(surface, "dirt") then
                     sound = path .. "dirt"..rnd4..".wav"
 
-                elseif mat == MAT_WOOD or surface == "wood" then
+                elseif mat == MAT_WOOD or string.find(surface, "wood") then
                     sound = path .. "wood"..rnd4..".wav"
 
                 elseif mat == MAT_GRASS then
                     sound = path .. "grass"..rnd4..".wav"
 
-                elseif mat == MAT_METAL or surface == "metal" then
+                elseif mat == MAT_METAL or string.find(surface, "metal") then
                     sound = path .. "metal"..rnd4..".wav"
 
-                elseif mat == MAT_TILE or surface == "tile" then
+                elseif mat == MAT_TILE or string.find(surface, "tile") then
                     sound = "player/footsteps/tile"..rnd4..".wav"
 
                 elseif mat == MAT_GRATE then
                     sound = path .. "metalgrate"..rnd4..".wav"
                     
-                elseif mat == MAT_CONCRETE or surface == "rock" or surface == "concrete" then
+                elseif mat == MAT_CONCRETE or string.find(surface,"rock") or string.find(surface, "concrete") then
                     sound = path .. "concrete"..rnd4..".wav"
 
-                elseif surface == "wood_plank" then
+                elseif string.find(surface, "wood_plank") then
                     sound = path .. "woodpanel"..rnd4..".wav"
 
-                elseif mat == MAT_PLASTIC or surface == "plastic" or surface == "rubber" then
+                elseif mat == MAT_PLASTIC or string.find(surface, "plastic") or string.find(surface, "rubber") then
                     sound = "physics/plastic/plastic_box_impact_soft"..rnd4..".wav"
 
-                elseif mat == MAT_SAND or surface == "sand" then
+                elseif mat == MAT_SAND or string.find(surface, "sand") then
                     sound = path .. "sand"..rnd4..".wav"
 
-                elseif surface == "paper" then
+                elseif string.find(surface, "paper") then
                     sound = "physics/cardboard/cardboard_box_impact_soft"..MathRandom(7)..".wav"
 
-                elseif mat == MAT_SNOW or surface == "snow" then
+                elseif mat == MAT_SNOW or string.find(surface, "snow") then
                     sound = "player/footsteps/tile"..rnd4..".wav"
 
-                elseif mat == MAT_FLESH or surface == "flesh" then
+                elseif mat == MAT_FLESH or string.find(surface, "flesh") then
                     sound = "physics/flesh/flesh_impact_hard"..MathRandom(3)..".wav"
 
-                elseif surface == "mud" then
+                elseif string.find(surface, "mud") then
                     sound = path .. "mud"..rnd4..".wav"
 
                 elseif mat == MAT_SLOSH then
                     sound = path .. "slosh"..rnd4..".wav"
 
-                elseif mat == MAT_VENT or surface == "vent" then
+                elseif mat == MAT_VENT or string.find(surface, "vent") then
                     sound = path .. "duct"..rnd4..".wav"
 
                 elseif mat == MAT_COMPUTER then
                     sound = "physics/metal/metal_box_footstep"..rnd4..".wav"
 
-                elseif surface == "cardboard" then
+                elseif string.find(surface, "cardboard") then
                     sound = "physics/cardboard/cardboard_box_impact_soft"..MathRandom(7)..".wav"
 
                 else
@@ -192,19 +192,28 @@ if CLIENT then
                     ErrorNoHalt("No good sound for surface: " .. surface)
                 end
                 
-                EmitSound(sound, v:GetPos(), v:EntIndex(), CHAN_AUTO, math.Clamp(volume, 0, 1), soundLevel)
+                if (sound) then
+                   EmitSound(sound, v:GetPos(), v:EntIndex(), CHAN_AUTO, math.Clamp(volume, 0, 1), soundLevel)
+                else
+                    ErrorNoHalt("No good sound for surface: " .. surface)
+                end
             end
         end
     end
-    hook.Add("Tick", "Kanade_FootstepSystem_Tick", HandleFootstepsCL)
+    hook.Add("Tick", "Kanade_FootstepSystem_Tick", Kanade_Footsteps)
 end
 
--- Disable footsteps completely if the module is enabled
-hook.Add("PlayerFootstep", "Kanade_FootstepSystem_PlayerFootstep", function(ply, pos, foot, sound, volume, filter)
+
+local function OriginalFootstepFunction(ply, pos, foot, sound, volume, filter)
     if (ix.config.Get("FootstepSystemEnabled", true)) then
         if string.find(sound, "ladder") then
             EmitSound(path .. "ladder" .. MathRandom(4)..".wav", ply:GetPos(), ply:EntIndex(), CHAN_AUTO, 0.5, 70)
         end
         return true
     end
-end)
+    return false
+end
+
+function Schema:PlayerFootstep(ply, pos, foot, sound, volume, filter)
+    return OriginalFootstepFunction(ply, pos, foot, sound, volume, filter)
+end

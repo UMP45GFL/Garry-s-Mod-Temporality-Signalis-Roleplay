@@ -101,10 +101,14 @@ end
 function Schema:PlayerLoadedCharacter(client, character, oldCharacter)
 	local faction = character:GetFaction()
 
-	if (faction == FACTION_CITIZEN) then
+	if (faction == FACTION_GESTALT) then
 		self:AddCombineDisplayMessage("@cCitizenLoaded", Color(255, 100, 255, 255))
+
 	elseif (client:IsCombine()) then
 		client:AddCombineDisplayMessage("@cCombineLoaded")
+
+	elseif (faction == FACTION_REPLIKA) then
+		client:AddCombineDisplayMessage("@cReplikaLoaded")
 	end
 end
 
@@ -120,17 +124,8 @@ function Schema:CharacterVarChanged(character, key, oldValue, value)
 end
 
 function Schema:PlayerFootstep(client, position, foot, soundName, volume)
-	/*
-	local factionTable = ix.faction.Get(client:Team())
-
-	if (factionTable.runSounds and client:IsRunning()) then
-		client:EmitSound(factionTable.runSounds[foot])
-		return true
-	end
-
-	client:EmitSound(soundName)
-	*/
-	return false
+	--Kanade_Footsteps()
+	return true
 end
 
 function Schema:PlayerSpawn(client)

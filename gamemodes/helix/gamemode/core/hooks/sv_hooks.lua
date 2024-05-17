@@ -6,13 +6,17 @@ function GM:PlayerInitialSpawn(client)
 
 	if (client:IsBot()) then
 		local botID = os.time() + client:EntIndex()
-		local index = math.random(1, table.Count(ix.faction.indices))
-		local faction = ix.faction.indices[index]
+		
+		local faction_index = math.random(1, table.Count(ix.faction.indices))
+		local class_index = math.random(1, table.Count(ix.class.list))
+
+		local faction = ix.faction.indices[faction_index]
+		local class = ix.class.indices[class_index]
 
 		local character = ix.char.New({
 			name = client:Name(),
 			faction = faction and faction.uniqueID or "unknown",
-			model = faction and table.Random(faction:GetModels(client)) or "models/gman.mdl"
+			model = faction and table.Random(class:GetModels(client)) or "models/gman.mdl"
 		}, botID, client, client:SteamID64())
 		character.isBot = true
 
@@ -264,7 +268,7 @@ function GM:PlayerLoadedCharacter(client, character, lastChar)
 
 	if (character) then
 		for _, v in pairs(ix.class.list) do
-			if (v.faction == client:Team() and v.isDefault) then
+			if (v.class == client:Team() and v.isDefault) then
 				character:SetClass(v.index)
 
 				break

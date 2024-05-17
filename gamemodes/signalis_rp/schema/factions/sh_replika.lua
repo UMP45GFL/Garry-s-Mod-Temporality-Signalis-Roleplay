@@ -1,8 +1,8 @@
 
-FACTION.name = "Gestalt"
-FACTION.description = "A human that is not a replika."
-FACTION.color = Color(52, 146, 235, 255)
-FACTION.isDefault = true
+FACTION.name = "Replika"
+FACTION.description = "A biomechanical human made by AEON."
+FACTION.color = Color(194, 54, 8, 255)
+FACTION.isDefault = false
 
 function FACTION:OnCharacterCreated(client, character)
 	local id = Schema:ZeroNumber(math.random(1, 99999), 5)
@@ -17,4 +17,4 @@ function FACTION:OnCharacterCreated(client, character)
 	})
 end
 
-FACTION_GESTALT = FACTION.index
+FACTION_REPLIKA = FACTION.index

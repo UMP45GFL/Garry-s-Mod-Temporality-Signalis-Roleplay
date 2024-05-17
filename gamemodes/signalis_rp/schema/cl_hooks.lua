@@ -80,8 +80,8 @@ function Schema:RenderScreenspaceEffects()
 	colorModify["$pp_colour_colour"] = 0.77
 
 	if (system.IsWindows()) then
-		colorModify["$pp_colour_brightness"] = -0.02
-		colorModify["$pp_colour_contrast"] = 1.2
+		colorModify["$pp_colour_brightness"] = -0.03
+		colorModify["$pp_colour_contrast"] = 1.1
 	else
 		colorModify["$pp_colour_brightness"] = 0
 		colorModify["$pp_colour_contrast"] = 1
@@ -140,7 +140,15 @@ end
 
 -- creates labels in the status screen
 function Schema:CreateCharacterInfo(panel)
-	if (LocalPlayer():Team() == FACTION_CITIZEN) then
+	if (LocalPlayer():Team() == FACTION_GESTALT) then
+		panel.cid = panel:Add("ixListRow")
+		panel.cid:SetList(panel.list)
+		panel.cid:Dock(TOP)
+		panel.cid:DockMargin(0, 0, 0, 8)
+	end
+
+	-- TODO
+	if (LocalPlayer():Team() == FACTION_REPLIKA) then
 		panel.cid = panel:Add("ixListRow")
 		panel.cid:SetList(panel.list)
 		panel.cid:Dock(TOP)
@@ -150,7 +158,14 @@ end
 
 -- populates labels in the status screen
 function Schema:UpdateCharacterInfo(panel)
-	if (LocalPlayer():Team() == FACTION_CITIZEN) then
+	if (LocalPlayer():Team() == FACTION_GESTALT) then
+		panel.cid:SetLabelText(L("citizenid"))
+		panel.cid:SetText(string.format("##%s", LocalPlayer():GetCharacter():GetData("cid") or "UNKNOWN"))
+		panel.cid:SizeToContents()
+	end
+
+	-- TODO
+	if (LocalPlayer():Team() == FACTION_REPLIKA) then
 		panel.cid:SetLabelText(L("citizenid"))
 		panel.cid:SetText(string.format("##%s", LocalPlayer():GetCharacter():GetData("cid") or "UNKNOWN"))
 		panel.cid:SizeToContents()

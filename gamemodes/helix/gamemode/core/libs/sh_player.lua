@@ -57,6 +57,22 @@ do
 		return false
 	end
 
+	function playerMeta:HasClassWhitelist(class)
+		local data = ix.class.list[class]
+
+		if (data) then
+			if (data.isDefault) then
+				return true
+			end
+
+			local ixData = self:GetData("class_whitelists", {})
+
+			return ixData[Schema.folder] and ixData[Schema.folder][data.uniqueID] == true or false
+		end
+
+		return false
+	end
+
 	function playerMeta:GetItems()
 		local char = self:GetCharacter()
 

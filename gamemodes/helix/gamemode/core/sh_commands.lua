@@ -541,6 +541,45 @@ ix.command.Add("PlyWhitelist", {
 	end
 })
 
+ix.command.Add("PlyWhitelistClass", {
+	description = "@cmdPlyWhitelistClass",
+	privilege = "Manage Class Whitelist",
+	superAdminOnly = true,
+	arguments = {
+		ix.type.player,
+		ix.type.text
+	},
+	OnRun = function(self, client, target, name)
+		if (name == "") then
+			return "@invalidArg", 2
+		end
+
+		local class = ix.class.list[name]
+
+		if (!class) then
+			for _, v in ipairs(ix.class.list) do
+				if (ix.util.StringMatches(L(v.name, client), name) or ix.util.StringMatches(v.uniqueID, name)) then
+					class = v
+
+					break
+				end
+			end
+		end
+
+		if (class) then
+			if (target:SetClassWhitelisted(class.index, true)) then
+				for _, v in ipairs(player.GetAll()) do
+					if (self:OnCheckAccess(v) or v == target) then
+						v:NotifyLocalized("class_whitelist", client:GetName(), target:GetName(), L(class.name, v))
+					end
+				end
+			end
+		else
+			return "@invalidClass"
+		end
+	end
+})
+
 ix.command.Add("CharGetUp", {
 	description = "@cmdCharGetUp",
 	OnRun = function(self, client, arguments)
@@ -628,6 +667,73 @@ ix.command.Add("PlyUnwhitelist", {
 			end
 		else
 			return "@invalidFaction"
+		end
+	end
+})
+
+ix.command.Add("PlyUnwhitelistClass", {
+	description = "@cmdPlyUnwhitelistClass",
+	privilege = "Manage Class Whitelist",
+	superAdminOnly = true,
+	arguments = {
+		ix.type.string,
+		ix.type.text
+	},
+	OnRun = function(self, client, target, name)
+		local class = ix.faction.teams[name]
+
+		if (!class) then
+			for _, v in ipairs(ix.class.list) do
+				if (ix.util.StringMatches(L(v.name, client), name) or ix.util.StringMatches(v.uniqueID, name)) then
+					class = v
+
+					break
+				end
+			end
+		end
+
+		if (class) then
+			local targetPlayer = ix.util.FindPlayer(target)
+
+			if (IsValid(targetPlayer) and targetPlayer:SetWhitelisted(class.index, false)) then
+				for _, v in ipairs(player.GetAll()) do
+					if (self:OnCheckAccess(v) or v == targetPlayer) then
+						v:NotifyLocalized("class_unwhitelist", client:GetName(), targetPlayer:GetName(), L(class.name, v))
+					end
+				end
+			else
+				local steamID64 = util.SteamIDTo64(target)
+				local query = mysql:Select("ix_players")
+					query:Select("data")
+					query:Where("steamid", steamID64)
+					query:Limit(1)
+					query:Callback(function(result)
+						if (istable(result) and #result > 0) then
+							local data = util.JSONToTable(result[1].data or "[]")
+							local class_whitelists = data.class_whitelists and data.class_whitelists[Schema.folder]
+
+							if (!class_whitelists or !class_whitelists[class.uniqueID]) then
+								return
+							end
+
+							class_whitelists[class.uniqueID] = nil
+
+							local updateQuery = mysql:Update("ix_players")
+								updateQuery:Update("data", util.TableToJSON(data))
+								updateQuery:Where("steamid", steamID64)
+							updateQuery:Execute()
+
+							for _, v in ipairs(player.GetAll()) do
+								if (self:OnCheckAccess(v)) then
+									v:NotifyLocalized("class_unwhitelist", client:GetName(), target, L(class.name, v))
+								end
+							end
+						end
+					end)
+				query:Execute()
+			end
+		else
+			return "@invalidClass"
 		end
 	end
 })
@@ -749,6 +855,51 @@ ix.command.Add("PlyTransfer", {
 			end
 		else
 			return "@invalidFaction"
+		end
+	end
+})
+
+ix.command.Add("PlyTransferClass", {
+	description = "@cmdPlyTransferClass",
+	adminOnly = true,
+	arguments = {
+		ix.type.character,
+		ix.type.text
+	},
+	OnRun = function(self, client, target, name)
+		local class = ix.class.teams[name]
+
+		if (!class) then
+			for _, v in pairs(ix.class.list) do
+				if (ix.util.StringMatches(L(v.name, client), name)) then
+					class = v
+
+					break
+				end
+			end
+		end
+
+		if (class) then
+			local bHasWhitelist = target:GetPlayer():HasWhitelist(class.index)
+
+			if (bHasWhitelist) then
+				target.vars.class = class.uniqueID
+				target:SetClass(class.index)
+
+				if (class.OnTransferred) then
+					class:OnTransferred(target)
+				end
+
+				for _, v in ipairs(player.GetAll()) do
+					if (self:OnCheckAccess(v) or v == target:GetPlayer()) then
+						v:NotifyLocalized("cChangeFactionClass", client:GetName(), target:GetName(), L(faction.name, v))
+					end
+				end
+			else
+				return "@charNotWhitelistedClass", target:GetName(), L(faction.name, client)
+			end
+		else
+			return "@invalidClass"
 		end
 	end
 })

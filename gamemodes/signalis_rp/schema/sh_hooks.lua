@@ -1,6 +1,6 @@
 
 function Schema:CanPlayerUseBusiness(client, uniqueID)
-	if (client:Team() == FACTION_CITIZEN) then
+	if (client:Team() == FACTION_GESTALT or client:Team() == FACTION_REPLIKA) then
 		local itemTable = ix.item.list[uniqueID]
 
 		if (itemTable) then
