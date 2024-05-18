@@ -8,6 +8,10 @@ ix.lang.AddTable("english", {
 	hungerThirstSystemEnabled = "Enable hunger & thirst system",
 })
 
+ix.config.Add("hungerThirstSystemEnabled", true, "Enable the hunger & thirst system", nil, {
+	category = "Kanade"
+})
+
 ix.config.Add("hungerThirstSystemMaxHunger", 125, "Amount of max hunger a player can have", nil, {
 	data = {min = 1, max = 1000},
 	category = "Kanade"
@@ -40,8 +44,8 @@ if SERVER then
 	end
 	
 	function player_meta:ResetHungerAndThirst()
-		v.hunger = 125
-		v.thirst = 125
+		self.hunger = 125
+		self.thirst = 125
 	end
 
 	function HandleHungerAndThirst()
@@ -134,7 +138,6 @@ if CLIENT then
 	net.Receive("update_hunger", function(len)
 		our_hunger = net.ReadInt(16)
 		our_thirst = net.ReadInt(16)
-		print("hunger update", our_hunger, our_thirst)
 	end)
 
 	ix.bar.Add(function()
