@@ -534,6 +534,10 @@ function GM:PlayerLoadout(client)
 		client:SetHealth(health)
 		client:SetMaxHealth(health)
 
+		if client.ResetHungerAndThirst then
+			client:ResetHungerAndThirst()
+		end
+
 		local faction = ix.faction.indices[client:Team()]
 
 		if (faction) then

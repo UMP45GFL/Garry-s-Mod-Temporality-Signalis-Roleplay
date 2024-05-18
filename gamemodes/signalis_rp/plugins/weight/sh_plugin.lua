@@ -4,6 +4,10 @@ PLUGIN.description = "Allows for weight to be added to items."
 
 ix.weight = ix.weight or {}
 
+ix.lang.AddTable("english", {
+	optImperial = "Use Imperial units",
+})
+
 ix.config.Add("maxWeight", 30, "The maximum weight in Kilograms someone can carry in their inventory.", nil, {
 	data = {min = 1, max = 100},
 	category = "Weight"

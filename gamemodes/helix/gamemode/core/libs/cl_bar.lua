@@ -8,7 +8,7 @@ ix.bar.actionEnd = 0
 ix.bar.totalHeight = 0
 
 -- luacheck: globals BAR_HEIGHT
-BAR_HEIGHT = 10
+BAR_HEIGHT = 12
 
 function ix.bar.Get(identifier)
 	for _, v in ipairs(ix.bar.list) do
