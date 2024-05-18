@@ -509,9 +509,30 @@ function GM:PlayerLoadout(client)
 		-- Set their player model to the character's model.
 		client:SetModel(character:GetModel())
 		client:Give("ix_hands")
-		client:SetWalkSpeed(ix.config.Get("walkSpeed"))
-		client:SetRunSpeed(ix.config.Get("runSpeed"))
-		client:SetHealth(character:GetData("health", client:GetMaxHealth()))
+
+		local class = ix.class.GetClass(character.vars.class)
+
+		local speed_mul = 1
+		if (class and class.speed) then
+			speed_mul = class.speed
+		end
+
+		local jump_mul = 1
+		if (class and class.jump_power) then
+			jump_mul = class.jump_power
+		end
+
+		local health = character:GetData("health", client:GetMaxHealth())
+		if (class and class.health) then
+			health = class.health
+		end
+
+		client:SetWalkSpeed(math.Round(ix.config.Get("walkSpeed") * speed_mul))
+		client:SetRunSpeed(math.Round(ix.config.Get("runSpeed") * speed_mul))
+		client:SetJumpPower(math.Round(ix.config.Get("jumpPower") * jump_mul))
+		
+		client:SetHealth(health)
+		client:SetMaxHealth(health)
 
 		local faction = ix.faction.indices[client:Team()]
 

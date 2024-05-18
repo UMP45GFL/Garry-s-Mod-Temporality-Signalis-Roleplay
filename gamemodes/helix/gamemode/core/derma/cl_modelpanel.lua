@@ -61,6 +61,14 @@ function PANEL:SetModel(model, skin, bodygroups)
 		end
 	end
 
+	local bone = entity:LookupBone("ValveBiped.Bip01_Neck1")
+	if bone then
+		height = entity:GetBonePosition(bone).z + 5
+		if height > 60 then
+			entity:SetPos(entity:GetPos() - Vector(0, 0, height - 60))
+		end
+	end
+
 	self.Entity = entity
 end
 
@@ -72,8 +80,8 @@ function PANEL:LayoutEntity()
 	local xRatio2 = x / scrW
 	local entity = self.Entity
 
-	entity:SetPoseParameter("head_pitch", yRatio*90 - 30)
-	entity:SetPoseParameter("head_yaw", (xRatio - xRatio2)*90 - 5)
+	entity:SetPoseParameter("head_pitch", yRatio * 90 - 30)
+	entity:SetPoseParameter("head_yaw", (xRatio - xRatio2) * 90 - 5)
 	entity:SetAngles(MODEL_ANGLE)
 	entity:SetIK(false)
 

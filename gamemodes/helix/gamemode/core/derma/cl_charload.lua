@@ -4,7 +4,10 @@ local PANEL = {}
 
 AccessorFunc(PANEL, "animationTime", "AnimationTime", FORCE_NUMBER)
 
+local setupHeightsFor = {}
+
 local function SetCharacter(self, character)
+	local old_model = self:GetModel()
 	self.character = character
 
 	if (character) then
@@ -25,6 +28,32 @@ local function SetCharacter(self, character)
 	else
 		self:SetModel(errorModel)
 	end
+
+	if old_model != self:GetModel() then
+		local bone = self:LookupBone("ValveBiped.Bip01_Neck1")
+		if bone then
+			height = self:GetBonePosition(bone).z + 5
+			if height > 60 and self:GetPos().z >= -1 then
+				self:SetPos( Vector(0, 0, -(height - 60)) )
+			else
+				self:SetPos( Vector(0,0,0) )
+			end
+		end
+	end
+
+	/*
+	if !table.HasValue(setupHeightsFor, self:GetModel()) then
+		print("self.setUpHeight")
+		local bone = self:LookupBone("ValveBiped.Bip01_Neck1")
+		if bone then
+			height = self:GetBonePosition(bone).z + 5
+			if height > 60 then
+				self:SetPos(self:GetPos() - Vector(0, 0, height - 60))
+				table.ForceInsert(setupHeightsFor, self:GetModel())
+			end
+		end
+	end
+	*/
 end
 
 local function GetCharacter(self)
@@ -104,7 +133,6 @@ function PANEL:SetActiveCharacter(character)
 	if (self.activeCharacter:GetModel() == errorModel) then
 		self.activeCharacter:SetCharacter(character)
 		self:ResetSequence(self.activeCharacter)
-
 		return
 	end
 
@@ -115,6 +143,7 @@ function PANEL:SetActiveCharacter(character)
 	if (shade) then
 		shade.newCharacter = character
 		return
+
 	elseif (shadeHide) then
 		shadeHide.queuedCharacter = character
 		return

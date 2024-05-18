@@ -22,6 +22,24 @@ ix.config.Add("punchStamina", 10, "How much stamina punches use up.", nil, {
 	data = {min = 0, max = 100},
 	category = "characters"
 })
+
+local function getMaxStamina(character)
+	if CLIENT then
+		character = LocalPlayer():GetCharacter()
+	end
+
+	local max_stamina_mul = 1
+
+	if character then
+		local class = ix.class.GetClass(character.vars.class)
+		if (class and class.max_stamina) then
+			max_stamina_mul = class.max_stamina
+		end
+	end
+
+	return 100 * max_stamina_mul
+end
+
 -- luacheck: pop
 local function CalcStaminaChange(client)
 	local character = client:GetCharacter()
@@ -62,16 +80,23 @@ local function CalcStaminaChange(client)
 		if (current != value) then
 			client:SetLocalVar("stm", value)
 
+			local class = ix.class.GetClass(character.vars.class)
+			local speed_mul = 1
+			if (class and class.speed) then
+				speed_mul = class.speed
+			end
+
 			if (value == 0 and !client:GetNetVar("brth", false)) then
-				client:SetRunSpeed(walkSpeed)
+				client:SetRunSpeed(walkSpeed * speed_mul)
 				client:SetNetVar("brth", true)
 
 				character:UpdateAttrib("end", 0.1)
 				character:UpdateAttrib("stm", 0.01)
 
 				hook.Run("PlayerStaminaLost", client)
+				
 			elseif (value >= 50 and client:GetNetVar("brth", false)) then
-				client:SetRunSpeed(runSpeed)
+				client:SetRunSpeed(runSpeed * speed_mul)
 				client:SetNetVar("brth", nil)
 
 				hook.Run("PlayerStaminaGained", client)
@@ -105,7 +130,7 @@ if (SERVER) then
 
 	function PLUGIN:PlayerLoadedCharacter(client, character)
 		timer.Simple(0.25, function()
-			client:SetLocalVar("stm", character:GetData("stamina", 100))
+			client:SetLocalVar("stm", character:GetData("stamina", getMaxStamina(character)))
 		end)
 	end
 
@@ -113,14 +138,14 @@ if (SERVER) then
 
 	function playerMeta:RestoreStamina(amount)
 		local current = self:GetLocalVar("stm", 0)
-		local value = math.Clamp(current + amount, 0, 100)
+		local value = math.Clamp(current + amount, 0, getMaxStamina(character))
 
 		self:SetLocalVar("stm", value)
 	end
 
 	function playerMeta:ConsumeStamina(amount)
 		local current = self:GetLocalVar("stm", 0)
-		local value = math.Clamp(current - amount, 0, 100)
+		local value = math.Clamp(current - amount, 0, getMaxStamina(character))
 
 		self:SetLocalVar("stm", value)
 	end
@@ -135,7 +160,7 @@ else
 		offset = math.Remap(FrameTime(), 0, 0.25, 0, offset)
 
 		if (offset != 0) then
-			predictedStamina = math.Clamp(predictedStamina + offset, 0, 100)
+			predictedStamina = math.Clamp(predictedStamina + offset, 0, getMaxStamina())
 		end
 	end
 
@@ -147,6 +172,6 @@ else
 	end
 
 	ix.bar.Add(function()
-		return predictedStamina / 100
+		return predictedStamina / getMaxStamina()
 	end, Color(200, 200, 40), nil, "stm")
 end

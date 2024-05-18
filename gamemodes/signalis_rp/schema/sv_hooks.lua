@@ -139,10 +139,6 @@ function Schema:PlayerDeath(client, inflicter, attacker)
 		self:AddCombineDisplayMessage("@cLostBiosignal")
 		self:AddCombineDisplayMessage("@cLostBiosignalLocation", Color(255, 0, 0, 255), location)
 
-		if (IsValid(client.ixScanner) and client.ixScanner:Health() > 0) then
-			client.ixScanner:TakeDamage(999)
-		end
-
 		local sounds = {"npc/overwatch/radiovoice/on1.wav", "npc/overwatch/radiovoice/lostbiosignalforunit.wav"}
 		local chance = math.random(1, 7)
 
@@ -163,39 +159,26 @@ function Schema:PlayerDeath(client, inflicter, attacker)
 end
 
 function Schema:PlayerNoClip(client)
-	if (IsValid(client.ixScanner)) then
-		return false
-	end
 end
 
 function Schema:EntityTakeDamage(entity, dmgInfo)
-	if (IsValid(entity.ixPlayer) and entity.ixPlayer:IsScanner()) then
-		entity.ixPlayer:SetHealth( math.max(entity:Health(), 0) )
+    if IsValid(entity) and entity:IsPlayer() then
 
-		hook.Run("PlayerHurt", entity.ixPlayer, dmgInfo:GetAttacker(), entity.ixPlayer:Health(), dmgInfo:GetDamage())
-	end
-end
+		local dmg_type = dmgInfo:GetDamageType()
+		-- only apply the damage multiplier to physical attacks
+		if dmg_type == DMG_CRUSH or dmg_type == DMG_FALL or dmg_type == DMG_CLUB or dmg_type == DMG_SLASH or dmg_type == DMG_CRUSH or dmg_type == DMG_PHYSGUN then
+			local dmg_mul = 1
+			local character = entity:GetCharacter()
+			if character then
+				local class = ix.class.Get(entity:GetCharacter())
+				if class then
+					dmg_mul = dmg_mul * class.physical_damage_taken
+				end
+			end
 
-function Schema:PlayerHurt(client, attacker, health, damage)
-	if (health <= 0) then
-		return
-	end
-
-	if (client:IsCombine() and (client.ixTraumaCooldown or 0) < CurTime()) then
-		local text = "External"
-
-		if (damage > 50) then
-			text = "Severe"
+			dmgInfo:ScaleDamage(dmg_mul)
 		end
-
-		client:AddCombineDisplayMessage("@cTrauma", Color(255, 0, 0, 255), text)
-
-		if (health < 25) then
-			client:AddCombineDisplayMessage("@cDroppingVitals", Color(255, 0, 0, 255))
-		end
-
-		client.ixTraumaCooldown = CurTime() + 15
-	end
+    end
 end
 
 function Schema:PlayerStaminaLost(client)

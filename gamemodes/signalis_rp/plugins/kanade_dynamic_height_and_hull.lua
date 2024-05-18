@@ -5,7 +5,7 @@ PLUGIN.description = "Adds dynamic height and hull."
 PLUGIN.license = [[meow]]
 
 ix.lang.AddTable("english", {
-	DynamicHeightAndHullEnabled = "Enable dragging ragdolls",
+	DynamicHeightAndHullEnabled = "Enable dynamic height and hull",
 })
 
 ix.config.Add("DynamicHeightAndHullEnabled", true, "Whether or to enable dynamic height and hull.", nil, {
@@ -62,7 +62,7 @@ if SERVER then
 		-- Find the height by spawning a dummy entity
 		if ply:GetModel() == "models/player.mdl" then return end
 		
-		if ix.config.Get("DynamicHeightAndHullEnabled", true) then
+		if !ix.config.Get("DynamicHeightAndHullEnabled", true) then
 			ply:SetHull(Vector(-16,-16,0), Vector(16,16,72))
 			ply:SetHullDuck(Vector(-16,-16,0), Vector(16,16,36))
 			ply:SetViewOffset(Vector(0, 0, 64))

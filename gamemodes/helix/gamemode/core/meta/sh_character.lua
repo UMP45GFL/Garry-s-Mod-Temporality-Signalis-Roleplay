@@ -149,6 +149,7 @@ if (SERVER) then
 
 			client:SetNetVar("char", self:GetID())
 			client:SetTeam(self:GetFaction())
+
 			client:SetModel(istable(model) and model[1] or model)
 
 			-- Apply saved body groups.

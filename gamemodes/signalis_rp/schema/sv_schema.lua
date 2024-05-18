@@ -233,3 +233,25 @@ function Schema:SearchPlayer(client, target)
 
 	return true
 end
+
+
+function GAMEMODE:ScalePlayerDamage(ply, hitgroup, dmginfo)
+	if IsValid(ply) and ply:Team() != TEAM_SPECTATOR then
+		local dmg_mul = 1
+
+		if hitgroup == HITGROUP_HEAD then
+			dmg_mul = dmg_mul * 1.5
+		end
+
+		local character = ply:GetCharacter()
+		if character then
+			local class = ix.class.Get(ply:GetCharacter())
+			if class then
+				dmg_mul = dmg_mul * class.bullet_damage_taken
+			end
+		end
+
+		dmginfo:ScaleDamage(dmg_mul)
+	end
+	print(ply, hitgroup, dmginfo, dmginfo:GetDamage())
+end

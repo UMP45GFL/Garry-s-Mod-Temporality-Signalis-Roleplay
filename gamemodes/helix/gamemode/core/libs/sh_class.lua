@@ -150,6 +150,20 @@ function ix.class.Get(identifier)
 	return ix.class.list[identifier]
 end
 
+--- Retrieves a class table.
+-- @realm shared
+-- @number identifier Index of the class
+-- @treturn table Class table
+function ix.class.GetClass(identifier)
+	for k,v in pairs(ix.class.list) do
+		if v.uniqueID == identifier then
+			return v
+		end
+	end
+
+	return nil
+end
+
 --- Retrieves the players in a class
 -- @realm shared
 -- @number class Index of the class

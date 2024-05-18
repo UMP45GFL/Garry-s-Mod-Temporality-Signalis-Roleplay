@@ -27,7 +27,11 @@ function PANEL:Init()
 		end
 	end
 
-	local factionProceed = self.factionPanel:Add("ixMenuButton")
+	local modelFactionList = self.factionPanel:Add("Panel")
+	modelFactionList:Dock(RIGHT)
+	modelFactionList:SetSize(halfWidth + padding * 2, halfHeight)
+
+	local factionProceed = modelFactionList:Add("ixMenuButton")
 	factionProceed:SetText("proceed")
 	factionProceed:SetContentAlignment(6)
 	factionProceed:Dock(BOTTOM)
@@ -39,25 +43,17 @@ function PANEL:Init()
 		self.classPanel.title:SetTextColor(faction.color or color_white)
 
 		self:Populate(true)
-		self:SetActiveSubpanel("class")
-	end
-
-	self.classPanel = self:AddSubpanel("class", true)
-	self.classPanel:SetTitle("chooseClass")
-	self.classPanel.OnSetActive = function()
-		-- if we only have one class, we are always selecting that one so we can skip to the description section
 		if (#self.classButtons == 1) then
-			self:SetActiveSubpanel("description", 0)
+			self:SetActiveSubpanel("description")
+		else
+			self:SetActiveSubpanel("class")
 		end
 	end
-
-	self.factionButtonsPanel = self.factionPanel:Add("ixCharMenuButtonList")
-	self.factionButtonsPanel:SetWide(halfWidth)
-	self.factionButtonsPanel:Dock(FILL)
 
 	local factionBack = self.factionPanel:Add("ixMenuButton")
 	factionBack:SetText("return")
 	factionBack:SizeToContents()
+	factionBack:DockMargin(0, 80, 0, 0)
 	factionBack:Dock(BOTTOM)
 	factionBack.DoClick = function()
 		self.progress:DecrementProgress()
@@ -68,15 +64,29 @@ function PANEL:Init()
 		parent.mainPanel:Undim()
 	end
 
-	self.classButtonsPanel = self.classPanel:Add("ixCharMenuButtonList")
-	self.classButtonsPanel:SetWide(halfWidth)
-	self.classButtonsPanel:Dock(FILL)
+	self.factionButtonsPanel = self.factionPanel:Add("ixCharMenuButtonList")
+	self.factionButtonsPanel:SetWide(halfWidth)
+	self.factionButtonsPanel:Dock(BOTTOM)
 
-	local classProceed = self.classPanel:Add("ixMenuButton")
+	self.classPanel = self:AddSubpanel("class", true)
+	self.classPanel:SetTitle("chooseClass")
+	self.classPanel.OnSetActive = function()
+		-- if we only have one class, we are always selecting that one so we can skip to the description section
+		if (#self.classButtons == 1) then
+			self:SetActiveSubpanel("description", 0)
+		end
+	end
+
+	local modelClassList = self.classPanel:Add("Panel")
+	modelClassList:Dock(RIGHT)
+	modelClassList:SetSize(halfWidth + padding * 2, halfHeight)
+
+	local classProceed = modelClassList:Add("ixMenuButton")
 	classProceed:SetText("proceed")
 	classProceed:SetContentAlignment(6)
 	classProceed:SizeToContents()
 	classProceed:Dock(BOTTOM)
+	classProceed:SetWide(halfWidth)
 	classProceed.DoClick = function()
 		self.progress:IncrementProgress()
 
@@ -87,7 +97,9 @@ function PANEL:Init()
 	local classBack = self.classPanel:Add("ixMenuButton")
 	classBack:SetText("return")
 	classBack:SizeToContents()
+	classBack:DockMargin(0, 80, 0, 0)
 	classBack:Dock(BOTTOM)
+	classBack:SetWide(halfWidth)
 	classBack.DoClick = function()
 		self.progress:DecrementProgress()
 
@@ -98,11 +110,11 @@ function PANEL:Init()
 		parent.mainPanel:Undim()
 	end
 
-	local modelList = self.classPanel:Add("Panel")
-	modelList:Dock(RIGHT)
-	modelList:SetSize(halfWidth + padding * 2, halfHeight)
+	self.classButtonsPanel = self.classPanel:Add("ixCharMenuButtonList")
+	self.classButtonsPanel:SetWide(halfWidth)
+	self.classButtonsPanel:Dock(FILL)
 
-	self.classModel = modelList:Add("ixModelPanel")
+	self.classModel = modelClassList:Add("ixModelPanel")
 	self.classModel:Dock(FILL)
 	self.classModel:SetModel("models/error.mdl")
 	self.classModel:SetFOV(modelFOV)

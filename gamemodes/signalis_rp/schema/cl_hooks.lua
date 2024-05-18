@@ -77,10 +77,10 @@ local scannerFirstPerson = false
 
 function Schema:RenderScreenspaceEffects()
 	local colorModify = {}
-	colorModify["$pp_colour_colour"] = 0.77
+	colorModify["$pp_colour_colour"] = 0.8
 
 	if (system.IsWindows()) then
-		colorModify["$pp_colour_brightness"] = -0.03
+		colorModify["$pp_colour_brightness"] = -0.01
 		colorModify["$pp_colour_contrast"] = 1.1
 	else
 		colorModify["$pp_colour_brightness"] = 0
@@ -93,16 +93,6 @@ function Schema:RenderScreenspaceEffects()
 	end
 
 	DrawColorModify(colorModify)
-
-	if (LocalPlayer():IsCombine()) then
-		render.UpdateScreenEffectTexture()
-
-		combineOverlay:SetFloat("$alpha", 0.5)
-		combineOverlay:SetInt("$ignorez", 1)
-
-		render.SetMaterial(combineOverlay)
-		render.DrawScreenQuad()
-	end
 end
 
 function Schema:PreDrawOpaqueRenderables()

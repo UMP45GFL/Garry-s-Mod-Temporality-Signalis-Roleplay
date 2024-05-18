@@ -101,22 +101,61 @@ ix.config.Add("saveInterval", 300, "How often characters save in seconds.", nil,
 	data = {min = 60, max = 3600},
 	category = "characters"
 })
+
 ix.config.Add("walkSpeed", 130, "How fast a player normally walks.", function(oldValue, newValue)
 	for _, v in ipairs(player.GetAll())	do
-		v:SetWalkSpeed(newValue)
+		local character = v:GetCharacter()
+		local speed_mul = 1
+		if character then
+			local class = ix.class.GetClass(character.vars.class)
+
+			if (class and class.speed) then
+				speed_mul = class.speed
+			end
+		end
+		v:SetWalkSpeed(math.Round(newValue * speed_mul))
 	end
 end, {
 	data = {min = 75, max = 500},
 	category = "characters"
 })
+
 ix.config.Add("runSpeed", 235, "How fast a player normally runs.", function(oldValue, newValue)
 	for _, v in ipairs(player.GetAll())	do
-		v:SetRunSpeed(newValue)
+		local character = v:GetCharacter()
+		local speed_mul = 1
+		if character then
+			local class = ix.class.GetClass(character.vars.class)
+
+			if (class and class.speed) then
+				speed_mul = class.speed
+			end
+		end
+		v:SetRunSpeed(math.Round(newValue * speed_mul))
 	end
 end, {
 	data = {min = 75, max = 500},
 	category = "characters"
 })
+
+ix.config.Add("jumpPower", 160, "How high a player can jump.", function(oldValue, newValue)
+	for _, v in ipairs(player.GetAll())	do
+		local character = v:GetCharacter()
+		local mul = 1
+		if character then
+			local class = ix.class.GetClass(character.vars.class)
+
+			if (class and class.jump_power) then
+				mul = class.jump_power
+			end
+		end
+		v:SetJumpPower(math.Round(newValue * mul))
+	end
+end, {
+	data = {min = 75, max = 500},
+	category = "characters"
+})
+
 ix.config.Add("walkRatio", 0.5, "How fast one goes when holding ALT.", nil, {
 	data = {min = 0, max = 1, decimals = 1},
 	category = "characters"

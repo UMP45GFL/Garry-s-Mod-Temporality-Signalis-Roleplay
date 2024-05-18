@@ -532,7 +532,7 @@ do
 	ix.char.RegisterVar("class", {
 		field = "class",
 		fieldType = ix.type.string,
-		default = "Gestalt",
+		default = "Unknown",
 		bNoDisplay = true,
 		FilterValues = function(self)
 			local values = {}
@@ -548,8 +548,7 @@ do
 
 			if (IsValid(client)) then
 				self.vars.class = ix.class.list[value] and ix.class.list[value].uniqueID
-
-				client:SetTeam(value)
+				self.vars.className = ix.class.list[value] and ix.class.list[value].uniqueID
 
 				-- @todo refactor networking of character vars so this doesn't need to be repeated on every OnSet override
 				net.Start("ixCharacterVarChanged")
@@ -562,7 +561,7 @@ do
 		OnGet = function(self, default)
 			local class = ix.class.list[self.vars.class]
 
-			return class and class.index or 0
+			return class and class.uniqueID or 0
 		end,
 		OnValidate = function(self, index, data, client)
 			if (index and client:HasClassWhitelist(index)) then

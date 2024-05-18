@@ -1,0 +1,10 @@
+"SplineRope"
+{
+	"$basetexture" "particle/Ac/rdr2_ptfx_liquid_trail_AC_edit"
+	"$vertexcolor" "1"
+	"$vertexalpha" "1"
+	"$translucent" "1"
+//      "$additive" "1"
+	"$depthblend"  "1"
+	"$depthblendscale"  "6"
+}
