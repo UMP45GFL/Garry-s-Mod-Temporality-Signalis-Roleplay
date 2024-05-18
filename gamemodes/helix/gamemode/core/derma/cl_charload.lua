@@ -6,6 +6,8 @@ AccessorFunc(PANEL, "animationTime", "AnimationTime", FORCE_NUMBER)
 
 local setupHeightsFor = {}
 
+local last_character = nil
+
 local function SetCharacter(self, character)
 	local old_model = self:GetModel()
 	self.character = character
@@ -25,25 +27,15 @@ local function SetCharacter(self, character)
 				self:SetBodygroup(k, v)
 			end
 		end
-	else
-		self:SetModel(errorModel)
-	end
 
-	if old_model != self:GetModel() then
-		local bone = self:LookupBone("ValveBiped.Bip01_Neck1")
-		if bone then
-			height = self:GetBonePosition(bone).z + 5
-			if height > 60 and self:GetPos().z >= -1 then
-				self:SetPos( Vector(0, 0, -(height - 60)) )
-			else
-				self:SetPos( Vector(0,0,0) )
-			end
+		/*
+		self:SetPos(Vector(0, 0, 0))
+		if SIGNALIS_MODEL_HEIGHT_FIXES[self:GetModel()] then
+			self:SetPos(Vector(0, 0, SIGNALIS_MODEL_HEIGHT_FIXES[self:GetModel()]))
 		end
-	end
+		*/
 
-	/*
-	if !table.HasValue(setupHeightsFor, self:GetModel()) then
-		print("self.setUpHeight")
+		self:SetPos(Vector(0, 0, 0))
 		local bone = self:LookupBone("ValveBiped.Bip01_Neck1")
 		if bone then
 			height = self:GetBonePosition(bone).z + 5
@@ -52,8 +44,9 @@ local function SetCharacter(self, character)
 				table.ForceInsert(setupHeightsFor, self:GetModel())
 			end
 		end
+	else
+		self:SetModel(errorModel)
 	end
-	*/
 end
 
 local function GetCharacter(self)

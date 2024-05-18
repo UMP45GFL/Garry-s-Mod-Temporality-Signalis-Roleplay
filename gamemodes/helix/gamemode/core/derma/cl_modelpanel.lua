@@ -60,7 +60,15 @@ function PANEL:SetModel(model, skin, bodygroups)
 			entity:ResetSequence(4)
 		end
 	end
+	
+	/*
+	entity:SetPos(Vector(0, 0, 0))
+	if SIGNALIS_MODEL_HEIGHT_FIXES[model] then
+		entity:SetPos(Vector(0, 0, SIGNALIS_MODEL_HEIGHT_FIXES[model]))
+	end
+	*/
 
+	entity:SetPos(Vector(0, 0, 0))
 	local bone = entity:LookupBone("ValveBiped.Bip01_Neck1")
 	if bone then
 		height = entity:GetBonePosition(bone).z + 5

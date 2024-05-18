@@ -16,3 +16,11 @@ ix.config.Add("rationInterval", 300, "How long a person needs to wait in seconds
 	data = {min = 0, max = 86400},
 	category = "economy"
 })
+
+SIGNALIS_MODEL_HEIGHT_FIXES = {
+	["models/citric/signalis_stcr/stcr_pm.mdl"] = -20,
+	["models/voxaid/signalis_mynah/mynah_pm.mdl"] = -30,
+	["models/voxaid/signalis_star/star_pm.mdl"] = -15,
+	["models/citric/signalis_fklr/falke_pm.mdl"] = -20,
+}
+
