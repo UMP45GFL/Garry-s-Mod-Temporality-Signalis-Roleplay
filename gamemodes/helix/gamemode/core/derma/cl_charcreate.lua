@@ -81,17 +81,20 @@ function PANEL:Init()
 	modelClassList:Dock(RIGHT)
 	modelClassList:SetSize(halfWidth + padding * 2, halfHeight)
 
-	local classProceed = modelClassList:Add("ixMenuButton")
-	classProceed:SetText("proceed")
-	classProceed:SetContentAlignment(6)
-	classProceed:SizeToContents()
-	classProceed:Dock(BOTTOM)
-	classProceed:SetWide(halfWidth)
-	classProceed.DoClick = function()
-		self.progress:IncrementProgress()
+	self.classProceed = modelClassList:Add("ixMenuButton")
+	self.classProceed:SetText("proceed")
+	self.classProceed:SetContentAlignment(6)
+	self.classProceed:SizeToContents()
+	self.classProceed:Dock(BOTTOM)
+	self.classProceed:SetWide(halfWidth)
+	self.classProceed:SetTextColor(Color(100,100,100))
+	self.classProceed.DoClick = function()
+		if self.payload["model"] then
+			self.progress:IncrementProgress()
 
-		self:Populate()
-		self:SetActiveSubpanel("description")
+			self:Populate()
+			self:SetActiveSubpanel("description")
+		end
 	end
 
 	local classBack = self.classPanel:Add("ixMenuButton")
@@ -459,12 +462,15 @@ function PANEL:Populate(redo)
 
 					self.payload:Set("class", panel.class)
 					self.payload:Set("model", math.random(1, #models))
+					self.classProceed:SetTextColor(color_white)
 				end
 
+				/*
 				if ((lastSelected2 and lastSelected2 == v.index) or (!lastSelected2 and v.isDefault)) then
 					button:SetSelected(true)
 					lastSelected2 = v.index
 				end
+				*/
 			end
 		end
 	end

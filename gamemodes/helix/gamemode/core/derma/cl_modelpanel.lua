@@ -68,12 +68,16 @@ function PANEL:SetModel(model, skin, bodygroups)
 	end
 	*/
 
-	entity:SetPos(Vector(0, 0, 0))
-	local bone = entity:LookupBone("ValveBiped.Bip01_Neck1")
-	if bone then
-		height = entity:GetBonePosition(bone).z + 5
-		if height > 60 then
-			entity:SetPos(entity:GetPos() - Vector(0, 0, height - 60))
+	if model == "models/error.mdl" then
+		entity:SetPos(Vector(0, 0, -300))
+	else
+		entity:SetPos(Vector(0, 0, 0))
+		local bone = entity:LookupBone("ValveBiped.Bip01_Neck1")
+		if bone then
+			height = entity:GetBonePosition(bone).z + 5
+			if height > 60 then
+				entity:SetPos(entity:GetPos() - Vector(0, 0, height - 60))
+			end
 		end
 	end
 
