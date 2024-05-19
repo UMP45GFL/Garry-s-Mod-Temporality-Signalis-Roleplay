@@ -10,7 +10,7 @@ function PANEL:Init()
 	local halfWidth = parent:GetWide() * 0.5 - (padding * 2)
 	local thirdWidth = parent:GetWide() * 0.33 - (padding * 2)
 	local halfHeight = parent:GetTall() * 0.5 - (padding * 2)
-	local modelFOV = (ScrW() > ScrH() * 1.8) and 100 or 78
+	local modelFOV = (ScrW() > ScrH() * 1.8) and 90 or 68
 
 	self:ResetPayload(true)
 
@@ -98,7 +98,7 @@ function PANEL:Init()
 		local stats = self:GetParent():GetParent().stats
 
 		if stats then
-			local y = 64
+			local y = 100
 			draw.DrawText("Health: " .. stats.health, "ixMenuButtonFontSmall", w * 0.5, y, color_white, TEXT_ALIGN_CENTER)
 			y = y + spaceBetween
 			draw.DrawText("Physical damage taken: " .. stats.physical_damage_taken, "ixMenuButtonFontSmall", w * 0.5, y, color_white, TEXT_ALIGN_CENTER)
@@ -507,6 +507,8 @@ function PANEL:Populate(redo)
 				button:SetButtonList(self.factionButtons)
 				button.faction = v.index
 				button.OnSelected = function(panel)
+					self.classModel:SetModel("models/error.mdl")
+
 					local faction = ix.faction.indices[panel.faction]
 					--local models = faction:GetModels(LocalPlayer())
 
