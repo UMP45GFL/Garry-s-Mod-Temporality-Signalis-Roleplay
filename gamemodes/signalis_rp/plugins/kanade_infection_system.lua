@@ -69,6 +69,8 @@ if SERVER then
 	end
 
 	function HandleInfection()
+		if !(ix.config.Get("infectionSystemEnabled", true)) then return end
+
 		for k,v in pairs(player.GetAll()) do
 			if v:Alive() and v:Team() != TEAM_SPECTATOR and v.isInfected then
 				if v.next_iup1 == nil then
@@ -139,7 +141,9 @@ if CLIENT then
 		BR_OUR_INFECTION = net.ReadInt(16)
 	end)
 
-	ix.bar.Add(function()
-		return BR_OUR_INFECTION / 200
-	end, Color(40, 150, 18), nil, "infection")
+	if ix.config.Get("infectionSystemEnabled", true) then
+		ix.bar.Add(function()
+			return BR_OUR_INFECTION / 200
+		end, Color(40, 150, 18), nil, "infection")
+	end
 end
