@@ -5,7 +5,7 @@ PLUGIN.description = "Adds screen effects when the player has low health."
 PLUGIN.license = [[meow]]
 
 ix.lang.AddTable("english", {
-	optlowHealthEffectsEnabled = "Enable low health effects.",
+	optLowHealthEffectsEnabled = "Enable low health effects.",
 })
 
 ix.config.Add("lowHealthEffectsSystemEnabled", true, "Enable the low health effects system", nil, {
@@ -38,7 +38,7 @@ ix.config.Add("lowHealthEffectsEnableMuffleEffectThreshold", 10, "Low health sou
 	category = "Kanade"
 })
 
-ix.option.Add("lowHealthEffectsEnabled", true, "Enable the low health effects", nil, {
+ix.option.Add("lowHealthEffectsEnabled", ix.type.bool, true, {
 	category = "Kanade"
 })
 
