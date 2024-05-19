@@ -78,6 +78,7 @@ function PANEL:Init()
 	self.classPanel = self:AddSubpanel("class", true)
 	self.classPanel:SetTitle("chooseClass")
 	self.classPanel.OnSetActive = function()
+		self.stats = nil
 		-- if we only have one class, we are always selecting that one so we can skip to the description section
 		if (#self.classButtons == 1) then
 			self:SetActiveSubpanel("description", 0)
