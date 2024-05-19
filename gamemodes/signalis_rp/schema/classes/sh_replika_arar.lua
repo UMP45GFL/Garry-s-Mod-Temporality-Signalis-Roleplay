@@ -1,7 +1,10 @@
 CLASS.name = "ARAR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.models = {"models/voxaid/signalis_arar/arar_pm.mdl"}
+CLASS.models = {
+	"models/voxaid/signalis_arar/arar_pm.mdl",
+	"models/voxaid/araV2/araV2_pm.mdl"
+}
 CLASS.health = 120
 CLASS.armor = nil
 CLASS.physical_damage_taken = 0.7 -- titanium reinforced shell

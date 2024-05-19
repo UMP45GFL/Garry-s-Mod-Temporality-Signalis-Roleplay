@@ -8,6 +8,7 @@ local PANEL = {}
 function PANEL:Init()
 	local parent = self:GetParent()
 	local halfWidth = parent:GetWide() * 0.5 - (padding * 2)
+	local thirdWidth = parent:GetWide() * 0.33 - (padding * 2)
 	local halfHeight = parent:GetTall() * 0.5 - (padding * 2)
 	local modelFOV = (ScrW() > ScrH() * 1.8) and 100 or 78
 
@@ -16,6 +17,8 @@ function PANEL:Init()
 	self.factionButtons = {}
 	self.classButtons = {}
 	self.repopulatePanels = {}
+
+	self.stats = nil
 
 	-- faction selection subpanel
 	self.factionPanel = self:AddSubpanel("faction", true)
@@ -56,6 +59,10 @@ function PANEL:Init()
 	factionBack:DockMargin(0, 80, 0, 0)
 	factionBack:Dock(BOTTOM)
 	factionBack.DoClick = function()
+		self.payload["class"] = nil
+		self.payload["model"] = nil
+		self.classButtons = {}
+
 		self.progress:DecrementProgress()
 
 		self:SetActiveSubpanel("faction", 0)
@@ -79,7 +86,39 @@ function PANEL:Init()
 
 	local modelClassList = self.classPanel:Add("Panel")
 	modelClassList:Dock(RIGHT)
-	modelClassList:SetSize(halfWidth + padding * 2, halfHeight)
+	modelClassList:SetSize(thirdWidth + padding * 2, halfHeight)
+	--modelClassList.Paint = function(self, w, h) draw.RoundedBox(0, 0, 0, w, h, Color(255,0,0)) end
+
+	local statsPanel = self.classPanel:Add("Panel")
+	statsPanel:Dock(RIGHT)
+	statsPanel:SetSize(thirdWidth + padding * 2, halfHeight)
+
+	local spaceBetween = 38
+	statsPanel.Paint = function(self, w, h)
+		local stats = self:GetParent():GetParent().stats
+
+		if stats then
+			local y = 64
+			draw.DrawText("Health: " .. stats.health, "ixMenuButtonFontSmall", w * 0.5, y, color_white, TEXT_ALIGN_CENTER)
+			y = y + spaceBetween
+			draw.DrawText("Physical damage taken: " .. stats.physical_damage_taken, "ixMenuButtonFontSmall", w * 0.5, y, color_white, TEXT_ALIGN_CENTER)
+			y = y + spaceBetween
+			draw.DrawText("Bullet damage taken: " .. stats.bullet_damage_taken, "ixMenuButtonFontSmall", w * 0.5, y, color_white, TEXT_ALIGN_CENTER)
+			y = y + spaceBetween
+			draw.DrawText("Mental strength: " .. stats.mental_strength, "ixMenuButtonFontSmall", w * 0.5, y, color_white, TEXT_ALIGN_CENTER)
+			y = y + spaceBetween
+			draw.DrawText("Hunger: " .. stats.hunger, "ixMenuButtonFontSmall", w * 0.5, y, color_white, TEXT_ALIGN_CENTER)
+			y = y + spaceBetween
+			draw.DrawText("Thirst: " .. stats.thirst, "ixMenuButtonFontSmall", w * 0.5, y, color_white, TEXT_ALIGN_CENTER)
+			y = y + spaceBetween
+			draw.DrawText("Speed: " .. stats.speed, "ixMenuButtonFontSmall", w * 0.5, y, color_white, TEXT_ALIGN_CENTER)
+			y = y + spaceBetween
+			draw.DrawText("Jump power: " .. stats.jump_power, "ixMenuButtonFontSmall", w * 0.5, y, color_white, TEXT_ALIGN_CENTER)
+			y = y + spaceBetween
+			draw.DrawText("Max stamina: " .. stats.max_stamina, "ixMenuButtonFontSmall", w * 0.5, y, color_white, TEXT_ALIGN_CENTER)
+		end
+		--draw.RoundedBox(0, 0, 0, w, h, Color(0,0,255,10))
+	end
 
 	self.classProceed = modelClassList:Add("ixMenuButton")
 	self.classProceed:SetText("proceed")
@@ -104,6 +143,9 @@ function PANEL:Init()
 	classBack:Dock(BOTTOM)
 	classBack:SetWide(halfWidth)
 	classBack.DoClick = function()
+		self.payload["class"] = nil
+		self.payload["model"] = nil
+
 		self.progress:DecrementProgress()
 
 		self:Populate()
@@ -114,8 +156,9 @@ function PANEL:Init()
 	end
 
 	self.classButtonsPanel = self.classPanel:Add("ixCharMenuButtonList")
-	self.classButtonsPanel:SetWide(halfWidth)
-	self.classButtonsPanel:Dock(FILL)
+	self.classButtonsPanel:SetWide(thirdWidth)
+	self.classButtonsPanel:Dock(LEFT)
+	--self.classButtonsPanel.Paint = function(self, w, h) draw.RoundedBox(0, 0, 0, w, h, Color(0,255,0)) end
 
 	self.classModel = modelClassList:Add("ixModelPanel")
 	self.classModel:Dock(FILL)
@@ -137,6 +180,9 @@ function PANEL:Init()
 	descriptionBack:SizeToContents()
 	descriptionBack:Dock(BOTTOM)
 	descriptionBack.DoClick = function()
+		self.payload["class"] = nil
+		self.payload["model"] = nil
+
 		self.progress:DecrementProgress()
 
 		if (#self.factionButtons == 1) then
@@ -380,6 +426,7 @@ function PANEL:GetContainerPanel(name)
 	-- TODO: yuck
 	if (name == "description") then
 		return self.descriptionPanel
+		
 	elseif (name == "attributes") then
 		return self.attributesPanel
 	end
@@ -389,6 +436,48 @@ end
 
 function PANEL:AttachCleanup(panel)
 	self.repopulatePanels[#self.repopulatePanels + 1] = panel
+end
+
+function PANEL:populateClassButtons()
+	for _, v in pairs(self.classButtons) do
+		if (IsValid(v)) then
+			v:Remove()
+		end
+	end
+
+	self.classButtons = {}
+
+	for _, v in SortedPairs(ix.class.list) do
+		if v.faction == self.payload["faction"] && ix.class.HasClassWhitelist(v.index) then
+			local button = self.classButtonsPanel:Add("ixMenuSelectionButton")
+			local faction = ix.faction.indices[self.payload["faction"]]
+			button:SetBackgroundColor(faction.color or color_white)
+			button:SetText(L(v.name):utf8upper())
+			button:SizeToContents()
+			button:SetButtonList(self.classButtons)
+			button.class = v.index
+			button.OnSelected = function(panel)
+				local class = ix.class.list[panel.class]
+				local models = class:GetModels(LocalPlayer())
+
+				self.stats = {
+					health = class.health,
+					physical_damage_taken = class.physical_damage_taken,
+					bullet_damage_taken = class.bullet_damage_taken,
+					mental_strength = class.mental_strength,
+					hunger = class.hunger,
+					thirst = class.thirst,
+					speed = class.speed,
+					jump_power = class.jump_power,
+					max_stamina = class.max_stamina,
+				}
+
+				self.payload:Set("class", panel.class)
+				self.payload:Set("model", math.random(1, #models))
+				self.classProceed:SetTextColor(color_white)
+			end
+		end
+	end
 end
 
 function PANEL:Populate(redo)
@@ -423,6 +512,35 @@ function PANEL:Populate(redo)
 
 					self.payload:Set("faction", panel.faction)
 					--self.payload:Set("model", math.random(1, #models))
+
+					self:populateClassButtons()
+
+					local num_of_classes = 0
+					for _, v in SortedPairs(ix.class.list) do
+						if v.faction == panel.faction && ix.class.HasClassWhitelist(v.index) then
+							num_of_classes = num_of_classes + 1
+						end
+					end
+
+					if num_of_classes == 1 then
+						local class = ix.class.list[self.classButtons[1].class]
+						local models = class:GetModels(LocalPlayer())
+	
+						self.stats = {
+							health = class.health,
+							physical_damage_taken = class.physical_damage_taken,
+							bullet_damage_taken = class.bullet_damage_taken,
+							mental_strength = class.mental_strength,
+							hunger = class.hunger,
+							thirst = class.thirst,
+							speed = class.speed,
+							jump_power = class.jump_power,
+							max_stamina = class.max_stamina,
+						}
+	
+						self.payload:Set("class", self.classButtons[1].class)
+						self.payload:Set("model", math.random(1, #models))
+					end
 				end
 
 				if ((lastSelected and lastSelected == v.index) or (!lastSelected and v.isDefault)) then
@@ -432,47 +550,8 @@ function PANEL:Populate(redo)
 			end
 		end
 
-		-- Classes
-		local lastSelected2
 
-		for _, v in pairs(self.classButtons) do
-			if (v:GetSelected()) then
-				lastSelected2 = v.class
-			end
-
-			if (IsValid(v)) then
-				v:Remove()
-			end
-		end
-
-		self.classButtons = {}
-
-		for _, v in SortedPairs(ix.class.list) do
-			if v.faction == self.payload["faction"] && ix.class.HasClassWhitelist(v.index) then
-				local button = self.classButtonsPanel:Add("ixMenuSelectionButton")
-				local faction = ix.faction.indices[self.payload["faction"]]
-				button:SetBackgroundColor(faction.color or color_white)
-				button:SetText(L(v.name):utf8upper())
-				button:SizeToContents()
-				button:SetButtonList(self.classButtons)
-				button.class = v.index
-				button.OnSelected = function(panel)
-					local class = ix.class.list[panel.class]
-					local models = class:GetModels(LocalPlayer())
-
-					self.payload:Set("class", panel.class)
-					self.payload:Set("model", math.random(1, #models))
-					self.classProceed:SetTextColor(color_white)
-				end
-
-				/*
-				if ((lastSelected2 and lastSelected2 == v.index) or (!lastSelected2 and v.isDefault)) then
-					button:SetSelected(true)
-					lastSelected2 = v.index
-				end
-				*/
-			end
-		end
+		self:populateClassButtons()
 	end
 
 	-- remove panels created for character vars
