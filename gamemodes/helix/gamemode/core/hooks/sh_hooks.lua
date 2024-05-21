@@ -282,7 +282,7 @@ function GM:PlayerWeaponChanged(client, weapon)
 	-- update weapon raise state
 	if weapon.ARC9 and ix.config.Get("arc9DisableToggleRaise", false) then
 		client:SetWepRaised(true, weapon)
-		weapon:ToggleSafety(true)
+		--weapon:ToggleSafety(true)
 		return
 	elseif (weapon.IsAlwaysRaised or ALWAYS_RAISED[weapon:GetClass()]) then
 		client:SetWepRaised(true, weapon)

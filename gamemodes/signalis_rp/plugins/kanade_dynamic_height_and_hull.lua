@@ -377,5 +377,3 @@ end
 
 -- Addon: https://steamcommunity.com/sharedfiles/filedetails/?id=2887450478
 -- Creator: https://steamcommunity.com/id/Xaxidoro
-
-print("[GAMEMODE] loaded external module sh_dynamic_height_and_hull.lua loaded!")

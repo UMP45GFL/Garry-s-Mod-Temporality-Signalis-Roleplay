@@ -25,7 +25,7 @@ ix.config.Add("bulletLightBlue", 150, "Blue color of the bullet light.", nil, {
 	category = "Kanade"
 })
 
-ix.config.Add("bulletLightRange", 50, "Bullet light range.", nil, {
+ix.config.Add("bulletLightRange", 100, "Bullet light range.", nil, {
 	data = {min = 5, max = 200},
 	category = "Kanade"
 })
@@ -41,7 +41,7 @@ if SERVER then
 			local Result = util.TraceLine(Trace)
 			if Result.Hit then
 				local FireLight = ents.Create("light_dynamic")
-				FireLight:SetKeyValue("distance", ix.config.Get("bulletLightRange", 50))
+				FireLight:SetKeyValue("distance", ix.config.Get("bulletLightRange", 100))
 				FireLight:SetKeyValue("_light", ix.config.Get("bulletLightRed", 255) .. " " .. ix.config.Get("bulletLightGreen", 225) .. " " .. ix.config.Get("bulletLightBlue", 150))
 				FireLight:SetPos(Result.HitPos)
 				FireLight:Spawn()
