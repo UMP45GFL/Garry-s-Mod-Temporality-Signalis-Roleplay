@@ -1,7 +1,13 @@
 CLASS.name = "KLBR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.models = {"models/voxaid/signalis_kolibri/kolibri_pm.mdl"}
+CLASS.models = {
+	{
+		mdl = "models/voxaid/signalis_kolibri/kolibri_pm.mdl",
+		hullMins = Vector(-10, -10, 0),
+		hullMaxs = Vector(10, 10, 60)
+	}
+}
 CLASS.health = 115
 --CLASS.armor = "bullet_resistant_armor_plating", TODO
 CLASS.physical_damage_taken = 0.9

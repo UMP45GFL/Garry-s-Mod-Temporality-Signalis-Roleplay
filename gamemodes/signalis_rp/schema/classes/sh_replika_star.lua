@@ -1,7 +1,13 @@
 CLASS.name = "STAR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.models = {"models/voxaid/signalis_star/star_pm.mdl"}
+CLASS.models = {
+	{
+		mdl = "models/voxaid/signalis_star/star_pm.mdl",
+		hullMins = Vector(-12, -12, 0),
+		hullMaxs = Vector(12, 12, 86)
+	}
+}
 CLASS.health = 120 -- they are a bit more robust
 CLASS.armor = "bullet_resistant_armor_plating"
 CLASS.physical_damage_taken = 0.9

@@ -6,31 +6,6 @@ ix.faction = ix.faction or {}
 ix.faction.teams = ix.faction.teams or {}
 ix.faction.indices = ix.faction.indices or {}
 
-local CITIZEN_MODELS = {
-	"models/humans/group01/male_01.mdl",
-	"models/humans/group01/male_02.mdl",
-	"models/humans/group01/male_04.mdl",
-	"models/humans/group01/male_05.mdl",
-	"models/humans/group01/male_06.mdl",
-	"models/humans/group01/male_07.mdl",
-	"models/humans/group01/male_08.mdl",
-	"models/humans/group01/male_09.mdl",
-	"models/humans/group02/male_01.mdl",
-	"models/humans/group02/male_03.mdl",
-	"models/humans/group02/male_05.mdl",
-	"models/humans/group02/male_07.mdl",
-	"models/humans/group02/male_09.mdl",
-	"models/humans/group01/female_01.mdl",
-	"models/humans/group01/female_02.mdl",
-	"models/humans/group01/female_03.mdl",
-	"models/humans/group01/female_06.mdl",
-	"models/humans/group01/female_07.mdl",
-	"models/humans/group02/female_01.mdl",
-	"models/humans/group02/female_03.mdl",
-	"models/humans/group02/female_06.mdl",
-	"models/humans/group01/female_04.mdl"
-}
-
 --- Loads factions from a directory.
 -- @realm shared
 -- @string directory The path to the factions files.
@@ -57,22 +32,7 @@ function ix.faction.LoadFromDir(directory)
 
 			team.SetUp(FACTION.index, FACTION.name or "Unknown", FACTION.color or Color(125, 125, 125))
 
-			FACTION.models = FACTION.models or CITIZEN_MODELS
 			FACTION.uniqueID = FACTION.uniqueID or niceName
-
-			for _, v2 in pairs(FACTION.models) do
-				if (isstring(v2)) then
-					util.PrecacheModel(v2)
-				elseif (istable(v2)) then
-					util.PrecacheModel(v2[1])
-				end
-			end
-
-			if (!FACTION.GetModels) then
-				function FACTION:GetModels(client)
-					return self.models
-				end
-			end
 
 			ix.faction.indices[FACTION.index] = FACTION
 			ix.faction.teams[niceName] = FACTION

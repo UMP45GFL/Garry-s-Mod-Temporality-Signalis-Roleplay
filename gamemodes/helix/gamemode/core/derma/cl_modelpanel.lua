@@ -9,7 +9,7 @@ function PANEL:Init()
 	self:SetCursor("none")
 end
 
-function PANEL:SetModel(model, skin, bodygroups)
+function PANEL:SetModel(model)
 	if (IsValid(self.Entity)) then
 		self.Entity:Remove()
 		self.Entity = nil
@@ -19,7 +19,11 @@ function PANEL:SetModel(model, skin, bodygroups)
 		return
 	end
 
-	local entity = ClientsideModel(model, RENDERGROUP_OPAQUE)
+	if isstring(model) then
+		model = {mdl = model}
+	end
+
+	local entity = ClientsideModel(model.mdl, RENDERGROUP_OPAQUE)
 
 	if (!IsValid(entity)) then
 		return
@@ -28,12 +32,12 @@ function PANEL:SetModel(model, skin, bodygroups)
 	entity:SetNoDraw(true)
 	entity:SetIK(false)
 
-	if (skin) then
-		entity:SetSkin(skin)
+	if (model.skin) then
+		entity:SetSkin(model.skin)
 	end
 
-	if (isstring(bodygroups)) then
-		entity:SetBodyGroups(bodygroups)
+	if (model.bodygroups) then
+		entity:SetBodyGroups(model.bodygroups)
 	end
 
 	local sequence = entity:LookupSequence("idle_unarmed")
@@ -68,7 +72,7 @@ function PANEL:SetModel(model, skin, bodygroups)
 	end
 	*/
 
-	if model == "models/error.mdl" then
+	if model.mdl == "models/error.mdl" then
 		entity:SetPos(Vector(0, 0, -300))
 	else
 		entity:SetPos(Vector(0, 0, 0))

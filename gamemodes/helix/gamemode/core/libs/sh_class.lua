@@ -17,31 +17,6 @@ ix.class.list = {}
 
 local charMeta = ix.meta.character
 
-local CITIZEN_MODELS = {
-	"models/humans/group01/male_01.mdl",
-	"models/humans/group01/male_02.mdl",
-	"models/humans/group01/male_04.mdl",
-	"models/humans/group01/male_05.mdl",
-	"models/humans/group01/male_06.mdl",
-	"models/humans/group01/male_07.mdl",
-	"models/humans/group01/male_08.mdl",
-	"models/humans/group01/male_09.mdl",
-	"models/humans/group02/male_01.mdl",
-	"models/humans/group02/male_03.mdl",
-	"models/humans/group02/male_05.mdl",
-	"models/humans/group02/male_07.mdl",
-	"models/humans/group02/male_09.mdl",
-	"models/humans/group01/female_01.mdl",
-	"models/humans/group01/female_02.mdl",
-	"models/humans/group01/female_03.mdl",
-	"models/humans/group01/female_06.mdl",
-	"models/humans/group01/female_07.mdl",
-	"models/humans/group02/female_01.mdl",
-	"models/humans/group02/female_03.mdl",
-	"models/humans/group02/female_06.mdl",
-	"models/humans/group01/female_04.mdl"
-}
-
 --- Loads classes from a directory.
 -- @realm shared
 -- @internal
@@ -70,7 +45,7 @@ function ix.class.LoadFromDir(directory)
 			CLASS.description = "No description available."
 			CLASS.limit = 0
 
-			CLASS.models = CLASS.models or CITIZEN_MODELS
+			CLASS.models = CLASS.models
 
 			-- For future use with plugins.
 			if (PLUGIN) then
@@ -91,6 +66,12 @@ function ix.class.LoadFromDir(directory)
 			if (!CLASS.CanSwitchTo) then
 				CLASS.CanSwitchTo = function(client)
 					return true
+				end
+			end
+
+			if istable(CLASS.models) then
+				for _, v2 in pairs(CLASS.models) do
+					util.PrecacheModel(v2.mdl)
 				end
 			end
 

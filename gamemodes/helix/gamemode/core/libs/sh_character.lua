@@ -422,6 +422,7 @@ do
 		index = 3,
 		OnSet = function(character, value)
 			local client = character:GetPlayer()
+			print("Setting model to: " .. value)
 
 			if (IsValid(client) and client:GetCharacter() == character) then
 				client:SetModel(value)
@@ -472,7 +473,7 @@ do
 					if (isstring(v)) then
 						icon:SetModel(v)
 					else
-						icon:SetModel(v[1], v[2] or 0, v[3])
+						icon:SetModel(v.mdl)
 					end
 				end
 			end
@@ -500,18 +501,21 @@ do
 
 				if (isstring(model)) then
 					newData.model = model
+
 				elseif (istable(model)) then
-					newData.model = model[1]
+					newData.model = model.mdl
 
 					-- save skin/bodygroups to character data
 					local bodygroups = {}
 
-					for i = 1, #model[3] do
-						bodygroups[i - 1] = tonumber(model[3][i]) or 0
+					if model.bodygroups then
+						for i = 1, #model.bodygroups do
+							bodygroups[i - 1] = tonumber(model[3][i]) or 0
+						end
 					end
 
 					newData.data = newData.data or {}
-					newData.data.skin = model[2] or 0
+					newData.data.skin = model.skin or 0
 					newData.data.groups = bodygroups
 				end
 			end

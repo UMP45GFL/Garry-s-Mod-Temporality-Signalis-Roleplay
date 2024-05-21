@@ -156,6 +156,24 @@ end, {
 	category = "characters"
 })
 
+ix.config.Add("ladderClimbSpeed", 70, "How fast a player climbs the ladder.", function(oldValue, newValue)
+	for _, v in ipairs(player.GetAll())	do
+		local character = v:GetCharacter()
+		local mul = 1
+		if character then
+			local class = ix.class.GetClass(character.vars.class)
+
+			if (class and class.speed) then
+				mul = class.speed
+			end
+		end
+		v:SetLadderClimbSpeed(math.Round(newValue * mul))
+	end
+end, {
+	data = {min = 25, max = 300},
+	category = "characters"
+})
+
 ix.config.Add("walkRatio", 0.5, "How fast one goes when holding ALT.", nil, {
 	data = {min = 0, max = 1, decimals = 1},
 	category = "characters"

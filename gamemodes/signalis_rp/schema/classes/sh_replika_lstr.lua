@@ -1,7 +1,14 @@
 CLASS.name = "LSTR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.models = {"models/citric/signalis_lstr/elster_pm.mdl"}
+CLASS.models = {
+	{
+		mdl = "models/citric/signalis_lstr/elster_pm.mdl",
+		hullMins = Vector(-12, -12, 0),
+		hullMaxs = Vector(12, 12, 70),
+        skin = "3"
+	}
+}
 CLASS.health = 115
 CLASS.armor = nil
 CLASS.physical_damage_taken = 0.7 -- carbon fiber-reinforced shell

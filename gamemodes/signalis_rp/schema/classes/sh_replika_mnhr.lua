@@ -1,7 +1,13 @@
 CLASS.name = "MNHR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.models = {"models/voxaid/signalis_mynah/mynah_pm.mdl"}
+CLASS.models = {
+	{
+		mdl = "models/voxaid/signalis_mynah/mynah_pm.mdl",
+		hullMins = Vector(-20, -20, 0),
+		hullMaxs = Vector(20, 20, 100)
+	}
+}
 CLASS.health = 200
 CLASS.armor = 0
 CLASS.physical_damage_taken = 0.9

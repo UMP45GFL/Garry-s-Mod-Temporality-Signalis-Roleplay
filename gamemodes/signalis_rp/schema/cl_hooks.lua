@@ -78,6 +78,7 @@ local scannerFirstPerson = false
 function Schema:RenderScreenspaceEffects()
 	local colorModify = {}
 	colorModify["$pp_colour_colour"] = 0.8
+	colorModify["$pp_colour_mulr"] = 0.1
 
 	if (system.IsWindows()) then
 		colorModify["$pp_colour_brightness"] = -0.01

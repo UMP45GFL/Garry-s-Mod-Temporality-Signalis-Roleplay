@@ -2,9 +2,22 @@ CLASS.name = "Gestalt"
 CLASS.faction = FACTION_GESTALT
 CLASS.isDefault = true
 CLASS.models = {
-    "models/voxaid/alina/alina_pm.mdl",
-    "models/citric/signalis_ariane/ariane_pm.mdl",
-    "models/voxaid/isa/isa_pm.mdl"
+    {
+        mdl = "models/voxaid/alina/alina_pm.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 59)
+    },
+    {
+        mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 68),
+        skin = "2"
+    },
+    {
+        mdl = "models/voxaid/isa/isa_pm.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+    }
 }
 CLASS.health = 75 -- amount of health the player has
 CLASS.armor = nil -- string of the classname of an armor

@@ -2,8 +2,16 @@ CLASS.name = "ARAR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
 CLASS.models = {
-	"models/voxaid/signalis_arar/arar_pm.mdl",
-	"models/voxaid/araV2/araV2_pm.mdl"
+	{
+		mdl = "models/voxaid/signalis_arar/arar_pm.mdl",
+		hullMins = Vector(-12, -12, 0),
+		hullMaxs = Vector(12, 12, 75)
+	},
+	{
+		mdl = "models/voxaid/araV2/araV2_pm.mdl",
+		hullMins = Vector(-12, -12, 0),
+		hullMaxs = Vector(12, 12, 75)
+	}
 }
 CLASS.health = 120
 CLASS.armor = nil

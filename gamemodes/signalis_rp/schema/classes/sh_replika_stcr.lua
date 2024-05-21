@@ -1,7 +1,13 @@
 CLASS.name = "STCR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.models = {"models/citric/signalis_stcr/stcr_pm.mdl"}
+CLASS.models = {
+	{
+		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",
+		hullMins = Vector(-13, -13, 0),
+		hullMaxs = Vector(13, 13, 92)
+	}
+}
 CLASS.health = 130 -- they are a bit more robust
 CLASS.armor = "bullet_resistant_armor_plating"
 CLASS.physical_damage_taken = 0.87 -- replikas take less physical damage by default

@@ -1,7 +1,13 @@
 CLASS.name = "EULR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.models = {"models/voxaid/signalis_eule/eule_pm.mdl"}
+CLASS.models = {
+	{
+		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
+		hullMins = Vector(-10, -10, 0),
+		hullMaxs = Vector(10, 10, 70),
+	}
+}
 CLASS.health = 100
 CLASS.armor = nil
 CLASS.physical_damage_taken = 0.9

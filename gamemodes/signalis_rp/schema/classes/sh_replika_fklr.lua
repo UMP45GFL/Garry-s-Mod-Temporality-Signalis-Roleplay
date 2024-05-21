@@ -1,7 +1,13 @@
 CLASS.name = "FKLR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.models = {"models/citric/signalis_fklr/falke_pm.mdl"}
+CLASS.models = {
+	{
+		mdl = "models/citric/signalis_fklr/falke_pm.mdl",
+		hullMins = Vector(-13, -13, 0),
+		hullMaxs = Vector(13, 13, 95)
+	}
+}
 CLASS.health = 150
 CLASS.armor = "bullet_resistant_armor_plating"
 CLASS.physical_damage_taken = 0.75

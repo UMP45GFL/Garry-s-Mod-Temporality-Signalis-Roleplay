@@ -111,6 +111,12 @@ do
 		playerMeta.ixSelectWeapon = playerMeta.ixSelectWeapon or playerMeta.SelectWeapon
 
 		function entityMeta:SetModel(model)
+			if(model == nil) then
+				error("Attempt to set model to nil", 2)
+			end
+
+			print(model)
+
 			local oldModel = self:GetModel()
 
 			if (self:IsPlayer()) then

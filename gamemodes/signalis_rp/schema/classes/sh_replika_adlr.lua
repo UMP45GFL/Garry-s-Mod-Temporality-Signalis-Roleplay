@@ -1,7 +1,13 @@
 CLASS.name = "ADLR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.models = {"models/citric/signalis_adlr/adler_pm.mdl"}
+CLASS.models = {
+	{
+		mdl = "models/citric/signalis_adlr/adler_pm.mdl",
+		hullMins = Vector(-11, -11, 0),
+		hullMaxs = Vector(11, 11, 73)
+	}
+}
 CLASS.health = 110
 CLASS.armor = nil
 CLASS.physical_damage_taken = 0.82 -- titanium skeleton makes them a bit stronger

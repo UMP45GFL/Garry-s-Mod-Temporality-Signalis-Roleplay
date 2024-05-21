@@ -272,16 +272,9 @@ function PANEL:Init()
 		if (class) then
 			local model = class:GetModels(LocalPlayer())[value]
 
-			-- assuming bodygroups
-			if (istable(model)) then
-				self.classModel:SetModel(model[1], model[2] or 0, model[3])
-				self.descriptionModel:SetModel(model[1], model[2] or 0, model[3])
-				self.attributesModel:SetModel(model[1], model[2] or 0, model[3])
-			else
-				self.classModel:SetModel(model)
-				self.descriptionModel:SetModel(model)
-				self.attributesModel:SetModel(model)
-			end
+			self.classModel:SetModel(model)
+			self.descriptionModel:SetModel(model)
+			self.attributesModel:SetModel(model)
 		end
 	end)
 
@@ -593,6 +586,7 @@ function PANEL:Populate(redo)
 			-- if the var has a custom way of displaying, we'll use that instead
 			if (v.OnDisplay) then
 				panel = v:OnDisplay(container, self.payload)
+				
 			elseif (isstring(v.default)) then
 				panel = container:Add("ixTextEntry")
 				panel:Dock(TOP)

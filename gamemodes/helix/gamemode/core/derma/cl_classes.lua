@@ -63,11 +63,12 @@ end
 function PANEL:SetClass(data)
 	if (data.model) then
 		local model = data.model
+
 		if (istable(model)) then
 			model = table.Random(model)
 		end
 
-		self.icon:SetModel(model)
+		self.icon:SetModel(model.mdl)
 	else
 		local char = LocalPlayer():GetCharacter()
 		local model = LocalPlayer():GetModel()
@@ -76,7 +77,7 @@ function PANEL:SetClass(data)
 			model = char:GetModel()
 		end
 
-		self.icon:SetModel(model)
+		self.icon:SetModel(model.mdl)
 	end
 
 	self.label:SetText(L(data.name))
