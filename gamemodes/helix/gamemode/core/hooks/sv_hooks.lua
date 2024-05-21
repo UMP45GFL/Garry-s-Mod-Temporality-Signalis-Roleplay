@@ -527,6 +527,7 @@ function GM:PlayerLoadout(client)
 			health = class.health
 		end
 
+		/*
 		for k,v in pairs(class:GetModels()) do
 			if v.mdl == client:GetModel() then
 				if v.hullMins and v.hullMaxs then
@@ -535,6 +536,7 @@ function GM:PlayerLoadout(client)
 				break
 			end
 		end
+		*/
 
 		client:SetLadderClimbSpeed(math.Round(ix.config.Get("ladderClimbSpeed") * speed_mul))
 		client:SetWalkSpeed(math.Round(ix.config.Get("walkSpeed") * speed_mul))

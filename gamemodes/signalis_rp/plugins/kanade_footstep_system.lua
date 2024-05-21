@@ -187,6 +187,9 @@ if CLIENT then
                 elseif string.find(surface, "cardboard") then
                     sound = "physics/cardboard/cardboard_box_impact_soft"..MathRandom(7)..".wav"
 
+                elseif string.find(surface, "glass") then
+                    sound = "physics/glass/glass_sheet_impact_soft"..MathRandom(3)..".wav"
+
                 else
                     sound = path .. "dirt"..rnd4..".wav"
                     ErrorNoHalt("No good sound for surface: " .. surface)

@@ -542,7 +542,6 @@ ix.anim.SetModelClass("models/voxaid/alina/alina_pm.mdl", "gestalt")
 ix.anim.SetModelClass("models/citric/signalis_ariane/ariane_pm.mdl", "gestalt")
 ix.anim.SetModelClass("models/voxaid/isa/isa_pm.mdl", "gestalt")
 
-
 if (SERVER) then
 	util.AddNetworkString("ixSequenceSet")
 	util.AddNetworkString("ixSequenceReset")

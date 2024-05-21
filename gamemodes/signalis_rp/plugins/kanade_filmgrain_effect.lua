@@ -11,7 +11,7 @@ ix.lang.AddTable("english", {
     optFilmgrainEffectAddAlpha = "Filmgrain noise addition",
 })
 
-ix.config.Add("filmgrainEffectEnabled", true, "Whether or to enable dynamic height and hull.", nil, {
+ix.config.Add("filmgrainEffectEnabled", true, "Whether or to enable the filmgrain effect", nil, {
 	category = "Kanade"
 })
 
