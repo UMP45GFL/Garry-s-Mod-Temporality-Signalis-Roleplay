@@ -61,6 +61,7 @@ function PANEL:SetNumber(number)
 end
 
 function PANEL:SetClass(data)
+	print("PANEL:SetClass(data)")
 	if (data.model) then
 		local model = data.model
 

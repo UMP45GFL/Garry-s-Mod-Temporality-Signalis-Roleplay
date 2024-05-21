@@ -451,7 +451,42 @@ do
 				local models = class:GetModels(LocalPlayer())
 
 				for k, v in SortedPairs(models) do
+					local icon = layout:Add("DModelPanel")
+					icon:SetSize(128, 256)
+					icon:SetModel(v.mdl)
+					icon:SetSkin(v.skin)
+					icon:SetFOV(50)
+					icon:InvalidateLayout(true)
+					icon:SetAnimated(false)
+					icon:SetAnimSpeed(0)
+					icon.DoClick = function(this)
+						payload:Set("model", k)
+					end
+					icon.PaintOver = function(this, w, h)
+						if (payload.model == k) then
+							local color = ix.config.Get("color", color_white)
+
+							surface.SetDrawColor(color.r, color.g, color.b, 200)
+
+							for i = 1, 3 do
+								local i2 = i * 2
+								surface.DrawOutlinedRect(i, i, w - i2, h - i2)
+							end
+						end
+					end
+
+					function icon:LayoutEntity(ent)
+					end
+
+					local headpos = icon.Entity:GetBonePosition(icon.Entity:LookupBone("ValveBiped.Bip01_Head1"))
+					headpos = headpos - Vector(0, 0, 3)
+					icon:SetLookAt(headpos)
+					icon:SetCamPos(headpos + Vector(20, 0, 0))	
+
+
+					/*
 					local icon = layout:Add("SpawnIcon")
+					icon:SetSkinID(v.skin)
 					icon:SetSize(64, 128)
 					icon:InvalidateLayout(true)
 					icon.DoClick = function(this)
@@ -473,8 +508,11 @@ do
 					if (isstring(v)) then
 						icon:SetModel(v)
 					else
+						print(v.skin)
+						icon:SetSkinID(v.skin)
 						icon:SetModel(v.mdl)
 					end
+					*/
 				end
 			end
 

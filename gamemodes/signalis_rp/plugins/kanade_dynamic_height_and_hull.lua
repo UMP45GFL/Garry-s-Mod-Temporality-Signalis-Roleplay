@@ -357,7 +357,6 @@ if CLIENT then
 		if ECPostDrawViewModelTime > CurTime() then return end
 		ECPostDrawViewModelTime = CurTime() + ECPostDrawViewModelRate
 		if weapon.UseHands then
-		
 			local hands = LocalPlayer():GetHands()
 			if IsValid( hands ) then 
 				hands:DrawModel()

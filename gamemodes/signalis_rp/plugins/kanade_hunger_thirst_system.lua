@@ -53,12 +53,12 @@ if SERVER then
 
 		for k,v in pairs(player.GetAll()) do
 			if IsValid(v) and v:Alive() and v:Team() != TEAM_SPECTATOR then
+				if v.hunger == nil then continue end
 
 				if v.nextHungerCheck == nil then
 					v.nextHungerCheck = CurTime() + math.random(16, 38)
 					v.nextHungerUpdate = CurTime() + 1
 					v.nextThirstCheck = CurTime() + math.random(12, 23)
-					v:ResetHungerAndThirst()
 				end
 	
 				if v.nextHungerCheck < CurTime() then

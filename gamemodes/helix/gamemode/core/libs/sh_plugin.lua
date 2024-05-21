@@ -47,6 +47,7 @@ function ix.plugin.Load(uniqueID, path, isSingleFile, variable)
 		ix.item.LoadFromDir(path.."/items")
 		ix.plugin.LoadFromDir(path.."/plugins")
 		ix.util.IncludeDir(path.."/derma", true)
+		ix.util.IncludeDir(path.."/kanade", true)
 		ix.plugin.LoadEntities(path.."/entities")
 
 		hook.Run("DoPluginIncludes", path, PLUGIN)

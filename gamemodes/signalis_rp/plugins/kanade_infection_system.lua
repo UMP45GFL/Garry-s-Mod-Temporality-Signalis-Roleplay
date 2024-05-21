@@ -73,11 +73,11 @@ if SERVER then
 
 		for k,v in pairs(player.GetAll()) do
 			if v:Alive() and v:Team() != TEAM_SPECTATOR and v.isInfected then
+				if v.infectionProgress == nil then continue end
+				
 				if v.next_iup1 == nil then
 					v.next_iup1 = 0
 					v.next_iup2 = 0
-					v.infectionProgress = 0
-					v.asymptomatic = false
 					v.nextInfectionUpdate = 0
 				end
 

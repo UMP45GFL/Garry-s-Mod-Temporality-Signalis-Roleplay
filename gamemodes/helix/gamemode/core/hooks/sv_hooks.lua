@@ -527,6 +527,13 @@ function GM:PlayerLoadout(client)
 			health = class.health
 		end
 
+		print("read thirst: ", character:GetData("thirst"))
+
+		client.thirst = character:GetData("thirst", client:GetMaxThirst())
+		client.hunger = character:GetData("hunger", client:GetMaxHunger())
+		client.infectionProgress = character:GetData("infectionProgress", 0)
+		client.asymptomatic = character:GetData("asymptomatic", false)
+
 		/*
 		for k,v in pairs(class:GetModels()) do
 			if v.mdl == client:GetModel() then
@@ -545,10 +552,6 @@ function GM:PlayerLoadout(client)
 		
 		client:SetHealth(health)
 		client:SetMaxHealth(health)
-
-		if client.ResetHungerAndThirst then
-			client:ResetHungerAndThirst()
-		end
 
 		local faction = ix.faction.indices[client:Team()]
 
@@ -914,7 +917,13 @@ function GM:CharacterPreSave(character)
 		end
 	end
 
+	print("presave character", client.thirst, client.hunger, client.infectionProgress, client.asymptomatic)
+
 	character:SetData("health", client:Alive() and client:Health() or nil)
+	character:SetData("thirst", client.thirst or nil)
+	character:SetData("hunger", client.hunger or nil)
+	character:SetData("infectionProgress", client.infectionProgress or nil)
+	character:SetData("asymptomatic", client.asymptomatic or nil)
 end
 
 timer.Create("ixLifeGuard", 1, 0, function()
