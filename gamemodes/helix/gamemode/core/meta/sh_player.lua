@@ -178,9 +178,9 @@ if (SERVER) then
 	-- reference to this player's current weapon to avoid an expensive lookup for this player's current weapon.
 	function meta:SetWepRaised(bState, weapon)
 		if weapon.ARC9 and ix.config.Get("arc9DisableToggleRaise", false) then
-			weapon:ToggleSafety(true)
+			--weapon:ToggleSafety(true)
 			self:SetNetVar("raised", true)
-			self:SetNetVar("canShoot", true)
+			--self:SetNetVar("canShoot", true)
 			return
 		end
 
