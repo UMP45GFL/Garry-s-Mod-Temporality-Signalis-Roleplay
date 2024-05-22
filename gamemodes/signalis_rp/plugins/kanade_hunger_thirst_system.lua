@@ -52,7 +52,7 @@ if SERVER then
 		if !ix.config.Get("hungerThirstSystemEnabled", true) then return end
 
 		for k,v in pairs(player.GetAll()) do
-			if IsValid(v) and v:Alive() and v:Team() != TEAM_SPECTATOR then
+			if v and  IsValid(v) and v:Alive() and v:Team() != TEAM_SPECTATOR and v:Team() != FACTION_STAFF and v:Team() != FACTION_ADMIN then
 				if v.hunger == nil then continue end
 
 				if v.nextHungerCheck == nil then
@@ -111,10 +111,12 @@ if SERVER then
 
 					if v:Health() < 1 then
 						local fdmginfo = DamageInfo()
-						fdmginfo:SetDamage(20)
-						fdmginfo:SetAttacker(v)
-						fdmginfo:SetDamageType(DMG_ENERGYBEAM)
-						v:TakeDamageInfo(fdmginfo)
+						if IsValid(v) and IsValid(fdmginfo) then
+							fdmginfo:SetDamage(20)
+							fdmginfo:SetAttacker(v)
+							fdmginfo:SetDamageType(DMG_ENERGYBEAM)
+							v:TakeDamageInfo(fdmginfo)
+						end
 					end
 				end
 

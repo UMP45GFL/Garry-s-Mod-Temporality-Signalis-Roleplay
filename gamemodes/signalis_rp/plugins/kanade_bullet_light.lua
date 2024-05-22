@@ -16,10 +16,12 @@ ix.config.Add("bulletLightRed", 255, "Red color of the bullet light.", nil, {
 	data = {min = 0, max = 255},
 	category = "Kanade"
 })
+
 ix.config.Add("bulletLightGreen", 225, "Green color of the bullet light.", nil, {
 	data = {min = 0, max = 255},
 	category = "Kanade"
 })
+
 ix.config.Add("bulletLightBlue", 150, "Blue color of the bullet light.", nil, {
 	data = {min = 0, max = 255},
 	category = "Kanade"
@@ -31,25 +33,21 @@ ix.config.Add("bulletLightRange", 100, "Bullet light range.", nil, {
 })
 
 if SERVER then
-	hook.Add("EntityFireBullets", "Kanade_BulletLight_EntityFireBullets", function(Entity, Other)
-		if IsValid(Entity) and ix.config.Get("bulletLightEnabled", true) then
-			local Trace = {}
-			Trace.start = Other.Src
-			Trace.endpos = Other.Src + (Other.Dir * 2147483647)
-			Trace.filter = Entity
-
-			local Result = util.TraceLine(Trace)
-			if Result.Hit then
+	hook.Add("EntityFireBullets", "Kanade_BulletLight_EntityFireBullets", function(ent, data)
+		if IsValid(ent) and ix.config.Get("bulletLightEnabled", true) then
+			local tr = util.TraceLine({
+				start = data.Src,
+				endpos = data.Src + (data.Dir * 2147483647),
+				filter = ent
+			})
+			if tr.Hit then
 				local FireLight = ents.Create("light_dynamic")
 				FireLight:SetKeyValue("distance", ix.config.Get("bulletLightRange", 100))
 				FireLight:SetKeyValue("_light", ix.config.Get("bulletLightRed", 255) .. " " .. ix.config.Get("bulletLightGreen", 225) .. " " .. ix.config.Get("bulletLightBlue", 150))
-				FireLight:SetPos(Result.HitPos)
+				FireLight:SetPos(tr.HitPos)
 				FireLight:Spawn()
 				FireLight:Fire("Kill", "", 0.05)
 			end
 		end
 	end)
 end
-
--- Addon: https://steamcommunity.com/sharedfiles/filedetails/?id=3175942640
--- Creator: https://steamcommunity.com/id/Dishings

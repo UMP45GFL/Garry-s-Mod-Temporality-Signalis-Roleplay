@@ -14,6 +14,18 @@ CLASS.models = {
         skin = "2"
     },
     {
+        mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 68),
+        skin = "1"
+    },
+    {
+        mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 68),
+        skin = "0"
+    },
+    {
         mdl = "models/voxaid/isa/isa_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),

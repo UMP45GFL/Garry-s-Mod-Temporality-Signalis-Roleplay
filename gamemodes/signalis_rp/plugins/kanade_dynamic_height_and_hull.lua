@@ -20,10 +20,12 @@ ix.config.Add("DynamicHeightAndHullMinHeight", 10, "Minimum height.", nil, {
 	data = {min = 10, max = 33},
 	category = "Kanade"
 })
+
 ix.config.Add("DynamicHeightAndHullMaxHeight", 200, "Max height.", nil, {
 	data = {min = 72, max = 200},
 	category = "Kanade"
 })
+
 ix.config.Add("DynamicHeightAndHullMaxSize", 18, "Max hull size for playermodels.", nil, {
 	data = {min = 1, max = 100},
 	category = "Kanade"

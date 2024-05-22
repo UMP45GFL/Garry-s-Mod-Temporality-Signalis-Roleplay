@@ -72,7 +72,7 @@ if SERVER then
 		if !(ix.config.Get("infectionSystemEnabled", true)) then return end
 
 		for k,v in pairs(player.GetAll()) do
-			if v:Alive() and v:Team() != TEAM_SPECTATOR and v.isInfected then
+			if v.isInfected and v:Alive() and v:Team() != TEAM_SPECTATOR  and v:Team() != FACTION_STAFF and v:Team() != FACTION_ADMIN then
 				if v.infectionProgress == nil then continue end
 				
 				if v.next_iup1 == nil then

@@ -257,13 +257,6 @@ hook.Add("PlayerBindPress", "FlashLight_KeyPress", function(ply, bind, pressed)
 	end
 end)
 
-
-local function solvetriangle(angle, dist)
-    local a = angle / 2
-    local b = dist
-    return b * math.tan(a) * 2
-end
-
 local function WBK_SpawnFlashlight()
     if WBK_FlashlightIsActive && WBK_FlashlightObject then
         local mdl = VManip:GetVMGesture()

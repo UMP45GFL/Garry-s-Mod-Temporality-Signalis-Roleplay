@@ -267,5 +267,5 @@ elseif CLIENT then
 	net.Receive("soniccracks_dist", soniccracks_dist_cl)
 end
 
--- Addon: https://steamcommunity.com/sharedfiles/filedetails/?id=3175942640
--- Creator: https://steamcommunity.com/id/Dishings
+-- Addon: https://steamcommunity.com/sharedfiles/filedetails/?id=1197226439
+-- Creator: https://steamcommunity.com/profiles/76561198001997916

@@ -422,7 +422,6 @@ do
 		index = 3,
 		OnSet = function(character, value)
 			local client = character:GetPlayer()
-			print("Setting model to: " .. value)
 
 			if (IsValid(client) and client:GetCharacter() == character) then
 				client:SetModel(value)
@@ -454,7 +453,7 @@ do
 					local icon = layout:Add("DModelPanel")
 					icon:SetSize(128, 256)
 					icon:SetModel(v.mdl)
-					icon:SetSkin(v.skin)
+					icon.skin = v.skin
 					icon:SetFOV(50)
 					icon:InvalidateLayout(true)
 					icon:SetAnimated(false)
@@ -474,6 +473,9 @@ do
 							end
 						end
 					end
+					icon.PreDrawModel = function(self, ent)
+						ent:SetSkin(self.skin or 0)
+					end
 
 					function icon:LayoutEntity(ent)
 					end
@@ -482,8 +484,10 @@ do
 					headpos = headpos - Vector(0, 0, 3)
 					icon:SetLookAt(headpos)
 					icon:SetCamPos(headpos + Vector(20, 0, 0))	
+					
 
 
+					
 					/*
 					local icon = layout:Add("SpawnIcon")
 					icon:SetSkinID(v.skin)
@@ -511,6 +515,7 @@ do
 						print(v.skin)
 						icon:SetSkinID(v.skin)
 						icon:SetModel(v.mdl)
+						icon:SetBodyGroup(1, 2)
 					end
 					*/
 				end
@@ -1212,6 +1217,8 @@ do
 		end)
 
 		net.Receive("ixCharacterLoadFailure", function()
+			surface.PlaySound("signalis_ui/no.wav")
+
 			local message = net.ReadString()
 
 			if (isstring(message) and message:sub(1, 1) == "@") then
