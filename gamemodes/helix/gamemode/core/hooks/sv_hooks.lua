@@ -527,10 +527,9 @@ function GM:PlayerLoadout(client)
 			health = class.health
 		end
 
-		print("read thirst: ", character:GetData("thirst"))
-
 		client.thirst = character:GetData("thirst", client:GetMaxThirst())
 		client.hunger = character:GetData("hunger", client:GetMaxHunger())
+		client.sleepiness = character:GetData("sleepiness", client:GetMaxSleepiness())
 		client.infectionProgress = character:GetData("infectionProgress", 0)
 		client.asymptomatic = character:GetData("asymptomatic", false)
 
@@ -917,11 +916,10 @@ function GM:CharacterPreSave(character)
 		end
 	end
 
-	print("presave character", client.thirst, client.hunger, client.infectionProgress, client.asymptomatic)
-
 	character:SetData("health", client:Alive() and client:Health() or nil)
 	character:SetData("thirst", client.thirst or nil)
 	character:SetData("hunger", client.hunger or nil)
+	character:SetData("sleepiness", client.sleepiness or nil)
 	character:SetData("infectionProgress", client.infectionProgress or nil)
 	character:SetData("asymptomatic", client.asymptomatic or nil)
 end
