@@ -24,6 +24,15 @@ CLASS.thirst = 0.9
 CLASS.speed = 0.85
 CLASS.jump_power = 0.9 -- not as bad because they are tall
 CLASS.max_stamina = 0.87
+
+-- attributes
+CLASS.weapon_knowledge = 0
+CLASS.min_weapon_knowledge = 0
+CLASS.max_weapon_knowledge = 3
+CLASS.medical_knowledge = 0
+CLASS.min_medical_knowledge = 0
+CLASS.max_medical_knowledge = 3
+
 CLASS_REPLIKA_ARAR = CLASS.index
 
 function CLASS:OnSet(client)

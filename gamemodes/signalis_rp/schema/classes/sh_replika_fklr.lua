@@ -19,6 +19,15 @@ CLASS.thirst = 0.87
 CLASS.speed = 1.12
 CLASS.jump_power = 1.36
 CLASS.max_stamina = 1.15
+
+-- attributes
+CLASS.weapon_knowledge = 3
+CLASS.min_weapon_knowledge = 2
+CLASS.max_weapon_knowledge = 6
+CLASS.medical_knowledge = 0
+CLASS.min_medical_knowledge = 0
+CLASS.max_medical_knowledge = 4
+
 CLASS_REPLIKA_FKLR = CLASS.index
 
 function CLASS:OnSet(client)

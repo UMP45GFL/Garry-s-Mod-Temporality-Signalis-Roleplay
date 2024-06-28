@@ -716,15 +716,47 @@ do
 			y = totalBar:GetTall() + 4
 
 			for k, v in SortedPairsByMemberValue(ix.attributes.list, "name") do
-				payload.attributes[k] = 0
+				local class = ix.class.Get(payload.class)
+
+				local startingValue = 0
+				local minValue = 0
+				local maxValue = maximum
+
+				if isstring(v.defaultValue) then
+					startingValue = v.defaultValue
+
+				elseif isfunction(v.defaultValue) then
+					startingValue = v.defaultValue(class)
+				end
+
+				if isstring(v.minValue) then
+					minValue = v.minValue
+
+				elseif isfunction(v.minValue) then
+					minValue = v.minValue(class)
+				end
+
+				if isstring(v.maxValue) then
+					maxValue = v.maxValue
+
+				elseif isfunction(v.maxValue) then
+					maxValue = v.maxValue(class)
+				end
 
 				local bar = attributes:Add("ixAttributeBar")
-				bar:SetMax(maximum)
+
+				payload.attributes[k] = startingValue
+				bar.value = startingValue
+				total = total + startingValue
+				totalBar:SetValue(totalBar.value - startingValue)
+
+				bar:SetMax(maxValue)
 				bar:Dock(TOP)
 				bar:DockMargin(2, 2, 2, 2)
 				bar:SetText(L(v.name))
 				bar.OnChanged = function(this, difference)
-					if ((total + difference) > maximum) then
+					if ((total + difference) > maxValue)
+					or ((total + difference) < minValue) then
 						return false
 					end
 
@@ -734,7 +766,7 @@ do
 					totalBar:SetValue(totalBar.value - difference)
 				end
 
-				if (v.noStartBonus) then
+				if (v.noStartBonus or minValue == maxValue) then
 					bar:SetReadOnly()
 				end
 

@@ -58,7 +58,15 @@ do
 			if (attribute) then
 				local attrib = self:GetAttributes()
 
-				attrib[key] = math.min((attrib[key] or 0) + value, attribute.maxValue or ix.config.Get("maxAttributes", 100))
+				local maxValue = 10
+				if isfunction(attribute.maxValue) then
+					maxValue = attribute.maxValue(self)
+
+				elseif isstring(attribute.maxValue) then
+					maxValue = attribute.maxValue
+				end
+
+				attrib[key] = math.min((attrib[key] or 0) + value, maxValue or ix.config.Get("maxAttributes", 100))
 
 				if (IsValid(client)) then
 					net.Start("ixAttributeUpdate")

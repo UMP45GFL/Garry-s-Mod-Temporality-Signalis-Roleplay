@@ -19,6 +19,15 @@ CLASS.thirst = 0.9
 CLASS.speed = 1.07
 CLASS.jump_power = 1.04 -- short baby
 CLASS.max_stamina = 1.05
+
+-- attributes
+CLASS.weapon_knowledge = 1
+CLASS.min_weapon_knowledge = 0
+CLASS.max_weapon_knowledge = 4
+CLASS.medical_knowledge = 0
+CLASS.min_medical_knowledge = 0
+CLASS.max_medical_knowledge = 3
+
 CLASS_REPLIKA_ADLR = CLASS.index
 
 function CLASS:OnSet(client)

@@ -543,7 +543,7 @@ function GM:PlayerLoadout(client)
 			end
 		end
 		*/
-
+		
 		client:SetLadderClimbSpeed(math.Round(ix.config.Get("ladderClimbSpeed") * speed_mul))
 		client:SetWalkSpeed(math.Round(ix.config.Get("walkSpeed") * speed_mul))
 		client:SetRunSpeed(math.Round(ix.config.Get("runSpeed") * speed_mul))

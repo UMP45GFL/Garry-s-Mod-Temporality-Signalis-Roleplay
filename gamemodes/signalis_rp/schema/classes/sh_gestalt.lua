@@ -41,4 +41,13 @@ CLASS.thirst = 1 -- multiplier of how fast the thirst of the player will increas
 CLASS.speed = 1 -- multiplier of how fast the player can run
 CLASS.jump_power = 1 -- multiplier of how strong the player can jump
 CLASS.max_stamina = 1 -- multiplier of how much stamina the player has
+
+-- attributes
+CLASS.weapon_knowledge = 0
+CLASS.min_weapon_knowledge = 0
+CLASS.max_weapon_knowledge = 2
+CLASS.medical_knowledge = 0
+CLASS.min_medical_knowledge = 0
+CLASS.max_medical_knowledge = 4
+
 CLASS_GESTALT = CLASS.index
