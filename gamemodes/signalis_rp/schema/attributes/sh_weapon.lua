@@ -1,16 +1,22 @@
 
 ATTRIBUTE.name = "Weapon Knowledge"
 ATTRIBUTE.description = "Your affinity for weapons."
+
 ATTRIBUTE.minValue = function(class)
     return class.min_weapon_knowledge
 end
+
 ATTRIBUTE.maxValue = function(class)
     return class.max_weapon_knowledge
 end
+
 ATTRIBUTE.defaultValue = function(class)
     return class.weapon_knowledge
 end
+
 ATTRIBUTE.CalculateSpread = function(character, spread)
+    if !ix.config.Get("weaponProficiencySpread", true) then return spread end
+
     local attrib = character:GetAttribute("weapon", 0)
     local multiplier = 1 / (attrib + 1)
     multiplier = math.max(0.7, math.min(multiplier, 6))
@@ -19,7 +25,10 @@ ATTRIBUTE.CalculateSpread = function(character, spread)
     --print("spread: " .. spread ..  " multiplier: " .. multiplier .. " (attrib: ".. attrib ..")")
     return spread * multiplier
 end
+
 ATTRIBUTE.CalculateRecoil = function(character, recoil)
+    if !ix.config.Get("weaponProficiencyRecoil", true) then return recoil end
+
     local attrib = character:GetAttribute("weapon", 0)
     local multiplier = 1 / (attrib + 1)
     multiplier = math.max(0.7, math.min(multiplier, 6))
@@ -30,7 +39,7 @@ ATTRIBUTE.CalculateRecoil = function(character, recoil)
 end
 
 local anim_time_multipliers_for_level = {
-    [0] = 5,
+    [0] = 1.2,
     [1] = 1.15,
     [2] = 1.1,
     [3] = 1.05,
@@ -40,7 +49,9 @@ local anim_time_multipliers_for_level = {
 }
 
 ATTRIBUTE.CalculateAnimTime = function(character, animation, time)
-    if animation == "idle" || animation == "fire" then return time end
+    if !ix.config.Get("weaponProficiencyAnimations", true) then return time end
+
+    if string.find(animation, "idle") || string.find(animation, "fire") || string.find(animation, "ready") then return time end
 
     local attrib = character:GetAttribute("weapon", 0)
 

@@ -9,32 +9,32 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("sleepSystemEnabled", true, "Enable the sleep system", nil, {
-	category = "Kanade"
+	category = "Sleeping System"
 })
 
 ix.config.Add("sleepSystemMaxSleepiness", 60, "Max sleepiness (in minutes)", nil, {
 	data = {min = 10, max = 180},
-	category = "Kanade"
+	category = "Sleeping System"
 })
 
 ix.config.Add("sleepSystemSleepy", 30, "Amount of minutes of not sleeping thats considered sleepy", nil, {
 	data = {min = 10, max = 180},
-	category = "Kanade"
+	category = "Sleeping System"
 })
 
 ix.config.Add("sleepSystemVerySleepy", 45, "Amount of minutes of not sleeping thats considered very sleepy", nil, {
 	data = {min = 10, max = 180},
-	category = "Kanade"
+	category = "Sleeping System"
 })
 
 ix.config.Add("sleepSystemTooSleepy", 60, "Amount of minutes of not sleeping thats considered too sleepy to stay awake", nil, {
 	data = {min = 10, max = 180},
-	category = "Kanade"
+	category = "Sleeping System"
 })
 
 ix.config.Add("sleepSystemFrequency", 1, "How frequently sleepiness is increased in seconds", nil, {
 	data = {min = 1, max = 100},
-	category = "Kanade"
+	category = "Sleeping System"
 })
 
 local player_meta = FindMetaTable("Player")

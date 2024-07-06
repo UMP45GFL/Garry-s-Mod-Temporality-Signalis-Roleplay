@@ -34,7 +34,7 @@ ix.config.Add("font", "Roboto Th", "The font used to display titles.", function(
 end, {category = "appearance"})
 
 ix.config.Add("arc9DisableToggleRaise", false, "Whether to disable toggle raising of ARC9 weapons.", nil, {
-	category = "Kanade"
+	category = "Weapons"
 })
 
 ix.config.Add("genericFont", "Roboto", "The font used to display generic texts.", function(oldValue, newValue)

@@ -17,6 +17,18 @@ ix.config.Add("rationInterval", 300, "How long a person needs to wait in seconds
 	category = "economy"
 })
 
+ix.config.Add("weaponProficiencyRecoil", true, "If to enable calculating weapon recoil based on weapon proficiency", nil, {
+	category = "Weapons"
+})
+
+ix.config.Add("weaponProficiencySpread", true, "If to enable calculating weapon spread based on weapon proficiency", nil, {
+	category = "Weapons"
+})
+
+ix.config.Add("weaponProficiencyAnimations", true, "If to enable slowing down of weapon handling animations for lower weapon proficiency", nil, {
+	category = "Weapons"
+})
+
 SIGNALIS_MODEL_HEIGHT_FIXES = {
 	["models/citric/signalis_stcr/stcr_pm.mdl"] = -20,
 	["models/voxaid/signalis_mynah/mynah_pm.mdl"] = -30,

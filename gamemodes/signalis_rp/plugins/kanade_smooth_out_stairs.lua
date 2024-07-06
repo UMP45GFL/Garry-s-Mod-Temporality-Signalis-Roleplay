@@ -11,16 +11,16 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("SmoothOutStairsEnabled", true, "Whether or to enable smoothing out stairs.", nil, {
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 if CLIENT then
     ix.option.Add("SmoothOutStairsEnabled", ix.type.bool, true, {
-        category = "Kanade"
+        category = "Visual Effects"
     })
     
     ix.option.Add("SmoothOutStairsSpeed", ix.type.number, 1, {
-        category = "Kanade", min = 0.1, max = 20, decimals = 1
+        category = "Visual Effects", min = 0.1, max = 20, decimals = 1
     })
 
     local enabled = ix.config.Get("SmoothOutStairsEnabled", true) && ix.option.Get("SmoothOutStairsEnabled", true)

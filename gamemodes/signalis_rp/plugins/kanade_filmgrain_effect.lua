@@ -12,20 +12,20 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("filmgrainEffectEnabled", true, "Whether or to enable the filmgrain effect", nil, {
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 if CLIENT then
 	ix.option.Add("filmgrainEffectEnabled", ix.type.bool, true, {
-		category = "Kanade"
+		category = "Visual Effects"
 	})
 
 	ix.option.Add("filmgrainEffectAlpha", ix.type.number, 5, {
-		category = "Kanade", min = 1, max = 25
+		category = "Visual Effects", min = 1, max = 25
 	})
 
 	ix.option.Add("filmgrainEffectAddAlpha", ix.type.number, 5, {
-		category = "Kanade", min = 1, max = 25
+		category = "Visual Effects", min = 1, max = 25
 	})
 	
 	local NoiseTexture = Material("filmgrain/noise")

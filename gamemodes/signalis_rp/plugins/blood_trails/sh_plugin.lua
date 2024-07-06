@@ -9,7 +9,7 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("bloodTrailsEnabled", true, "Whether or to enable the better footstep system.", nil, {
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 game.AddParticles("particles/ubtm.pcf")

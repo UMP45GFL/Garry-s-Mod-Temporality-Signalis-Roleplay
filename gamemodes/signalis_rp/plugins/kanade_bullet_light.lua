@@ -9,27 +9,27 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("bulletLightEnabled", true, "Whether or to enable bullet light.", nil, {
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.config.Add("bulletLightRed", 255, "Red color of the bullet light.", nil, {
 	data = {min = 0, max = 255},
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.config.Add("bulletLightGreen", 225, "Green color of the bullet light.", nil, {
 	data = {min = 0, max = 255},
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.config.Add("bulletLightBlue", 150, "Blue color of the bullet light.", nil, {
 	data = {min = 0, max = 255},
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.config.Add("bulletLightRange", 100, "Bullet light range.", nil, {
 	data = {min = 5, max = 200},
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 if SERVER then

@@ -12,12 +12,12 @@ ix.lang.AddTable("english", {
 
 if CLIENT then
 	ix.option.Add("sonicCracksEnabled", ix.type.bool, true, {
-		category = "Kanade"
+		category = "Sound Effects"
 	})
 end
 
 ix.config.Add("sonicCracksEnabled", true, "Whether or to adds audible sonic cracks to gunshots.", nil, {
-	category = "Kanade"
+	category = "Sound Effects"
 })
 
 sound.Add(

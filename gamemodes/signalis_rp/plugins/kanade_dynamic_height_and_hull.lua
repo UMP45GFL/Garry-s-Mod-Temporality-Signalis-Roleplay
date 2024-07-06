@@ -9,26 +9,26 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("DynamicHeightAndHullEnabled", true, "Whether or to enable dynamic height and hull.", nil, {
-	category = "Kanade"
+	category = "Dynamic Height And Hull"
 })
 
 ix.config.Add("DynamicHeightAndHullAffectNPCs", true, "Whether or to affect NPCs.", nil, {
-	category = "Kanade"
+	category = "Dynamic Height And Hull"
 })
 
 ix.config.Add("DynamicHeightAndHullMinHeight", 10, "Minimum height.", nil, {
 	data = {min = 10, max = 33},
-	category = "Kanade"
+	category = "Dynamic Height And Hull"
 })
 
 ix.config.Add("DynamicHeightAndHullMaxHeight", 200, "Max height.", nil, {
 	data = {min = 72, max = 200},
-	category = "Kanade"
+	category = "Dynamic Height And Hull"
 })
 
 ix.config.Add("DynamicHeightAndHullMaxSize", 18, "Max hull size for playermodels.", nil, {
 	data = {min = 1, max = 100},
-	category = "Kanade"
+	category = "Dynamic Height And Hull"
 })
 
 local function CLAMPSIZE(value)

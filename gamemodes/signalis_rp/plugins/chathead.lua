@@ -9,7 +9,7 @@ ix.lang.AddTable("english", {
 
 if CLIENT then
 	ix.option.Add("chatHeadsEnabled", ix.type.bool, true, {
-		category = "Kanade"
+		category = "Visual Effects"
 	})
 
 	surface.CreateFont("prChatFont", {

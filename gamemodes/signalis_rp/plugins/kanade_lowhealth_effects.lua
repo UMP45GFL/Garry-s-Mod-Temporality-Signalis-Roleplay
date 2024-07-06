@@ -9,37 +9,37 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("lowHealthEffectsSystemEnabled", true, "Enable the low health effects system", nil, {
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.config.Add("lowHealthEffectsHealthThreshold", 25, "Low health effects health threshold", nil, {
 	data = {min = 1, max = 100},
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.config.Add("lowHealthEffectsEnableHeartbeat", true, "Enable heartbeat on low health", nil, {
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.config.Add("lowHealthEffectsEnableRedFlash", true, "Enable red flashing on low health", nil, {
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.config.Add("lowHealthEffectsEnableVignette", true, "Enable vignette on low health", nil, {
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.config.Add("lowHealthEffectsEnableMuffleEffect", true, "Enable effect of sounds becoming muffled when low health", nil, {
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.config.Add("lowHealthEffectsEnableMuffleEffectThreshold", 10, "Low health sound muffling health threshold", nil, {
 	data = {min = 1, max = 100},
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.option.Add("lowHealthEffectsEnabled", ix.type.bool, true, {
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 if SERVER then

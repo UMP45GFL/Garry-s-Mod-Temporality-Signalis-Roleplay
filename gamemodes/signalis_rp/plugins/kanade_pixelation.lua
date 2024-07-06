@@ -9,12 +9,12 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("pixelationEffectEnable", true, "Whether or to enable the pixelation effect", nil, {
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 ix.config.Add("pixelationEffectPixelSize", 2, "Changes the size of pixels in the pixelation effect", nil, {
 	data = {min = 1, max = 16},
-	category = "Kanade"
+	category = "Visual Effects"
 })
 
 -- Define the post process table

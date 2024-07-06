@@ -9,17 +9,17 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("hungerThirstSystemEnabled", true, "Enable the hunger & thirst system", nil, {
-	category = "Kanade"
+	category = "Hunger And Thirst"
 })
 
 ix.config.Add("hungerThirstSystemMaxHunger", 125, "Amount of max hunger a player can have", nil, {
 	data = {min = 1, max = 1000},
-	category = "Kanade"
+	category = "Hunger And Thirst"
 })
 
 ix.config.Add("hungerThirstSystemMaxThirst", 125, "Amount of max hunger a player can have", nil, {
 	data = {min = 1, max = 1000},
-	category = "Kanade"
+	category = "Hunger And Thirst"
 })
 
 local player_meta = FindMetaTable("Player")

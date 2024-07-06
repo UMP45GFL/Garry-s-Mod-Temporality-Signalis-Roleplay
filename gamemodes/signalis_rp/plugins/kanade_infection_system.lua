@@ -9,7 +9,7 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("infectionSystemEnabled", true, "Enable the infection system", nil, {
-	category = "Kanade"
+	category = "Infection System"
 })
 
 if SERVER then

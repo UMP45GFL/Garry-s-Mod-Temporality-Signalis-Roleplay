@@ -9,11 +9,11 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("ragdollDraggingEnabled", true, "Whether or to enable ragdoll dragging.", nil, {
-	category = "Kanade"
+	category = "Ragdoll Dragging"
 })
 
 ix.config.Add("ragdollDragginAlowMassLimit", true, "Whether or to enable ragdoll dragging.", nil, {
-	category = "Kanade"
+	category = "Ragdoll Dragging"
 })
 
 if SERVER then

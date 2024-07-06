@@ -9,17 +9,17 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("FootstepSystemEnabled", true, "Whether or to enable the better footstep system.", nil, {
-	category = "Kanade"
+	category = "Sound Effects"
 })
 
 ix.config.Add("FootstepSystemSlowWalkVolume", 0.75, "Changes the volume of slow walk footsteps.", nil, {
 	data = {min = 0, max = 5},
-	category = "Kanade"
+	category = "Sound Effects"
 })
 
 ix.config.Add("FootstepSystemRunSpeedVolume", 1.2, "Changes the volume of footsteps while running.", nil, {
 	data = {min = 0, max = 5},
-	category = "Kanade"
+	category = "Sound Effects"
 })
 
 -- Precache all the footstep sounds

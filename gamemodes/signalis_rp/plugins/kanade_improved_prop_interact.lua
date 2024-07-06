@@ -9,25 +9,25 @@ ix.lang.AddTable("english", {
 })
 
 ix.config.Add("PropInteractEnabled", true, "Whether or to enable improved prop interact.", nil, {
-	category = "Kanade"
+	category = "Improved Prop interact"
 })
 
 ix.config.Add("PropInteractSensitivity", true, "Changes prop interact sensitivity.", nil, {
-	category = "Kanade"
+	category = "Improved Prop interact"
 })
 
 ix.config.Add("PropInteractMoveDampen", true, "Whether to dampen movement.", nil, {
-	category = "Kanade"
+	category = "Improved Prop interact"
 })
 
 ix.config.Add("PropInteractPlayerStrength", 35, "Changes prop interact player strength.", nil, {
 	data = {min = 0, max = 30000},
-	category = "Kanade"
+	category = "Improved Prop interact"
 })
 
 ix.config.Add("PropInteractPlayerRange", 105, "Limits the range of from how far away players can pick up objects.", nil, {
 	data = {min = 0, max = 30000},
-	category = "Kanade"
+	category = "Improved Prop interact"
 })
 
 if SERVER then
