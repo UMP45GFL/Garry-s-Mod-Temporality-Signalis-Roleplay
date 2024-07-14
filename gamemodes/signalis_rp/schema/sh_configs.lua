@@ -35,4 +35,3 @@ SIGNALIS_MODEL_HEIGHT_FIXES = {
 	["models/voxaid/signalis_star/star_pm.mdl"] = -15,
 	["models/citric/signalis_fklr/falke_pm.mdl"] = -20,
 }
-

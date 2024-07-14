@@ -24,26 +24,5 @@ LANGUAGE = {
 	radioAlreadyOn = "You already have a radio that is turned on!",
 	economy = "Economy",
 
-	-- combine display messages
-	cViewData = "Downloading citizen profile data...",
-	cViewDataExpired = "ERROR! Failed to upload revised citizen profile data...",
-	cViewDataUpdate = "Uploading revised citizen profile data...",
-	cViewDataFiller = "Caching revised citizen profile database...",
-	cViewObjectives = "Downloading overwatch objective manifest...",
-	cViewObjectivesUpdate = "Uploading revised overwatch objective manifest...",
-	cViewObjectivesFiller = "Retrieving incoming overwatch objective manifest (REVISION %d)...",
-	cCivilJudgement = "Preparing civil judgement administration protocols...",
-	cRequest = "Downloading request packet...",
-	cCitizenLoaded = "Rebuilding citizen manifest...",
-	cCombineLoaded = "Updating biosignal co-ordinates...",
-	cLostBiosignal = "Downloading lost biosignal...",
-	cLostBiosignalLocation = "WARNING! Biosignal lost for protection team unit at %s...",
-	cTrauma = "WARNING! %s trauma detected...",
-	cDroppingVitals = "WARNING! VITAL SIGNS DROPPING, SEEK IMMEDIATE MEDICAL ATTENTION",
-	cStaminaLost = "ATTENTION: Excessive user exertion, administering stimulant...",
-	cStaminaGained = "STIMULANT ADMINISTERED",
-	cLosingContact = "Downloading lost radio contact information...",
-	cLostContact = "WARNING! Radio contact lost for unit at unknown location...",
-
 	voices = "Voices"
 }

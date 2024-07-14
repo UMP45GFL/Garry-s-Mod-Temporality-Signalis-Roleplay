@@ -5,38 +5,18 @@ function Schema:PopulateCharacterInfo(client, character, tooltip)
 		panel:SetBackgroundColor(derma.GetColor("Warning", tooltip))
 		panel:SetText(L("tiedUp"))
 		panel:SizeToContents()
+
 	elseif (client:GetNetVar("tying")) then
 		local panel = tooltip:AddRowAfter("name", "ziptie")
 		panel:SetBackgroundColor(derma.GetColor("Warning", tooltip))
 		panel:SetText(L("beingTied"))
 		panel:SizeToContents()
+
 	elseif (client:GetNetVar("untying")) then
 		local panel = tooltip:AddRowAfter("name", "ziptie")
 		panel:SetBackgroundColor(derma.GetColor("Warning", tooltip))
 		panel:SetText(L("beingUntied"))
 		panel:SizeToContents()
-	end
-end
-
-local COMMAND_PREFIX = "/"
-
-function Schema:ChatTextChanged(text)
-	if (LocalPlayer():IsCombine()) then
-		local key = nil
-
-		if (text == COMMAND_PREFIX .. "radio ") then
-			key = "r"
-		elseif (text == COMMAND_PREFIX .. "w ") then
-			key = "w"
-		elseif (text == COMMAND_PREFIX .. "y ") then
-			key = "y"
-		elseif (text:sub(1, 1):match("%w")) then
-			key = "t"
-		end
-
-		if (key) then
-			netstream.Start("PlayerChatTextChanged", key)
-		end
 	end
 end
 
@@ -46,14 +26,6 @@ end
 
 function Schema:CanPlayerJoinClass(client, class, info)
 	return false
-end
-
-function Schema:CharacterLoaded(character)
-	if (character:IsCombine()) then
-		vgui.Create("ixCombineDisplay")
-	elseif (IsValid(ix.gui.combine)) then
-		ix.gui.combine:Remove()
-	end
 end
 
 function Schema:PlayerFootstep(client, position, foot, soundName, volume)
@@ -71,9 +43,6 @@ local COLOR_BLACK_WHITE = {
 	["$pp_colour_mulg"] = 0,
 	["$pp_colour_mulb"] = 0
 }
-
-local combineOverlay = ix.util.GetMaterial("effects/combine_binocoverlay")
-local scannerFirstPerson = false
 
 function Schema:RenderScreenspaceEffects()
 	local colorModify = {}
@@ -94,39 +63,6 @@ function Schema:RenderScreenspaceEffects()
 	end
 
 	DrawColorModify(colorModify)
-end
-
-function Schema:PreDrawOpaqueRenderables()
-	local viewEntity = LocalPlayer():GetViewEntity()
-
-	if (IsValid(viewEntity) and viewEntity:GetClass():find("scanner")) then
-		self.LastViewEntity = viewEntity
-		self.LastViewEntity:SetNoDraw(true)
-
-		scannerFirstPerson = true
-		return
-	end
-
-	if (self.LastViewEntity != viewEntity) then
-		if (IsValid(self.LastViewEntity)) then
-			self.LastViewEntity:SetNoDraw(false)
-		end
-
-		self.LastViewEntity = nil
-		scannerFirstPerson = false
-	end
-end
-
-function Schema:ShouldDrawCrosshair()
-	if (scannerFirstPerson) then
-		return false
-	end
-end
-
-function Schema:AdjustMouseSensitivity()
-	if (scannerFirstPerson) then
-		return 0.3
-	end
 end
 
 -- creates labels in the status screen
@@ -169,7 +105,6 @@ function Schema:BuildBusinessMenu(panel)
 	for k, _ in pairs(ix.item.list) do
 		if (hook.Run("CanPlayerUseBusiness", LocalPlayer(), k) != false) then
 			bHasItems = true
-
 			break
 		end
 	end
@@ -254,12 +189,6 @@ function Schema:PopulateHelpMenu(tabs)
 	end
 end
 
-netstream.Hook("CombineDisplayMessage", function(text, color, arguments)
-	if (IsValid(ix.gui.combine)) then
-		ix.gui.combine:AddLine(text, color, nil, unpack(arguments))
-	end
-end)
-
 netstream.Hook("PlaySound", function(sound)
 	surface.PlaySound(sound)
 end)
@@ -268,14 +197,4 @@ netstream.Hook("Frequency", function(oldFrequency)
 	Derma_StringRequest("Frequency", "What would you like to set the frequency to?", oldFrequency, function(text)
 		ix.command.Send("SetFreq", text)
 	end)
-end)
-
-netstream.Hook("ViewData", function(target, cid, data)
-	Schema:AddCombineDisplayMessage("@cViewData")
-	vgui.Create("ixViewData"):Populate(target, cid, data)
-end)
-
-netstream.Hook("ViewObjectives", function(data)
-	Schema:AddCombineDisplayMessage("@cViewObjectives")
-	vgui.Create("ixViewObjectives"):Populate(data)
 end)
