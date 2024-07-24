@@ -12,22 +12,22 @@ ix.config.Add("sleepSystemEnabled", true, "Enable the sleep system", nil, {
 	category = "Sleeping System"
 })
 
-ix.config.Add("sleepSystemMaxSleepiness", 60, "Max sleepiness (in minutes)", nil, {
+ix.config.Add("sleepSystemMaxSleepiness", 75, "Max sleepiness (in minutes)", nil, {
 	data = {min = 10, max = 180},
 	category = "Sleeping System"
 })
 
-ix.config.Add("sleepSystemSleepy", 30, "Amount of minutes of not sleeping thats considered sleepy", nil, {
+ix.config.Add("sleepSystemSleepy", 45, "Amount of minutes of not sleeping thats considered sleepy", nil, {
 	data = {min = 10, max = 180},
 	category = "Sleeping System"
 })
 
-ix.config.Add("sleepSystemVerySleepy", 45, "Amount of minutes of not sleeping thats considered very sleepy", nil, {
+ix.config.Add("sleepSystemVerySleepy", 60, "Amount of minutes of not sleeping thats considered very sleepy", nil, {
 	data = {min = 10, max = 180},
 	category = "Sleeping System"
 })
 
-ix.config.Add("sleepSystemTooSleepy", 60, "Amount of minutes of not sleeping thats considered too sleepy to stay awake", nil, {
+ix.config.Add("sleepSystemTooSleepy", 75, "Amount of minutes of not sleeping thats considered too sleepy to stay awake", nil, {
 	data = {min = 10, max = 180},
 	category = "Sleeping System"
 })
