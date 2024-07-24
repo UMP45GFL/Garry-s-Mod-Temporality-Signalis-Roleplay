@@ -20,6 +20,8 @@ CLASS.jump_power = 0.7
 CLASS.max_stamina = 0.75
 
 -- attributes
+CLASS.remove_attributes = true
+
 CLASS.weapon_knowledge = 3
 CLASS.min_weapon_knowledge = 1
 CLASS.max_weapon_knowledge = 4

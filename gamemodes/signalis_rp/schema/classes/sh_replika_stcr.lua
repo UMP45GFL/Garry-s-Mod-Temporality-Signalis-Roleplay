@@ -21,12 +21,12 @@ CLASS.jump_power = 1.32
 CLASS.max_stamina = 1.05
 
 -- attributes
+CLASS.remove_attributes = true
+
 CLASS.weapon_knowledge = 4
-CLASS.min_weapon_knowledge = 2
-CLASS.max_weapon_knowledge = 6
+CLASS.weapon_noStartBonus = true
 CLASS.medical_knowledge = 0
-CLASS.min_medical_knowledge = 0
-CLASS.max_medical_knowledge = 3
+CLASS.medical_noStartBonus = true
 
 CLASS_REPLIKA_STCR = CLASS.index
 

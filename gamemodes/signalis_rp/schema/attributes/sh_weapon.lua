@@ -2,16 +2,22 @@
 ATTRIBUTE.name = "Weapon Knowledge"
 ATTRIBUTE.description = "Your affinity for weapons."
 
+ATTRIBUTE.minPossibleValue = 0
 ATTRIBUTE.minValue = function(class)
     return class.min_weapon_knowledge
 end
 
+ATTRIBUTE.maxPossibleValue = 6
 ATTRIBUTE.maxValue = function(class)
     return class.max_weapon_knowledge
 end
 
 ATTRIBUTE.defaultValue = function(class)
     return class.weapon_knowledge
+end
+
+ATTRIBUTE.noStartBonus = function(class)
+    return class.weapon_noStartBonus
 end
 
 ATTRIBUTE.CalculateSpread = function(character, spread)
@@ -30,6 +36,7 @@ ATTRIBUTE.CalculateRecoil = function(character, recoil)
     if !ix.config.Get("weaponProficiencyRecoil", true) then return recoil end
 
     local attrib = character:GetAttribute("weapon", 0)
+    print("attribW: ", attrib)
     local multiplier = 1 / (attrib + 1)
     multiplier = math.max(0.7, math.min(multiplier, 6))
     multiplier = multiplier * (6 - attrib)
