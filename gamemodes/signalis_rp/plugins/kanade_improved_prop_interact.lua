@@ -21,12 +21,12 @@ ix.config.Add("PropInteractMoveDampen", true, "Whether to dampen movement.", nil
 })
 
 ix.config.Add("PropInteractPlayerStrength", 35, "Changes prop interact player strength.", nil, {
-	data = {min = 0, max = 30000},
+	data = {min = 0, max = 3000},
 	category = "Improved Prop interact"
 })
 
 ix.config.Add("PropInteractPlayerRange", 105, "Limits the range of from how far away players can pick up objects.", nil, {
-	data = {min = 0, max = 30000},
+	data = {min = 0, max = 3000},
 	category = "Improved Prop interact"
 })
 

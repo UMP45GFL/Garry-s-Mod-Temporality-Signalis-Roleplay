@@ -4,7 +4,7 @@ PLUGIN.name = "Chathead"
 PLUGIN.author = "Project Revival"
 
 ix.lang.AddTable("english", {
-	optChatHeadsEnabled = "Enable chat heads`",
+	optChatHeadsEnabled = "Enable chat heads",
 })
 
 if CLIENT then
