@@ -8,16 +8,19 @@ ix.lang.AddTable("english", {
 	hungerThirstSystemEnabled = "Enable hunger & thirst system",
 })
 
+local MAX_HUNGER = 200
+local MAX_THIRST = 200
+
 ix.config.Add("hungerThirstSystemEnabled", true, "Enable the hunger & thirst system", nil, {
 	category = "Hunger And Thirst"
 })
 
-ix.config.Add("hungerThirstSystemMaxHunger", 125, "Amount of max hunger a player can have", nil, {
+ix.config.Add("hungerThirstSystemMaxHunger", MAX_HUNGER, "Amount of max hunger a player can have", nil, {
 	data = {min = 1, max = 1000},
 	category = "Hunger And Thirst"
 })
 
-ix.config.Add("hungerThirstSystemMaxThirst", 125, "Amount of max hunger a player can have", nil, {
+ix.config.Add("hungerThirstSystemMaxThirst", MAX_THIRST, "Amount of max hunger a player can have", nil, {
 	data = {min = 1, max = 1000},
 	category = "Hunger And Thirst"
 })
@@ -25,11 +28,11 @@ ix.config.Add("hungerThirstSystemMaxThirst", 125, "Amount of max hunger a player
 local player_meta = FindMetaTable("Player")
 
 function player_meta:GetMaxHunger()
-	return ix.config.Get("hungerThirstSystemMaxHunger", 125)
+	return ix.config.Get("hungerThirstSystemMaxHunger", MAX_HUNGER)
 end
 
 function player_meta:GetMaxThirst()
-	return ix.config.Get("hungerThirstSystemMaxThirst", 125)
+	return ix.config.Get("hungerThirstSystemMaxThirst", MAX_THIRST)
 end
 
 if SERVER then
@@ -44,8 +47,8 @@ if SERVER then
 	end
 	
 	function player_meta:ResetHungerAndThirst()
-		self.hunger = 125
-		self.thirst = 125
+		self.hunger = MAX_HUNGER
+		self.thirst = MAX_THIRST
 	end
 
 	function HandleHungerAndThirst()
@@ -134,8 +137,8 @@ if SERVER then
 end
 
 if CLIENT then
-	our_hunger = 125
-	our_thirst = 125
+	our_hunger = MAX_HUNGER
+	our_thirst = MAX_THIRST
 
 	net.Receive("update_hunger", function(len)
 		our_hunger = net.ReadInt(16)
