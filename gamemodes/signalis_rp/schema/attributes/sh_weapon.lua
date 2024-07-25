@@ -36,7 +36,6 @@ ATTRIBUTE.CalculateRecoil = function(character, recoil)
     if !ix.config.Get("weaponProficiencyRecoil", true) then return recoil end
 
     local attrib = character:GetAttribute("weapon", 0)
-    print("attribW: ", attrib)
     local multiplier = 1 / (attrib + 1)
     multiplier = math.max(0.7, math.min(multiplier, 6))
     multiplier = multiplier * (6 - attrib)
