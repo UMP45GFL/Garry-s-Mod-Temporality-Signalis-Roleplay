@@ -3,6 +3,7 @@ FACTION.name = "Gestalt"
 FACTION.description = "A human that is not a replika."
 FACTION.color = Color(52, 146, 235, 255)
 FACTION.isDefault = true
+FACTION.availableByDefault = true
 
 function FACTION:OnCharacterCreated(client, character)
 	local id = Schema:ZeroNumber(math.random(1, 99999), 5)
