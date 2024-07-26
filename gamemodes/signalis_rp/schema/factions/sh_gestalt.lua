@@ -10,6 +10,12 @@ function FACTION:OnCharacterCreated(client, character)
 
 	character:SetData("cid", id)
 
+	inventory:Add("ration_k4", 1)
+	inventory:Add("id_card", 1, {
+		skin = 0,
+		name = character:GetName()
+	})
+
 	/*
 	inventory:Add("suitcase", 1)
 	inventory:Add("cid", 1, {

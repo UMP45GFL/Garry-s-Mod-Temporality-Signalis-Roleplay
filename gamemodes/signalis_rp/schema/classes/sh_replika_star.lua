@@ -40,11 +40,10 @@ function CLASS:OnCharacterCreated(client, character)
 	
 	inventory:Add("cigarettes", 1)
 	inventory:Add("ration_k4", 1)
-	inventory:Add("id_star", 1, {
-		name = character:GetName()
-	})
-	inventory:Add("id_card", 1, {
+
+	local idCard = inventory:Add("id_star", 1, {
 		skin = 1,
 		name = character:GetName()
 	})
+	idCard.skin = 1
 end
