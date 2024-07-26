@@ -1,6 +1,7 @@
 CLASS.name = "FKLR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
+CLASS.availableByDefault = true
 CLASS.models = {
 	{
 		mdl = "models/citric/signalis_fklr/falke_pm.mdl",

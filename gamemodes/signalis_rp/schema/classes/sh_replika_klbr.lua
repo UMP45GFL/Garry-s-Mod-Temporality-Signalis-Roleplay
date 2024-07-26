@@ -1,6 +1,7 @@
 CLASS.name = "KLBR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
+CLASS.availableByDefault = true
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_kolibri/kolibri_pm.mdl",

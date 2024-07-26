@@ -1,6 +1,7 @@
 CLASS.name = "ADLR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
+CLASS.availableByDefault = true
 CLASS.models = {
 	{
 		mdl = "models/citric/signalis_adlr/adler_pm.mdl",

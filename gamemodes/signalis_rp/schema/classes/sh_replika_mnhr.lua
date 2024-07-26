@@ -1,6 +1,7 @@
 CLASS.name = "MNHR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
+CLASS.availableByDefault = true
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_mynah/mynah_pm.mdl",

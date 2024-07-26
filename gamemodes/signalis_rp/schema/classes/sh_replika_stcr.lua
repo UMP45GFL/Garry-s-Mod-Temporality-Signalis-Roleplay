@@ -1,6 +1,7 @@
 CLASS.name = "STCR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
+CLASS.availableByDefault = true
 CLASS.models = {
 	{
 		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",
