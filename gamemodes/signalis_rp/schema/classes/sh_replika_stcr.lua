@@ -31,5 +31,14 @@ CLASS.medical_noStartBonus = true
 CLASS_REPLIKA_STCR = CLASS.index
 
 function CLASS:OnSet(client)
-	local character = client:GetCharacter()
+end
+
+function CLASS:OnCharacterCreated(client, character)
+	local inventory = character:GetInventory()
+
+	inventory:Add("ration_k4", 1)
+	inventory:Add("id_card", 1, {
+		skin = 6,
+		name = character:GetName()
+	})
 end

@@ -7,11 +7,6 @@ CLASS.models = {
 		hullMins = Vector(-12, -12, 0),
 		hullMaxs = Vector(12, 12, 75)
 	},
-	{
-		mdl = "models/voxaid/araV2/araV2_pm.mdl",
-		hullMins = Vector(-12, -12, 0),
-		hullMaxs = Vector(12, 12, 75)
-	}
 }
 CLASS.health = 120
 CLASS.armor = nil
@@ -38,5 +33,14 @@ CLASS.max_medical_knowledge = 3
 CLASS_REPLIKA_ARAR = CLASS.index
 
 function CLASS:OnSet(client)
-	local character = client:GetCharacter()
+end
+
+function CLASS:OnCharacterCreated(client, character)
+	local inventory = character:GetInventory()
+
+	inventory:Add("ration_k4", 1)
+	inventory:Add("id_card", 1, {
+		skin = 3,
+		name = character:GetName()
+	})
 end

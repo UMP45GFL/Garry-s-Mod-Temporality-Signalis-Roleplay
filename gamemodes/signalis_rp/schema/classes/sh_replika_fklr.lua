@@ -33,5 +33,14 @@ CLASS.max_medical_knowledge = 4
 CLASS_REPLIKA_FKLR = CLASS.index
 
 function CLASS:OnSet(client)
-	local character = client:GetCharacter()
+end
+
+function CLASS:OnCharacterCreated(client, character)
+	local inventory = character:GetInventory()
+	
+	inventory:Add("ration_k4", 1)
+	inventory:Add("id_card", 1, {
+		skin = 7,
+		name = character:GetName()
+	})
 end
