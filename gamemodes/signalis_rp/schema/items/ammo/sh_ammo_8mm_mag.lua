@@ -1,4 +1,4 @@
-ITEM.name = "8mm mag"
+ITEM.name = "8mm ammo mag"
 ITEM.model = "models/eternalis/items/weapons/ammo/8mm/8mm_mag.mdl"
 
 ITEM.ammo = "8mm" -- type of the ammo

@@ -1,4 +1,4 @@
-ITEM.name = "Signal flare shells"
+ITEM.name = "Signal flare shells box"
 ITEM.model = "models/eternalis/items/weapons/ammo/flareshell/flareshell_box.mdl"
 
 ITEM.ammo = "16mm" -- type of the ammo

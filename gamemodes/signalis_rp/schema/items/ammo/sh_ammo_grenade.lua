@@ -1,4 +1,4 @@
-ITEM.name = "Grenade shells"
+ITEM.name = "Grenade shells box"
 ITEM.model = "models/eternalis/items/weapons/ammo/flakshell/flakshell_box.mdl"
 
 ITEM.ammo = "16mm" -- type of the ammo
