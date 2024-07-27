@@ -39,9 +39,8 @@ local function PrecacheSoundsRecursively(folder)
     end
 end
 
-PrecacheSoundsRecursively("sound/kanade_footsteps")
+PrecacheSoundsRecursively("sound/footsteps")
 PrecacheSoundsRecursively("sound/physics")
-
 
 -- Helper function to build our table of values.
 local function BackwardsEnums(enum_name)
@@ -83,7 +82,7 @@ local function MathRandom(num)
 	return (math.Round(math.random(1, 99999999) % (num)) + 1)
 end
 
-local path = "kanade_footsteps/"
+local path = "footsteps/"
 
 if CLIENT then
     hook.Remove("Tick", "Kanade_FootstepSystem_Tick")
