@@ -23,9 +23,11 @@ our_last_zone_next = 0
 our_last_zone_alpha = 0
 our_last_zone_stage = 0
 
+local next_zone_check = 0
+
 hook.Add("Tick", "Eternalis_Local_Zone", function()
 	if our_last_zone_stage == 0 then
-		local our_zone = LocalPlayer():GetSubAreaName()
+		local our_zone = LocalPlayer():GetZone()
 		if our_zone != our_last_zone and our_zone then
 			our_last_zone = our_zone
 			our_last_zone_stage = 1
@@ -38,7 +40,7 @@ end)
 hook.Add("HUDPaint", "Eternalis_Zones", function()
 	if our_last_zone_stage > 0 and our_last_zone then
 		draw.Text({
-			text = our_last_zone,
+			text = our_last_zone.name,
 			font = "BR_NEW_ZONE_NAME",
 			pos = {36, ScrH() - 24},
 			xalign = TEXT_ALIGN_LEFT,

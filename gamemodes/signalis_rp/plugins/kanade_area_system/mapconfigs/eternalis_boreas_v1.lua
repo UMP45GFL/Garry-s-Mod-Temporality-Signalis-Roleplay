@@ -44,6 +44,29 @@ MAPCONFIG.ZONES.SHOWER_AREAS = {
 	}
 }
 
+MAPCONFIG.ZONES.OUTSIDE = {
+	{
+		name 						= "Outside area",
+		sub_areas = {
+            {"Outside area western entrance 1", Vector(-690,1103,-6097), Vector(-1085,764,-6264)},
+			{"Outside area western entrance 2", Vector(-615,1116,-6100), Vector(-1054,883,-6351)},
+			{"Outside area western entrance silo", Vector(-198,834,-5967), Vector(263,1195,-5685)},
+			{"Outside area northern entrance", Vector(-3195,3609,-6228), Vector(-3742,3110,-5860)},
+			{"Outside area eastern entrance 1", Vector(-778,6645,-6739), Vector(-1060,6384,-6411)},
+			{"Outside area eastern entrance 2", Vector(-1513,6022,-6564), Vector(-1148,6274,-6381)},
+			{"Outside area eastern entrance 3", Vector(-1511,5489,-6731), Vector(-1754,5895,-6519)},
+			{"Outside area eastern entrance silo", Vector(330,5883,-5025), Vector(-990,4495,-4793)},
+			{"Outside area eastern entrance secret", Vector(1422,4800,-4954), Vector(-384,3869,-4656)},
+			{"Outside area underground entrance", Vector(2288,-15429,-6779), Vector(215,-14054,-6254)},
+		},
+		music 						= nil,
+		ambients 					= nil,
+		fog_enabled 				= true,
+		use_general_ambients 		= true,
+		color 						= Color(151, 209, 59, ALPHA),
+		examine_info 				= "You are in the Rocket silo area",
+	},
+}
 
 MAPCONFIG.ZONES.FACILITY = {
 	{
@@ -206,11 +229,11 @@ MAPCONFIG.ZONES.FACILITY = {
 	{
 		name 						= "Western facility entrance",
 		sub_areas = {
-            {"Proper", Vector(-19,474,-6304), Vector(-582,766,-6200)},
-            {"Proper 2", Vector(-130,190,-6304), Vector(-377,481,-6213)},
-            {"Entrance from facility", Vector(32,806,-6322), Vector(-122,596,-6200)},
-            {"Entrance from the outside 1", Vector(-562,969,-6324), Vector(-612,655,-6200)},
-            {"Entrance from the outside 2", Vector(-637,823,-6304), Vector(-672,658,-6200)},
+            {"Western entrance proper", Vector(-19,474,-6304), Vector(-582,766,-6200)},
+            {"Western entrance proper 2", Vector(-130,190,-6304), Vector(-377,481,-6213)},
+            {"Western entrance from facility", Vector(32,806,-6322), Vector(-122,596,-6200)},
+            {"Western entrance from the outside 1", Vector(-562,969,-6324), Vector(-612,655,-6200)},
+            {"Western entrance from the outside 2", Vector(-637,823,-6304), Vector(-672,658,-6200)},
 		},
 		music 						= nil,
 		ambients 					= nil,
@@ -291,8 +314,9 @@ MAPCONFIG.ZONES.FACILITY = {
 		name 						= "Underground",
 		sub_areas = {
             {"Underground proper", Vector(410,4611,-6453), Vector(1595,-3372,-7287)},
-            {"Underground tunnel", Vector(1024,-3358,-6868), Vector(701,-9017,-7738)},
-            {"Underground tunnel", Vector(1595,-14761,-8074), Vector(664,-9020,-7489)},
+            {"Underground tunnel 1", Vector(1024,-3358,-6868), Vector(701,-9017,-7738)},
+            {"Underground tunnel 2", Vector(1595,-14761,-8074), Vector(664,-9020,-7489)},
+			{"Underground tunnel 3", Vector(1351,-14766,-7485), Vector(1045,-14496,-6780)},
 		},
 		music 						= nil,
 		ambients 					= nil,
@@ -418,7 +442,11 @@ MAPCONFIG.ZONES.FACILITY = {
 		name 						= "Eastern facility entrance",
 		sub_areas = {
             {"Eastern facility entrance proper 1", Vector(248,6454,-6805), Vector(-818,5474,-6435)},
-            {"Eastern facility entrance proper 2", Vector(-1551,6191,-6723), Vector(-542,4748,-6428)},
+			{"Eastern facility entrance proper 2", Vector(-1485,5793,-6759), Vector(-505,4674,-6426)},
+			{"Eastern facility entrance proper 3", Vector(-817,5787,-6668), Vector(-1145,6162,-6386)},
+			{"Eastern facility entrance proper 4", Vector(-1137,5789,-6688), Vector(-1298,5987,-6490)},
+			{"Eastern facility entrance proper 5", Vector(-505,5470,-6791), Vector(-158,5056,-6518)},
+			{"Eastern facility entrance elevator", Vector(1178,4842,-6463), Vector(995,4612,-4993)},
 		},
 		music 						= nil,
 		ambients 					= nil,
@@ -442,5 +470,4 @@ MAPCONFIG.ZONES.FACILITY = {
 		color 						= Color(151, 209, 59, ALPHA),
 		examine_info 				= "You are in the Rocket silo area",
 	},
-
 }
