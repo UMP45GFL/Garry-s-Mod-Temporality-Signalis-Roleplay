@@ -43,11 +43,13 @@ CLASS.jump_power = 1 -- multiplier of how strong the player can jump
 CLASS.max_stamina = 1 -- multiplier of how much stamina the player has
 
 -- attributes
+CLASS.remove_attributes = true
+
 CLASS.weapon_knowledge = 0
 CLASS.min_weapon_knowledge = 0
-CLASS.max_weapon_knowledge = 2
+CLASS.max_weapon_knowledge = 0
 CLASS.medical_knowledge = 0
 CLASS.min_medical_knowledge = 0
-CLASS.max_medical_knowledge = 4
+CLASS.max_medical_knowledge = 0
 
 CLASS_GESTALT = CLASS.index
