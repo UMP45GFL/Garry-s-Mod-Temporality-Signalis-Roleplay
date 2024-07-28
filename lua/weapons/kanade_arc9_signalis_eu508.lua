@@ -6,10 +6,10 @@ SWEP.AdminOnly = false
 
 SWEP.PrintName = "Eu-K508 S 'Einhorn'"
 SWEP.Class = "Revolver"
-SWEP.Description = [[A short-barreled double-action 6-shot revolver that fires 12mm high-power ammo. High recoil, strong knockback.]]
+SWEP.Description = [[A short-barreled double-action 6-shot revolver that fires .357 high-power ammo. High recoil, strong knockback.]]
 SWEP.Trivia = {
     Manufacturer = "NA",
-    Calibre = "12mm",
+    Calibre = ".357",
     Mechanism = "Revolver",
     Country = "NA",
     Games = [[Signalis]]
