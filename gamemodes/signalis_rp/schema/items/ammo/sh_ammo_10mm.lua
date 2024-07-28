@@ -7,3 +7,6 @@ ITEM.description = "National Army standard-issue Pistol ammunition. 10x20mm full
 
 ITEM.price = 15
 ITEM.flag = "V"
+
+ITEM.width = 2
+ITEM.height = 1

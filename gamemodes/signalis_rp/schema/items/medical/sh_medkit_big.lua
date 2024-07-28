@@ -5,6 +5,9 @@ ITEM.description = "A big medkit containing various medical supplies."
 ITEM.category = "Medical"
 ITEM.price = 50
 
+ITEM.width = 2
+ITEM.height = 2
+
 ITEM.functions.Apply = {
 	sound = "items/medshot4.wav",
 	OnRun = function(itemTable)

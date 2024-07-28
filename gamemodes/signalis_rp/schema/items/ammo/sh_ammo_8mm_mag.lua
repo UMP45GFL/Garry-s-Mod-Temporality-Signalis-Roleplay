@@ -7,3 +7,6 @@ ITEM.description = "8x22mm cartridges optimized for automatic fire. Officially r
 
 ITEM.price = 45
 ITEM.flag = "V"
+
+ITEM.width = 1
+ITEM.height = 2

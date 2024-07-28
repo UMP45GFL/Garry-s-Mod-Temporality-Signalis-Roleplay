@@ -26,7 +26,7 @@ our_last_zone_stage = 0
 local next_zone_check = 0
 
 hook.Add("Tick", "Eternalis_Local_Zone", function()
-	if our_last_zone_stage == 0 then
+	if our_last_zone_stage == 0 and LocalPlayer().GetZone then
 		local our_zone = LocalPlayer():GetZone()
 		if our_zone != our_last_zone and our_zone then
 			our_last_zone = our_zone

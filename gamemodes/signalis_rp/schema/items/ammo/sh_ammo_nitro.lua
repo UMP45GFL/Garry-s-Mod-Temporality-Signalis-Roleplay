@@ -7,3 +7,6 @@ ITEM.description = "Large caliber PTFE-coated high-power armor-piercing 16mm 'Ni
 
 ITEM.price = 40
 ITEM.flag = "V"
+
+ITEM.width = 2
+ITEM.height = 1

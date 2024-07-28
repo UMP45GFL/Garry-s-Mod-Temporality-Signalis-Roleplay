@@ -97,7 +97,9 @@ if CLIENT then
 		our_sleepiness = net.ReadInt(16)
 	end)
 
-	ix.bar.Add(function()
-		return our_sleepiness / LocalPlayer():GetMaxSleepiness()
-	end, Color(230, 230, 230), nil, "sleepiness")
+    if ix.config.Get("sleepSystemEnabled", true) then
+        ix.bar.Add(function()
+            return our_sleepiness / LocalPlayer():GetMaxSleepiness()
+        end, Color(230, 230, 230), nil, "sleepiness")
+    end
 end

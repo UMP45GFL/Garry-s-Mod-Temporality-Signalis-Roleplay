@@ -1,7 +1,7 @@
 
 ITEM.name = "Cooked meat"
 ITEM.model = Model("models/foodnhouseholditems/meat8.mdl")
-ITEM.width = 1
+ITEM.width = 2
 ITEM.height = 1
 ITEM.description = "A piece of cooked meat. Looks edible."
 ITEM.category = "Consumables"

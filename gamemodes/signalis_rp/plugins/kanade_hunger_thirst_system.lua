@@ -81,7 +81,7 @@ if SERVER then
 		if !ix.config.Get("hungerThirstSystemEnabled", true) then return end
 
 		for k,v in pairs(player.GetAll()) do
-			if v and  IsValid(v) and v:Alive() and v:Team() != TEAM_SPECTATOR and v:Team() != FACTION_STAFF and v:Team() != FACTION_ADMIN then
+			if v and IsValid(v) and v:Alive() and v:Team() != TEAM_SPECTATOR and v:Team() != FACTION_STAFF and v:Team() != FACTION_ADMIN then
 				if v.hunger == nil then continue end
 
 				if v.nextHungerCheck == nil then
@@ -167,11 +167,13 @@ if CLIENT then
 		our_thirst = net.ReadInt(16)
 	end)
 
-	ix.bar.Add(function()
-		return our_hunger / LocalPlayer():GetMaxHunger()
-	end, Color(59, 194, 25), nil, "hunger")
+	if ix.config.Get("hungerThirstSystemEnabled", true) then
+		ix.bar.Add(function()
+			return our_hunger / LocalPlayer():GetMaxHunger()
+		end, Color(59, 194, 25), nil, "hunger")
 
-	ix.bar.Add(function()
-		return our_thirst / LocalPlayer():GetMaxThirst()
-	end, Color(24, 192, 214), nil, "thirst")
+		ix.bar.Add(function()
+			return our_thirst / LocalPlayer():GetMaxThirst()
+		end, Color(24, 192, 214), nil, "thirst")
+	end
 end

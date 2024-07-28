@@ -7,3 +7,6 @@ ITEM.description = "Old Imperially-produced high-powered, hollow-tipped .357 Rev
 
 ITEM.price = 25
 ITEM.flag = "V"
+
+ITEM.width = 1
+ITEM.height = 1

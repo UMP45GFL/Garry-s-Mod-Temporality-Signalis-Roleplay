@@ -7,3 +7,6 @@ ITEM.description = "26.5x80mm Flares. Hit hard enough to embed themselves in sof
 
 ITEM.price = 20
 ITEM.flag = "V"
+
+ITEM.width = 1
+ITEM.height = 2

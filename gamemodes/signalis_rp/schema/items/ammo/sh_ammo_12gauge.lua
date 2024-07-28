@@ -7,3 +7,6 @@ ITEM.description = "12-gauge shotgun shells tightly packed with nail-like steel 
 
 ITEM.price = 20
 ITEM.flag = "V"
+
+ITEM.width = 2
+ITEM.height = 1

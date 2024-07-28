@@ -7,3 +7,6 @@ ITEM.description = "26.5x100mm high explosive grenade shells. Instantly explode 
 
 ITEM.price = 50
 ITEM.flag = "V"
+
+ITEM.width = 1
+ITEM.height = 2
