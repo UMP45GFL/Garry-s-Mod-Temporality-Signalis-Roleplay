@@ -19,7 +19,7 @@ CLASS.hunger = 0.76
 CLASS.thirst = 0.76
 -- titanium skeleton makes them more agile
 -- carbon fiber-reinforced Polyethylene Shell is lighter than regular Polyethylene Shell
-CLASS.speed = 1.15
+CLASS.speed = 1.1
 CLASS.jump_power = 1.15
 CLASS.max_stamina = 1.15
 

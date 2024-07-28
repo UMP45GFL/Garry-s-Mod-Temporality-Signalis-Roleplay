@@ -16,7 +16,7 @@ CLASS.bullet_damage_taken = 0.75
 CLASS.mental_strength = 1.35
 CLASS.hunger = 0.95
 CLASS.thirst = 0.95
-CLASS.speed = 0.65
+CLASS.speed = 0.75
 CLASS.jump_power = 0.7
 CLASS.max_stamina = 0.75
 

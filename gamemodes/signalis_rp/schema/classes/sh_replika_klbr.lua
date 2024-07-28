@@ -17,7 +17,7 @@ CLASS.mental_strength = 0.8 -- definitely the least strong mentally replika...
 CLASS.hunger = 0.9
 CLASS.thirst = 0.9
 -- they short and agile
-CLASS.speed = 1.15
+CLASS.speed = 1.1
 CLASS.jump_power = 0.87
 CLASS.max_stamina = 1.15
 

@@ -17,7 +17,7 @@ CLASS.mental_strength = 1.35
 CLASS.hunger = 0.87
 CLASS.thirst = 0.87
 -- SUPER TALL
-CLASS.speed = 1.12
+CLASS.speed = 1.1
 CLASS.jump_power = 1.36
 CLASS.max_stamina = 1.15
 
