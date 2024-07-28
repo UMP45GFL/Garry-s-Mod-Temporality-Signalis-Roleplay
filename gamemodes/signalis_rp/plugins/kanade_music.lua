@@ -23,7 +23,8 @@ local trackList = {
 	{"signalis_music/Crepuscular.mp3", 1, 222},
 	{"signalis_music/TurnedAround.mp3", 1, 222},
 	{"signalis_music/SafeRoom.mp3", 1, 138},
-	{"signalis_music/MNHR.mp3", 1, 294}
+	{"signalis_music/MNHR.mp3", 1, 294},
+	{"signalis_music/DoubleBackVHS.mp3", 1, 361},
 }
 
 if SERVER then
@@ -87,20 +88,20 @@ if CLIENT then
 
 			if music_info == nil or next_music_play < CurTime() then
 				if #song_queue > 0 then
-					local next_song = table.remove(song_queue, 1)
+					local next_song = table.remove(song_queue, math.random(1, #song_queue))
 					if next_song != nil then
 						music_info = {
 							nextPlay = 0,
 							volume = next_song[2],
-							length = next_song[3] + 1,
+							length = next_song[3] + math.random(18, 50),
 							sound = next_song[1],
 							playUntil = function()
 								return false
 							end
 						}
-						PlayMusicTrack(next_song[1])
-						next_music_play = CurTime() + next_song[3]
-						chat.AddText("playing music: " .. next_song[1])
+						PlayMusicTrack(music_info.sound)
+						next_music_play = CurTime() + music_info.length
+						chat.AddText("playing music: " .. music_info.sound)
 					end
 				else
 					ResetSongQueue()
