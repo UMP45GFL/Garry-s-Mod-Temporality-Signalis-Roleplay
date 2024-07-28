@@ -79,12 +79,14 @@ if CLIENT then
 		return sound
 	end
 
+	local next_music_check = 100
 	local next_music_play = 0
 	function HandleMusic()
 		if !ix.config.Get("musicSystemEnabled", true) or !ix.option.Get("musicSystemEnabled", true) then return end
 
 		local client = LocalPlayer()
-		if client.Alive != nil and client:Alive() and !client:IsBot() and client:Team() != TEAM_SPECTATOR then
+		if client.Alive != nil and CurTime() < next_music_check and client:Alive() and !client:IsBot() and client:Team() != TEAM_SPECTATOR then
+			next_music_check = CurTime() + 1
 
 			if music_info == nil or next_music_play < CurTime() then
 				if #song_queue > 0 then
