@@ -17,19 +17,22 @@ ix.option.Add("musicSystemEnabled", ix.type.bool, true, {
 })
 
 local trackList = {
-	{"signalis_music/DoubleBack.mp3", 1, 362},
-	{"signalis_music/Dowsing.mp3", 1, 128},
-	{"signalis_music/SeaSmoke.mp3", 1, 134},
-	{"signalis_music/Crepuscular.mp3", 1, 222},
-	{"signalis_music/TurnedAround.mp3", 1, 222},
-	{"signalis_music/SafeRoom.mp3", 1, 138},
-	{"signalis_music/MNHR.mp3", 1, 294},
-	{"signalis_music/DoubleBackVHS.mp3", 1, 361},
+	-- casual ones
+	{ name = "Turned Around", 	sound = "signalis_ost/1_turned_around.mp3", volume = 1, length = 222 },
+	{ name = "Safe Room", 		sound = "signalis_ost/2_safe_room.mp3", 	volume = 1, length = 138 },
+	{ name = "Double Back", 	sound = "signalis_ost/4_double_back.mp3", 	volume = 1, length = 362 },
+	{ name = "Mnhr", 			sound = "signalis_ost/12_mnhr.mp3", 		volume = 1, length = 294 },
+	{ name = "Dowsing", 		sound = "signalis_ost/15_dowsing.mp3", 		volume = 1, length = 128 },
+	{ name = "Sea Smoke", 		sound = "signalis_ost/32_sea_smoke.mp3", 	volume = 1, length = 134 },
+	{ name = "Crepuscular", 	sound = "signalis_ost/54_crepuscular.mp3", 	volume = 1, length = 222 },
+
+	-- more sad or scary or intense
+	{ name = "Adler", 			sound = "signalis_ost/14_adler.mp3", 		volume = 1, length = 298 },
 }
 
 if SERVER then
 	for k,	v in ipairs(trackList) do
-		resource.AddFile(v)
+		resource.AddFile(v.sound)
 	end
 end
 
@@ -94,9 +97,9 @@ if CLIENT then
 					if next_song != nil then
 						music_info = {
 							nextPlay = 0,
-							volume = next_song[2],
-							length = next_song[3] + math.random(18, 50),
-							sound = next_song[1],
+							volume = next_song.volume,
+							length = next_song.length + math.random(18, 50),
+							sound = next_song.sound,
 							playUntil = function()
 								return false
 							end
