@@ -97,6 +97,7 @@ if CLIENT then
 					if next_song != nil then
 						music_info = {
 							nextPlay = 0,
+							name = next_song.name,
 							volume = next_song.volume,
 							length = next_song.length + math.random(18, 50),
 							sound = next_song.sound,
@@ -106,7 +107,7 @@ if CLIENT then
 						}
 						PlayMusicTrack(music_info.sound)
 						next_music_play = CurTime() + music_info.length
-						chat.AddText("playing music: " .. music_info.sound)
+						chat.AddText("playing music: " .. music_info.name)
 					end
 				else
 					ResetSongQueue()
