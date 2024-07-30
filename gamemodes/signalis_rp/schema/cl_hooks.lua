@@ -21,7 +21,7 @@ function Schema:PopulateCharacterInfo(client, character, tooltip)
 end
 
 function Schema:FinishChat()
-	netstream.Start("PlayerFinishChat")
+	--netstream.Start("PlayerFinishChat")
 end
 
 function Schema:CanPlayerJoinClass(client, class, info)
