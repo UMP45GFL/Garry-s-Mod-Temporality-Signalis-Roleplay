@@ -5,11 +5,5 @@ ITEM.description = "Single-use injection syringe. Instantly restores a large amo
 ITEM.category = "Medical"
 ITEM.price = 60
 
-ITEM.functions.Apply = {
-	sound = "items/medshot4.wav",
-	OnRun = function(itemTable)
-		local client = itemTable.player
-
-		client:SetHealth(math.min(client:Health() + 120, 100))
-	end
-}
+ITEM.addHealth = 120
+ITEM.applySound = "items/medshot4.wav"

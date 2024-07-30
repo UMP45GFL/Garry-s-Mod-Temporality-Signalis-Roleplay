@@ -8,11 +8,5 @@ ITEM.price = 35
 ITEM.width = 1
 ITEM.height = 2
 
-ITEM.functions.Apply = {
-	sound = "items/medshot4.wav",
-	OnRun = function(itemTable)
-		local client = itemTable.player
-
-		client:SetHealth(math.min(client:Health() + 50, 100))
-	end
-}
+ITEM.addHealth = 50
+ITEM.applySound = "items/medshot4.wav"

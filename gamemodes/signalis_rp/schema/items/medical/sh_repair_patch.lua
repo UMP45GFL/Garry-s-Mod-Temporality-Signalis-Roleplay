@@ -5,11 +5,5 @@ ITEM.description = "A sealed, single-use adhesive patch containing a coagulation
 ITEM.category = "Medical"
 ITEM.price = 18
 
-ITEM.functions.Apply = {
-	sound = "items/medshot4.wav",
-	OnRun = function(itemTable)
-		local client = itemTable.player
-
-		client:SetHealth(math.min(client:Health() + 20, 100))
-	end
-}
+ITEM.addHealth = 20
+ITEM.applySound = "items/medshot4.wav"

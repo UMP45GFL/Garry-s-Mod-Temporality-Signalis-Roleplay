@@ -5,11 +5,5 @@ ITEM.description = "A small roll of bandage."
 ITEM.category = "Medical"
 ITEM.price = 18
 
-ITEM.functions.Apply = {
-	sound = "items/medshot4.wav",
-	OnRun = function(itemTable)
-		local client = itemTable.player
-
-		client:SetHealth(math.min(client:Health() + 25, 100))
-	end
-}
+ITEM.addHealth = 25
+ITEM.applySound = "items/medshot4.wav"

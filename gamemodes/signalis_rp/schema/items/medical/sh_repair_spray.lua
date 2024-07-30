@@ -5,11 +5,5 @@ ITEM.description = "A single-use spray gun to fill damaged areas with polyuretha
 ITEM.category = "Medical"
 ITEM.price = 18
 
-ITEM.functions.Apply = {
-	sound = "items/medshot4.wav",
-	OnRun = function(itemTable)
-		local client = itemTable.player
-
-		client:SetHealth(math.min(client:Health() + 30, 100))
-	end
-}
+ITEM.addHealth = 30
+ITEM.applySound = "items/medshot4.wav"
