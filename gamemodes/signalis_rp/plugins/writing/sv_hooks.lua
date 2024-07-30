@@ -1,8 +1,12 @@
 
 local PLUGIN = PLUGIN
 
-netstream.Hook("ixWritingEdit", function(client, itemID, text)
-	text = tostring(text):sub(1, PLUGIN.maxLength)
+netstream.Hook("ixWritingEdit", function(client, itemID, pages)
+	print("editing end ", client, itemID, pages)
+
+	for k,v in pairs(pages) do
+		pages[k] = tostring(v):sub(1, PLUGIN.maxLength)
+	end
 
 	local character = client:GetCharacter()
 	local item = ix.item.instances[itemID]
@@ -11,8 +15,8 @@ netstream.Hook("ixWritingEdit", function(client, itemID, text)
 	if (character and item and item.base == "base_writing") then
 		local owner = item:GetData("owner", 0)
 
-		if ((owner == 0 or owner == character:GetID()) and text:len() > 0) then
-			item:SetText(text, character)
+		if (owner == 0 or owner == character:GetID()) then
+			item:SetPages(pages, character)
 		end
 	end
 end)
