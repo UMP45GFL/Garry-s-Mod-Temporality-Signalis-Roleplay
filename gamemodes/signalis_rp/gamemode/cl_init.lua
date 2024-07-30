@@ -15,3 +15,24 @@ end)
 function GM:PlayerFootstep(ply, pos, foot, sound, volume, filter)
     return true
 end
+
+local fontSettings = {
+	font = "Perfect DOS VGA 437",
+	extended = false,
+	size = 32,
+	weight = 500,
+	blursize = 0,
+	scanlines = 0,
+	antialias = true,
+	underline = false,
+	italic = false,
+	strikeout = false,
+	symbol = false,
+	rotary = false,
+	shadow = false,
+	additive = false,
+	outline = false,
+}
+surface.CreateFont("SignalisDocumentsFontMedium", fontSettings)
+fontSettings.size = 38
+surface.CreateFont("SignalisDocumentsFontBig", fontSettings)
