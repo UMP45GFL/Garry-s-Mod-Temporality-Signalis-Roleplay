@@ -6,7 +6,6 @@ AccessorFunc(PANEL, "itemID", "ItemID", FORCE_NUMBER)
 
 PANEL.page = -1
 PANEL.pages = {}
-PANEL.image = "eternalis/documents/DET_GenericNote.png"
 
 local turnPageSound = "signalis_ui/page_turn.wav"
 local nextPageTurn = 0
@@ -44,8 +43,8 @@ function PANEL:Init()
 
 	local img_alpha = 0
 	local img_bg = vgui.Create("DImage", self)
-	img_bg:SetSize(ScrW(), ScrH())		
-	img_bg:SetImage(self.image)
+	self.img_bg = img_bg
+	img_bg:SetSize(ScrW(), ScrH())
 	img_bg:SetImageColor(Color(255, 255, 255, img_alpha))
 	img_bg.Think = function(this)
 		img_bg:SetImageColor(Color(255, 255, 255, img_alpha))
@@ -58,10 +57,10 @@ function PANEL:Init()
 			end
 		end
 		if self.page == 1 then
-			if img_alpha > 25 then
+			if img_alpha > 10 then
 				img_alpha = img_alpha - 2
 			else
-				img_alpha = 25
+				img_alpha = 10
 			end
 		end
 	end
@@ -84,8 +83,12 @@ function PANEL:Init()
 	pagePanel:SetPos(ScrW() / 2 - (pW / 2), ScrH() - (ScrH() / 6) - pH + 4)
 	pagePanel.Paint = function(this, w, h)
 		if self.page > 0 then
+			local page = self.page
+			if self.startFromPage0 then
+				page = page - 1
+			end
 			draw.TextShadow({
-				text = "0" .. self.page .. " / 0" .. #self.pages,
+				text = "0" .. page .. " / 0" .. (#self.pages - 1),
 				font = "SignalisDocumentsFontBig",
 				pos = {w / 2, h / 2},
 				xalign = TEXT_ALIGN_CENTER,
@@ -143,14 +146,14 @@ function PANEL:Init()
 		end
 	end
 
-	local tW = ScrW() * 0.5
-	local tH = ScrH() * 0.5
+	local tW = ScrW() * 0.75
+	local tH = ScrH() * 0.4
 
 	self.text = self:Add("DTextEntry")
 	self.text:SetMultiline(true)
 	self.text:SetEditable(false)
 	self.text:SetDisabled(true)
-	self.text:SetFont("SignalisDocumentsFontMedium")
+	self.text:SetFont("SignalisDocumentsFontBig")
 	self.text:SetPaintBackground(false)
 	self.text:SetPos(ScrW() / 2 - (tW / 2), ScrH() / 2 - (tH / 2))
 	self.text:SetSize(tW, tH)

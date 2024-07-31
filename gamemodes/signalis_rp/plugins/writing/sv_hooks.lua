@@ -2,8 +2,6 @@
 local PLUGIN = PLUGIN
 
 netstream.Hook("ixWritingEdit", function(client, itemID, pages)
-	print("editing end ", client, itemID, pages)
-
 	for k,v in pairs(pages) do
 		pages[k] = tostring(v):sub(1, PLUGIN.maxLength)
 	end

@@ -14,6 +14,7 @@ ix.util.Include("sh_hooks.lua")
 ix.util.Include("sh_anims.lua")
 ix.util.Include("sv_schema.lua")
 ix.util.Include("sv_hooks.lua")
+ix.util.Include("sv_money.lua")
 
 ix.flag.Add("v", "Access to light blackmarket goods.")
 ix.flag.Add("V", "Access to heavy blackmarket goods.")

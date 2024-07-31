@@ -66,11 +66,11 @@ function PANEL:Init()
 		}, 1, 255)
 	end
 	buttonPageLeft.DoClick = function()
-		if self.page > 1 then
+		if self.page > 1 and self.page + 1 <= self.maxPages then
 			self.pages[self.page] = self.text:GetValue()
 
 			self.page = self.page -1
-		self.text:SetValue(self.pages[self.page] or "")
+			self.text:SetValue(self.pages[self.page] or "")
 		end
 	end
 
