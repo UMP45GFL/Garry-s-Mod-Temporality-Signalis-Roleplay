@@ -9,14 +9,18 @@ ITEM.startFromPage0 = true
 ITEM.backgroundPhoto = "eternalis/documents/ROT_Bioresonance.png"
 
 ITEM.pages = {
-    "「Bioresonance Technology and its Limitations」",
+    {
+        {"「Bioresonance Technology and its Limitations」", Color(255, 255, 255), TEXT_ALIGN_CENTER}
+    },
 
-    [[- CLASSIFIED -
-No other technology has shaped our Nation as Bioresonance has.
-Would we ever have been able to free ourselves from the stranglehold of the Empire
-without the support of Replikas?
-Essential technologies like Klimaforming and Induced Gravity would be Impossible without
-Bioresonance Technology.]],
+    {
+        {"- CLASSIFIED -", Color(253, 67, 2), TEXT_ALIGN_CENTER},
+        "No other technology has shaped our Nation as Bioresonance has.",
+        "Would we ever have been able to free ourselves from the stranglehold of the Empire",
+        "without the support of Replikas?",
+        "Essential technologies like Klimaforming and Induced Gravity would be Impossible without",
+        "Bioresonance Technology.",
+    },
 
     [[Despite that, it feels like we've made little effort to really understand or replicate
 bioresonant effects with conventional technology, Our progress in the development of

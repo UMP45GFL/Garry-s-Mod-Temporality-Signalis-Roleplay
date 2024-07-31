@@ -26,19 +26,6 @@ function PANEL:Init()
 	self.Paint = function(this, w, h)
 		surface.SetDrawColor(0, 0, 0, 255)
 		surface.DrawRect(0, 0, w, h)
-
-		/*
-		if self.page > 0 then
-			draw.TextShadow({
-				text = self.pages[self.page],
-				font = "SignalisDocumentsFontMedium",
-				pos = {w / 2, h * 0.45},
-				xalign = TEXT_ALIGN_CENTER,
-				yalign = TEXT_ALIGN_CENTER,
-				color = color_white
-			}, 1, 255)
-		end
-		*/
 	end
 
 	local img_alpha = 0
@@ -56,7 +43,7 @@ function PANEL:Init()
 				self.page = 0
 			end
 		end
-		if self.page == 1 then
+		if self.page > 0 then
 			if img_alpha > 10 then
 				img_alpha = img_alpha - 2
 			else
@@ -117,7 +104,6 @@ function PANEL:Init()
 	buttonPageLeft.DoClick = function()
 		if nextPageTurn < CurTime() and self.page > 1 then
 			self.page = self.page - 1
-			self.text:SetValue(self.pages[self.page] or "")
 			surface.PlaySound(turnPageSound)
 			nextPageTurn = CurTime() + 0.3
 		end
@@ -140,24 +126,65 @@ function PANEL:Init()
 	buttonPageRight.DoClick = function()
 		if nextPageTurn < CurTime() and self.page > -1 and self.page < #self.pages then
 			self.page = self.page + 1
-			self.text:SetValue(self.pages[self.page] or "")
 			surface.PlaySound(turnPageSound)
 			nextPageTurn = CurTime() + 0.3
 		end
 	end
 
-	local tW = ScrW() * 0.75
-	local tH = ScrH() * 0.4
+	local tW = ScrW() * 0.65
+	local tH = ScrH() * 0.5
 
-	self.text = self:Add("DTextEntry")
-	self.text:SetMultiline(true)
-	self.text:SetEditable(false)
-	self.text:SetDisabled(true)
-	self.text:SetFont("SignalisDocumentsFontBig")
-	self.text:SetPaintBackground(false)
+	self.text = self:Add("DPanel")
 	self.text:SetPos(ScrW() / 2 - (tW / 2), ScrH() / 2 - (tH / 2))
 	self.text:SetSize(tW, tH)
-	self.text:SetTextColor(color_white)
+	self.text.Paint = function(this, w, h)
+		if self.pages[self.page] then
+			if isstring(self.pages[self.page]) then
+				for k,v in pairs(string.Split(self.pages[self.page], "\n")) do
+					draw.TextShadow({
+						text = v,
+						font = "SignalisDocumentsFontMedium",
+						pos = {8, 8 + (k - 1) * 42},
+						xalign = TEXT_ALIGN_LEFT,
+						yalign = TEXT_ALIGN_TOP,
+						color = color_white
+					}, 1, 255)
+				end
+			end
+
+			if istable(self.pages[self.page]) then
+				for k,v in pairs(self.pages[self.page]) do
+					local txt = ""
+					local clr = color_white
+					local xalign = TEXT_ALIGN_LEFT
+					local pos = 8
+					if isstring(v) then
+						txt = v
+					end
+					if istable(v) then
+						txt = v[1]
+						if v[2] then
+							clr = v[2]
+						end
+						if v[3] then
+							xalign = v[3]
+							if xalign == TEXT_ALIGN_CENTER then
+								pos = w / 2
+							end
+						end
+					end
+					draw.TextShadow({
+						text = txt,
+						font = "SignalisDocumentsFontMedium",
+						pos = {pos, 8 + (k - 1) * 42},
+						xalign = xalign,
+						yalign = TEXT_ALIGN_TOP,
+						color = clr
+					}, 1, 255)
+				end
+			end
+		end
+	end
 
 	self:MakePopup()
 	PLUGIN.panel = self

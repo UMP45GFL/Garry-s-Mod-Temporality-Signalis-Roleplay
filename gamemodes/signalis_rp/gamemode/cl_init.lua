@@ -18,7 +18,7 @@ end
 
 local fontSettings = {
 	font = "Perfect DOS VGA 437",
-	extended = false,
+	extended = true,
 	size = 32,
 	weight = 0,
 	blursize = 0,

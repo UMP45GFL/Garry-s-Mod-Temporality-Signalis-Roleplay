@@ -53,7 +53,7 @@ ITEM.functions.View = {
 		end
 
 		for k,v in pairs(item:GetData("pages", {})) do
-			if (v and string.len(v) > 0) then
+			if (v and isstring(v) and string.len(v) > 0) or (v and istable(v)) then
 				hasBeenWrittenTo = true
 				break
 			end
