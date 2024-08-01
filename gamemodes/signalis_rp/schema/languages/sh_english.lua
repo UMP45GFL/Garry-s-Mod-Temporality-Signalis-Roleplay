@@ -24,5 +24,5 @@ LANGUAGE = {
 	radioAlreadyOn = "You already have a radio that is turned on!",
 	economy = "Economy",
 
-	voices = "Voices"
+	voices = "Voices",
 }

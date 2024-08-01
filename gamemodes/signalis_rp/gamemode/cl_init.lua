@@ -18,12 +18,13 @@ end
 
 local fontSettings = {
 	font = "Perfect DOS VGA 437",
+	--font = "Pokémon DP Pro",
 	extended = true,
 	size = 32,
 	weight = 0,
 	blursize = 0,
 	scanlines = 0,
-	antialias = true,
+	antialias = false,
 	underline = false,
 	italic = false,
 	strikeout = false,

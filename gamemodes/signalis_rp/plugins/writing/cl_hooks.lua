@@ -7,9 +7,6 @@ netstream.Hook("ixViewPaper", function(maxPages, startFromPage0, backgroundPhoto
 		panel.pages = pages
 		panel.maxPages = maxPages
 		panel.startFromPage0 = startFromPage0
-		if backgroundPhoto then
-			panel.img_bg:SetImage(backgroundPhoto)
-		end
 		panel:SetEditable(bEditable)
 		panel:SetItemID(itemID)
 	else
