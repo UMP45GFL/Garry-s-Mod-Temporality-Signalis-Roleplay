@@ -7,7 +7,7 @@ AccessorFunc(PANEL, "itemID", "ItemID", FORCE_NUMBER)
 PANEL.page = -1
 PANEL.pages = {}
 
-local turnPageSound = "signalis_ui/page_turn.wav"
+local turnPageSound = "eternalis/signalis_ui/page_turn.wav"
 local nextPageTurn = 0
 function PANEL:Init()
 	if (IsValid(PLUGIN.panel)) then

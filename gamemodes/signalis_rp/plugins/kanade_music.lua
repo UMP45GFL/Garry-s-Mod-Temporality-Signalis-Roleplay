@@ -16,20 +16,22 @@ ix.option.Add("musicSystemEnabled", ix.type.bool, true, {
 	category = "Music"
 })
 
+local path = "sound/eternalis/signalis_ost/"
+
 local trackList = {
 	-- casual ones
-	{ name = "Turned Around", 			sound = "eternalis/signalis_ost/1_turned_around.mp3", 			volume = 1, length = 222 },
-	{ name = "Safe Room", 				sound = "eternalis/signalis_ost/2_safe_room.mp3", 				volume = 1, length = 138 },
-	{ name = "Double Back", 			sound = "eternalis/signalis_ost/4_double_back.mp3", 			volume = 1, length = 362 },
-	{ name = "Double Back VHS ver.", 	sound = "eternalis/signalis_ost/48_double_back_vhs_ver.mp3", 	volume = 1, length = 362 },
-	{ name = "Mnhr", 					sound = "eternalis/signalis_ost/12_mnhr.mp3", 					volume = 1, length = 294 },
-	{ name = "Dowsing", 				sound = "eternalis/signalis_ost/15_dowsing.mp3", 				volume = 1, length = 128 },
-	{ name = "Crepuscular", 			sound = "eternalis/signalis_ost/54_crepuscular.mp3", 			volume = 1, length = 222 },
+	{ name = "Turned Around", 			sound = path.."1_turned_around.mp3", 			volume = 1, length = 222 },
+	{ name = "Safe Room", 				sound = path.."2_safe_room.mp3", 				volume = 1, length = 138 },
+	{ name = "Double Back", 			sound = path.."4_double_back.mp3", 				volume = 1, length = 362 },
+	{ name = "Double Back VHS ver.", 	sound = path.."48_double_back_vhs_ver.mp3", 	volume = 1, length = 362 },
+	{ name = "Mnhr", 					sound = path.."12_mnhr.mp3", 					volume = 1, length = 294 },
+	{ name = "Dowsing", 				sound = path.."15_dowsing.mp3", 				volume = 1, length = 128 },
+	{ name = "Crepuscular", 			sound = path.."54_crepuscular.mp3", 			volume = 1, length = 222 },
 
 	-- more sad or scary or intense
-	{ name = "Ritual", 					sound = "signalis_ost/11_ritual.mp3", 							volume = 1, length = 258 },
-	{ name = "Adler", 					sound = "signalis_ost/14_adler.mp3", 							volume = 1, length = 298 },
-	{ name = "Sea Smoke", 				sound = "eternalis/signalis_ost/32_sea_smoke.mp3", 				volume = 1, length = 134 },
+	{ name = "Ritual", 					sound = path.."11_ritual.mp3", 					volume = 1, length = 258 },
+	{ name = "Adler", 					sound = path.."14_adler.mp3", 					volume = 1, length = 298 },
+	{ name = "Sea Smoke", 				sound = path.."32_sea_smoke.mp3", 				volume = 1, length = 134 },
 }
 
 if SERVER then

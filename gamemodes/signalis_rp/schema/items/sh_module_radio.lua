@@ -16,12 +16,22 @@ end
 
 function ITEM:EquipRadioModule(client)
 	self:SetData("equip", true)
-    print("equipped")
+
+	if CLIENT then
+		self.functions.View.OnClick(self)
+	end
 end
 
 function ITEM:UnequipRadioModule(client)
 	self:SetData("equip", false)
-    print("unequipped")
+
+	local index = self:GetData("id", "")
+	if CLIENT and index then
+		local panel = ix.gui["inv"..index]
+		if (IsValid(panel)) then
+			panel:Remove()
+		end
+	end
 end
 
 ITEM:Hook("drop", function(item)
@@ -99,3 +109,40 @@ function ITEM:OnRemoved()
 		self.player = nil
 	end
 end
+
+
+
+
+
+----------------------------------------- PANEL -----------------------------------------
+
+ITEM.isBag = true
+
+ITEM.functions.View = {
+	icon = "icon16/briefcase.png",
+	OnClick = function(item)
+		local index = item:GetData("id", "")
+
+		if index and item:GetData("equip") then
+			local panel = ix.gui["inv"..index]
+			if (IsValid(panel)) then
+				panel:Remove()
+			end
+
+			local parent = ix.gui.menuInventoryContainer
+			if IsValid(parent) then
+				panel = vgui.Create("ixRadioPanel", parent)
+				panel:SetParent(parent)
+				panel:ShowCloseButton(true)
+				panel:MoveToFront()
+
+				ix.gui["inv"..index] = panel
+			end
+		end
+
+		return false
+	end,
+	OnCanRun = function(item)
+		return !IsValid(item.entity) and item:GetData("id") and !IsValid(ix.gui["inv" .. item:GetData("id", "")])
+	end
+}

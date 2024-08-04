@@ -3,17 +3,28 @@
 local ragSuffix = ""
 
 local moneyAmounts = {
+    -- coins
+    {value = 0.25,  amount = 0.25,  mdl = "models/eternalis/currency/coin_025.mdl"},
+    {value = 0.5,   amount = 0.5,   mdl = "models/eternalis/currency/coin_05.mdl"},
+    {value = 1,     amount = 1,     mdl = "models/eternalis/currency/coin_1.mdl"},
+
+    -- banknotes
     {value = 1,     amount = 1,     mdl = "models/eternalis/currency/banknote_1"..ragSuffix..".mdl"},
     {value = 2,     amount = 1,     mdl = "models/eternalis/currency/banknote_2"..ragSuffix..".mdl"},
     {value = 5,     amount = 1,     mdl = "models/eternalis/currency/banknote_5"..ragSuffix..".mdl"},
     {value = 10,    amount = 1,     mdl = "models/eternalis/currency/banknote_10"..ragSuffix..".mdl"},
     {value = 20,    amount = 1,     mdl = "models/eternalis/currency/banknote_20"..ragSuffix..".mdl"},
+    {value = 50,    amount = 1,     mdl = "models/eternalis/currency/banknote_50"..ragSuffix..".mdl"},
+    {value = 100,   amount = 1,     mdl = "models/eternalis/currency/banknote_100"..ragSuffix..".mdl"},
     
-    {value = 1,     amount = 10,    mdl = "models/eternalis/currency/banknote_1_cluster.mdl"},
-    {value = 2,     amount = 10,    mdl = "models/eternalis/currency/banknote_2_cluster.mdl"},
-    {value = 5,     amount = 10,    mdl = "models/eternalis/currency/banknote_5_cluster.mdl"},
-    {value = 10,    amount = 10,    mdl = "models/eternalis/currency/banknote_10_cluster.mdl"},
-    {value = 20,    amount = 10,    mdl = "models/eternalis/currency/banknote_20_cluster.mdl"},
+    -- clusters
+    {value = 1,     amount = 10,    mdl = "models/eternalis/currency/banknote_1_cluster_10.mdl"},
+    {value = 2,     amount = 10,    mdl = "models/eternalis/currency/banknote_2_cluster_10.mdl"},
+    {value = 5,     amount = 10,    mdl = "models/eternalis/currency/banknote_5_cluster_10.mdl"},
+    {value = 10,    amount = 10,    mdl = "models/eternalis/currency/banknote_10_cluster_10.mdl"},
+    {value = 20,    amount = 10,    mdl = "models/eternalis/currency/banknote_20_cluster_10.mdl"},
+    {value = 50,    amount = 10,    mdl = "models/eternalis/currency/banknote_50_cluster_10.mdl"},
+    {value = 100,   amount = 10,    mdl = "models/eternalis/currency/banknote_100_cluster_10.mdl"},
 }
 
 function MoneySort(amount)
@@ -50,6 +61,8 @@ function MoneySort(amount)
             end
         end
     end
+
+    --PrintTable(sortedMoney)
 
     return sortedMoney
 end

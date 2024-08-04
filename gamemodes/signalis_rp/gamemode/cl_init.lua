@@ -37,3 +37,15 @@ local fontSettings = {
 surface.CreateFont("SignalisDocumentsFontMedium", fontSettings)
 fontSettings.size = 38
 surface.CreateFont("SignalisDocumentsFontBig", fontSettings)
+
+fontSettings.size = 32
+surface.CreateFont("SignalisRadioFontToggle", fontSettings)
+
+fontSettings.size = 22
+surface.CreateFont("SignalisRadioReceiver", fontSettings)
+
+fontSettings.size = 44
+surface.CreateFont("SignalisRadioFrequency", fontSettings)
+
+fontSettings.size = 32
+surface.CreateFont("SignalisRadioTranscription", fontSettings)
