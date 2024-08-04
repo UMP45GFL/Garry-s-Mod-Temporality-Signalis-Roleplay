@@ -11,13 +11,13 @@ local radio_icon_test = "eternalis/radio/radio_icon_test.png"
 local radio_icon_signal = "eternalis/radio/radio_icon_signal.png"
 local radio_icon_data = "eternalis/radio/radio_icon_data.png"
 
-local sound_switch = "eternalis/signalis_radio/radio_switch.wav"
-local sound_static = "sound/eternalis/environment/radio/tcp_random_radio_static.mp3"
+local sound_switch = "eternalis/signalis_ui/radio_switch.wav"
+local sound_static = "sound/eternalis/signalis_radio/tcp_random_radio_static.mp3"
 
 local signals = {
 	{
 		frequency = 84000,
-		snd = "sound/eternalis/environment/radio/tcp_d1_12_three_note_odditiy_irdial.mp3",
+		snd = "sound/eternalis/signalis_radio/tcp_d1_12_three_note_odditiy_irdial.mp3",
 		length = 245,
 		is_burst = true,
 
@@ -28,7 +28,7 @@ local signals = {
 	},
 	{
 		frequency = 190000,
-		snd = "sound/eternalis/environment/radio/tcp_d1_01_the_swedish_rhapsody_irdial.mp3",
+		snd = "sound/eternalis/signalis_radio/tcp_d1_01_the_swedish_rhapsody_irdial.mp3",
 		length = 454,
 		strength = 0.7,
 	},
