@@ -189,6 +189,13 @@ if CLIENT then
                 elseif string.find(surface, "glass") then
                     sound = "physics/glass/glass_sheet_impact_soft"..MathRandom(3)..".wav"
 
+                elseif string.find(surface, "carpet") then
+                    local ext = "a"
+                    if math.random(1,2) == 1 then
+                        ext = "b"
+                    end
+                    sound = "footsteps/footsteps_carpet_"..ext..MathRandom(4)..".wav"
+
                 else
                     sound = path .. "dirt"..rnd4..".wav"
                     ErrorNoHalt("No good sound for surface: " .. surface)
