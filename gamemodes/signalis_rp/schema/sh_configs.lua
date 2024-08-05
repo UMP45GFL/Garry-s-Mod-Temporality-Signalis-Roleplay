@@ -4,7 +4,6 @@ ix.currency.singular = "rationmark"
 ix.currency.plural = "rationmarks"
 
 ix.config.SetDefault("scoreboardRecognition", true)
-ix.config.SetDefault("music", "music/hl2_song19.mp3")
 ix.config.SetDefault("maxAttributes", 60)
 
 ix.config.Add("rationTokens", 20, "The amount of rationmarks that a person will get from a ration", nil, {
