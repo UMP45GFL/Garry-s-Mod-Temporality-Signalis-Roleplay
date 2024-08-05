@@ -16,7 +16,11 @@ ix.option.Add("musicSystemEnabled", ix.type.bool, true, {
 	category = "Music"
 })
 
-local path = "sound/eternalis/signalis_ost/"
+ix.option.Add("musicSystemVolume", ix.type.number, 0.7, {
+	category = "appearance", min = 0, max = 1, decimals = 1
+})
+
+local path = "eternalis/signalis_ost/"
 
 local trackList = {
 	-- casual ones
@@ -43,6 +47,7 @@ end
 if CLIENT then
 	local last_music = nil
 	local last_music_name = nil
+	local last_vol_mul = nil
 	local registered_music = {}
 
 	local function ResetMusicInfo()
@@ -95,6 +100,14 @@ if CLIENT then
 		if client.Alive != nil and CurTime() < next_music_check and client:Alive() and !client:IsBot() and client:Team() != TEAM_SPECTATOR then
 			next_music_check = CurTime() + 1
 
+			local vol_mul = ix.option.Get("musicSystemVolume", 0.7)
+
+			if last_vol_mul != nil and last_vol_mul != vol_mul and last_music != nil then
+				last_music:ChangeVolume(vol_mul, 4)
+			end
+
+			last_vol_mul = vol_mul
+
 			if music_info == nil or next_music_play < CurTime() then
 				if #song_queue > 0 then
 					local next_song = table.remove(song_queue, math.random(1, #song_queue))
@@ -102,7 +115,7 @@ if CLIENT then
 						music_info = {
 							nextPlay = 0,
 							name = next_song.name,
-							volume = next_song.volume,
+							volume = next_song.volume * vol_mul,
 							length = next_song.length + math.random(18, 50),
 							sound = next_song.sound,
 							playUntil = function()
