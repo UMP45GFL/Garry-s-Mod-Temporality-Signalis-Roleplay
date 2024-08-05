@@ -1,7 +1,7 @@
 CLASS.name = "LSTR Replika"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.availableByDefault = true
+CLASS.availableByDefault = false
 CLASS.models = {
 	{
 		mdl = "models/citric/signalis_lstr/elster_pm.mdl",
