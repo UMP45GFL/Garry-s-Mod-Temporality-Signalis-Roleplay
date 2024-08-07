@@ -7,7 +7,7 @@ CLASS.models = {
 		mdl = "models/citric/signalis_lstr/elster_pm.mdl",
 		hullMins = Vector(-12, -12, 0),
 		hullMaxs = Vector(12, 12, 70),
-        skin = "3"
+        skin = "0"
 	}
 }
 CLASS.health = 115
