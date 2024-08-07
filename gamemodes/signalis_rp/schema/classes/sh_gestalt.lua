@@ -7,29 +7,101 @@ CLASS.models = {
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 59)
     },
+    -- penrose program
     {
         mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 68),
         skin = "2"
     },
+    /* polytechnical school
     {
         mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 68),
         skin = "1"
     },
+    */
+    /* penrose - cancer :sob:
     {
         mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 68),
         skin = "0"
     },
+    */
     {
         mdl = "models/voxaid/isa/isa_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
-    }
+    },
+
+    -- female gestalt - different hair
+    {
+        mdl = "models/female/f_geshtalt.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+    },
+    {
+        mdl = "models/female/f_geshtalt.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+        bodygroups = "01"
+    },
+    {
+        mdl = "models/female/f_geshtalt.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+        bodygroups = "02"
+    },
+    {
+        mdl = "models/female/f_geshtalt.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+        bodygroups = "03"
+    },
+    {
+        mdl = "models/female/f_geshtalt.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+        bodygroups = "04"
+    },
+
+    -- male gestalt - different hair
+    {
+        mdl = "models/male/m_geshtalt.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+        skin = "5"
+    },
+    {
+        mdl = "models/male/m_geshtalt.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+        skin = "5",
+        bodygroups = "01"
+    },
+    {
+        mdl = "models/male/m_geshtalt.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+        skin = "5",
+        bodygroups = "02"
+    },
+    {
+        mdl = "models/male/m_geshtalt.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+        skin = "5",
+        bodygroups = "03"
+    },
+    {
+        mdl = "models/male/m_geshtalt.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+        skin = "5",
+        bodygroups = "04"
+    },
 }
 CLASS.health = 75 -- amount of health the player has
 CLASS.armor = nil -- string of the classname of an armor
