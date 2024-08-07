@@ -76,18 +76,21 @@ ix.anim.gestalt = {
 		--[ACT_MP_RUN] = {ACT_RUN, ACT_RUN_AIM_RIFLE_STIMULATED},
 		[ACT_LAND] = {ACT_RESET, ACT_RESET}
 	},
-	/*
 	pistol = {
 		[ACT_MP_STAND_IDLE] = {ACT_IDLE_PISTOL, ACT_IDLE_ANGRY_PISTOL},
 		[ACT_MP_CROUCH_IDLE] = {ACT_COVER_LOW, ACT_RANGE_AIM_SMG1_LOW},
+
 		[ACT_MP_WALK] = {ACT_WALK, ACT_WALK_AIM_PISTOL},
+
 		[ACT_MP_CROUCHWALK] = {ACT_WALK_CROUCH, ACT_WALK_CROUCH_AIM_RIFLE},
+		
 		[ACT_MP_RUN] = {ACT_RUN, ACT_RUN_AIM_PISTOL},
+		
 		[ACT_LAND] = {ACT_RESET, ACT_RESET},
+
 		attack = ACT_GESTURE_RANGE_ATTACK_PISTOL,
 		reload = ACT_RELOAD_PISTOL
 	},
-	*/
 	smg = {
 		[ACT_MP_STAND_IDLE] = {ACT_IDLE_SMG1_RELAXED, ACT_IDLE_ANGRY_SMG1},
 		[ACT_MP_CROUCH_IDLE] = {ACT_COVER_LOW, ACT_RANGE_AIM_SMG1_LOW},
@@ -143,3 +146,5 @@ ix.anim.SetModelClass("models/voxaid/signalis_mynah/mynah_pm.mdl", "replika")
 ix.anim.SetModelClass("models/voxaid/alina/alina_pm.mdl", "gestalt")
 ix.anim.SetModelClass("models/citric/signalis_ariane/ariane_pm.mdl", "gestalt")
 ix.anim.SetModelClass("models/voxaid/isa/isa_pm.mdl", "gestalt")
+ix.anim.SetModelClass("models/male/m_geshtalt.mdl", "gestalt")
+ix.anim.SetModelClass("models/female/f_geshtalt.mdl", "gestalt")
