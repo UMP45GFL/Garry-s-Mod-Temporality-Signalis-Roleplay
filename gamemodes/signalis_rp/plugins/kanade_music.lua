@@ -6,6 +6,7 @@ PLUGIN.license = [[meow]]
 
 ix.lang.AddTable("english", {
 	optMusicSystemEnabled = "Enable music",
+	optmusicSystemVolume = "Music volume",
 })
 
 ix.config.Add("musicSystemEnabled", true, "Whether or to enable the music system", nil, {
@@ -17,7 +18,7 @@ ix.option.Add("musicSystemEnabled", ix.type.bool, true, {
 })
 
 ix.option.Add("musicSystemVolume", ix.type.number, 0.7, {
-	category = "appearance", min = 0, max = 1, decimals = 1
+	category = "Music", min = 0, max = 1, decimals = 1
 })
 
 local path = "eternalis/signalis_ost/"
