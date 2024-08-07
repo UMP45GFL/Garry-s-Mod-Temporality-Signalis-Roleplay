@@ -85,14 +85,7 @@ end
 
 -- populates labels in the status screen
 function Schema:UpdateCharacterInfo(panel)
-	if (LocalPlayer():Team() == FACTION_GESTALT) then
-		panel.cid:SetLabelText(L("citizenid"))
-		panel.cid:SetText(string.format("##%s", LocalPlayer():GetCharacter():GetData("cid") or "UNKNOWN"))
-		panel.cid:SizeToContents()
-	end
-
-	-- TODO
-	if (LocalPlayer():Team() == FACTION_REPLIKA) then
+	if (LocalPlayer():Team() == FACTION_GESTALT or LocalPlayer():Team() == FACTION_REPLIKA) then
 		panel.cid:SetLabelText(L("citizenid"))
 		panel.cid:SetText(string.format("##%s", LocalPlayer():GetCharacter():GetData("cid") or "UNKNOWN"))
 		panel.cid:SizeToContents()
