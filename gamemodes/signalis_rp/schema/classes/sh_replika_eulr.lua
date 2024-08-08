@@ -31,6 +31,20 @@ CLASS.medical_knowledge = 2
 CLASS.min_medical_knowledge = 0
 CLASS.max_medical_knowledge = 4
 
+CLASS.description = {
+	[[Einfache Universelle Leichte Replika
+- 'Eule' -
+(Simple Universal Light Replika 'Owl')
+Type: Generation 4 Low-Cost General Purpose
+Frame: Biomechanical with Polyethylene Shell
+Height: 175 cm]],
+
+	[[EULR units are the backbone of the Eusan Nation's workforce.
+These elegant multi-purpose worker units are suited for all kinds of domestic tasks like cleaning, cooking, and simple medical and office work.
+Eules are highly social and get along well with each other as well as most other Replika Models.
+While unfit for combat, their lightweight frame makes them a prime choice for distant facilities where supplies are limited.]]
+}
+
 CLASS_REPLIKA_EULR = CLASS.index
 
 function CLASS:OnSet(client)

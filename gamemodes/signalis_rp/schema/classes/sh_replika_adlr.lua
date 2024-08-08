@@ -31,6 +31,19 @@ CLASS.medical_knowledge = 0
 CLASS.min_medical_knowledge = 0
 CLASS.max_medical_knowledge = 3
 
+CLASS.description = {
+	[[Administration-, Datenverarbeitung-, Logistik-Replika
+- 'Adler' -
+(Administration, Data Processing, Logistics Replika 'Eagle')
+Type: Generation 5 High Command Specialist
+Frame: Biomechanical with Polyethylene Shell and Titanium Skeleton
+Height: 175 cm]],
+
+	[[An integral part of every Protektor Führungskommando is the Administrator unit.
+A single ADLR unit can manage and oversee all the administrative tasks for an entire facility, freeing other Operational Command units to focus on the direct control of Protektor units.
+The Adler is designed to work as a direct counterpart to the Falke Unit, serving as her adjutant by taking care of necessary paperwork and calculations.]]
+}
+
 CLASS_REPLIKA_ADLR = CLASS.index
 
 function CLASS:OnSet(client)

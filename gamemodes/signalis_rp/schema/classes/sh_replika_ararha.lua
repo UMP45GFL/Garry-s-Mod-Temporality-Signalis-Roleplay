@@ -31,6 +31,20 @@ CLASS.medical_knowledge = 0
 CLASS.min_medical_knowledge = 0
 CLASS.max_medical_knowledge = 3
 
+CLASS.description = {
+	[[Allzweck-Reparatur-Arbeiter Replika
+- 'Ara' -
+(All-Purpose Repair Worker Replika 'Macaw')
+Type: Generation 2 Low-Cost General Purpose
+Frame: Biomechanical with Titanium-Reinforced Polyethylene Shell
+Height: 185 cm]],
+
+	[[The tough 'worker bees' of the construction and repair industry.
+One of the earlier Replika designs, the simple but efficient Aras are actually the most-produced Replika type to date.
+These strong and heavy worker units are a perfect fit for work in construction and production of industrial goods.
+In many places throughout our Nation, Aras have already replaced all Gestalt workers in fields like Klimaforming and explosive ordnance disposal.]]
+}
+
 CLASS_REPLIKA_ARARHA = CLASS.index
 
 function CLASS:OnSet(client)

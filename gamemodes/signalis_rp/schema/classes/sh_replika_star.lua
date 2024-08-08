@@ -31,6 +31,21 @@ CLASS.medical_knowledge = 0
 CLASS.min_medical_knowledge = 0
 CLASS.max_medical_knowledge = 3
 
+CLASS.description = {
+	[[Sicherheitstechniker-Aufseher-Replika
+- 'Star' -
+(Security Technician Guard Replika 'Starling')
+Type: Generation 4 Low-Cost Combat Unit
+Frame: Biomechanical with Polyethylene Shell and Bullet-Resistant Armor Plating
+Height: 220cm]],
+
+	[[The Standard model of the Protektor Security Technicians.
+Fitted with extended legs, STAR units gracefully tower over most Gestalts.
+Despite their heavy armor, they can move swiftly with their long stride.
+Their cool and detached demeanor allows them to analyze situations with objectivity and deploy force as required.
+Trained in close combat and riot control techniques, they operate best in small squads led by an officer STAR unit equipped with a ballistic shield.]]
+}
+
 CLASS_REPLIKA_STAR = CLASS.index
 
 function CLASS:OnSet(client)

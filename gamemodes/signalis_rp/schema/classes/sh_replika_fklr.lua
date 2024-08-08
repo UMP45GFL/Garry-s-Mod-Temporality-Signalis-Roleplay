@@ -31,6 +31,15 @@ CLASS.medical_knowledge = 0
 CLASS.min_medical_knowledge = 0
 CLASS.max_medical_knowledge = 4
 
+CLASS.description = {
+	[[Führungskommando-Leiteinheit-Replika
+- 'Falke' -
+(Operational Command Control Unit Replika 'Falcon')
+Type: Generation 6 High-Tech Bioresonance Command Unit
+Frame: Biomechanical with Polyethylene Shell and Bullet-Resistant Armor Plating
+Height: 250 cm]]
+}
+
 CLASS_REPLIKA_FKLR = CLASS.index
 
 function CLASS:OnSet(client)

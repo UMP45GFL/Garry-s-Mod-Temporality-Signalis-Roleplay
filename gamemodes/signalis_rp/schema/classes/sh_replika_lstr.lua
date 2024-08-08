@@ -33,6 +33,20 @@ CLASS.medical_knowledge = 1
 CLASS.min_medical_knowledge = 0
 CLASS.max_medical_knowledge = 5
 
+CLASS.description = {
+	[[Landvermessungs-/Schiff-Techniker Replika
+- 'Elster' -
+(Land Survey/Ship Technician Replika 'Magpie')
+Type: Generation 5 Kosmo-Pioneer Specialist
+Frame: Biomechanical with carbon fiber-reinforced Polyethylene Shell and Titanium Skeleton
+Height: 178 cm]],
+
+	[[A versatile combat engineer unit primarily designed for orbital service.
+These tough and stoic loners are best suited as specialist Sappers and Scouts.
+Their technical knowledge and combat capabilities make these units true survivalists, especially when in their iconic white-and-blue heavy combat configuration, which sports bullet-resistant armor plating on their chest and forearms.
+Since the original neural pattern for this unit was lost with the destruction of the central Neural Archive on Vineta, new LSTR units have been produced based on a decommissioned unit from the Penrose Program.]]
+}
+
 CLASS_REPLIKA_LSTR = CLASS.index
 
 function CLASS:OnSet(client)

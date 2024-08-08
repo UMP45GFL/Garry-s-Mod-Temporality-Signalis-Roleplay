@@ -29,6 +29,19 @@ CLASS.weapon_noStartBonus = true
 CLASS.medical_knowledge = 0
 CLASS.medical_noStartBonus = true
 
+CLASS.description = {
+	[[Sicherheitstechniker-Controller-Replika
+- 'Storch' -
+(Security Technician Controller Replika 'Stork')
+Type: Generation 5 Combat Lead Unit
+Frame: Biomechanical with Polyethylene Shell and Bullet-Resistant Armor Plating
+Height: 240cm]],
+
+	[[Each Cadre of Protektor Security Technicians is overseen by a Controller Unit, the most common of which is the STCR "Stork" Type.
+One of the tallest Replika models thanks to their extended legs, Storks figuratively and literally keep a constant birds-eye view of any situation ready to direct and coordinate their assigned Security Technicians.
+Their tough, no-nonsense demeanor, though sometimes described as brutal and even cruel, makes them the perfect fit as unwavering sentinels of order.]]
+}
+
 CLASS_REPLIKA_STCR = CLASS.index
 
 function CLASS:OnSet(client)

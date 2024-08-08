@@ -31,6 +31,15 @@ CLASS.medical_knowledge = 0
 CLASS.min_medical_knowledge = 0
 CLASS.max_medical_knowledge = 4
 
+CLASS.description = {
+	[[Kommando-Leiteinheit Bioresonanztechnik-Replika
+- 'Kolibri' -
+(Command Control Unit Bioresonance Technology Replika 'Hummingbird')
+Type: Generation 6 High-Tech Bioresonance Specialist
+Frame: Biomechanical with Polyethylene Shell and Bullet-Resistant Armor Plating
+Height: 152 cm]]
+}
+
 CLASS_REPLIKA_KLBR = CLASS.index
 
 function CLASS:OnSet(client)

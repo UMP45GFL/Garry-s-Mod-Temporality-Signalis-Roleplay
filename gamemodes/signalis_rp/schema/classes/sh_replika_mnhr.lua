@@ -30,6 +30,19 @@ CLASS.medical_knowledge = 0
 CLASS.min_medical_knowledge = 0
 CLASS.max_medical_knowledge = 2
 
+CLASS.description = {
+	[[Minenarbeit-, Nukleartechnik-, Hochsicherheits-Replika
+- 'Mynah' -
+(Mining, Nuclear Tech, High-Security Replika 'Mynah')
+Type: Generation 3 Industrial Specialist
+Frame: Biomechanical with High-Security Reinforced Armor-Plated Servoshell
+Height: 260 cm]],
+
+[[When it comes to dangerous cargo, heavy machinery and hazardous environments, no other model rivals the MNHR units with their high-security power armor bodies.
+Even in lethal radiation, under crushing pressure and in zero G, they keep their calm demeanor and show exemplary teamwork.
+Despite their hulking bodies, underneath their face shields a standard Generation 3 Cranial Construction can be found, making maintenance and social interfacing as easy as with any other Replika Model.]]
+}
+
 CLASS_REPLIKA_MNHR = CLASS.index
 
 function CLASS:OnSet(client)
