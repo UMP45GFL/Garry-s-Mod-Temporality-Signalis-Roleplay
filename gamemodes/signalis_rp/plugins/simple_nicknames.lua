@@ -52,12 +52,21 @@ ix.command.Add("SetNickname", {
 			end
 
 			if (!string.find(name, "'")) then
-				name = string.gsub(name, " ", " '" .. nickname .. "' ")
+				if string.find(name, " ") then
+					name = string.gsub(name, " ", " '" .. nickname .. "' ")
+				else
+					name = name .. " '" .. nickname .. "'"
+				end
 			else
 				name = string.gsub(name, "'.*'", "'" .. nickname .. "'")
 			end
 		else
-			name = string.gsub(name, "'.*' ", "")
+			if (string.find(name, "'.*' ")) then
+				name = string.gsub(name, "'.*' ", "")
+
+			elseif (string.find(name, " '*'")) then
+				name = string.gsub(name, " '.*'", "")
+			end
 		end
 
 		character:SetName(name)
