@@ -13,7 +13,7 @@ CLASS.health = 130 -- they are a bit more robust
 CLASS.armor = "bullet_resistant_armor_plating"
 CLASS.physical_damage_taken = 0.87 -- replikas take less physical damage by default
 CLASS.bullet_damage_taken = 0.72 -- replikas take less bullet damage by default
-CLASS.mental_strength = 1.2 -- They definitely have a bit higher mental strength
+CLASS.mental_strength = 0.9 -- It is said in signalis that they are more unstable
 CLASS.hunger = 0.9
 CLASS.thirst = 0.9
 -- they TALL and STRONK
@@ -24,7 +24,7 @@ CLASS.max_stamina = 1.05
 -- attributes
 CLASS.remove_attributes = true
 
-CLASS.weapon_knowledge = 4
+CLASS.weapon_knowledge = 3
 CLASS.weapon_noStartBonus = true
 CLASS.medical_knowledge = 0
 CLASS.medical_noStartBonus = true
