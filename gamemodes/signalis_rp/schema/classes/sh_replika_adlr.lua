@@ -6,7 +6,8 @@ CLASS.models = {
 	{
 		mdl = "models/citric/signalis_adlr/adler_pm.mdl",
 		hullMins = Vector(-11, -11, 0),
-		hullMaxs = Vector(11, 11, 73)
+		hullMaxs = Vector(11, 11, 73),
+		gender = "male"
 	}
 }
 CLASS.health = 110

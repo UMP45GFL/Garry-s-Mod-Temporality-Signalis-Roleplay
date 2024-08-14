@@ -6,8 +6,9 @@ CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_arar/arar_pm.mdl",
 		hullMins = Vector(-12, -12, 0),
-		hullMaxs = Vector(12, 12, 75)
-	},
+		hullMaxs = Vector(12, 12, 75),
+		gender = "female"
+	}
 }
 CLASS.health = 120
 CLASS.armor = nil

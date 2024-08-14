@@ -6,7 +6,8 @@ CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_star/star_pm.mdl",
 		hullMins = Vector(-12, -12, 0),
-		hullMaxs = Vector(12, 12, 86)
+		hullMaxs = Vector(12, 12, 86),
+		gender = "female"
 	}
 }
 CLASS.health = 120 -- they are a bit more robust

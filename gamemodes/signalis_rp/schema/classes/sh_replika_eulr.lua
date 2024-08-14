@@ -7,6 +7,7 @@ CLASS.models = {
 		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
 		hullMins = Vector(-10, -10, 0),
 		hullMaxs = Vector(10, 10, 70),
+		gender = "female"
 	}
 }
 CLASS.health = 100

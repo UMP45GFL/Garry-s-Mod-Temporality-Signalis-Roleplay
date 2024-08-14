@@ -6,7 +6,8 @@ CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_mynah/mynah_pm.mdl",
 		hullMins = Vector(-20, -20, 0),
-		hullMaxs = Vector(20, 20, 100)
+		hullMaxs = Vector(20, 20, 100),
+		gender = "female"
 	}
 }
 CLASS.health = 200

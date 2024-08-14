@@ -6,7 +6,8 @@ CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_kolibri/kolibri_pm.mdl",
 		hullMins = Vector(-10, -10, 0),
-		hullMaxs = Vector(10, 10, 60)
+		hullMaxs = Vector(10, 10, 60),
+		gender = "female"
 	}
 }
 CLASS.health = 115

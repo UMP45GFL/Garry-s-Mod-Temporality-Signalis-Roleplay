@@ -6,7 +6,8 @@ CLASS.models = {
 	{
 		mdl = "models/citric/signalis_fklr/falke_pm.mdl",
 		hullMins = Vector(-13, -13, 0),
-		hullMaxs = Vector(13, 13, 95)
+		hullMaxs = Vector(13, 13, 95),
+		gender = "female"
 	}
 }
 CLASS.health = 150

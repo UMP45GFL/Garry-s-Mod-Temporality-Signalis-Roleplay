@@ -6,7 +6,8 @@ CLASS.models = {
 	{
 		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",
 		hullMins = Vector(-13, -13, 0),
-		hullMaxs = Vector(13, 13, 92)
+		hullMaxs = Vector(13, 13, 92),
+		gender = "female"
 	}
 }
 CLASS.health = 130 -- they are a bit more robust

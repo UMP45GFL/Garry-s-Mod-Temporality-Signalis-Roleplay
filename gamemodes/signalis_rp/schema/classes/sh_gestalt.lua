@@ -5,21 +5,24 @@ CLASS.models = {
     {
         mdl = "models/voxaid/alina/alina_pm.mdl",
         hullMins = Vector(-10, -10, 0),
-        hullMaxs = Vector(10, 10, 59)
+        hullMaxs = Vector(10, 10, 59),
+		gender = "female"
     },
     -- penrose program
     {
         mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 68),
-        skin = "2"
+        skin = "2",
+		gender = "female"
     },
     /* polytechnical school
     {
         mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 68),
-        skin = "1"
+        skin = "1",
+		gender = "female"
     },
     */
     /* penrose - cancer :sob:
@@ -27,13 +30,15 @@ CLASS.models = {
         mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 68),
-        skin = "0"
+        skin = "0",
+		gender = "female"
     },
     */
     {
         mdl = "models/voxaid/isa/isa_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
+		gender = "female"
     },
 
     -- female gestalt - different hair
@@ -41,30 +46,35 @@ CLASS.models = {
         mdl = "models/female/f_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
+		gender = "female"
     },
     {
         mdl = "models/female/f_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
-        bodygroups = "01"
+        bodygroups = "01",
+		gender = "female"
     },
     {
         mdl = "models/female/f_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
-        bodygroups = "02"
+        bodygroups = "02",
+		gender = "female"
     },
     {
         mdl = "models/female/f_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
-        bodygroups = "03"
+        bodygroups = "03",
+		gender = "female"
     },
     {
         mdl = "models/female/f_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
-        bodygroups = "04"
+        bodygroups = "04",
+		gender = "female"
     },
 
     -- male gestalt - different hair
@@ -72,35 +82,40 @@ CLASS.models = {
         mdl = "models/male/m_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
-        skin = "5"
+        skin = "5",
+		gender = "male"
     },
     {
         mdl = "models/male/m_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
         skin = "5",
-        bodygroups = "01"
+        bodygroups = "01",
+		gender = "male"
     },
     {
         mdl = "models/male/m_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
         skin = "5",
-        bodygroups = "02"
+        bodygroups = "02",
+		gender = "male"
     },
     {
         mdl = "models/male/m_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
         skin = "5",
-        bodygroups = "03"
+        bodygroups = "03",
+		gender = "male"
     },
     {
         mdl = "models/male/m_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
         skin = "5",
-        bodygroups = "04"
+        bodygroups = "04",
+		gender = "male"
     },
 }
 CLASS.health = 75 -- amount of health the player has
