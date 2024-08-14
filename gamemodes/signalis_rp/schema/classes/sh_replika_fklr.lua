@@ -1,4 +1,5 @@
 CLASS.name = "FKLR Replika"
+CLASS.shortName = "FKLR"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
 CLASS.availableByDefault = false

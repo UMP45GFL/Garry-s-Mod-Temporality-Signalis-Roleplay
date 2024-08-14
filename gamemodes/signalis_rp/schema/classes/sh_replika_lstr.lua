@@ -1,4 +1,5 @@
 CLASS.name = "LSTR Replika"
+CLASS.shortName = "LSTR"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
 CLASS.availableByDefault = false

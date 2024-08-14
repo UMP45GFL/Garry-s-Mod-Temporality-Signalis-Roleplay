@@ -1,4 +1,5 @@
 CLASS.name = "ARAR Replika"
+CLASS.shortName = "ARAR"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
 CLASS.availableByDefault = true
@@ -8,7 +9,15 @@ CLASS.models = {
 		hullMins = Vector(-12, -12, 0),
 		hullMaxs = Vector(12, 12, 75),
 		gender = "female"
+	},
+	/*
+	{
+		mdl = "models/voxaid/araV2/araV2_pm.mdl",
+		hullMins = Vector(-12, -12, 0),
+		hullMaxs = Vector(12, 12, 75),
+		gender = "female"
 	}
+	*/
 }
 CLASS.health = 120
 CLASS.armor = nil

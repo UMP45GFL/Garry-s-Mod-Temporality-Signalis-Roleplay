@@ -28,6 +28,10 @@ ix.config.Add("weaponProficiencyAnimations", true, "If to enable slowing down of
 	category = "Weapons"
 })
 
+ix.config.Add("facilityShortName", "S23", "Facility short name, used in naming replikas, changing this with characters already existing may break things.", nil, {
+	category = "Other"
+})
+
 SIGNALIS_MODEL_HEIGHT_FIXES = {
 	["models/citric/signalis_stcr/stcr_pm.mdl"] = -20,
 	["models/voxaid/signalis_mynah/mynah_pm.mdl"] = -30,
