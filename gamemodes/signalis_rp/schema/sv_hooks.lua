@@ -43,6 +43,20 @@ function Schema:PlayerUse(client, entity)
 	end
 end
 
+function Schema:GetFallDamage(client, speed)
+	local mul = 1
+
+	local character = client:GetCharacter()
+	if character then
+		local class = ix.class.GetClass(character.vars.class)
+		if class then
+			mul = class.physical_damage_taken
+		end
+	end
+
+	return (speed - 480) * 0.4 * mul
+end
+
 function Schema:PlayerLoadout(client)
 	client:SetNetVar("restricted")
 end
