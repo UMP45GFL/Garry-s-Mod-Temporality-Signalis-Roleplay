@@ -8,7 +8,7 @@ ix.lang.AddTable("english", {
 	PropInteractEnabled = "Enable dragging ragdolls",
 })
 
-ix.config.Add("PropInteractEnabled", true, "Whether or to enable improved prop interact.", nil, {
+ix.config.Add("PropInteractEnabled", false, "Whether or to enable improved prop interact.", nil, {
 	category = "Improved Prop interact"
 })
 
@@ -154,7 +154,7 @@ if SERVER then
         
         if not isValidIPROP(ply.propInt_iprop) and key == IN_USE and not ply.propInt_phys then
             local entity = traceForEntity(ply)
-            if entity then
+            if IsValid(entity) then
                 timer.Simple(0, function()
                     entity:Use(ply, ply, USE_SET)
                     hook.Run("PlayerUse", ply, entity)
