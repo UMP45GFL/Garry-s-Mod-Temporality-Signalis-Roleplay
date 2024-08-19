@@ -6,7 +6,7 @@ PLUGIN.license = [[meow]]
 
 ix.lang.AddTable("english", {
 	optMusicSystemEnabled = "Enable music",
-	optmusicSystemVolume = "Music volume",
+	optMusicSystemVolume = "Music volume",
 })
 
 ix.config.Add("musicSystemEnabled", true, "Whether or to enable the music system", nil, {
