@@ -46,22 +46,10 @@ local COLOR_BLACK_WHITE = {
 
 function Schema:RenderScreenspaceEffects()
 	local colorModify = {}
-	colorModify["$pp_colour_colour"] = 0.8
-	colorModify["$pp_colour_mulr"] = 0.1
-
-	if (system.IsWindows()) then
-		colorModify["$pp_colour_brightness"] = -0.01
-		colorModify["$pp_colour_contrast"] = 1.1
-	else
-		colorModify["$pp_colour_brightness"] = 0
-		colorModify["$pp_colour_contrast"] = 1
-	end
-
-	if (scannerFirstPerson) then
-		COLOR_BLACK_WHITE["$pp_colour_brightness"] = 0.05 + math.sin(RealTime() * 10) * 0.01
-		colorModify = COLOR_BLACK_WHITE
-	end
-
+	colorModify["$pp_colour_colour"] = 0.9
+	colorModify["$pp_colour_mulr"] = 0.07
+	colorModify["$pp_colour_brightness"] = 0
+	colorModify["$pp_colour_contrast"] = 1.1
 	DrawColorModify(colorModify)
 end
 
