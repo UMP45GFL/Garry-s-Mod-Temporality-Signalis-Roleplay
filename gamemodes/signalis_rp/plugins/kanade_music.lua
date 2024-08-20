@@ -17,7 +17,7 @@ ix.option.Add("musicSystemEnabled", ix.type.bool, true, {
 	category = "Music"
 })
 
-ix.option.Add("musicSystemVolume", ix.type.number, 0.7, {
+ix.option.Add("musicSystemVolume", ix.type.number, 0.5, {
 	category = "Music", min = 0, max = 1, decimals = 1
 })
 
@@ -92,7 +92,7 @@ if CLIENT then
 		return sound
 	end
 
-	local next_music_check = 100
+	local next_music_check = 0
 	local next_music_play = 0
 	function HandleMusic()
 		if !ix.config.Get("musicSystemEnabled", true) or !ix.option.Get("musicSystemEnabled", true) then return end
