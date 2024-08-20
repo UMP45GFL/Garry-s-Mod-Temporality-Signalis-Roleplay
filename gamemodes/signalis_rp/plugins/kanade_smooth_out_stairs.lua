@@ -10,12 +10,12 @@ ix.lang.AddTable("english", {
     optSmoothOutStairsSpeed = "Smooth out stairs speed"
 })
 
-ix.config.Add("SmoothOutStairsEnabled", true, "Whether or to enable smoothing out stairs.", nil, {
+ix.config.Add("SmoothOutStairsEnabled", false, "Whether or to enable smoothing out stairs.", nil, {
 	category = "Visual Effects"
 })
 
 if CLIENT then
-    ix.option.Add("SmoothOutStairsEnabled", ix.type.bool, true, {
+    ix.option.Add("SmoothOutStairsEnabled", ix.type.bool, false, {
         category = "Visual Effects"
     })
     
