@@ -98,5 +98,4 @@ function GAMEMODE:ScalePlayerDamage(ply, hitgroup, dmginfo)
 
 		dmginfo:ScaleDamage(dmg_mul)
 	end
-	print(ply, hitgroup, dmginfo, dmginfo:GetDamage())
 end
