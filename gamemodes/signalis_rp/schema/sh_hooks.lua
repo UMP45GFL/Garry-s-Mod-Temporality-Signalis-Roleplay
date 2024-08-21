@@ -22,6 +22,24 @@ function Schema:CanDrive()
 	return false
 end
 
+/*
+local function GetDefaultCharacterName(className)
+	local class = ix.class.GetClass(className)
+
+	if not class or not class.shortName then
+		return
+	end
+
+	local facilityName = ix.config.Get("facilityShortName", nil)
+
+	if facilityName then
+		return class.shortName .. "-" .. facilityName
+	end
+
+	return class.shortName
+end
+*/
+
 
 -- FKLR-S2301
 -- lua_run print(Schema:GetNewCharacterName("replika_fklr"))
@@ -32,6 +50,7 @@ function Schema:GetNewCharacterName(className)
 	local class = ix.class.GetClass(className)
 
 	if not class or not class.shortName then
+		print("Error in GetNewCharacterName: class not found", className)
 		return
 	end
 
@@ -84,10 +103,30 @@ function Schema:GetNewCharacterName(className)
 end
 
 function Schema:GetDefaultCharacterName(client, faction, class)
+	class = tonumber(class)
+
 	if class and ix.class.list[class] then
+		/*
+		local name = GetDefaultCharacterName(ix.class.list[class].uniqueID)
+		if name then
+			return name, !client:IsAdmin()
+		end
+		*/
 		local name = self:GetNewCharacterName(ix.class.list[class].uniqueID)
 		if name then
 			return name, !client:IsAdmin()
+		end
+	else
+		print("Error in GetDefaultCharacterName: class not found", class)
+	end
+end
+
+function Schema:ValidateCharacterName(name, client, class)
+	if class then
+		local defaultName = GetDefaultCharacterName(ix.class.list[class].uniqueID)
+
+		if defaultName and !string.find(name, defaultName) then
+			return true
 		end
 	end
 end
