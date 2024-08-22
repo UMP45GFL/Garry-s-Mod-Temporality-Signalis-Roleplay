@@ -40,6 +40,21 @@ local function GetDefaultCharacterName(className)
 end
 */
 
+local characterList = {}
+
+function getAllCharacters()
+	if CLIENT then return nil end
+
+	local query = mysql:Select("ix_characters")
+	query:Select("name")
+	query:Select("class")
+	query:Callback(function(data)
+		if (istable(data) and #data > 0) then
+			characterList = data
+		end
+	end)
+	query:Execute()
+end
 
 -- FKLR-S2301
 -- lua_run print(Schema:GetNewCharacterName("replika_fklr"))
@@ -49,14 +64,16 @@ function Schema:GetNewCharacterName(className)
 	local facilityName = ix.config.Get("facilityShortName", nil)
 	local class = ix.class.GetClass(className)
 
-	if not class or not class.shortName then
+	getAllCharacters()
+
+	if not class or not class.shortName or not characterList then
 		return
 	end
 
-	for _, char in pairs(ix.char.loaded) do
-		if char.vars.class == className then
+	for _, char in pairs(characterList) do
+		if char.class == className then
 			local replikaName = class.shortName
-			local charName = char.vars.name
+			local charName = char.name
 
 			-- remove facility name from the character name
 			if facilityName then
