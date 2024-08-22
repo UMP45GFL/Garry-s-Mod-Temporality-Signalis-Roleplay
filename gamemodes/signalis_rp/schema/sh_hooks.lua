@@ -51,6 +51,11 @@ function getAllCharacters()
 	query:Callback(function(data)
 		if (istable(data) and #data > 0) then
 			characterList = data
+			/*
+			net.Start("echarlist")
+				net.WriteTable(data)
+			net.Broadcast()
+			*/
 		end
 	end)
 	query:Execute()
@@ -71,6 +76,7 @@ function Schema:GetNewCharacterName(className)
 	end
 
 	for _, char in pairs(characterList) do
+		print("char: ", char.name)
 		if char.class == className then
 			local replikaName = class.shortName
 			local charName = char.name
