@@ -216,18 +216,7 @@ function PLY_META.ResetHull(self)
 end
 
 if SERVER then
-
 	function DynamicCameraUpdateTrueModel(ply)
-		-- if ply:GetNWInt("DynamicCamera:TrueSkin") ~= ply:GetSkin() then
-			-- ply:SetNWInt("DynamicCamera:TrueSkin", ply:GetSkin())
-			-- DynamicCameraUpdateView(ply)
-			-- return
-		-- end
-		-- if ply:GetNWInt("DynamicCamera:TrueBodygroups") ~= ply:GetBodygroupsAsNumber() then
-			-- ply:SetNWInt("DynamicCamera:TrueBodygroups", ply:GetBodygroupsAsNumber())
-			-- DynamicCameraUpdateView(ply)
-			-- return
-		-- end
 		local testString = ply.outfitter_mdl_help and ( ply.outfitter_mdl_help ~= "" and ply.outfitter_mdl_help ) or ply:GetModel()
 		if ply:GetNWString("DynamicCamera:TrueModel") ~= testString then
 			ply:SetNWString("DynamicCamera:TrueModel", testString)
@@ -311,9 +300,7 @@ if SERVER then
 end
 
 if CLIENT then
-	
 	local function DynamicCameraSetup( height, cheight, camheight, ccamheight )
-	
 		if LocalPlayer().SetViewOffset then 
 		else
 			timer.Simple( 2, function()
@@ -322,7 +309,7 @@ if CLIENT then
 			return
 		end
 		
-		if ix.config.Get("DynamicHeightAndHullEnabled", true) then
+		if ix.config.Get("DynamicHeightAndHullEnabled", true) == false then
 			LocalPlayer():SetHull(Vector(-16,-16,0), Vector(16,16,72))
 			LocalPlayer():SetHullDuck(Vector(-16,-16,0), Vector(16,16,36))
 			LocalPlayer():SetViewOffset(Vector(0, 0, 64))
