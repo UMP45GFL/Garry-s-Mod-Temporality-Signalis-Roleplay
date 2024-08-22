@@ -50,7 +50,6 @@ function Schema:GetNewCharacterName(className)
 	local class = ix.class.GetClass(className)
 
 	if not class or not class.shortName then
-		print("Error in GetNewCharacterName: class not found", className)
 		return
 	end
 
@@ -102,7 +101,11 @@ function Schema:GetNewCharacterName(className)
 	return class.shortName .. "-" .. facilityName .. num
 end
 
-function Schema:GetDefaultCharacterName(client, faction, class)
+function Schema:GetDefaultCharacterName(client, faction, class, value)
+	if isstring(value) and client:IsAdmin() then
+		return value, false
+	end
+
 	class = tonumber(class)
 
 	if class and ix.class.list[class] then
@@ -116,11 +119,10 @@ function Schema:GetDefaultCharacterName(client, faction, class)
 		if name then
 			return name, !client:IsAdmin()
 		end
-	else
-		print("Error in GetDefaultCharacterName: class not found", class)
 	end
 end
 
+/*
 function Schema:ValidateCharacterName(name, client, class)
 	if class then
 		local defaultName = GetDefaultCharacterName(ix.class.list[class].uniqueID)
@@ -130,3 +132,4 @@ function Schema:ValidateCharacterName(name, client, class)
 		end
 	end
 end
+*/

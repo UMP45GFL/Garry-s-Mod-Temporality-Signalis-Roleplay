@@ -14,8 +14,8 @@ if SERVER then
 	hook.Add("PlayerSwitchWeapon", "Kanade_WeaponProficiency_PlayerSwitchWeapon", function(ply, oldWeapon, newWeapon)
 		if !ix.config.Get("weaponProficiencyEffectsSystemEnabled", true) then return end
 
-		if newWeapon.SetStatRawL then
-			newWeapon.Primary.DidWeaponProficiencyCheck = true
+		if newWeapon.SetStatRawL and !newWeapon.DidWeaponProficiencyCheck then
+			newWeapon.DidWeaponProficiencyCheck = true
 
 			local character = ply:GetCharacter()
 			local newKickUp = newWeapon.Primary.KickUp
