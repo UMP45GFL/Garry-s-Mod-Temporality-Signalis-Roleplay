@@ -20,28 +20,50 @@ ATTRIBUTE.noStartBonus = function(class)
     return class.weapon_noStartBonus
 end
 
+local spread_multipliers_for_level = {
+    [0] = 1.8,
+    [1] = 1.5,
+    [2] = 1.3,
+    [3] = 1.1,
+    [4] = 1,
+    [5] = 0.9,
+    [6] = 0.85
+}
+
 ATTRIBUTE.CalculateSpread = function(character, spread)
     if !ix.config.Get("weaponProficiencySpread", true) then return spread end
 
     local attrib = character:GetAttribute("weapon", 0)
-    local multiplier = 1 / (attrib + 1)
-    multiplier = math.max(0.7, math.min(multiplier, 6))
-    multiplier = multiplier * (6 - attrib)
 
-    --print("spread: " .. spread ..  " multiplier: " .. multiplier .. " (attrib: ".. attrib ..")")
-    return spread * multiplier
+    if spread_multipliers_for_level[attrib] == nil then
+        print("Invalid spread weapon attribute value: " .. attrib)
+        return spread
+    end
+
+    return spread * spread_multipliers_for_level[attrib]
 end
+
+local recoil_multipliers_for_level = {
+    [0] = 2.5,
+    [1] = 1.9,
+    [2] = 1.5,
+    [3] = 1.1,
+    [4] = 1,
+    [5] = 0.9,
+    [6] = 0.85
+}
 
 ATTRIBUTE.CalculateRecoil = function(character, recoil)
     if !ix.config.Get("weaponProficiencyRecoil", true) then return recoil end
 
     local attrib = character:GetAttribute("weapon", 0)
-    local multiplier = 1 / (attrib + 1)
-    multiplier = math.max(0.7, math.min(multiplier, 6))
-    multiplier = multiplier * (6 - attrib)
 
-    --print("recoil: " .. recoil ..  " multiplier: " .. multiplier .. " (attrib: ".. attrib ..")")
-    return recoil * multiplier
+    if recoil_multipliers_for_level[attrib] == nil then
+        print("Invalid recoil weapon attribute value: " .. attrib)
+        return recoil
+    end
+
+    return recoil * recoil_multipliers_for_level[attrib]
 end
 
 local anim_time_multipliers_for_level = {
