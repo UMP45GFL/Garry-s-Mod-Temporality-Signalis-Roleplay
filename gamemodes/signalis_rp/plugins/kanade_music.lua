@@ -44,7 +44,7 @@ if SERVER then
 		resource.AddFile(v.sound)
 	end
 end
-
+ 
 if CLIENT then
 	local last_music = nil
 	local last_music_name = nil
@@ -98,8 +98,11 @@ if CLIENT then
 		if !ix.config.Get("musicSystemEnabled", true) or !ix.option.Get("musicSystemEnabled", true) then return end
 
 		local client = LocalPlayer()
-		if client.Alive != nil and CurTime() < next_music_check and client:Alive() and !client:IsBot() and client:Team() != TEAM_SPECTATOR then
+
+		if client.Alive != nil and CurTime() > next_music_check and client:Alive() and !client:IsBot() and client:Team() != TEAM_SPECTATOR then
 			next_music_check = CurTime() + 1
+
+			print("music check")
 
 			local vol_mul = ix.option.Get("musicSystemVolume", 0.7)
 
