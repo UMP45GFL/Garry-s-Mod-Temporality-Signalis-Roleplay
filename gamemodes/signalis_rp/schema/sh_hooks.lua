@@ -76,13 +76,16 @@ function Schema:GetNewCharacterName(className)
 	end
 
 	for _, char in pairs(characterList) do
-		print("char: ", char.name)
 		if char.class == className then
 			local replikaName = class.shortName
 			local charName = char.name
 
 			-- remove facility name from the character name
 			if facilityName then
+				if !string.find(charName, facilityName) then
+					continue
+				end
+
 				charName = string.gsub(charName, facilityName, "")
 			end
 
@@ -93,20 +96,17 @@ function Schema:GetNewCharacterName(className)
 			charName = string.gsub(charName, "-", "")
 
 			local len = string.len(charName)
+			local numString = ""
 			for i=1, len do
 				if not nums[i] then
 					local ch = string.sub(charName, i, i)
 
 					if tonumber(ch) then
-						if len >= i + 1 and tonumber(string.sub(charName, i + 1, i + 1)) then
-							local num = tonumber(ch..string.sub(charName, i + 1, i + 1))
-							nums[i + 1] = num
-						else
-							nums[i] = tonumber(ch)
-						end
+						numString = numString .. ch
 					end
 				end
 			end
+			table.insert(nums, tonumber(numString))
 		end
 	end
 
