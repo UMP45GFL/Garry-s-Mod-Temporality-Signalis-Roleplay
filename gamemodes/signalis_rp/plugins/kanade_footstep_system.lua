@@ -57,27 +57,6 @@ end
 
 local MAT = BackwardsEnums( "MAT_" )
 
-local footsteps = {
-
-}
-
-/*
-hook.Add("PostPlayerDraw", "PostPlayerDraw2132412", function()
-    local v = LocalPlayer()
-    local tr = util.TraceHull({
-        start = v:GetPos() + Vector(0,0,5),
-        endpos = v:GetPos() + (Angle(90,0,0):Forward() * 70),
-        filter = v,
-        mins = Vector(-10, -10, -10),
-        maxs = Vector(10, 10, 10)
-    })
-    if !tr.Hit then return end
-
-    render.SetColorMaterial()
-    render.DrawSphere(tr.HitPos, 5, 30, 30, Color( 0, 175, 175, 100 ) )
-end)
-*/
-
 local function MathRandom(num)
 	return (math.Round(math.random(1, 99999999) % (num)) + 1)
 end
@@ -212,7 +191,6 @@ if CLIENT then
     hook.Add("Tick", "Kanade_FootstepSystem_Tick", Kanade_Footsteps)
 end
 
-
 local function OriginalFootstepFunction(ply, pos, foot, sound, volume, filter)
     if (ix.config.Get("FootstepSystemEnabled", true)) then
         if string.find(sound, "ladder") then
@@ -223,6 +201,6 @@ local function OriginalFootstepFunction(ply, pos, foot, sound, volume, filter)
     return false
 end
 
-function Schema:PlayerFootstep(ply, pos, foot, sound, volume, filter)
+hook.Add("PlayerFootstep", "Kanade_FootstepSystem_PlayerFootstep", function(ply, pos, foot, sound, volume, filter)
     return OriginalFootstepFunction(ply, pos, foot, sound, volume, filter)
-end
+end)

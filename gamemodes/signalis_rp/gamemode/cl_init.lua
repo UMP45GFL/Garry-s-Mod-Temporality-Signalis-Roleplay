@@ -12,10 +12,6 @@ net.Receive("updatebattery", function(len)
 	end
 end)
 
-function GM:PlayerFootstep(ply, pos, foot, sound, volume, filter)
-    return true
-end
-
 local fontSettings = {
 	font = "Perfect DOS VGA 437",
 	--font = "Pokémon DP Pro",

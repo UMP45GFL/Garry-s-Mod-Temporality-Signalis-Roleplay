@@ -28,10 +28,6 @@ function Schema:CanPlayerJoinClass(client, class, info)
 	return false
 end
 
-function Schema:PlayerFootstep(client, position, foot, soundName, volume)
-	return true
-end
-
 local COLOR_BLACK_WHITE = {
 	["$pp_colour_addr"] = 0,
 	["$pp_colour_addg"] = 0,

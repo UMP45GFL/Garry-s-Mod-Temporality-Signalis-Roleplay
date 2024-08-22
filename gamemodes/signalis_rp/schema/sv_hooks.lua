@@ -78,11 +78,6 @@ function Schema:CharacterVarChanged(character, key, oldValue, value)
 	end
 end
 
-function Schema:PlayerFootstep(client, position, foot, soundName, volume)
-	--Kanade_Footsteps()
-	return true
-end
-
 function Schema:PlayerNoClip(client)
 end
 
