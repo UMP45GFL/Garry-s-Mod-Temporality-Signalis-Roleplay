@@ -172,7 +172,7 @@ end
 
 -- CAUTION : OVERRIDE
 function PLY_META.ResetHull(self)
-	if ix.config.Get("DynamicHeightAndHullEnabled", true) then
+	if ix.config.Get("DynamicHeightAndHullEnabled", true) == false then
 		self:SetHull(Vector(-16,-16,0), Vector(16,16,72))
 		self:SetHullDuck(Vector(-16,-16,0), Vector(16,16,36))
 		return
