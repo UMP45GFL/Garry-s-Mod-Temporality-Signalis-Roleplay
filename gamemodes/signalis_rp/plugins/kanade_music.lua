@@ -102,8 +102,6 @@ if CLIENT then
 		if client.Alive != nil and CurTime() > next_music_check and client:Alive() and !client:IsBot() and client:Team() != TEAM_SPECTATOR then
 			next_music_check = CurTime() + 1
 
-			print("music check")
-
 			local vol_mul = ix.option.Get("musicSystemVolume", 0.7)
 
 			if last_vol_mul != nil and last_vol_mul != vol_mul and last_music != nil then
