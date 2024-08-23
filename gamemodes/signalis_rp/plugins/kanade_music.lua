@@ -17,8 +17,8 @@ ix.option.Add("musicSystemEnabled", ix.type.bool, true, {
 	category = "Music"
 })
 
-ix.option.Add("musicSystemVolume", ix.type.number, 0.5, {
-	category = "Music", min = 0, max = 1, decimals = 1
+ix.option.Add("musicSystemVolume", ix.type.number, 0.25, {
+	category = "Music", min = 0, max = 1, decimals = 2
 })
 
 local path = "eternalis/signalis_ost/"
