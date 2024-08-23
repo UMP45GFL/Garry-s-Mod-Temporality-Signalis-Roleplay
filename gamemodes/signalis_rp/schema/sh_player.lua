@@ -19,3 +19,22 @@ function meta:IsFemale()
 
 	return false
 end
+
+function meta:IsReplika()
+	return self:Team() == FACTION_REPLIKA
+end
+
+if SERVER then
+	util.AddNetworkString("sendErrorSound")
+
+	function meta:SendErrorSound()
+		net.Start("sendErrorSound")
+		net.Send(self)
+	end
+end
+
+if CLIENT then
+	net.Receive("sendErrorSound", function()
+		surface.PlaySound("eternalis/signalis_ui/no.wav")
+	end)
+end

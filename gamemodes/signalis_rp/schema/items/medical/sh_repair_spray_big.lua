@@ -6,3 +6,4 @@ ITEM.price = 38
 
 ITEM.addHealth = 50
 ITEM.applySound = "items/medshot4.wav"
+ITEM.replikaOnly = true

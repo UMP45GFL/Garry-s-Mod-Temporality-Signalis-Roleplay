@@ -25,4 +25,5 @@ LANGUAGE = {
 	economy = "Economy",
 
 	voices = "Voices",
+	replikaUseOnly = "This item can only be used by a Replika.",
 }
