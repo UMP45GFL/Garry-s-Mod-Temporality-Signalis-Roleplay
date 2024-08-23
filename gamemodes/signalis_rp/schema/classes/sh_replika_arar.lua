@@ -2,7 +2,7 @@ CLASS.name = "ARAR Replika"
 CLASS.shortName = "ARAR"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.availableByDefault = true
+CLASS.availableByDefault = false
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_arar/arar_pm.mdl",

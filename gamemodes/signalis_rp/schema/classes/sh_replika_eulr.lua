@@ -2,7 +2,7 @@ CLASS.name = "EULR Replika"
 CLASS.shortName = "EULR"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
-CLASS.availableByDefault = true
+CLASS.availableByDefault = false
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
