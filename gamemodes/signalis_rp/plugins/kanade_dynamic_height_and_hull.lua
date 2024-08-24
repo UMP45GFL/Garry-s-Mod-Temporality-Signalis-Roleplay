@@ -26,7 +26,7 @@ ix.config.Add("DynamicHeightAndHullMaxHeight", 200, "Max height.", nil, {
 	category = "Dynamic Height And Hull"
 })
 
-ix.config.Add("DynamicHeightAndHullMaxSize", 18, "Max hull size for playermodels.", nil, {
+ix.config.Add("DynamicHeightAndHullMaxSize", 16, "Max hull size for playermodels.", nil, {
 	data = {min = 1, max = 100},
 	category = "Dynamic Height And Hull"
 })
