@@ -130,7 +130,7 @@ CLASS.jump_power = 1 -- multiplier of how strong the player can jump
 CLASS.max_stamina = 1 -- multiplier of how much stamina the player has
 
 local breathingSounds = {
-	snd = "eternalis/player/breathing_female.wav",
+	snd = "eternalis/player/breathing/breathing_female.wav",
 	volume = 1,
 	sndLevel = 100,
 	pitch = 105

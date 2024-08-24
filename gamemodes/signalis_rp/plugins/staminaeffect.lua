@@ -33,7 +33,7 @@ function PLUGIN:PlayerTick(ply)
                     if istable(class.breathing_sound) then
                         breathingSound = class.breathing_sound
 
-                    elseif isfunction(class.breathing_sound) then
+                    elseif isfunction(class.breathing_sound) and class.breathing_sound(ply) then
                         breathingSound = class.breathing_sound(ply)
                     end
                 end

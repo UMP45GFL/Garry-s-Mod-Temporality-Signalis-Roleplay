@@ -32,7 +32,7 @@ CLASS.death_sounds = {
 	}
 }
 CLASS.breathing_sound = {
-	snd = "eternalis/player/breathing_female.wav",
+	snd = "eternalis/player/breathing/breathing_female.wav",
 	volume = 1,
 	sndLevel = 100,
 	pitch = 105
