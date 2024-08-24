@@ -86,16 +86,50 @@ function GAMEMODE:ScalePlayerDamage(ply, hitgroup, dmginfo)
 
 		if hitgroup == HITGROUP_HEAD then
 			dmg_mul = dmg_mul * 1.5
+			-- Headshot sound effects
+			local bone = ply:LookupBone("ValveBiped.Bip01_Head1")
+			if bone and ETERNALIS_HEADSHOT_SOUNDS then
+				local headpos = ply:GetBonePosition(bone)
+				if isvector(headpos) then
+					local snd = table.Random(ETERNALIS_HEADSHOT_SOUNDS)
+					if snd then
+						EmitSound(snd, headpos, 0, CHAN_BODY, 1, 75)
+						ply:SendPlaySound(snd)
+					end
+				end
+			end
 		end
 
 		local character = ply:GetCharacter()
 		if character then
-			local class = ix.class.Get(ply:GetCharacter())
-			if class then
+			local class = ix.class.GetClass(character.vars.class)
+			if class and class.bullet_damage_taken then
 				dmg_mul = dmg_mul * class.bullet_damage_taken
 			end
 		end
 
 		dmginfo:ScaleDamage(dmg_mul)
+	end
+end
+
+function Schema:GetPlayerDeathSound(ply)
+	print("GetPlayerDeathSound", ply)
+
+	local character = ply:GetCharacter()
+	if character then
+		local class = ix.class.GetClass(character.vars.class)
+		print(class, class.death_sounds)
+		if class and class.death_sounds then
+			local sndTable = table.Random(class.death_sounds)
+			if sndTable then
+				local pitch = sndTable.pitch or 100
+
+				pitch = math.random(pitch - 5, pitch + 5)
+
+				ply:EmitSound(sndTable.snd, sndTable.sndLevel, pitch, sndTable.volume)
+				ply:SendPlaySound("eternalis/player/death/flatline.wav")
+				return false
+			end
+		end
 	end
 end

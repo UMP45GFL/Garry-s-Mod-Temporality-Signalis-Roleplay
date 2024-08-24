@@ -91,7 +91,7 @@ function Schema:EntityTakeDamage(entity, dmgInfo)
 			local character = entity:GetCharacter()
 			if character then
 				local class = ix.class.Get(entity:GetCharacter())
-				if class then
+				if class and class.physical_damage_taken then
 					dmg_mul = dmg_mul * class.physical_damage_taken
 				end
 			end

@@ -23,6 +23,15 @@ CLASS.speed = 1.1
 CLASS.jump_power = 1.36
 CLASS.max_stamina = 1.15
 
+CLASS.death_sounds = {
+	{
+		snd = "eternalis/player/death/death_stcr.wav",
+		volume = 1,
+		sndLevel = 120,
+		pitch = 100
+	}
+}
+
 -- attributes
 CLASS.remove_attributes = true
 

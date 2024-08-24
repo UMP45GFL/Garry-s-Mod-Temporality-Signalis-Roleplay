@@ -18,10 +18,19 @@ CLASS.bullet_damage_taken = 0.75
 CLASS.mental_strength = 1.2 -- They definitely have a bit higher mental strength
 CLASS.hunger = 0.9
 CLASS.thirst = 0.9
- -- they TALL and STRONK
+-- they TALL and STRONK
 CLASS.speed = 1.05
 CLASS.jump_power = 1.25
 CLASS.max_stamina = 1.07
+
+CLASS.death_sounds = {
+	{
+		snd = "eternalis/player/death/death_stcr.wav",
+		volume = 1,
+		sndLevel = 120,
+		pitch = 100
+	}
+}
 
 -- attributes
 CLASS.remove_attributes = true

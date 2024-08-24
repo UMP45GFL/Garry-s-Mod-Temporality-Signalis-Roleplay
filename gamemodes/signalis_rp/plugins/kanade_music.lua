@@ -13,34 +13,8 @@ ix.config.Add("musicSystemEnabled", true, "Whether or to enable the music system
 	category = "Music"
 })
 
-ix.option.Add("musicSystemEnabled", ix.type.bool, true, {
-	category = "Music"
-})
-
-ix.option.Add("musicSystemVolume", ix.type.number, 0.25, {
-	category = "Music", min = 0, max = 1, decimals = 2
-})
-
-local path = "eternalis/signalis_ost/"
-
-local trackList = {
-	-- casual ones
-	{ name = "Turned Around", 			sound = path.."1_turned_around.mp3", 			volume = 1, length = 222 },
-	{ name = "Safe Room", 				sound = path.."2_safe_room.mp3", 				volume = 1, length = 138 },
-	{ name = "Double Back", 			sound = path.."4_double_back.mp3", 				volume = 1, length = 362 },
-	{ name = "Double Back VHS ver.", 	sound = path.."48_double_back_vhs_ver.mp3", 	volume = 1, length = 362 },
-	{ name = "Mnhr", 					sound = path.."12_mnhr.mp3", 					volume = 1, length = 294 },
-	{ name = "Dowsing", 				sound = path.."15_dowsing.mp3", 				volume = 1, length = 128 },
-	{ name = "Crepuscular", 			sound = path.."54_crepuscular.mp3", 			volume = 1, length = 222 },
-
-	-- more sad or scary or intense
-	{ name = "Ritual", 					sound = path.."11_ritual.mp3", 					volume = 1, length = 258 },
-	{ name = "Adler", 					sound = path.."14_adler.mp3", 					volume = 1, length = 298 },
-	{ name = "Sea Smoke", 				sound = path.."32_sea_smoke.mp3", 				volume = 1, length = 134 },
-}
-
 if SERVER then
-	for k,	v in ipairs(trackList) do
+	for k,	v in ipairs(ETERNALIS_MUSIC_TRACKLIST) do
 		resource.AddFile(v.sound)
 	end
 end
@@ -48,7 +22,6 @@ end
 if CLIENT then
 	local last_music = nil
 	local last_music_name = nil
-	local last_vol_mul = nil
 	local registered_music = {}
 
 	local function ResetMusicInfo()
@@ -62,7 +35,7 @@ if CLIENT then
 	ResetMusicInfo()
 	
 	local function ResetSongQueue()
-		song_queue = table.Copy(trackList)
+		song_queue = table.Copy(ETERNALIS_MUSIC_TRACKLIST)
 	end
 	ResetSongQueue()
 
@@ -94,21 +67,13 @@ if CLIENT then
 
 	local next_music_check = 0
 	local next_music_play = 0
-	function HandleMusic()
+	local function HandleMusic()
 		if !ix.config.Get("musicSystemEnabled", true) or !ix.option.Get("musicSystemEnabled", true) then return end
 
 		local client = LocalPlayer()
 
 		if client.Alive != nil and CurTime() > next_music_check and client:Alive() and !client:IsBot() and client:Team() != TEAM_SPECTATOR then
 			next_music_check = CurTime() + 1
-
-			local vol_mul = ix.option.Get("musicSystemVolume", 0.7)
-
-			if last_vol_mul != nil and last_vol_mul != vol_mul and last_music != nil then
-				last_music:ChangeVolume(vol_mul, 4)
-			end
-
-			last_vol_mul = vol_mul
 
 			if music_info == nil or next_music_play < CurTime() then
 				if #song_queue > 0 then
@@ -117,7 +82,7 @@ if CLIENT then
 						music_info = {
 							nextPlay = 0,
 							name = next_song.name,
-							volume = next_song.volume * vol_mul,
+							volume = next_song.volume * ix.option.Get("musicSystemVolume", 0.25),
 							length = next_song.length + math.random(18, 50),
 							sound = next_song.sound,
 							playUntil = function()
@@ -136,4 +101,32 @@ if CLIENT then
 		end
 	end
 	hook.Add("Tick", "Eternalis_HandleMusic", HandleMusic)
+
+	-- OPTIONS
+	local function isHidden()
+		return !ix.config.Get("musicSystemEnabled")
+	end
+
+	ix.option.Add("musicSystemEnabled", ix.type.bool, true, {
+		category = "Music",
+		hidden = isHidden,
+		OnChanged = function(oldValue, value)
+			if not value then
+				if last_music != nil then
+					EndCurrentTrack()
+				end
+			elseif oldValue != value then
+				ResetMusicInfo()
+			end
+		end
+	})
+
+	ix.option.Add("musicSystemVolume", ix.type.number, 0.25, {
+		category = "Music", min = 0.1, max = 1, decimals = 2, hidden = isHidden,
+		OnChanged = function(oldValue, value)
+			if last_music != nil then
+				last_music:ChangeVolume(value, 3)
+			end
+		end
+	})
 end
