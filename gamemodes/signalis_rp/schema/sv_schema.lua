@@ -113,12 +113,9 @@ function GAMEMODE:ScalePlayerDamage(ply, hitgroup, dmginfo)
 end
 
 function Schema:GetPlayerDeathSound(ply)
-	print("GetPlayerDeathSound", ply)
-
 	local character = ply:GetCharacter()
 	if character then
 		local class = ix.class.GetClass(character.vars.class)
-		print(class, class.death_sounds)
 		if class and class.death_sounds then
 			local sndTable = table.Random(class.death_sounds)
 			if sndTable then
