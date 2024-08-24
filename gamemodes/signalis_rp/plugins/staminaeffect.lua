@@ -18,14 +18,35 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 function PLUGIN:PlayerTick(ply)
     if not ply.NextStaminaBreathe or ply.NextStaminaBreathe <= CurTime() then
         local stamina = ply:GetNetVar("stm", 100)
-        if ( stamina <= 10 ) then
+        if stamina <= 10 then
+            local breathingSound = {
+                snd = "player/breathe1.wav",
+                volume = 1,
+                sndLevel = 60,
+                pitch = 100
+            }
+
+            local character = ply:GetCharacter()
+            if character then
+                local class = ix.class.GetClass(character.vars.class)
+                if class and class.breathing_sound then
+                    if istable(class.breathing_sound) then
+                        breathingSound = class.breathing_sound
+
+                    elseif isfunction(class.breathing_sound) then
+                        breathingSound = class.breathing_sound(ply)
+                    end
+                end
+            end
+
             ply:EmitSound("player/heartbeat1.wav", 60)
-            ply:EmitSound("player/breathe1.wav", 60)
+            ply:EmitSound(breathingSound.snd, 60, pitch, volume)
+            
             ply.ixStaminaBreathe = true
             timer.Simple(3.9, function()
-                if ( ply:IsValid() ) then
+                if ply:IsValid() then
                     ply:StopSound("player/heartbeat1.wav")
-                    ply:StopSound("player/breathe1.wav")
+                    ply:StopSound(breathingSound.snd)
                     ply.ixStaminaBreathe = false
                 end
             end)

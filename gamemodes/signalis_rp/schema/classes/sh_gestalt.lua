@@ -129,6 +129,19 @@ CLASS.speed = 1 -- multiplier of how fast the player can run
 CLASS.jump_power = 1 -- multiplier of how strong the player can jump
 CLASS.max_stamina = 1 -- multiplier of how much stamina the player has
 
+local breathingSounds = {
+	snd = "eternalis/player/breathing_female.wav",
+	volume = 1,
+	sndLevel = 100,
+	pitch = 105
+}
+
+CLASS.breathing_sound = function(ply)
+    if ply:IsFemale() then
+        return breathingSounds
+    end
+end
+
 -- attributes
 CLASS.remove_attributes = true
 

@@ -29,7 +29,7 @@ CLASS.thirst = 0.9
 -- titanium shell makes them less mobile
 CLASS.speed = 0.9
 CLASS.jump_power = 0.9 -- not as bad because they are tall
-CLASS.max_stamina = 0.87
+CLASS.max_stamina = 1.87
 
 CLASS.death_sounds = {
 	{
@@ -38,6 +38,12 @@ CLASS.death_sounds = {
 		sndLevel = 100,
 		pitch = 105
 	}
+}
+CLASS.breathing_sound = {
+	snd = "eternalis/player/breathing_female.wav",
+	volume = 1,
+	sndLevel = 100,
+	pitch = 105
 }
 
 -- attributes

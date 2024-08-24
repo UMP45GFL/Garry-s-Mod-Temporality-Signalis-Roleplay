@@ -21,7 +21,7 @@ CLASS.thirst = 0.87
 -- SUPER TALL
 CLASS.speed = 1.1
 CLASS.jump_power = 1.36
-CLASS.max_stamina = 1.15
+CLASS.max_stamina = 2.15
 
 CLASS.death_sounds = {
 	{
@@ -30,6 +30,12 @@ CLASS.death_sounds = {
 		sndLevel = 120,
 		pitch = 100
 	}
+}
+CLASS.breathing_sound = {
+	snd = "eternalis/player/breathing_female.wav",
+	volume = 1,
+	sndLevel = 100,
+	pitch = 105
 }
 
 -- attributes
