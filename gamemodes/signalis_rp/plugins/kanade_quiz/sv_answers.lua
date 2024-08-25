@@ -73,6 +73,8 @@ local function quizFailed(ply)
 end
 
 hook.Add("PostPlayerInitialized", "QuizModule_PostPlayerInitialized", function(ply)
+    if !ix.config.Get("QuizModuleEnabled", true) then return end
+
     timer.Simple(0.5, function()
         if IsValid(ply) then
             checkPlayerQuizWhitelist(ply)
