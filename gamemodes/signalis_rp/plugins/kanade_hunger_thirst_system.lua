@@ -4,10 +4,6 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Adds hunger & thirst."
 PLUGIN.license = [[meow]]
 
-ix.lang.AddTable("english", {
-	hungerThirstSystemEnabled = "Enable hunger & thirst system",
-})
-
 local MAX_HUNGER = 250
 local HUNGRY = 175
 local VERY_HUNGRY = 100

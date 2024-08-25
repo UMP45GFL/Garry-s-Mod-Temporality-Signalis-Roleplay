@@ -4,10 +4,6 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Adds improved prop interaction."
 PLUGIN.license = [[meow]]
 
-ix.lang.AddTable("english", {
-	PropInteractEnabled = "Enable dragging ragdolls",
-})
-
 ix.config.Add("PropInteractEnabled", false, "Whether or to enable improved prop interact.", nil, {
 	category = "Improved Prop interact"
 })

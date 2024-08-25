@@ -5,7 +5,6 @@ PLUGIN.description = "Adds smoothing out stairs"
 PLUGIN.license = [[meow]]
 
 ix.lang.AddTable("english", {
-	SmoothOutStairsEnabled = "Enable smoothing out stairs",
     optSmoothOutStairsEnabled = "Enable smoothing out stairs",
     optSmoothOutStairsSpeed = "Smooth out stairs speed"
 })

@@ -4,10 +4,6 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Adds sleeping."
 PLUGIN.license = [[meow]]
 
-ix.lang.AddTable("english", {
-	sleepSystemEnabled = "Enable the sleep system",
-})
-
 ix.config.Add("sleepSystemEnabled", true, "Enable the sleep system", nil, {
 	category = "Sleeping System"
 })

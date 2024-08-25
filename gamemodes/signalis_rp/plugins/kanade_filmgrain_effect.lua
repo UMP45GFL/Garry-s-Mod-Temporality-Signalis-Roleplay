@@ -5,7 +5,6 @@ PLUGIN.description = "Adds a filmgrain effect."
 PLUGIN.license = [[meow]]
 
 ix.lang.AddTable("english", {
-	filmgrainEffectEnabled = "Enable filmgrain effect module",
     optFilmgrainEffectEnabled = "Enable filmgrain",
     optFilmgrainEffectAlpha = "Filmgrain noise transparency",
     optFilmgrainEffectAddAlpha = "Filmgrain noise addition",

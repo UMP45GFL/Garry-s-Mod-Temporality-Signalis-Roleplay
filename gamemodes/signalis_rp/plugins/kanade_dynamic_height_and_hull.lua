@@ -4,10 +4,6 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Adds dynamic height and hull."
 PLUGIN.license = [[meow]]
 
-ix.lang.AddTable("english", {
-	DynamicHeightAndHullEnabled = "Enable dynamic height and hull",
-})
-
 ix.config.Add("DynamicHeightAndHullEnabled", true, "Whether or to enable dynamic height and hull.", nil, {
 	category = "Dynamic Height And Hull"
 })

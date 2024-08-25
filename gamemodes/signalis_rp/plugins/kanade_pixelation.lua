@@ -4,10 +4,6 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Adds a pixelation effect to the screen"
 PLUGIN.license = [[meow]]
 
-ix.lang.AddTable("english", {
-	pixelationEffectEnable = "Enable pixelation effect",
-})
-
 ix.config.Add("pixelationEffectEnable", true, "Whether or to enable the pixelation effect", nil, {
 	category = "Visual Effects"
 })

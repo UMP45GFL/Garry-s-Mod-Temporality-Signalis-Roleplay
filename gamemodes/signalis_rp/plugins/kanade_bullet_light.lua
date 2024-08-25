@@ -4,10 +4,6 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Adds bullet lights."
 PLUGIN.license = [[meow]]
 
-ix.lang.AddTable("english", {
-	bulletLightEnabled = "Enable bullet light",
-})
-
 ix.config.Add("bulletLightEnabled", true, "Whether or to enable bullet light.", nil, {
 	category = "Visual Effects"
 })

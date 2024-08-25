@@ -4,10 +4,6 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Adds infections."
 PLUGIN.license = [[meow]]
 
-ix.lang.AddTable("english", {
-	infectionSystemEnabled = "Enable the infection system",
-})
-
 ix.config.Add("infectionSystemEnabled", true, "Enable the infection system", nil, {
 	category = "Infection System"
 })

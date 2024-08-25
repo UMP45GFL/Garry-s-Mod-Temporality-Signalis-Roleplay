@@ -4,10 +4,6 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Adds ragdoll dragging."
 PLUGIN.license = [[meow]]
 
-ix.lang.AddTable("english", {
-	ragdollDraggingEnabled = "Enable dragging ragdolls",
-})
-
 ix.config.Add("ragdollDraggingEnabled", true, "Whether or to enable ragdoll dragging.", nil, {
 	category = "Ragdoll Dragging"
 })

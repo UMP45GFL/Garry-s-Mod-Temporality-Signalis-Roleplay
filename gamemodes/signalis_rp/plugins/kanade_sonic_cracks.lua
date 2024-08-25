@@ -5,8 +5,6 @@ PLUGIN.description = "Adds audible sonic cracks to gunshots."
 PLUGIN.license = [[meow]]
 
 ix.lang.AddTable("english", {
-	sonic_cracks = "Sonic cracks",
-
 	optSonicCracksEnabled = "Enable sonic cracks",
 })
 
