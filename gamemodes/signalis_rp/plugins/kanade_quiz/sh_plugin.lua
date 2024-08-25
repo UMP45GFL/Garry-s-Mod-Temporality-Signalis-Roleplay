@@ -26,7 +26,7 @@ if CLIENT then
 
 	surface.CreateFont("quizQuestionFont", {
 		font = "Roboto",
-		size = math.max(ScreenScale(12), 26),
+		size = math.max(ScreenScale(12), 28),
 		extended = true,
 		weight = 500
 	})
@@ -35,7 +35,7 @@ if CLIENT then
 		font = "Roboto",
 		size = math.max(ScreenScale(9), 18),
 		extended = false,
-		weight = 100
+		weight = 500
 	})
 
 	surface.CreateFont("quizSubmitFont", {
@@ -94,6 +94,9 @@ if CLIENT then
         quizPanel:ShowCloseButton(false)
         quizPanel:SetDeleteOnClose(true)
         quizPanel:MakePopup()
+        quizPanel.Paint = function(self, w, h)
+            draw.RoundedBox(0, 0, 0, w, h, Color(0, 0, 0, 255))
+        end
 
         local scrollPanel = vgui.Create("DScrollPanel", quizPanel)
         scrollPanel:Dock(FILL)
@@ -124,17 +127,22 @@ if CLIENT then
             table.Shuffle(options)
 
             for i, option in ipairs(options) do
-                local optionButton = vgui.Create("DButton", questionPanel)
-                optionButton:DockPadding(4, 4, 4, 4)
-                optionButton:DockMargin(4, 4, 4, 4)
-                optionButton:Dock(TOP)
+                local optionButtonPanel = vgui.Create("DPanel", questionPanel)
+                optionButtonPanel:SetHeight(draw.GetFontHeight("quizOptionFont") + 8)
+                optionButtonPanel:Dock(TOP)
+                optionButtonPanel:DockPadding(8, 8, 8, 8)
+                optionButtonPanel.Paint = function() end
+
+                local buttonWidth = ScrW() * 0.3
+
+                local optionButton = vgui.Create("DButton", optionButtonPanel)
                 optionButton:SetText(alphabet[i] .. ") " .. option)
                 optionButton:SetFont("quizOptionFont")
                 optionButton:SetTextColor(color_white)
                 optionButton:SizeToContents()
-                optionButton:SetWidth(ScrW() * 0.6)
+                optionButton:SetWidth(buttonWidth)
+                optionButton:SetPos(ScrW() / 2 - ((buttonWidth) / 2) - 32, 0)
                 
-                scrollPanel:AddItem(optionButton)
                 optionButton.DoClick = function(self)
                     if questionTable.answer == option then
                         questionTable.answer = nil
@@ -158,11 +166,13 @@ if CLIENT then
                         draw.RoundedBox(4, 0, 0, w, h, Color(25, 25, 25, 100))
                     end
                 end
+
+                scrollPanel:AddItem(optionButtonPanel)
             end
 
             local space = vgui.Create("DPanel", questionPanel)
             space:Dock(TOP)
-            space:SetHeight(64)
+            space:SetHeight(80)
             space.Paint = function() end
             scrollPanel:AddItem(space)
         end
@@ -174,13 +184,14 @@ if CLIENT then
         scrollPanel:AddItem(space)
 
         local submitButton = vgui.Create("DButton", questionPanel)
+        submitButton:SetWidth(ScrW() * 0.6)
+        submitButton:SetHeight(draw.GetFontHeight("quizSubmitFont") + 16)
+        submitButton:DockPadding(8, 8, 8, 8)
         submitButton:DockMargin(4, 32, 4, 32)
-        submitButton:Dock(BOTTOM)
+        submitButton:Dock(TOP)
         submitButton:SetText("Submit")
         submitButton:SetFont("quizSubmitFont")
         submitButton:SetTextColor(color_white)
-        submitButton:SetWidth(ScrW() * 0.6)
-        submitButton:SetHeight(draw.GetFontHeight("quizSubmitFont") + 16)
         submitButton.DoClick = function()
             if not submitAvailable then
                 return

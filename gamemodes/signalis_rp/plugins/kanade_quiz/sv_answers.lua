@@ -131,7 +131,6 @@ net.Receive("quizsubmit", function(len, ply)
 		query:Where("steamid", ply:SteamID64())
 		query:Callback(function(data)
             if istable(data) and #data > 0 then
-                PrintTable(data)
                 local updateQuery = mysql:Update("ix_quiz_whitelist")
                 updateQuery:Update("quiz_completed_time", os.time())
                 updateQuery:Where("steamid", ply:SteamID64())
