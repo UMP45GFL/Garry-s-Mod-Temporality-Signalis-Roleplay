@@ -8,6 +8,7 @@ hook.Add("OnLoadDatabaseTables", "QuizModule_OnLoadDatabaseTables", function()
 		query:Create("steamid", "VARCHAR(20) NOT NULL")
 		query:Create("quiz_completed_time", "INT(11) UNSIGNED NOT NULL")
 		query:Create("answered_incorrectly", "INT(6) UNSIGNED NOT NULL")
+		query:Create("was_banned", "BIT(1) NOT NULL")
 		query:PrimaryKey("whitelist_id")
 	query:Execute()
 end)
@@ -16,9 +17,10 @@ local function checkPlayerQuizWhitelist(ply)
 	local query = mysql:Select("ix_quiz_whitelist")
     query:Select("answered_incorrectly")
     query:Select("quiz_completed_time")
+    query:Select("was_banned")
     query:Where("steamid", ply:SteamID64())
     query:Callback(function(data)
-        if istable(data) and #data > 0 then
+        if istable(data) and #data > 0 and tonumber(data[1].was_banned) == 0 then
             if string.len(data[1].quiz_completed_time) < 4 and tonumber(data[1].answered_incorrectly) >= ix.config.Get("QuizModuleFiledAttempts", 3) then
                 local banLength = ix.config.Get("QuizModuleBanLength", 120)
                 RunConsoleCommand("ulx ban " .. ply:SteamID64() .. " " .. tostring(banLength) .. " Wrongly answered quiz questions too many times.")
@@ -60,6 +62,7 @@ local function quizFailed(ply)
                 insertQuery:Insert("steamid", ply:SteamID64())
                 insertQuery:Insert("quiz_completed_time", 0)
                 insertQuery:Insert("answered_incorrectly", 1)
+                insertQuery:Insert("was_banned", 0)
                 insertQuery:Execute()
 			end
 
@@ -134,11 +137,19 @@ net.Receive("quizsubmit", function(len, ply)
                 updateQuery:Update("quiz_completed_time", os.time())
                 updateQuery:Where("steamid", ply:SteamID64())
                 updateQuery:Execute()
+
+                if tonumber(data[1].was_banned) == 1 then
+                    local updateQuery = mysql:Update("ix_quiz_whitelist")
+                    updateQuery:Update("was_banned", 0)
+                    updateQuery:Where("steamid", ply:SteamID64())
+                    updateQuery:Execute()
+                end
             else
                 local insertQuery = mysql:Insert("ix_quiz_whitelist")
                 insertQuery:Insert("steamid", ply:SteamID64())
                 insertQuery:Insert("quiz_completed_time", os.time())
                 insertQuery:Insert("answered_incorrectly", 0)
+                insertQuery:Insert("was_banned", 0)
                 insertQuery:Execute()
             end
 		end)
