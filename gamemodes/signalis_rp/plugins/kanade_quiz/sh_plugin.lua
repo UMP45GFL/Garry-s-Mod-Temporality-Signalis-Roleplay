@@ -55,7 +55,7 @@ if CLIENT then
     function OpenQuizFailedPanel()
         local quizFailedPopup = vgui.Create("DFrame")
         quizFailedPopup:SetSize(ScrW() / 2, ScrH() / 4)
-        quizFailedPopup:SetTitle("Quiz failed. Try again.")
+        quizFailedPopup:SetTitle("")
         quizFailedPopup:SetDraggable(true)
         quizFailedPopup:ShowCloseButton(true)
         quizFailedPopup:SetDeleteOnClose(true)
