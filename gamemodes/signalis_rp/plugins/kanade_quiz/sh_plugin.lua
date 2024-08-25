@@ -1,0 +1,235 @@
+﻿
+PLUGIN.name = "Quiz Module"
+PLUGIN.author = "Kanade"
+PLUGIN.description = "Adds a configurable quiz after a player joins."
+PLUGIN.license = [[meow]]
+
+if SERVER then
+    include("sv_answers.lua")
+    AddCSLuaFile("cl_questions.lua")
+
+    ix.config.Add("QuizModuleEnabled", true, "Whether or to enable the quiz module.", nil, {
+        category = "Quiz Module"
+    })
+
+    ix.config.Add("QuizModuleBanLength", 120, "Length of the ban after player fails the quiz, 0 is permanent", nil, {
+        data = {min = 0, max = 3600},
+        category = "Quiz Module"
+    })
+end
+
+if CLIENT then
+    include("cl_questions.lua")
+
+    local quizPanel = nil
+    local alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+	surface.CreateFont("quizQuestionFont", {
+		font = "Roboto",
+		size = math.max(ScreenScale(12), 26),
+		extended = true,
+		weight = 500
+	})
+
+	surface.CreateFont("quizOptionFont", {
+		font = "Roboto",
+		size = math.max(ScreenScale(9), 18),
+		extended = false,
+		weight = 100
+	})
+
+	surface.CreateFont("quizSubmitFont", {
+		font = "Roboto",
+		size = math.max(ScreenScale(10), 24),
+		extended = false,
+		weight = 500
+	})
+
+	surface.CreateFont("quizFailedFont", {
+		font = "Roboto",
+		size = math.max(ScreenScale(11), 26),
+		extended = false,
+		weight = 500
+	})
+
+    function OpenQuizFailedPanel()
+        local quizFailedPopup = vgui.Create("DFrame")
+        quizFailedPopup:SetSize(ScrW() / 2, ScrH() / 4)
+        quizFailedPopup:SetTitle("Quiz failed. Try again.")
+        quizFailedPopup:SetDraggable(true)
+        quizFailedPopup:ShowCloseButton(true)
+        quizFailedPopup:SetDeleteOnClose(true)
+        quizFailedPopup:MakePopup()
+        quizFailedPopup:Center()
+
+        local labelPanel = vgui.Create("DPanel", quizFailedPopup)
+        labelPanel:Dock(FILL)
+        labelPanel.Paint = function(self, w, h)
+            draw.Text({
+                text = "You have failed the quiz. Try again.",
+                font = "quizFailedFont",
+                pos = {w / 2, h / 2},
+                color = color_white,
+                xalign = TEXT_ALIGN_CENTER,
+                yalign = TEXT_ALIGN_CENTER
+            })
+        end
+    end
+
+    function OpenQuizModule()
+        if quizPanel then
+            quizPanel:Remove()
+        end
+
+        for k,v in pairs(KANADE_QUIZ_QUESTIONS) do
+            v.answer = nil
+        end
+
+        local submitAvailable = false
+
+        quizPanel = vgui.Create("DFrame")
+        quizPanel:SetSize(ScrW(), ScrH())
+        quizPanel:SetTitle("Quiz")
+        quizPanel:SetDraggable(false)
+        quizPanel:ShowCloseButton(false)
+        quizPanel:SetDeleteOnClose(true)
+        quizPanel:MakePopup()
+
+        local scrollPanel = vgui.Create("DScrollPanel", quizPanel)
+        scrollPanel:Dock(FILL)
+        scrollPanel:GetCanvas():DockPadding(16, 32, 16, 32)
+
+        local questionPanel = vgui.Create("DPanel", scrollPanel)
+        questionPanel:Dock(FILL)
+        questionPanel:DockPadding(16, 64, 16, 32)
+
+        for questionNum, questionTable in ipairs(KANADE_QUIZ_QUESTIONS) do
+			local questionLabel = vgui.Create("DPanel", questionPanel)
+            questionLabel:Dock(TOP)
+            questionLabel:DockPadding(4, 4, 4, 8)
+            questionLabel:SetHeight(draw.GetFontHeight("quizQuestionFont") + 4)
+            questionLabel.Paint = function(self, w, h)
+                draw.Text({
+                    text = questionNum .. ". " ..  questionTable.question,
+                    font = "quizQuestionFont",
+                    pos = {w / 2, h / 2},
+                    color = color_white,
+                    xalign = TEXT_ALIGN_CENTER,
+                    yalign = TEXT_ALIGN_CENTER
+                })
+            end
+            scrollPanel:AddItem(questionLabel)
+
+            local options = table.Copy(questionTable.options)
+            table.Shuffle(options)
+
+            for i, option in ipairs(options) do
+                local optionButton = vgui.Create("DButton", questionPanel)
+                optionButton:DockPadding(4, 4, 4, 4)
+                optionButton:DockMargin(4, 4, 4, 4)
+                optionButton:Dock(TOP)
+                optionButton:SetText(alphabet[i] .. ") " .. option)
+                optionButton:SetFont("quizOptionFont")
+                optionButton:SetTextColor(color_white)
+                optionButton:SizeToContents()
+                optionButton:SetWidth(ScrW() * 0.6)
+                
+                scrollPanel:AddItem(optionButton)
+                optionButton.DoClick = function(self)
+                    if questionTable.answer == option then
+                        questionTable.answer = nil
+                    else
+                        questionTable.answer = option
+                    end
+
+                    submitAvailable = true
+                    for _, qst in pairs(KANADE_QUIZ_QUESTIONS) do
+                        if qst.answer == nil then
+                            submitAvailable = false
+                        end
+                    end
+                end
+                optionButton.Paint = function(self, w, h)
+                    if questionTable.answer == option then
+                        draw.RoundedBox(4, 0, 0, w, h, Color(255, 0, 0, 100))
+                    elseif self:IsHovered() then
+                        draw.RoundedBox(4, 0, 0, w, h, Color(35, 35, 35, 150))
+                    else
+                        draw.RoundedBox(4, 0, 0, w, h, Color(25, 25, 25, 100))
+                    end
+                end
+            end
+
+            local space = vgui.Create("DPanel", questionPanel)
+            space:Dock(TOP)
+            space:SetHeight(64)
+            space.Paint = function() end
+            scrollPanel:AddItem(space)
+        end
+
+        local space = vgui.Create("DPanel", questionPanel)
+        space:Dock(TOP)
+        space:SetHeight(16)
+        space.Paint = function() end
+        scrollPanel:AddItem(space)
+
+        local submitButton = vgui.Create("DButton", questionPanel)
+        submitButton:DockMargin(4, 32, 4, 32)
+        submitButton:Dock(BOTTOM)
+        submitButton:SetText("Submit")
+        submitButton:SetFont("quizSubmitFont")
+        submitButton:SetTextColor(color_white)
+        submitButton:SetWidth(ScrW() * 0.6)
+        submitButton:SetHeight(draw.GetFontHeight("quizSubmitFont") + 16)
+        submitButton.DoClick = function()
+            if not submitAvailable then
+                return
+            end
+
+            local answers = {}
+
+            for _, questionTable in ipairs(KANADE_QUIZ_QUESTIONS) do
+                if questionTable.answer == nil then
+                    return
+                end
+                table.insert(answers, {
+                    question = questionTable.question,
+                    answer = questionTable.answer
+                })
+            end
+
+            net.Start("quizsubmit")
+            net.WriteTable(answers)
+            net.SendToServer()
+
+            quizPanel:Close()
+        end
+        submitButton.Paint = function(self, w, h)
+            if submitAvailable then
+                if self:IsHovered() then
+                    draw.RoundedBox(4, 0, 0, w, h, Color(255, 0, 0, 150))
+                else
+                    draw.RoundedBox(4, 0, 0, w, h, Color(245, 0, 0, 100))
+                end
+            else
+                draw.RoundedBox(4, 0, 0, w, h, Color(25, 25, 25, 100))
+            end
+        end
+        scrollPanel:AddItem(submitButton)
+
+        local space = vgui.Create("DPanel", questionPanel)
+        space:Dock(TOP)
+        space:SetHeight(64)
+        space.Paint = function() end
+        scrollPanel:AddItem(space)
+    end
+
+    net.Receive("openquiz", function()
+        OpenQuizModule()
+    end)
+
+    net.Receive("openquizfailed", function()
+        OpenQuizModule()
+        OpenQuizFailedPanel()
+    end)
+end
