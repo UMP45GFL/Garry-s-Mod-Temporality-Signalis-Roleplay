@@ -26,7 +26,7 @@ CLASS.max_stamina = 2
 CLASS.death_sounds = {
 	{
 		snd = "eternalis/player/death/death_eulr.wav",
-		volume = 1,
+		volume = 0.95,
 		sndLevel = 100,
 		pitch = 100
 	}

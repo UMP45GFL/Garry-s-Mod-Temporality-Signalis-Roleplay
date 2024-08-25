@@ -40,7 +40,7 @@ function PLUGIN:PlayerTick(ply)
             end
 
             ply:EmitSound("player/heartbeat1.wav", 60)
-            ply:EmitSound(breathingSound.snd, 60, pitch, volume)
+            ply:EmitSound(breathingSound.snd, breathingSound.sndLevel, breathingSound.pitch, breathingSound.volume)
             
             ply.ixStaminaBreathe = true
             timer.Simple(3.9, function()
