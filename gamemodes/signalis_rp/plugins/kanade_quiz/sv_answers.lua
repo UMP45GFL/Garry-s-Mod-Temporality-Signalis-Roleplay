@@ -12,8 +12,6 @@ hook.Add("OnLoadDatabaseTables", "QuizModule_OnLoadDatabaseTables", function()
 	query:Execute()
 end)
 
-local max_amount_of_incorrect_answers = 4
-
 local function checkPlayerQuizWhitelist(ply)
 	local query = mysql:Select("ix_quiz_whitelist")
     query:Select("answered_incorrectly")
@@ -21,10 +19,9 @@ local function checkPlayerQuizWhitelist(ply)
     query:Where("steamid", ply:SteamID64())
     query:Callback(function(data)
         if istable(data) and #data > 0 then
-            if string.len(data[1].quiz_completed_time) < 4 and tonumber(data[1].answered_incorrectly) >= max_amount_of_incorrect_answers then
+            if string.len(data[1].quiz_completed_time) < 4 and tonumber(data[1].answered_incorrectly) >= ix.config.Get("QuizModuleFiledAttempts", 3) then
                 local banLength = ix.config.Get("QuizModuleBanLength", 120)
-                ply:Ban(banLength, false)
-                ply:Kick("Wrongly answered quiz questions too many times.")
+                RunConsoleCommand("ulx ban " .. ply:SteamID64() .. " " .. tostring(banLength) .. " Wrongly answered quiz questions too many times.")
                 return
             end
 
@@ -46,16 +43,16 @@ local function quizFailed(ply)
 		query:Where("steamid", ply:SteamID64())
 		query:Callback(function(data)
 			if istable(data) and #data > 0 then
-                local answeredIncorrectly = tonumber(data[1].answered_incorrectly)
+                local answeredIncorrectly = tonumber(data[1].answered_incorrectly) + 1
 
-                if answeredIncorrectly >= max_amount_of_incorrect_answers then
+                if answeredIncorrectly >= ix.config.Get("QuizModuleFiledAttempts", 3) then
                     ply:Ban(0, false)
                     ply:Kick("Wrongly answered quiz questions too many times.")
                     return
                 end
 
                 local updateQuery = mysql:Update("ix_quiz_whitelist")
-                updateQuery:Update("answered_incorrectly", answeredIncorrectly + 1)
+                updateQuery:Update("answered_incorrectly", answeredIncorrectly)
                 updateQuery:Where("steamid", ply:SteamID64())
                 updateQuery:Execute()
             else

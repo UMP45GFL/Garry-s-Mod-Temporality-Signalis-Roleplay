@@ -16,6 +16,11 @@ if SERVER then
         data = {min = 0, max = 3600},
         category = "Quiz Module"
     })
+
+    ix.config.Add("QuizModuleFiledAttempts", 3, "How many attempts until a ban", nil, {
+        data = {min = 1, max = 10},
+        category = "Quiz Module"
+    })
 end
 
 if CLIENT then
