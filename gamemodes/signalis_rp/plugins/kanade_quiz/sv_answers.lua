@@ -24,7 +24,9 @@ local function checkPlayerQuizWhitelist(ply)
         if istable(data) and #data > 0 and tonumber(data[1].was_banned) == 0 then
             if string.len(data[1].quiz_completed_time) < 4 and tonumber(data[1].answered_incorrectly) >= ix.config.Get("QuizModuleFiledAttempts", 3) then
                 local banLength = ix.config.Get("QuizModuleBanLength", 120)
-                RunConsoleCommand("ulx ban " .. ply:SteamID64() .. " " .. tostring(banLength) .. " Wrongly answered quiz questions too many times.")
+                local niceBanTime = string.NiceTime(banLength * 60)
+                local banText = " Wrongly answered quiz questions too many times. " .. "Try again in " .. niceBanTime .. "."
+                RunConsoleCommand("ulx ban " .. ply:SteamID64() .. " " .. tostring(banLength) .. banText)
                 return
             end
 
