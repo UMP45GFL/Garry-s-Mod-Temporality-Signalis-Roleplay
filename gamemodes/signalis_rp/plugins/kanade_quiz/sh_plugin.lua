@@ -21,6 +21,16 @@ if SERVER then
         data = {min = 1, max = 10},
         category = "Quiz Module"
     })
+
+    ix.config.Add("QuizModuleMaxSpentTimeAnswering", 8, "Max time a player can be answering the quiz until kick (in minutes)", nil, {
+        data = {min = 1, max = 20},
+        category = "Quiz Module"
+    })
+
+    ix.config.Add("QuizModuleAfkBanTime", 15, "Time in minutes the player gets banned for after being afk in the quiz (in minutes)", nil, {
+        data = {min = 1, max = 360},
+        category = "Quiz Module"
+    })
 end
 
 if CLIENT then
@@ -231,7 +241,7 @@ if CLIENT then
             net.WriteTable(answers)
             net.SendToServer()
 
-            quizPanel:Close()
+            --quizPanel:Close()
         end
         submitButton.Paint = function(self, w, h)
             if submitAvailable then
@@ -248,12 +258,15 @@ if CLIENT then
 
         local space = vgui.Create("DPanel", questionPanel)
         space:Dock(TOP)
-        space:SetHeight(64)
+        space:SetHeight(32)
         space.Paint = function() end
         scrollPanel:AddItem(space)
     end
 
     net.Receive("quizcompleted", function()
+        if quizPanel then
+            quizPanel:Remove()
+        end
         surface.PlaySound("eternalis/signalis_ui/save.wav")
     end)
 
