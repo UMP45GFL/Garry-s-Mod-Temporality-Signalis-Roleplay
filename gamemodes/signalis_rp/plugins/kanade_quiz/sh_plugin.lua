@@ -79,6 +79,8 @@ if CLIENT then
                 yalign = TEXT_ALIGN_CENTER
             })
         end
+
+        surface.PlaySound("eternalis/signalis_ui/no.wav")
     end
 
     function OpenQuizModule()
@@ -148,6 +150,11 @@ if CLIENT then
                 optionButton:SetWidth(buttonWidth)
                 optionButton:SetPos(ScrW() / 2 - ((buttonWidth) / 2) - 32, 0)
                 
+                optionButton.OnCursorEntered = function()
+                    --surface.PlaySound("Helix.Rollover")
+                    LocalPlayer():EmitSound("Helix.Rollover")
+                end
+
                 optionButton.DoClick = function(self)
                     if questionTable.answer == option then
                         questionTable.answer = nil
@@ -197,6 +204,12 @@ if CLIENT then
         submitButton:SetText("Submit")
         submitButton:SetFont("quizSubmitFont")
         submitButton:SetTextColor(color_white)
+
+        submitButton.OnCursorEntered = function()
+            --surface.PlaySound("Helix.Rollover")
+            LocalPlayer():EmitSound("Helix.Rollover")
+        end
+
         submitButton.DoClick = function()
             if not submitAvailable then
                 return
@@ -239,6 +252,10 @@ if CLIENT then
         space.Paint = function() end
         scrollPanel:AddItem(space)
     end
+
+    net.Receive("quizcompleted", function()
+        surface.PlaySound("eternalis/signalis_ui/save.wav")
+    end)
 
     net.Receive("openquiz", function()
         OpenQuizModule()

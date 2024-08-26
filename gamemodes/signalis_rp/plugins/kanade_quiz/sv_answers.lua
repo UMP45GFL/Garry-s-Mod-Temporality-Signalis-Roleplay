@@ -1,6 +1,7 @@
 ﻿
 util.AddNetworkString("openquiz")
 util.AddNetworkString("openquizfailed")
+util.AddNetworkString("quizcompleted")
 
 hook.Add("OnLoadDatabaseTables", "QuizModule_OnLoadDatabaseTables", function()
 	query = mysql:Create("ix_quiz_whitelist")
@@ -127,6 +128,9 @@ net.Receive("quizsubmit", function(len, ply)
             end
         end
     end
+
+    net.Start("quizcompleted")
+    net.Send(ply)
 
 	local query = mysql:Select("ix_quiz_whitelist")
 		query:Select("answered_incorrectly")
