@@ -22,12 +22,11 @@ local function checkPlayerQuizWhitelist(ply)
     query:Where("steamid", ply:SteamID64())
     query:Callback(function(data)
         if istable(data) and #data > 0 and tonumber(data[1].was_banned) == 0 then
-            if string.len(data[1].quiz_completed_time) < 4 and tonumber(data[1].answered_incorrectly) >= ix.config.Get("QuizModuleFiledAttempts", 3) then
-                local banLength = ix.config.Get("QuizModuleBanLength", 120)
-                local niceBanTime = string.NiceTime(banLength * 60)
-                local banText = " Wrongly answered quiz questions too many times. " .. "Try again in " .. niceBanTime .. "."
-                RunConsoleCommand("ulx ban " .. ply:SteamID64() .. " " .. tostring(banLength) .. banText)
-                return
+            if tonumber(data[1].quiz_completed_time) == 0 and tonumber(data[1].answered_incorrectly) >= ix.config.Get("QuizModuleFiledAttempts", 3) then
+                local updateQuery = mysql:Update("ix_quiz_whitelist")
+                updateQuery:Update("was_banned", 0)
+                updateQuery:Where("steamid", ply:SteamID64())
+                updateQuery:Execute()
             end
 
             if tonumber(data[1].quiz_completed_time) > 0 then
@@ -38,6 +37,15 @@ local function checkPlayerQuizWhitelist(ply)
 
         net.Start("openquiz")
         net.Send(ply)
+
+        timer.Create("quizTimeLimit_" .. ply:SteamID64(), ix.config.Get("QuizModuleMaxSpentTimeAnswering", 8) * 60, 1, function()
+            if IsValid(ply) then
+                local banLength = ix.config.Get("QuizModuleAfkBanTime", 15)
+                local niceBanTime = string.NiceTime(banLength * 60)
+                local banText = ("You took too long to answer the quiz. Return in " .. niceBanTime .. "."
+                RunConsoleCommand("ulx", "ban", tostring(ply:Nick()), tostring(banLength), banText)
+            end
+        end)
     end)
 	query:Execute()
 end
@@ -50,16 +58,18 @@ local function quizFailed(ply)
 			if istable(data) and #data > 0 then
                 local answeredIncorrectly = tonumber(data[1].answered_incorrectly) + 1
 
-                if answeredIncorrectly >= ix.config.Get("QuizModuleFiledAttempts", 3) then
-                    ply:Ban(0, false)
-                    ply:Kick("Wrongly answered quiz questions too many times.")
-                    return
-                end
-
                 local updateQuery = mysql:Update("ix_quiz_whitelist")
                 updateQuery:Update("answered_incorrectly", answeredIncorrectly)
                 updateQuery:Where("steamid", ply:SteamID64())
                 updateQuery:Execute()
+
+                if answeredIncorrectly >= ix.config.Get("QuizModuleFiledAttempts", 3) then
+                    local banLength = ix.config.Get("QuizModuleBanLength", 120)
+                    local niceBanTime = string.NiceTime(banLength * 60)
+                    local banText = " Wrongly answered quiz questions too many times. "Try again in " .. niceBanTime .. "."
+                    RunConsoleCommand("ulx", "ban", tostring(ply:Nick()), tostring(banLength), banText)
+                    return
+                end
             else
                 local insertQuery = mysql:Insert("ix_quiz_whitelist")
                 insertQuery:Insert("steamid", ply:SteamID64())
@@ -115,7 +125,6 @@ net.Receive("quizsubmit", function(len, ply)
 
     if #answers != #KANADE_QUIZ_ANSWERS then
         print("Invalid number of answers received from " .. ply:Name())
-        ply:Ban(0, false)
         return
     end
 
@@ -133,6 +142,8 @@ net.Receive("quizsubmit", function(len, ply)
 
     net.Start("quizcompleted")
     net.Send(ply)
+
+    timer.Remove("quizTimeLimit_" .. ply:SteamID64())
 
 	local query = mysql:Select("ix_quiz_whitelist")
 		query:Select("answered_incorrectly")
