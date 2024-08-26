@@ -40,7 +40,7 @@ local function GetDefaultCharacterName(className)
 end
 */
 
-local characterList = {}
+characterList = {}
 
 function getAllCharacters()
 	if CLIENT then return nil end
@@ -62,7 +62,7 @@ function getAllCharacters()
 end
 
 -- FKLR-S2301
--- lua_run print(Schema:GetNewCharacterName("replika_fklr"))
+-- lua_run print(Schema:GetNewCharacterName("replika_arar"))
 function Schema:GetNewCharacterName(className)
 	local nums = {}
 
@@ -95,6 +95,7 @@ function Schema:GetNewCharacterName(className)
 			end
 			charName = string.gsub(charName, "-", "")
 
+			/*
 			local len = string.len(charName)
 			local numString = ""
 			for i=1, len do
@@ -106,7 +107,11 @@ function Schema:GetNewCharacterName(className)
 					end
 				end
 			end
-			table.insert(nums, tonumber(numString))
+			*/
+
+			--print("charName: ", charName, "numString: ", charName, tonumber(charName))
+
+			table.insert(nums, tonumber(charName))
 		end
 	end
 
