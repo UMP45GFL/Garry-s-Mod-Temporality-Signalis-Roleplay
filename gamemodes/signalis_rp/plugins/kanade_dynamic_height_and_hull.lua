@@ -58,7 +58,7 @@ if SERVER then
 	
 	function DynamicCameraUpdateView(ply)
 		-- Find the height by spawning a dummy entity
-		if ply:GetModel() == "models/player.mdl" then return end
+		if !ply:IsPlayer() or ply:GetModel() == "models/player.mdl" then return end
 		
 		if !ix.config.Get("DynamicHeightAndHullEnabled", true) then
 			ply:SetHull(Vector(-16,-16,0), Vector(16,16,72))
