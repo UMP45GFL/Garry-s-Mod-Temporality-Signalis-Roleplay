@@ -63,8 +63,15 @@ if CLIENT then
 		end
 	end
 
+	-- Refined function to calculate the next play time
+	local function CalculateNextPlayTime(length)
+		-- Add a short randomized delay between tracks for natural flow
+		local delay = math.random(20, 40) -- Random delay between 5 and 15 seconds
+		return CurTime() + length + delay
+	end
+
 	-- Play a music track safely
-	local function PlayMusicTrack(fileName)
+	local function PlayMusicTrack(fileName, defaultLength)
 		local sound
 		if not musicSystem.registeredMusic[fileName] then
 			sound = CreateSound(game.GetWorld(), fileName, nil)
@@ -80,6 +87,17 @@ if CLIENT then
 
 		if sound then
 			sound:Play()
+
+			-- Detect the duration of the track using SoundDuration
+			local trackDuration = SoundDuration(fileName)
+			if trackDuration and trackDuration > 0 then
+				musicSystem.musicInfo.length = trackDuration
+				musicSystem.nextMusicPlay = CalculateNextPlayTime(trackDuration)
+			else
+				musicSystem.musicInfo.length = defaultLength
+				musicSystem.nextMusicPlay = CalculateNextPlayTime(defaultLength)
+			end
+
 			musicSystem.lastMusic = sound
 			musicSystem.lastMusicName = fileName
 			return sound
@@ -87,13 +105,6 @@ if CLIENT then
 			chat.AddText("Error: Unable to play music track: " .. fileName)
 			return nil
 		end
-	end
-
-	-- Refined function to calculate the next play time
-	local function CalculateNextPlayTime(length)
-		-- Add a short randomized delay between tracks for natural flow
-		local delay = math.random(20, 40) -- Random delay between 5 and 15 seconds
-		return CurTime() + length + delay
 	end
 
 	-- Main music handling function
@@ -118,8 +129,7 @@ if CLIENT then
 						length = nextSong.length,
 						sound = nextSong.sound,
 					}
-					PlayMusicTrack(musicSystem.musicInfo.sound)
-					musicSystem.nextMusicPlay = CalculateNextPlayTime(musicSystem.musicInfo.length)
+					PlayMusicTrack(musicSystem.musicInfo.sound, nextSong.length)
 					chat.AddText("Playing music: " .. musicSystem.musicInfo.name)
 				else
 					ResetSongQueue()

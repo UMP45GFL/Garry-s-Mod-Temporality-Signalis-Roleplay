@@ -53,16 +53,16 @@ local path = "eternalis/signalis_ost/"
 
 ETERNALIS_MUSIC_TRACKLIST = {
 	-- casual ones
-	{ name = "Turned Around", 			sound = path.."1_turned_around.mp3", 			volume = 1, length = 222 },
-	{ name = "Safe Room", 				sound = path.."2_safe_room.mp3", 				volume = 1, length = 138 },
-	{ name = "Double Back", 			sound = path.."4_double_back.mp3", 				volume = 1, length = 362 },
-	{ name = "Double Back VHS ver.", 	sound = path.."48_double_back_vhs_ver.mp3", 	volume = 1, length = 362 },
-	{ name = "Mnhr", 					sound = path.."12_mnhr.mp3", 					volume = 1, length = 294 },
-	{ name = "Dowsing", 				sound = path.."15_dowsing.mp3", 				volume = 1, length = 128 },
-	{ name = "Crepuscular", 			sound = path.."54_crepuscular.mp3", 			volume = 1, length = 222 },
+	{ name = "Turned Around", 			sound = path.."1_turned_around.mp3", 			volume = 1, length = 125 },
+	{ name = "Safe Room", 				sound = path.."2_safe_room.mp3", 				volume = 1, length = 77.5 },
+	{ name = "Double Back", 			sound = path.."4_double_back.mp3", 				volume = 1, length = 204.27 },
+	{ name = "Double Back VHS ver.", 	sound = path.."48_double_back_vhs_ver.mp3", 	volume = 1, length = 204.27 },
+	{ name = "Mnhr", 					sound = path.."12_mnhr.mp3", 					volume = 1, length = 165.6 },
+	{ name = "Dowsing", 				sound = path.."15_dowsing.mp3", 				volume = 1, length = 72 },
+	{ name = "Crepuscular", 			sound = path.."54_crepuscular.mp3", 			volume = 1, length = 125.5 },
 
 	-- more sad or scary or intense
-	{ name = "Ritual", 					sound = path.."11_ritual.mp3", 					volume = 1, length = 258 },
-	{ name = "Adler", 					sound = path.."14_adler.mp3", 					volume = 1, length = 298 },
-	{ name = "Sea Smoke", 				sound = path.."32_sea_smoke.mp3", 				volume = 1, length = 134 },
+	{ name = "Ritual", 					sound = path.."11_ritual.mp3", 					volume = 1, length = 145.5 },
+	{ name = "Adler", 					sound = path.."14_adler.mp3", 					volume = 1, length = 168.3 },
+	{ name = "Sea Smoke", 				sound = path.."32_sea_smoke.mp3", 				volume = 1, length = 74.6 },
 }
