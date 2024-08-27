@@ -5,5 +5,5 @@ ITEM.description = "A sealed, single-use adhesive patch containing a coagulation
 ITEM.price = 18
 
 ITEM.addHealth = 20
-ITEM.applySound = "items/medshot4.wav"
+ITEM.applySound = "eternalis/items/heal.wav"
 ITEM.replikaOnly = true

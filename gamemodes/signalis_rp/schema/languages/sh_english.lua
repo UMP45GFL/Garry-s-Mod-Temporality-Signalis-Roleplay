@@ -26,4 +26,5 @@ LANGUAGE = {
 
 	voices = "Voices",
 	replikaUseOnly = "This item can only be used by a Replika.",
+	healthTooHigh = "Your health is too high to use this.",
 }

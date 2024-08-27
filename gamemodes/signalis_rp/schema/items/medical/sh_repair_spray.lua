@@ -5,5 +5,5 @@ ITEM.description = "A single-use spray gun to fill damaged areas with polyuretha
 ITEM.price = 18
 
 ITEM.addHealth = 30
-ITEM.applySound = "items/medshot4.wav"
+ITEM.applySound = "eternalis/items/heal.wav"
 ITEM.replikaOnly = true

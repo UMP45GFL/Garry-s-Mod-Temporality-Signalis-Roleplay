@@ -5,5 +5,5 @@ ITEM.description = "A single-use spray gun to fill damaged areas with fast-curin
 ITEM.price = 38
 
 ITEM.addHealth = 50
-ITEM.applySound = "items/medshot4.wav"
+ITEM.applySound = "eternalis/items/heal.wav"
 ITEM.replikaOnly = true

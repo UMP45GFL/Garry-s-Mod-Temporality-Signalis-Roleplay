@@ -152,7 +152,7 @@ print all replika names
 lua_run query = mysql:Select("ix_replika_names") query:Select("class") query:Select("next_number") query:Callback(function(data) PrintTable(data) end) query:Execute()
 
 print all characters
-lua_run query = mysql:Select("ix_characters") query:Select("name") query:Select("class") query:Callback(function(data) PrintTable(data) end) query:Execute()
+lua_run query = mysql:Select("ix_characters") query:Select("name") query:Select("class") query:Callback(function(data) for k,v in pairs(data) do print(v.name) end end) query:Execute()
 
 lua_run GetNextNumberForClassFromChars("replika_arar")
 

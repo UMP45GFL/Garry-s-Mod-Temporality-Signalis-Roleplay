@@ -5,7 +5,7 @@ ITEM.description = "Single-use injection syringe. Instantly restores a large amo
 ITEM.price = 60
 
 ITEM.addHealth = 120
-ITEM.applySound = "items/medshot4.wav"
+ITEM.applySound = "eternalis/items/heal.wav"
 ITEM.replikaOnly = true
 
 -- Inventory drawing
