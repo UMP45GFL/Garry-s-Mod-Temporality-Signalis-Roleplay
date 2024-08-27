@@ -9,102 +9,129 @@ ix.lang.AddTable("english", {
 	optMusicSystemVolume = "Music volume",
 })
 
-ix.config.Add("musicSystemEnabled", true, "Whether or to enable the music system", nil, {
+ix.config.Add("musicSystemEnabled", true, "Whether or not to enable the music system", nil, {
 	category = "Music"
 })
 
+-- Server-side: preload resources
 if SERVER then
-	for k,	v in ipairs(ETERNALIS_MUSIC_TRACKLIST) do
+	for k, v in ipairs(ETERNALIS_MUSIC_TRACKLIST) do
 		resource.AddFile(v.sound)
 	end
 end
- 
-if CLIENT then
-	local last_music = nil
-	local last_music_name = nil
-	local registered_music = {}
 
+-- Client-side music system
+if CLIENT then
+	local musicSystem = {
+		lastMusic = nil,
+		lastMusicName = nil,
+		registeredMusic = {},
+		musicInfo = {},
+		songQueue = {},
+		isMusicEnding = false,
+		nextMusicCheck = 0,
+		nextMusicPlay = 0
+	}
+
+	-- Reset the music information
 	local function ResetMusicInfo()
-		music_info = {
+		musicSystem.musicInfo = {
 			nextPlay = 0,
 			volume = 1,
 			length = 0,
 			sound = nil,
 		}
 	end
-	ResetMusicInfo()
-	
+
+	-- Reset the song queue
 	local function ResetSongQueue()
-		song_queue = table.Copy(ETERNALIS_MUSIC_TRACKLIST)
+		musicSystem.songQueue = table.Copy(ETERNALIS_MUSIC_TRACKLIST)
 	end
+
+	ResetMusicInfo()
 	ResetSongQueue()
 
-	local is_music_ending = false
+	-- End the current music track properly
 	local function EndCurrentTrack()
-		last_music:ChangeVolume(0, 4)
-		is_music_ending = true
-		chat.AddText("ending music")
+		if musicSystem.lastMusic then
+			musicSystem.lastMusic:Stop()
+			musicSystem.registeredMusic[musicSystem.lastMusicName] = nil
+			musicSystem.lastMusic = nil
+			musicSystem.lastMusicName = nil
+			musicSystem.isMusicEnding = true
+			chat.AddText("Music has ended.")
+		end
 	end
 
-	local function PlayMusicTrack(file_name)
+	-- Play a music track safely
+	local function PlayMusicTrack(fileName)
 		local sound
-		if !registered_music[file_name] then
-			sound = CreateSound(game.GetWorld(), file_name, nil)
-			if sound then
-				sound:SetSoundLevel(0)
-				registered_music[file_name] = {sound, nil}
+		if not musicSystem.registeredMusic[fileName] then
+			sound = CreateSound(game.GetWorld(), fileName, nil)
+			if not sound then
+				chat.AddText("Error: Failed to load music track: " .. fileName)
+				return nil
 			end
+			sound:SetSoundLevel(0)
+			musicSystem.registeredMusic[fileName] = {sound, nil}
 		else
-			sound = registered_music[file_name][1]
+			sound = musicSystem.registeredMusic[fileName][1]
 		end
+
 		if sound then
 			sound:Play()
+			musicSystem.lastMusic = sound
+			musicSystem.lastMusicName = fileName
+			return sound
+		else
+			chat.AddText("Error: Unable to play music track: " .. fileName)
+			return nil
 		end
-		last_music = sound
-		last_music_name = file_name
-		return sound
 	end
 
-	local next_music_check = 0
-	local next_music_play = 0
+	-- Refined function to calculate the next play time
+	local function CalculateNextPlayTime(length)
+		-- Add a short randomized delay between tracks for natural flow
+		local delay = math.random(20, 40) -- Random delay between 5 and 15 seconds
+		return CurTime() + length + delay
+	end
+
+	-- Main music handling function
 	local function HandleMusic()
-		if !ix.config.Get("musicSystemEnabled", true) or !ix.option.Get("musicSystemEnabled", true) then return end
+		-- Ensure the music system and options are enabled
+		if not ix.config.Get("musicSystemEnabled", true) or not ix.option.Get("musicSystemEnabled", true) then return end
 
 		local client = LocalPlayer()
 
-		if client.Alive != nil and CurTime() > next_music_check and client:Alive() and !client:IsBot() and client:Team() != TEAM_SPECTATOR then
-			next_music_check = CurTime() + 1
+		-- Perform checks periodically
+		if client.Alive != nil and CurTime() > musicSystem.nextMusicCheck and client:Alive() and not client:IsBot() and client:Team() != TEAM_SPECTATOR then
+			musicSystem.nextMusicCheck = CurTime() + 1
 
-			if music_info == nil or next_music_play < CurTime() then
-				if #song_queue > 0 then
-					local next_song = table.remove(song_queue, math.random(1, #song_queue))
-					if next_song != nil then
-						music_info = {
-							nextPlay = 0,
-							name = next_song.name,
-							volume = next_song.volume * ix.option.Get("musicSystemVolume", 0.25),
-							length = next_song.length + math.random(18, 50),
-							sound = next_song.sound,
-							playUntil = function()
-								return false
-							end
-						}
-						PlayMusicTrack(music_info.sound)
-						next_music_play = CurTime() + music_info.length
-						chat.AddText("playing music: " .. music_info.name)
-					end
+			-- Start playing music if nothing is playing and it's time to play the next track
+			if (not musicSystem.musicInfo or musicSystem.nextMusicPlay < CurTime()) and #musicSystem.songQueue > 0 then
+				local nextSong = table.remove(musicSystem.songQueue, math.random(1, #musicSystem.songQueue))
+				if nextSong then
+					musicSystem.musicInfo = {
+						nextPlay = 0,
+						name = nextSong.name,
+						volume = nextSong.volume * ix.option.Get("musicSystemVolume", 0.25),
+						length = nextSong.length,
+						sound = nextSong.sound,
+					}
+					PlayMusicTrack(musicSystem.musicInfo.sound)
+					musicSystem.nextMusicPlay = CalculateNextPlayTime(musicSystem.musicInfo.length)
+					chat.AddText("Playing music: " .. musicSystem.musicInfo.name)
 				else
 					ResetSongQueue()
 				end
 			end
-
 		end
 	end
-	hook.Add("Tick", "Eternalis_HandleMusic", HandleMusic)
+	hook.Add("Think", "Eternalis_HandleMusic", HandleMusic)
 
-	-- OPTIONS
+	-- Options for enabling/disabling the music system and controlling volume
 	local function isHidden()
-		return !ix.config.Get("musicSystemEnabled")
+		return not ix.config.Get("musicSystemEnabled")
 	end
 
 	ix.option.Add("musicSystemEnabled", ix.type.bool, true, {
@@ -112,10 +139,10 @@ if CLIENT then
 		hidden = isHidden,
 		OnChanged = function(oldValue, value)
 			if not value then
-				if last_music != nil then
+				if musicSystem.lastMusic then
 					EndCurrentTrack()
 				end
-			elseif oldValue != value then
+			elseif oldValue ~= value then
 				ResetMusicInfo()
 			end
 		end
@@ -124,8 +151,8 @@ if CLIENT then
 	ix.option.Add("musicSystemVolume", ix.type.number, 0.25, {
 		category = "Music", min = 0.1, max = 1, decimals = 2, hidden = isHidden,
 		OnChanged = function(oldValue, value)
-			if last_music != nil then
-				last_music:ChangeVolume(value, 3)
+			if musicSystem.lastMusic then
+				musicSystem.lastMusic:ChangeVolume(value, 3)
 			end
 		end
 	})
