@@ -29,7 +29,7 @@ hook.Add("OnLoadDatabaseTables", "ReplikaNamingSystem_OnLoadDatabaseTables", fun
         query:Callback(function(data)
             if not data or !istable(data) or #data == 0 or !isnumber(data[1].next_number) then
                 local insertQuery = mysql:Insert("ix_replika_names")
-                insertQuery:Insert("next_number", 0)
+                insertQuery:Insert("next_number", 1)
                 insertQuery:Insert("class", v.uniqueID)
                 insertQuery:Execute()
             end
@@ -156,6 +156,8 @@ lua_run query = mysql:Select("ix_characters") query:Select("name") query:Select(
 
 lua_run GetNextNumberForClassFromChars("replika_arar")
 
+lua_run UpdateNextNameNumbersFromChars()
+
 lua_run GetNewCharacterName("replika_arar")
 
 */
@@ -179,7 +181,7 @@ function GetNewCharacterName(className, func)
 	        num = data[1].next_number
         else
             local insertQuery = mysql:Insert("ix_replika_names")
-            insertQuery:Insert("next_number", 0)
+            insertQuery:Insert("next_number", 1)
             insertQuery:Insert("class", className)
             insertQuery:Execute()
         end
@@ -205,7 +207,7 @@ if SERVER then
 
         if classTable and classTable.shortName and classTable.faction == tonumber(faction) then
             GetNewCharacterName(class, function(newName)
-                print("GetDefaultCharacterName has given " .. newName)
+                --print("GetDefaultCharacterName has given " .. newName)
 
                 net.Start("getDefaultCharacterName")
                     net.WriteString(newName)
