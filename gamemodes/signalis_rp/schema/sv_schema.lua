@@ -124,7 +124,9 @@ function Schema:GetPlayerDeathSound(ply)
 				pitch = math.random(pitch - 5, pitch + 5)
 
 				ply:EmitSound(sndTable.snd, sndTable.sndLevel, pitch, sndTable.volume)
-				ply:SendPlaySound("eternalis/player/death/flatline.wav")
+				if ply:Team() == FACTION_REPLIKA then
+					ply:SendPlaySound("eternalis/player/death/flatline.wav")
+				end
 				return false
 			end
 		end
