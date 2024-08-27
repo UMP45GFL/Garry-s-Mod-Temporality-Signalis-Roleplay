@@ -22,7 +22,7 @@ local function checkPlayerQuizWhitelist(ply)
     query:Where("steamid", ply:SteamID64())
     query:Callback(function(data)
         if istable(data) and #data > 0 and tonumber(data[1].was_banned) == 0 then
-            if tonumber(data[1].quiz_completed_time) == 0 and tonumber(data[1].answered_incorrectly) >= ix.config.Get("QuizModuleFiledAttempts", 3) then
+            if data[1].quiz_completed_time and tonumber(data[1].quiz_completed_time) == 0 and tonumber(data[1].answered_incorrectly) >= ix.config.Get("QuizModuleFiledAttempts", 3) then
                 local updateQuery = mysql:Update("ix_quiz_whitelist")
                 updateQuery:Update("was_banned", 0)
                 updateQuery:Where("steamid", ply:SteamID64())
@@ -35,8 +35,13 @@ local function checkPlayerQuizWhitelist(ply)
             end
         end
 
+        print("Sending quiz to player: " .. ply:Nick())
         net.Start("openquiz")
         net.Send(ply)
+
+        if timer.Exists("quizTimeLimit_" .. ply:SteamID64()) then
+            timer.Remove("quizTimeLimit_" .. ply:SteamID64())
+        end
 
         timer.Create("quizTimeLimit_" .. ply:SteamID64(), ix.config.Get("QuizModuleMaxSpentTimeAnswering", 8) * 60, 1, function()
             if IsValid(ply) then
@@ -88,7 +93,7 @@ end
 hook.Add("PostPlayerInitialized", "QuizModule_PostPlayerInitialized", function(ply)
     if !ix.config.Get("QuizModuleEnabled", true) then return end
 
-    timer.Simple(0.5, function()
+    timer.Simple(1, function()
         if IsValid(ply) then
             checkPlayerQuizWhitelist(ply)
         end
@@ -125,6 +130,8 @@ net.Receive("quizsubmit", function(len, ply)
 
     if #answers != #KANADE_QUIZ_ANSWERS then
         print("Invalid number of answers received from " .. ply:Name())
+        net.Start("openquizfailed")
+        net.Send(ply)
         return
     end
 
@@ -143,7 +150,9 @@ net.Receive("quizsubmit", function(len, ply)
     net.Start("quizcompleted")
     net.Send(ply)
 
-    timer.Remove("quizTimeLimit_" .. ply:SteamID64())
+    if timer.Exists("quizTimeLimit_" .. ply:SteamID64()) then
+        timer.Remove("quizTimeLimit_" .. ply:SteamID64())
+    end
 
 	local query = mysql:Select("ix_quiz_whitelist")
 		query:Select("answered_incorrectly")
