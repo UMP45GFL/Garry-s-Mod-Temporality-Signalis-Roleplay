@@ -4,9 +4,17 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Adds a naming system to replikas"
 PLUGIN.license = [[meow]]
 
+ix.config.Add("ReplikaNamingSystemEnabled", true, "Whether to enable the replika naming system.", nil, {
+    category = "Replika Naming System"
+})
+
 if SERVER then
 
 hook.Add("OnLoadDatabaseTables", "ReplikaNamingSystem_OnLoadDatabaseTables", function()
+    if not ix.config.Get("ReplikaNamingSystemEnabled", true) then
+        return
+    end
+
 	query = mysql:Create("ix_replika_names")
         query:Create("id", "INT(11) UNSIGNED NOT NULL AUTO_INCREMENT")
 		query:Create("class", "VARCHAR(20) NOT NULL")
@@ -19,9 +27,7 @@ hook.Add("OnLoadDatabaseTables", "ReplikaNamingSystem_OnLoadDatabaseTables", fun
         query:Select("next_number")
         query:Where("class", v.uniqueID)
         query:Callback(function(data)
-            if istable(data) and #data > 0 and data[1].next_number then
-                print("Replika naming system: " .. v.uniqueID .. " next number is " .. data[1].next_number)
-            else
+            if not data or !istable(data) or #data == 0 or !isnumber(data[1].next_number) then
                 local insertQuery = mysql:Insert("ix_replika_names")
                 insertQuery:Insert("next_number", 0)
                 insertQuery:Insert("class", v.uniqueID)
@@ -228,6 +234,10 @@ else
 end
 
 hook.Add("GetDefaultCharacterName", "ReplikaNamingSystem_GetDefaultCharacterName", function(client, payload, value, panel)
+    if not ix.config.Get("ReplikaNamingSystemEnabled", true) then
+        return
+    end
+
     -- Allow admins to edit their names
 	if isstring(value) and client:IsAdmin() then
 		return value, false
