@@ -16,10 +16,10 @@ hook.Add("OnLoadDatabaseTables", "ReplikaNamingSystem_OnLoadDatabaseTables", fun
     end
 
 	query = mysql:Create("ix_replika_names")
-        query:Create("id", "INT(11) UNSIGNED NOT NULL AUTO_INCREMENT")
+        --query:Create("id", "INT(11) UNSIGNED NOT NULL AUTO_INCREMENT")
 		query:Create("class", "VARCHAR(20) NOT NULL")
 		query:Create("next_number", "INT(11) UNSIGNED NOT NULL")
-		query:PrimaryKey("id")
+		query:PrimaryKey("next_number")
 	query:Execute()
 
     for k,v in pairs(ix.class.list) do
@@ -27,7 +27,7 @@ hook.Add("OnLoadDatabaseTables", "ReplikaNamingSystem_OnLoadDatabaseTables", fun
         query:Select("next_number")
         query:Where("class", v.uniqueID)
         query:Callback(function(data)
-            if not data or !istable(data) or #data == 0 or !isnumber(data[1].next_number) then
+            if not data or !istable(data) or #data == 0 then
                 local insertQuery = mysql:Insert("ix_replika_names")
                 insertQuery:Insert("next_number", 1)
                 insertQuery:Insert("class", v.uniqueID)
