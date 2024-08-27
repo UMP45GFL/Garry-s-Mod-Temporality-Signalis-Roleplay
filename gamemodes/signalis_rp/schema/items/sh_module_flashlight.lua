@@ -14,24 +14,89 @@ if (CLIENT) then
 	end
 end
 
+if CLIENT then
+	function CreateCalcViewHook()
+		hook.Remove("CalcView", "FlashlightModule_CalcView")
+		hook.Add("CalcView", "FlashlightModule_CalcView", function(ply, position, angles, fov)
+			local flashlight3d = ply:GetNWEntity("flashlight3d")
+			if flashlight3d:IsValid() then
+				flashlight3d:SetPos(ply:EyePos() + ply:EyeAngles():Forward() * 15)
+				flashlight3d:SetAngles(ply:EyeAngles())
+			end
+		end)
+	end
+
+	net.Receive("ixFlashlightModuleEquip", function()
+		CreateCalcViewHook()
+	end)
+
+	net.Receive("ixFlashlightModuleUnequip", function()
+		hook.Remove("CalcView", "FlashlightModule_CalcView")
+	end)
+else
+	util.AddNetworkString("ixFlashlightModuleEquip")
+	util.AddNetworkString("ixFlashlightModuleUnequip")
+
+	function Remove3DFlashlight(ply)
+		if IsValid(ply.flashlight3d) then
+			ply.flashlight3d:Remove()
+		end
+	end
+
+	function Create3DFlashlight(ply)
+		Remove3DFlashlight(ply)
+		ply.flashlight3d = ents.Create("env_projectedtexture")
+
+		ply.flashlight3d:SetKeyValue("enableshadows", 1)
+		ply.flashlight3d:SetKeyValue("farz", 550)
+		ply.flashlight3d:SetKeyValue("nearz", 8)
+		ply.flashlight3d:SetKeyValue("lightfov", 60)
+		ply.flashlight3d:SetKeyValue("lightcolor", "230, 230, 200")
+		ply.flashlight3d:SetColor(Color(255, 255, 255))
+		ply.flashlight3d:Fire("SpotlightTexture", "eternalis/flashlight/flashlight3")
+
+		ply:SetNWEntity("flashlight3d", ply.flashlight3d)
+	end
+
+	hook.Add("PlayerSwitchFlashlight", "BlockFlashLight", function(ply, enabled)
+		local items = ply:GetItems()
+
+		PrintTable(items)
+
+		for k,v in pairs(items) do
+			if v.uniqueID == "module_flashlight" and v:GetData("equip") then
+				if IsValid(ply.flashlight3d) then
+					Remove3DFlashlight(ply)
+					net.Start("ixFlashlightModuleEquip")
+					net.Send(ply)
+				else
+					Create3DFlashlight(ply)
+					net.Start("ixFlashlightModuleEquip")
+					net.Send(ply)
+				end
+				return false
+			end
+		end
+
+		return false
+	end)
+end
+
 function ITEM:EquipFlashlightModule(client)
 	self:SetData("equip", true)
 
-    client:AllowFlashlight(true)
-end
+	Create3DFlashlight(client)
 
-local function RemoveFlashlightModule(client)
-    if client:FlashlightIsOn() then
-        client:Flashlight(false)
-    end
-
-    client:AllowFlashlight(false)
+	net.Start("ixFlashlightModuleEquip")
+	net.Send(client)
 end
 
 function ITEM:UnequipFlashlightModule(client)
 	self:SetData("equip", false)
 
-    RemoveFlashlightModule(client)
+    Remove3DFlashlight(client)
+	net.Start("ixFlashlightModuleUnequip")
+	net.Send(client)
 end
 
 ITEM:Hook("drop", function(item)
@@ -111,7 +176,7 @@ end
 function ITEM:OnRemoved()
 	if (self.invID != 0 and self:GetData("equip")) then
 		self.player = self:GetOwner()
-		RemoveFlashlightModule(self.player)
+		Remove3DFlashlight(self.player)
 		self.player = nil
 	end
 end
