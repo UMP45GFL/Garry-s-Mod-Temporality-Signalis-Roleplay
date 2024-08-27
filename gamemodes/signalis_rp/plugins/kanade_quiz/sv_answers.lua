@@ -35,7 +35,6 @@ local function checkPlayerQuizWhitelist(ply)
             end
         end
 
-        print("Sending quiz to player: " .. ply:Nick())
         net.Start("openquiz")
         net.Send(ply)
 
@@ -47,7 +46,7 @@ local function checkPlayerQuizWhitelist(ply)
             if IsValid(ply) then
                 local banLength = ix.config.Get("QuizModuleAfkBanTime", 15)
                 local niceBanTime = string.NiceTime(banLength * 60)
-                local banText = ("You took too long to answer the quiz. Return in " .. niceBanTime .. "."
+                local banText = "You took too long to answer the quiz. Return in " .. niceBanTime .. "."
                 RunConsoleCommand("ulx", "ban", tostring(ply:Nick()), tostring(banLength), banText)
             end
         end)
@@ -71,7 +70,7 @@ local function quizFailed(ply)
                 if answeredIncorrectly >= ix.config.Get("QuizModuleFiledAttempts", 3) then
                     local banLength = ix.config.Get("QuizModuleBanLength", 120)
                     local niceBanTime = string.NiceTime(banLength * 60)
-                    local banText = " Wrongly answered quiz questions too many times. "Try again in " .. niceBanTime .. "."
+                    local banText = " Wrongly answered quiz questions too many times. Try again in " .. niceBanTime .. "."
                     RunConsoleCommand("ulx", "ban", tostring(ply:Nick()), tostring(banLength), banText)
                     return
                 end
