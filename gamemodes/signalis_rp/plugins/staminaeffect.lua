@@ -37,6 +37,12 @@ function PLUGIN:PlayerTick(ply)
                         breathingSound = class.breathing_sound(ply)
                     end
                 end
+
+                if character.vars.faction == "gestalt" and isnumber(character.vars.pitch) then
+                    local minPitch = breathingSound.minPitch or 90
+                    local maxPitch = breathingSound.maxPitch or 110
+                    breathingSound.pitch = math.Clamp(character.vars.pitch, minPitch, maxPitch)
+                end
             end
 
             ply:EmitSound("player/heartbeat1.wav", 60)
