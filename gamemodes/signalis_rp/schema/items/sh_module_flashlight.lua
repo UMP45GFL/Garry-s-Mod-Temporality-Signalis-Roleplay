@@ -61,8 +61,6 @@ else
 	hook.Add("PlayerSwitchFlashlight", "BlockFlashLight", function(ply, enabled)
 		local items = ply:GetItems()
 
-		PrintTable(items)
-
 		for k,v in pairs(items) do
 			if v.uniqueID == "module_flashlight" and v:GetData("equip") then
 				if IsValid(ply.flashlight3d) then
