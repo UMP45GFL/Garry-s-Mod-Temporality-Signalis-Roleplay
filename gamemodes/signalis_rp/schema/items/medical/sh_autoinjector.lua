@@ -65,8 +65,7 @@ ITEM.functions.Equip = {
 		local items = char:GetInventory():GetItems()
 
 		for _, v in pairs(items) do
-			if (v.uniqueID and item.uniqueID == "autoinjector" and v.id != item.id and v.data.equip) then
-				local itemTable = ix.item.instances[v.id]
+			if (v.uniqueID and v.uniqueID == "autoinjector" and v.id != item.id and v.data.equip) then
                 return false
 			end
 		end
