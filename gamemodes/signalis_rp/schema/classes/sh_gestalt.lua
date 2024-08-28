@@ -132,8 +132,10 @@ CLASS.max_stamina = 1 -- multiplier of how much stamina the player has
 local breathingSounds = {
 	snd = "eternalis/player/breathing/breathing_female.wav",
 	volume = 1,
-	sndLevel = 100,
-	pitch = 105
+	sndLevel = 65,
+	pitch = 105,
+    minPitch = 90,
+    maxPitch = 110
 }
 
 CLASS.breathing_sound = function(ply)
