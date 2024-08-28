@@ -145,8 +145,7 @@ ITEM.functions.Equip = {
 				local itemTable = ix.item.instances[v.id]
 
 				for _, v in pairs(items) do
-					if (v.uniqueID and item.uniqueID == "module_flashlight" and v.id != item.id and v.data.equip) then
-						local itemTable = ix.item.instances[v.id]
+					if (v.uniqueID and v.uniqueID == "module_flashlight" and v.id != item.id and v.data.equip) then
 						return false
 					end
 				end
