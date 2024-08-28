@@ -27,4 +27,7 @@ LANGUAGE = {
 	voices = "Voices",
 	replikaUseOnly = "This item can only be used by a Replika.",
 	healthTooHigh = "Your health is too high to use this.",
+	cmdChangeReplikaNextNameNumber = "Change the next number in the naming system for a specific replika class.",
+	changedReplikaNextNameNumber = "Changed next name number for class %s to %s.",
+	invalidReplikaClass = "Invalid replika class.",
 }

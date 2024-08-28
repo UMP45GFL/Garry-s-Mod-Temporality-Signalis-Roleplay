@@ -196,6 +196,41 @@ end
 
 end
 
+ix.command.Add("ChangeReplikaNextNameNumber", {
+	description = "@cmdChangeReplikaNextNameNumber",
+	privilege = "Manage Replika Naming System",
+	superAdminOnly = true,
+	arguments = {
+		ix.type.string,
+		ix.type.number
+	},
+	OnRun = function(self, client, className, number)
+		if (className == "") then
+			return "@invalidArg", 1
+		end
+
+		local class = ix.class.list[className]
+		if (!class) then
+			for _, v in ipairs(ix.class.list) do
+				if (ix.util.StringMatches(L(v.name, client), className) or ix.util.StringMatches(v.uniqueID, className)) then
+					class = v
+					break
+				end
+			end
+		end
+
+		if (class and class.shortName and class.faction == FACTION_REPLIKA) then
+            local updateQuery = mysql:Update("ix_replika_names")
+            updateQuery:Update("next_number", number)
+            updateQuery:Where("class", class.uniqueID)
+            updateQuery:Execute()
+            return "@changedReplikaNextNameNumber", class.uniqueID, number
+		else
+			return "@invalidReplikaClass"
+		end
+	end
+})
+
 if SERVER then
 	util.AddNetworkString("getDefaultCharacterName")
 
