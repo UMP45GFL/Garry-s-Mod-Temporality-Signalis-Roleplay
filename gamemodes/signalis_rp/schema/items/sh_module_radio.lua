@@ -14,24 +14,45 @@ if (CLIENT) then
 	end
 end
 
+if CLIENT then
+	net.Receive("ixUnequippedRadioModule", function()
+		local index = net.ReadString()
+
+		if index then
+			local panel = ix.gui["inv"..index]
+			print(panel)
+			if (IsValid(panel)) then
+				panel:Remove()
+			end
+		end
+	end)
+
+	net.Receive("ixEquippedRadioModule", function()
+		local index = net.ReadString()
+
+		if index then
+			CreateRadioPanel(index)
+		end
+	end)
+else
+	util.AddNetworkString("ixUnequippedRadioModule")
+	util.AddNetworkString("ixEquippedRadioModule")
+end
+
 function ITEM:EquipRadioModule(client)
 	self:SetData("equip", true)
 
-	if CLIENT then
-		self.functions.View.OnClick(self)
-	end
+	net.Start("ixEquippedRadioModule")
+	net.WriteString(self:GetData("id", ""))
+	net.Send(client)
 end
 
 function ITEM:UnequipRadioModule(client)
 	self:SetData("equip", false)
 
-	local index = self:GetData("id", "")
-	if CLIENT and index then
-		local panel = ix.gui["inv"..index]
-		if (IsValid(panel)) then
-			panel:Remove()
-		end
-	end
+	net.Start("ixUnequippedRadioModule")
+		net.WriteString(self:GetData("id", ""))
+	net.Send(client)
 end
 
 ITEM:Hook("drop", function(item)
@@ -73,8 +94,7 @@ ITEM.functions.Equip = {
 		local items = char:GetInventory():GetItems()
 
 		for _, v in pairs(items) do
-			if (v.uniqueID and item.uniqueID == "module_radio" and v.id != item.id and v.data.equip) then
-				local itemTable = ix.item.instances[v.id]
+			if (v.uniqueID and v.uniqueID == "module_radio" and v.id != item.id and v.data.equip) then
                 return false
 			end
 		end
@@ -118,26 +138,30 @@ end
 
 ITEM.isBag = true
 
+function CreateRadioPanel(index)
+	local panel = ix.gui["inv"..index]
+	if (IsValid(panel)) then
+		panel:Remove()
+	end
+
+	local parent = ix.gui.menuInventoryContainer
+	if IsValid(parent) then
+		panel = vgui.Create("ixRadioPanel", parent)
+		panel:SetParent(parent)
+		panel:ShowCloseButton(true)
+		panel:MoveToFront()
+
+		ix.gui["inv"..index] = panel
+	end
+end
+
 ITEM.functions.View = {
 	icon = "icon16/briefcase.png",
 	OnClick = function(item)
 		local index = item:GetData("id", "")
 
 		if index and item:GetData("equip") then
-			local panel = ix.gui["inv"..index]
-			if (IsValid(panel)) then
-				panel:Remove()
-			end
-
-			local parent = ix.gui.menuInventoryContainer
-			if IsValid(parent) then
-				panel = vgui.Create("ixRadioPanel", parent)
-				panel:SetParent(parent)
-				panel:ShowCloseButton(true)
-				panel:MoveToFront()
-
-				ix.gui["inv"..index] = panel
-			end
+			CreateRadioPanel(index)
 		end
 
 		return false
