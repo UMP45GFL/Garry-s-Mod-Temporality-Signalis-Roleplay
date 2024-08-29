@@ -1,17 +1,6 @@
 
 DeriveGamemode("helix")
 
-net.Receive("updatebattery", function(len)
-	local int_got = net.ReadInt(8)
-	local int2_got = net.ReadInt(4)
-	local wep = LocalPlayer():GetActiveWeapon()
-	for k,v in pairs(LocalPlayer():GetWeapons()) do
-		if v.Slot == int2_got then
-			wep.BatteryLevel = int_got
-		end
-	end
-end)
-
 local fontSettings = {
 	font = "Perfect DOS VGA 437",
 	--font = "Pokémon DP Pro",
