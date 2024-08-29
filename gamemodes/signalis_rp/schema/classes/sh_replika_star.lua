@@ -83,5 +83,4 @@ function CLASS:OnCharacterCreated(client, character)
 		skin = 1,
 		name = character:GetName()
 	})
-	idCard.skin = 1
 end
