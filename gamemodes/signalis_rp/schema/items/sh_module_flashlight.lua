@@ -17,13 +17,17 @@ end
 if CLIENT then
 	function CreateCalcViewHook()
 		hook.Remove("CalcView", "FlashlightModule_CalcView")
-		hook.Add("CalcView", "FlashlightModule_CalcView", function(ply, position, angles, fov)
-			local flashlight3d = ply:GetNWEntity("flashlight3d")
-			if flashlight3d:IsValid() then
-				flashlight3d:SetPos(ply:EyePos() + ply:EyeAngles():Forward() * 15)
-				flashlight3d:SetAngles(ply:EyeAngles())
+		/*
+		hook.Add("CalcView", "FlashlightModule_CalcView", function(client, position, angles, fov)
+			for k,ply in pairs(player.GetAll()) do
+				local flashlight3d = ply:GetNWEntity("flashlight3d")
+				if flashlight3d:IsValid() then
+					flashlight3d:SetPos(ply:EyePos() + ply:EyeAngles():Forward() * 15)
+					flashlight3d:SetAngles(ply:EyeAngles())
+				end
 			end
 		end)
+		*/
 	end
 
 	net.Receive("ixFlashlightModuleEquip", function()
@@ -43,6 +47,18 @@ else
 		end
 	end
 
+	hook.Add("PlayerDisconnected", "FlashlightModule_PlayerDisconnected", function(ply)
+		Remove3DFlashlight(ply)
+	end)
+
+	hook.Add("PlayerSpawn", "FlashlightModule_PlayerSpawn",function(ply)
+		Remove3DFlashlight(ply)
+	end)
+
+	hook.Add("PlayerDeath", "FlashlightModule_PlayerDeath", function(victim, inflictor, attacker)
+		Remove3DFlashlight(victim)
+	end)
+
 	function Create3DFlashlight(ply)
 		Remove3DFlashlight(ply)
 		ply.flashlight3d = ents.Create("env_projectedtexture")
@@ -54,6 +70,33 @@ else
 		ply.flashlight3d:SetKeyValue("lightcolor", "230, 230, 200")
 		ply.flashlight3d:SetColor(Color(255, 255, 255))
 		ply.flashlight3d:Fire("SpotlightTexture", "eternalis/flashlight/flashlight3")
+
+        -- Parent the flashlight to the player's model
+        local attachID = ply:LookupAttachment("eyes") -- Attach to eyes if possible
+		
+        if attachID > 0 then
+            ply.flashlight3d:SetParent(ply)
+            ply.flashlight3d:Fire("SetParentAttachment", "eyes") -- Attach to the eyes
+        else
+            -- Fallback to parenting to a bone, like the head
+            if ply:LookupBone("ValveBiped.Bip01_L_Clavicle") then
+                ply.flashlight3d:SetParent(ply)
+                ply.flashlight3d:FollowBone(ply, ply:LookupBone("ValveBiped.Bip01_L_Clavicle"))
+				
+			elseif ply:LookupBone("ValveBiped.Bip01_R_Clavicle") then
+				ply.flashlight3d:SetParent(ply)
+				ply.flashlight3d:FollowBone(ply, ply:LookupBone("ValveBiped.Bip01_R_Clavicle"))
+				
+			elseif ply:LookupBone("ValveBiped.Bip01_Head") then
+				ply.flashlight3d:SetParent(ply)
+				ply.flashlight3d:FollowBone(ply, ply:LookupBone("ValveBiped.Bip01_Head"))
+
+            else
+                -- Default positioning if no suitable bone or attachment found
+                ply.flashlight3d:SetPos(ply:EyePos() + ply:EyeAngles():Forward() * 15)
+                ply.flashlight3d:SetAngles(ply:EyeAngles())
+            end
+        end
 
 		ply:SetNWEntity("flashlight3d", ply.flashlight3d)
 	end
