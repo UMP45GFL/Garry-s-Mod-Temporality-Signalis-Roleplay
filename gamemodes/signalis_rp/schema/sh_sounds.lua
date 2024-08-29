@@ -34,7 +34,7 @@ end
 if CLIENT then
     -- char loaded
     hook.Add("CharacterLoaded", "CharacterLoadedSound", function(char)
-        surface.PlaySound("eternalis/signalis_ui/character_selected2.wav")
+        surface.PlaySound("eternalis/signalis_ui/character_selected.wav")
     end)
 
     -- char load failed
