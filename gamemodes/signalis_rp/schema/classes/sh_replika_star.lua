@@ -3,6 +3,10 @@ CLASS.shortName = "STAR"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
 CLASS.availableByDefault = false
+
+CLASS.isAdministration = false
+CLASS.isProtektor = true
+
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_star/star_pm.mdl",

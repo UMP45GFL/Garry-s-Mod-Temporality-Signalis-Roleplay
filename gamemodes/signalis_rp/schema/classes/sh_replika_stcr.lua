@@ -3,6 +3,10 @@ CLASS.shortName = "STCR"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
 CLASS.availableByDefault = false
+
+CLASS.isAdministration = false
+CLASS.isProtektor = true
+
 CLASS.models = {
 	{
 		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",

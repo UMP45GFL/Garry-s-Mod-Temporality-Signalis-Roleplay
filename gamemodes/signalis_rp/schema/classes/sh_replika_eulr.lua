@@ -3,6 +3,10 @@ CLASS.shortName = "EULR"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
 CLASS.availableByDefault = false
+
+CLASS.isAdministration = false
+CLASS.isProtektor = false
+
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",

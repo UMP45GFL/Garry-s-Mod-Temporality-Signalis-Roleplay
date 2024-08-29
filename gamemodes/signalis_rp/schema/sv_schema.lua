@@ -80,7 +80,7 @@ function Schema:SearchPlayer(client, target)
 	return true
 end
 
-function GAMEMODE:ScalePlayerDamage(ply, hitgroup, dmginfo)
+function Schema:ScalePlayerDamage(ply, hitgroup, dmginfo)
 	if IsValid(ply) and ply:Team() != TEAM_SPECTATOR then
 		local dmg_mul = 1
 
@@ -107,7 +107,7 @@ function GAMEMODE:ScalePlayerDamage(ply, hitgroup, dmginfo)
 				dmg_mul = dmg_mul * class.bullet_damage_taken
 			end
 		end
-
+		
 		dmginfo:ScaleDamage(dmg_mul)
 	end
 end

@@ -3,6 +3,10 @@ CLASS.shortName = "FKLR"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
 CLASS.availableByDefault = false
+
+CLASS.isAdministration = true
+CLASS.isProtektor = false
+
 CLASS.models = {
 	{
 		mdl = "models/citric/signalis_fklr/falke_pm.mdl",

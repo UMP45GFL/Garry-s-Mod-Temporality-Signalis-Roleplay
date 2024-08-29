@@ -3,6 +3,10 @@ CLASS.shortName = "ARAR"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
 CLASS.availableByDefault = false
+
+CLASS.isAdministration = false
+CLASS.isProtektor = false
+
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_arar/arar_pm.mdl",

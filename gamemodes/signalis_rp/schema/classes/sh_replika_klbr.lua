@@ -3,6 +3,10 @@ CLASS.shortName = "KLBR"
 CLASS.faction = FACTION_REPLIKA
 CLASS.isDefault = false
 CLASS.availableByDefault = false
+
+CLASS.isAdministration = false
+CLASS.isProtektor = true
+
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_kolibri/kolibri_pm.mdl",
