@@ -56,5 +56,16 @@ else
     hook.Add("OnCharacterCreated", "OnCharacterCreatedSound", function(client, char)
         client:SendPlaySound("eternalis/signalis_ui/save.wav")
     end)
+
+    local replikaHurtSounds = {
+        "eternalis/player/damage/hurt_1.wav",
+        "eternalis/player/damage/hurt_2.wav"
+    }
+
+    function Schema:GetPlayerPainSound(client)
+        if client:IsReplika() then
+            return table.Random(replikaHurtSounds)
+        end
+    end
 end
 
