@@ -24,6 +24,7 @@ CLASS.hunger = 0.87
 CLASS.thirst = 0.87
 -- SUPER TALL
 CLASS.speed = 1.1
+CLASS.ladder_speed = 1.4
 CLASS.jump_power = 1.36
 CLASS.max_stamina = 2.15
 

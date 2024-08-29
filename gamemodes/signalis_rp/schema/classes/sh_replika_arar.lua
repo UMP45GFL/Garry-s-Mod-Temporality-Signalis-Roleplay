@@ -32,6 +32,7 @@ CLASS.hunger = 0.9
 CLASS.thirst = 0.9
 -- titanium shell makes them less mobile
 CLASS.speed = 0.9
+CLASS.ladder_speed = 1.15
 CLASS.jump_power = 0.9 -- not as bad because they are tall
 CLASS.max_stamina = 1.87
 

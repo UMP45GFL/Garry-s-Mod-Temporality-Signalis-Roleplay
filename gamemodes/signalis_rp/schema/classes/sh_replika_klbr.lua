@@ -24,6 +24,7 @@ CLASS.hunger = 0.9
 CLASS.thirst = 0.9
 -- they short and agile
 CLASS.speed = 1.1
+CLASS.ladder_speed = 1.35
 CLASS.jump_power = 0.87
 CLASS.max_stamina = 2.15
 

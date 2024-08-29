@@ -26,6 +26,7 @@ CLASS.thirst = 0.76
 -- titanium skeleton makes them more agile
 -- carbon fiber-reinforced Polyethylene Shell is lighter than regular Polyethylene Shell
 CLASS.speed = 1.1
+CLASS.ladder_speed = 1.25
 CLASS.jump_power = 1.15
 CLASS.max_stamina = 2.15
 

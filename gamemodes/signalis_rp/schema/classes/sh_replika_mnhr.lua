@@ -23,6 +23,7 @@ CLASS.mental_strength = 1.4 -- said to be the most stable unit
 CLASS.hunger = 0.95
 CLASS.thirst = 0.95
 CLASS.speed = 0.82
+CLASS.ladder_speed = 1
 CLASS.jump_power = 0.7
 CLASS.max_stamina = 1.75
 

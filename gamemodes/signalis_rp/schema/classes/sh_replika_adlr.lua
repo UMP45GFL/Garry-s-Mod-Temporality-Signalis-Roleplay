@@ -24,6 +24,7 @@ CLASS.hunger = 0.9
 CLASS.thirst = 0.9
 -- titanium skeleton makes them more agile
 CLASS.speed = 1.07
+CLASS.ladder_speed = 1.2
 CLASS.jump_power = 1.04 -- short baby
 CLASS.max_stamina = 2.05
 

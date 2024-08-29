@@ -126,6 +126,7 @@ CLASS.mental_strength = 1 -- multiplier of how strong the character is mentally,
 CLASS.hunger = 1 -- multiplier of how fast the hunger of the player will increase
 CLASS.thirst = 1 -- multiplier of how fast the thirst of the player will increase
 CLASS.speed = 1 -- multiplier of how fast the player can run
+CLASS.ladder_speed = 1 -- multiplier of how fast the player can climb ladders
 CLASS.jump_power = 1 -- multiplier of how strong the player can jump
 CLASS.max_stamina = 1 -- multiplier of how much stamina the player has
 
