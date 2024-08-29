@@ -11,18 +11,18 @@ ITEM.maxPages = 3
 ITEM.startFromPage0 = false
 
 function ITEM:GetDescription()
-	local hasBeenWrittenTo = false
+	local isEmpty = true
 	
 	for k,v in pairs(self:GetData("pages", {})) do
 		if (v and v != "") then
-			hasBeenWrittenTo = true
+			isEmpty = false
 			break
 		end
 	end
 
-	return ((self:GetData("owner", 0) == 0) or hasBeenWrittenTo)
-		and string.format(self.description, "it hasn't been written on.")
-		or string.format(self.description, "it has been written on.")
+	return ((self:GetData("owner", 0) == 0) or isEmpty)
+		and string.format(self.description, "it hasn't been written on")
+		or string.format(self.description, "it has been written on")
 end
 
 function ITEM:SetPages(pages, character)
@@ -44,9 +44,10 @@ ITEM.functions.View = {
 		netstream.Start(item.player, "ixViewPaper", item.maxPages, item.startFromPage0, item.backgroundPhoto, item:GetID(), item:GetData("pages", {}), 0)
 		return false
 	end,
-
 	OnCanRun = function(item)
-		local hasBeenWrittenTo = false
+		local owner = item:GetData("owner", 0)
+
+		local isEmpty = true
 	
 		if item.pages and #item:GetData("pages", {}) == 0 then
 			item:SetData("pages", item.pages)
@@ -54,12 +55,12 @@ ITEM.functions.View = {
 
 		for k,v in pairs(item:GetData("pages", {})) do
 			if (v and isstring(v) and string.len(v) > 0) or (v and istable(v)) then
-				hasBeenWrittenTo = true
+				isEmpty = false
 				break
 			end
 		end
 
-		return hasBeenWrittenTo
+		return !isEmpty or (item:GetData("owner", 0) != 0)
 	end
 }
 
@@ -87,7 +88,7 @@ ITEM.functions.Edit = {
 			end
 		end
 
-		return (owner == 0 and isEmpty) or (owner == item.player:GetCharacter():GetID() and isEmpty)
+		return isEmpty and (owner == 0 or owner == item.player:GetCharacter():GetID())
 	end
 }
 
