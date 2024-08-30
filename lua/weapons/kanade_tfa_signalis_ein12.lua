@@ -1,7 +1,7 @@
 SWEP.Base					= "tfa_bash_base"
 SWEP.Category				= "Kanade's TFA Signalis" --Category where you will find your weapons
-SWEP.PrintName				= "EIN-12 Flechette"		-- Weapon name (Shown on HUD)	
-SWEP.Purpose = "EIN-12 Flechette. Can hit multiple targets at once. Low damage, but high chance to stagger enemies at close range."
+SWEP.PrintName				= "EIN-12 flechette Shotgun"		-- Weapon name (Shown on HUD)	
+SWEP.Purpose = "EIN-12 flechette Shotgun. Can hit multiple targets at once. Low damage, but high chance to stagger enemies at close range."
 SWEP.Slot					= 3			-- Slot in the weapon selection menu
 SWEP.SlotPos				= 3			-- Position in the slot
 SWEP.DrawAmmo				= true		-- Should draw the default HL2 ammo counter

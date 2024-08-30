@@ -4,11 +4,11 @@ SWEP.Spawnable = TFA_BASE_VERSION and TFA_BASE_VERSION >= 4.7
 SWEP.AdminSpawnable = true
 SWEP.UseHands = true
 --SWEP.Manufacturer = "NA"
-SWEP.Purpose = "BU-5 Nitro Expres5. Very high damage. Easilupenetrates armor plating,ballistic shields and enemios."
+SWEP.Purpose = "BW-5 Nitro Express Rifle. Very high damage. Easily penetrates armor plating, ballistic shields and enemies."
 SWEP.Type_Displayed = "Shotgun"
 SWEP.Author = "Zacks & 1nazuma"
 SWEP.Slot = 3
-SWEP.PrintName = "BU-5 Nitro Expres5"
+SWEP.PrintName = "BW-5 Nitro Express Rifle"
 SWEP.DrawCrosshair = false
 SWEP.DrawCrosshairIS = false
 
