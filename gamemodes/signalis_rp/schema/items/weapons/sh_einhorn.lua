@@ -10,8 +10,10 @@ ITEM.weaponCategory = "sidearm"
 ITEM.width = 2
 ITEM.height = 2
 
+
+ITEM.forceRender = false
 ITEM.iconCam = {
-	pos = Vector(7.28, 1.63, 149.2),
-	ang = Angle(90, 180, 0),
-	fov = 4.39
+	pos = Vector(487.84, 409.77, 370.59),
+	ang = Angle(30.15, 220.08, 0),
+	fov = 1
 }

@@ -11,8 +11,11 @@ ITEM.weaponCategory = "primary"
 ITEM.width = 5
 ITEM.height = 1
 
+ITEM.forceRender = false
+/*
 ITEM.iconCam = {
 	pos = Vector(0, 200, -6.25),
 	ang = Angle(0, 270, 0),
 	fov = 20
 }
+*/
