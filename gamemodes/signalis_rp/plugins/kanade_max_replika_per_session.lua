@@ -11,7 +11,7 @@ ix.config.Add("MaxReplikaPerSessionEnabled", true, "Whether or to limit the amou
 function CreateMaxReplikaPerSessionConfigs()
 	for k,v in pairs(ix.class.list) do
 		if v.faction == FACTION_REPLIKA and v.shortName then
-			print("Creating config for "..v.shortName)
+			--print("Creating config for "..v.shortName)
 			ix.config.Add("Max"..v.shortName.." PerSession", 5, "The maximum amount of "..v.name.." replikas per session.", nil, {
 				category = "Max Replika Per Session",
 				data = {min = 0, max = 20},

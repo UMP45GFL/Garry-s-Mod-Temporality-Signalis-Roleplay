@@ -93,27 +93,40 @@ if CLIENT then
         surface.PlaySound("eternalis/signalis_ui/no.wav")
     end
 
+    local sentNoFocus = 0
+    local submitAvailable = false
+    local currentQuestion = 1
+    local optionList = {}
     function OpenQuizModule()
-        if quizPanel then
-            quizPanel:Remove()
+        if quizFrame then
+            quizFrame:Remove()
         end
 
         for k,v in pairs(KANADE_QUIZ_QUESTIONS) do
             v.answer = nil
         end
 
-        local submitAvailable = false
-
-        quizPanel = vgui.Create("DFrame")
-        quizPanel:SetSize(ScrW(), ScrH())
-        quizPanel:SetTitle("Quiz")
-        quizPanel:SetDraggable(false)
-        quizPanel:ShowCloseButton(false)
-        quizPanel:SetDeleteOnClose(true)
-        quizPanel:MakePopup()
-        quizPanel.Paint = function(self, w, h)
+        quizFrame = vgui.Create("DFrame")
+        quizFrame:SetSize(ScrW(), ScrH())
+        quizFrame:SetTitle("")
+        quizFrame:SetDraggable(false)
+        quizFrame:ShowCloseButton(false)
+        quizFrame:SetDeleteOnClose(true)
+        quizFrame:MakePopup()
+        quizFrame.Paint = function(self, w, h)
             draw.RoundedBox(0, 0, 0, w, h, Color(0, 0, 0, 255))
         end
+        quizFrame.Think = function(self)
+            if not system.HasFocus() and sentNoFocus == 0 then
+                sentNoFocus = 1
+                net.Start("quiznofocus")
+                net.SendToServer()
+            end
+        end
+
+        local quizPanel = vgui.Create("DPanel", quizFrame)
+        quizPanel:SetPos(0, ScrH() / 3)
+        quizPanel:SetSize(ScrW(), ScrH() / 2)
 
         local scrollPanel = vgui.Create("DScrollPanel", quizPanel)
         scrollPanel:Dock(FILL)
@@ -123,24 +136,35 @@ if CLIENT then
         questionPanel:Dock(FILL)
         questionPanel:DockPadding(16, 64, 16, 32)
 
-        for questionNum, questionTable in ipairs(KANADE_QUIZ_QUESTIONS) do
-			local questionLabel = vgui.Create("DPanel", questionPanel)
-            questionLabel:Dock(TOP)
-            questionLabel:DockPadding(4, 4, 4, 8)
-            questionLabel:SetHeight(draw.GetFontHeight("quizQuestionFont") + 4)
-            questionLabel.Paint = function(self, w, h)
-                draw.Text({
-                    text = questionNum .. ". " ..  questionTable.question,
-                    font = "quizQuestionFont",
-                    pos = {w / 2, h / 2},
-                    color = color_white,
-                    xalign = TEXT_ALIGN_CENTER,
-                    yalign = TEXT_ALIGN_CENTER
-                })
-            end
-            scrollPanel:AddItem(questionLabel)
+        local questionLabel = vgui.Create("DPanel", questionPanel)
+        questionLabel:Dock(TOP)
+        questionLabel:DockPadding(4, 4, 4, 8)
+        questionLabel:SetHeight(draw.GetFontHeight("quizQuestionFont") + 4)
+        questionLabel.Paint = function(self, w, h)
+            draw.Text({
+                text = currentQuestion .. ". " ..  KANADE_QUIZ_QUESTIONS[currentQuestion].question,
+                font = "quizQuestionFont",
+                pos = {w / 2, h / 2},
+                color = color_white,
+                xalign = TEXT_ALIGN_CENTER,
+                yalign = TEXT_ALIGN_CENTER
+            })
+        end
+        scrollPanel:AddItem(questionLabel)
 
-            local options = table.Copy(questionTable.options)
+        local function generateButtons()
+            for k,v in pairs(optionList) do
+                v:Remove()
+            end
+
+            local space = vgui.Create("DPanel", questionPanel)
+            space:Dock(TOP)
+            space:SetHeight(32)
+            space.Paint = function() end
+            scrollPanel:AddItem(space)
+            table.insert(optionList, space)
+
+            local options = table.Copy(KANADE_QUIZ_QUESTIONS[currentQuestion].options)
             table.Shuffle(options)
 
             for i, option in ipairs(options) do
@@ -149,9 +173,10 @@ if CLIENT then
                 optionButtonPanel:Dock(TOP)
                 optionButtonPanel:DockPadding(8, 8, 8, 8)
                 optionButtonPanel.Paint = function() end
-
+                table.insert(optionList, optionButtonPanel)
+    
                 local buttonWidth = ScrW() * 0.3
-
+    
                 local optionButton = vgui.Create("DButton", optionButtonPanel)
                 optionButton:SetText(alphabet[i] .. ") " .. option)
                 optionButton:SetFont("quizOptionFont")
@@ -159,28 +184,22 @@ if CLIENT then
                 optionButton:SizeToContents()
                 optionButton:SetWidth(buttonWidth)
                 optionButton:SetPos(ScrW() / 2 - ((buttonWidth) / 2) - 32, 0)
-                
                 optionButton.OnCursorEntered = function()
                     --surface.PlaySound("Helix.Rollover")
                     LocalPlayer():EmitSound("Helix.Rollover")
                 end
-
                 optionButton.DoClick = function(self)
-                    if questionTable.answer == option then
-                        questionTable.answer = nil
-                    else
-                        questionTable.answer = option
-                    end
-
-                    submitAvailable = true
-                    for _, qst in pairs(KANADE_QUIZ_QUESTIONS) do
-                        if qst.answer == nil then
+                    if KANADE_QUIZ_QUESTIONS[currentQuestion].answer == option then
+                        KANADE_QUIZ_QUESTIONS[currentQuestion].answer = nil
+                        if submitAvailable then
                             submitAvailable = false
                         end
+                    else
+                        KANADE_QUIZ_QUESTIONS[currentQuestion].answer = option
                     end
                 end
                 optionButton.Paint = function(self, w, h)
-                    if questionTable.answer == option then
+                    if KANADE_QUIZ_QUESTIONS[currentQuestion].answer == option then
                         draw.RoundedBox(4, 0, 0, w, h, Color(255, 0, 0, 100))
                     elseif self:IsHovered() then
                         draw.RoundedBox(4, 0, 0, w, h, Color(35, 35, 35, 150))
@@ -188,84 +207,109 @@ if CLIENT then
                         draw.RoundedBox(4, 0, 0, w, h, Color(25, 25, 25, 100))
                     end
                 end
-
+                table.insert(optionList, optionButton)
+    
                 scrollPanel:AddItem(optionButtonPanel)
             end
 
             local space = vgui.Create("DPanel", questionPanel)
             space:Dock(TOP)
-            space:SetHeight(80)
+            space:SetHeight(64)
             space.Paint = function() end
             scrollPanel:AddItem(space)
-        end
-
-        local space = vgui.Create("DPanel", questionPanel)
-        space:Dock(TOP)
-        space:SetHeight(16)
-        space.Paint = function() end
-        scrollPanel:AddItem(space)
-
-        local submitButton = vgui.Create("DButton", questionPanel)
-        submitButton:SetWidth(ScrW() * 0.6)
-        submitButton:SetHeight(draw.GetFontHeight("quizSubmitFont") + 16)
-        submitButton:DockPadding(8, 8, 8, 8)
-        submitButton:DockMargin(4, 32, 4, 32)
-        submitButton:Dock(TOP)
-        submitButton:SetText("Submit")
-        submitButton:SetFont("quizSubmitFont")
-        submitButton:SetTextColor(color_white)
-
-        submitButton.OnCursorEntered = function()
-            --surface.PlaySound("Helix.Rollover")
-            LocalPlayer():EmitSound("Helix.Rollover")
-        end
-
-        submitButton.DoClick = function()
-            if not submitAvailable then
-                return
+            table.insert(optionList, space)
+    
+            local submitButton = vgui.Create("DButton", questionPanel)
+            submitButton:SetWidth(ScrW() * 0.6)
+            submitButton:SetHeight(draw.GetFontHeight("quizSubmitFont") + 16)
+            submitButton:DockPadding(8, 8, 8, 8)
+            submitButton:DockMargin(4, 32, 4, 32)
+            submitButton:Dock(TOP)
+            submitButton:SetText("Next")
+            submitButton:SetFont("quizSubmitFont")
+            submitButton:SetTextColor(color_white)
+            submitButton.OnCursorEntered = function()
+                LocalPlayer():EmitSound("Helix.Rollover")
             end
-
-            local answers = {}
-
-            for _, questionTable in ipairs(KANADE_QUIZ_QUESTIONS) do
-                if questionTable.answer == nil then
+            submitButton.Think = function(self)
+                if submitAvailable != true then
+                    if self:GetText() == "Submit" then
+                        self:SetText("Next")
+                    end
+                    submitAvailable = true
+                    for _, questionTable in ipairs(KANADE_QUIZ_QUESTIONS) do
+                        if questionTable.answer == nil then
+                            submitAvailable = false
+                            break
+                        end
+                    end
+    
+                elseif self:GetText() != "Submit" then
+                    self:SetText("Submit")
+                end
+            end
+            submitButton.DoClick = function()
+                if not submitAvailable then
+                    if currentQuestion < #KANADE_QUIZ_QUESTIONS and KANADE_QUIZ_QUESTIONS[currentQuestion].answer then
+                        currentQuestion = currentQuestion + 1
+                        generateButtons()
+                    end
                     return
                 end
-                table.insert(answers, {
-                    question = questionTable.question,
-                    answer = questionTable.answer
-                })
-            end
-
-            net.Start("quizsubmit")
-            net.WriteTable(answers)
-            net.SendToServer()
-
-            --quizPanel:Close()
-        end
-        submitButton.Paint = function(self, w, h)
-            if submitAvailable then
-                if self:IsHovered() then
-                    draw.RoundedBox(4, 0, 0, w, h, Color(255, 0, 0, 150))
-                else
-                    draw.RoundedBox(4, 0, 0, w, h, Color(245, 0, 0, 100))
+    
+                local answers = {}
+    
+                for _, questionTable in ipairs(KANADE_QUIZ_QUESTIONS) do
+                    if questionTable.answer == nil then
+                        return
+                    end
+                    table.insert(answers, {
+                        question = questionTable.question,
+                        answer = questionTable.answer
+                    })
                 end
-            else
-                draw.RoundedBox(4, 0, 0, w, h, Color(25, 25, 25, 100))
+    
+                net.Start("quizsubmit")
+                net.WriteTable(answers)
+                net.SendToServer()
+            end
+            submitButton.Paint = function(self, w, h)
+                if submitAvailable or KANADE_QUIZ_QUESTIONS[currentQuestion].answer then
+                    if self:IsHovered() then
+                        draw.RoundedBox(4, 0, 0, w, h, Color(255, 0, 0, 150))
+                    else
+                        draw.RoundedBox(4, 0, 0, w, h, Color(245, 0, 0, 100))
+                    end
+                else
+                    draw.RoundedBox(4, 0, 0, w, h, Color(25, 25, 25, 100))
+                end
+            end
+            scrollPanel:AddItem(submitButton)
+            table.insert(optionList, submitButton)
+
+            local leaveButton = vgui.Create("DButton", questionPanel)
+            leaveButton:SetWidth(ScrW() * 0.6)
+            leaveButton:SetHeight(draw.GetFontHeight("quizSubmitFont") + 16)
+            leaveButton:DockPadding(8, 8, 8, 8)
+            leaveButton:DockMargin(4, 32, 4, 32)
+            leaveButton:Dock(TOP)
+            leaveButton:SetText("Leave")
+            leaveButton:SetFont("quizSubmitFont")
+            leaveButton:SetTextColor(color_white)
+            leaveButton.OnCursorEntered = function()
+                LocalPlayer():EmitSound("Helix.Rollover")
+            end
+            leaveButton.DoClick = function()
+                RunConsoleCommand("disconnect")
             end
         end
-        scrollPanel:AddItem(submitButton)
 
-        local space = vgui.Create("DPanel", questionPanel)
-        space:Dock(TOP)
-        space:SetHeight(32)
-        space.Paint = function() end
-        scrollPanel:AddItem(space)
+        generateButtons()
     end
 
     net.Receive("quizcompleted", function()
-        if quizPanel then
-            quizPanel:Remove()
+        if quizFrame then
+            quizFrame:Remove()
         end
         surface.PlaySound("eternalis/signalis_ui/save.wav")
     end)

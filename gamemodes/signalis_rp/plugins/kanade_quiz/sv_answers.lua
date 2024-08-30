@@ -70,7 +70,7 @@ local function quizFailed(ply)
                 if answeredIncorrectly >= ix.config.Get("QuizModuleFiledAttempts", 3) then
                     local banLength = ix.config.Get("QuizModuleBanLength", 120)
                     local niceBanTime = string.NiceTime(banLength * 60)
-                    local banText = " Wrongly answered quiz questions too many times. Try again in " .. niceBanTime .. "."
+                    local banText = "Wrongly answered quiz questions too many times. Try again in " .. niceBanTime .. "."
                     RunConsoleCommand("ulx", "ban", tostring(ply:Nick()), tostring(banLength), banText)
                     return
                 end
@@ -123,6 +123,35 @@ KANADE_QUIZ_ANSWERS = {
 }
 
 util.AddNetworkString("quizsubmit")
+util.AddNetworkString("quiznofocus")
+
+net.Receive("quiznofocus", function(len, ply)
+	local query = mysql:Select("ix_quiz_whitelist")
+    query:Select("answered_incorrectly")
+    query:Where("steamid", ply:SteamID64())
+    query:Callback(function(data)
+        if istable(data) and #data > 0 then
+            local answeredIncorrectly = tonumber(data[1].answered_incorrectly) + 1
+            local updateQuery = mysql:Update("ix_quiz_whitelist")
+            updateQuery:Update("answered_incorrectly", answeredIncorrectly)
+            updateQuery:Where("steamid", ply:SteamID64())
+            updateQuery:Execute()
+        else
+            local insertQuery = mysql:Insert("ix_quiz_whitelist")
+            insertQuery:Insert("steamid", ply:SteamID64())
+            insertQuery:Insert("quiz_completed_time", 0)
+            insertQuery:Insert("answered_incorrectly", 2)
+            insertQuery:Insert("was_banned", 0)
+            insertQuery:Execute()
+        end
+    end)
+    query:Execute()
+
+    local banLength = ix.config.Get("QuizModuleAfkBanTime", 15)
+    local niceBanTime = string.NiceTime(banLength * 60)
+    local banText = "You cannot minimize the game. Try again in " .. niceBanTime .. "."
+    RunConsoleCommand("ulx", "ban", tostring(ply:Nick()), tostring(banLength), banText)
+end)
 
 net.Receive("quizsubmit", function(len, ply)
     local answers = net.ReadTable()
