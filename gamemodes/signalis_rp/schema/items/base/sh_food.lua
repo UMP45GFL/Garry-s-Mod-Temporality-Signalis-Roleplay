@@ -11,6 +11,7 @@ ITEM.addThirst = 0
 ITEM.addHealth = 0
 ITEM.addStamina = 0
 ITEM.eatSound = nil
+ITEM.sliceableInto = nil
 
 ITEM.functions.Eat = {
 	OnRun = function(itemTable)
@@ -40,5 +41,39 @@ ITEM.functions.Eat = {
 		client:SetHealth( math.Clamp(client:Health() + itemTable.addHealth, 0, client:GetMaxHealth()) )
 
 		return true
+	end
+}
+
+ITEM.functions.Slice = {
+	OnRun = function(item)
+		local ply = item.player
+
+		if (IsValid(ply)) then
+			local inventory = ply:GetCharacter():GetInventory()
+			local items = inventory:GetItems()
+	
+			for _, v in pairs(items) do
+				if (v.id != item.id and v.canSlice) then
+					local sliceableInto = item:GetData("sliceableInto", item.sliceableInto)
+					local breadSlice = inventory:Add(sliceableInto[1])
+	
+					if (breadSlice) then
+						for i=1, sliceableInto[2] - 1 do
+							inventory:Add(sliceableInto[1])
+						end
+						return true
+					end
+	
+					return false
+				end
+			end
+		end
+	
+		ply:NotifyLocalized("noSlicingItems")
+		return false
 	end,
+	OnCanRun = function(item)
+		local sliceableInto = item:GetData("sliceableInto", item.sliceableInto)
+		return istable(sliceableInto)
+	end
 }
