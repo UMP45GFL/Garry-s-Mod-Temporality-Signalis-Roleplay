@@ -1,5 +1,5 @@
 ITEM.name = ".357 ammo loader"
-ITEM.model = "models/eternalis/items/weapons/ammo/ammo357magnum/ammo357magnum_mag.mdl"
+ITEM.model = "models/eternalis/items/weapons/ammo/ammo357magnum/ammo357magnum_speedloader.mdl"
 
 ITEM.ammo = "357" -- type of the ammo
 ITEM.ammoAmount = 6 -- amount of the ammo
