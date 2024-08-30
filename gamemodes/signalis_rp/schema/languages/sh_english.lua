@@ -30,4 +30,5 @@ LANGUAGE = {
 	cmdChangeReplikaNextNameNumber = "Change the next number in the naming system for a specific replika class.",
 	changedReplikaNextNameNumber = "Changed next name number for class %s to %s.",
 	invalidReplikaClass = "Invalid replika class.",
+	noSlicingItems = "You need an item that can slice.",
 }
