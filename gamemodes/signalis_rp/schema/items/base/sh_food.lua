@@ -22,6 +22,11 @@ ITEM.functions.Eat = {
 		local client = itemTable.player
 
 		if ix.config.Get("hungerThirstSystemEnabled", true) then
+			if client.hunger / client:GetMaxHunger() > 0.9 then
+				client:NotifyLocalized("You are too full to eat.")
+				return false
+			end
+
 			client:AddHunger(hunger)
 			client:AddThirst(thirst)
 		end
