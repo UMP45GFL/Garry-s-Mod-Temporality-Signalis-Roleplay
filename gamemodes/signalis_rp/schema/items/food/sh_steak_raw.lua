@@ -1,9 +1,9 @@
 
-ITEM.name = "Raw meat"
-ITEM.model = Model("models/foodnhouseholditems/meat7.mdl")
-ITEM.width = 2
+ITEM.name = "Raw steak"
+ITEM.model = Model("models/foodnhouseholditems/steak1.mdl")
+ITEM.width = 1
 ITEM.height = 1
-ITEM.description = "A piece of raw meat. Needs to be cooked."
+ITEM.description = "A piece of raw steak. Needs to be cooked."
 
 ITEM.addHunger = -10
 ITEM.addThirst = 10

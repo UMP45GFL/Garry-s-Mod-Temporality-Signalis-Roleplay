@@ -12,13 +12,15 @@ ITEM.addHealth = 0
 ITEM.addStamina = 0
 ITEM.eatSound = nil
 ITEM.sliceableInto = nil
+ITEM.eatMessage = nil
 
 ITEM.functions.Eat = {
 	OnRun = function(itemTable)
 		local hunger = itemTable:GetData("addHunger", itemTable.addHunger)
 		local thirst = itemTable:GetData("addThirst", itemTable.addThirst)
-		local eatSound = itemTable:GetData("eatSound", itemTable.eatSound)
 		local addStamina = itemTable:GetData("addStamina", itemTable.addStamina)
+		local eatSound = itemTable:GetData("eatSound", itemTable.eatSound)
+		local eatMessage = itemTable:GetData("eatMessage", itemTable.eatMessage)
 
 		local client = itemTable.player
 
@@ -36,6 +38,10 @@ ITEM.functions.Eat = {
 
 		if eatSound then
 			client:EmitSound(eatSound)
+		end
+
+		if eatMessage then
+			client:ChatPrint(eatMessage)
 		end
 
 		client:SetHealth( math.Clamp(client:Health() + itemTable.addHealth, 0, client:GetMaxHealth()) )
