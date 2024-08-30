@@ -32,7 +32,7 @@ CLASS.death_sounds = {
 	{
 		snd = "eternalis/player/death/death_stcr.wav",
 		volume = 1,
-		sndLevel = 120,
+		sndLevel = 110,
 		pitch = 100
 	}
 }

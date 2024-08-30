@@ -30,9 +30,9 @@ CLASS.max_stamina = 2.07
 
 CLASS.death_sounds = {
 	{
-		snd = "eternalis/player/death/death_stcr.wav",
+		snd = "eternalis/player/death/death_star.wav",
 		volume = 1,
-		sndLevel = 120,
+		sndLevel = 110,
 		pitch = 100
 	}
 }
