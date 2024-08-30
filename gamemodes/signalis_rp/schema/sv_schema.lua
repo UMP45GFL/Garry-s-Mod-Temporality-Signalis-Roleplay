@@ -117,7 +117,13 @@ function Schema:GetPlayerDeathSound(ply)
 	if character then
 		local class = ix.class.GetClass(character.vars.class)
 		if class and class.death_sounds then
-			local sndTable = table.Random(class.death_sounds)
+			local sndTable
+			if istable(class.death_sounds) then
+				sndTable = table.Random(class.death_sounds)
+			elseif isfunction(class.death_sounds) then
+				sndTable = class.death_sounds(ply)
+			end
+
 			if sndTable then
 				local pitch = sndTable.pitch or 100
 
