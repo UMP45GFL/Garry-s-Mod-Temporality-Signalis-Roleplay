@@ -21,7 +21,7 @@
 --	https://steamcommunity.com/id/Taxin2012/
 
 
-
+/*
 PLUGIN.AttachData[ "ins2_si_kobra" ] = {
 	Name = "Kobra Sight",
 	Desc = "Sight for weapons",
@@ -31,3 +31,4 @@ PLUGIN.AttachData[ "ins2_si_kobra" ] = {
 	Height = 1,
 	Slot = 2
 }
+*/

@@ -65,7 +65,15 @@ if CLIENT then
 	end
 end
 
+ix.config.Add("InitializeWeaponsAsItems", false, "Initialize TFA sweps as helix items automatically.", nil, {
+	category = "TFA Support"
+})
+
 function PLUGIN:InitializedPlugins()
+	if !ix.config.Get("InitializeWeaponsAsItems", false) then
+		return
+	end
+
 	for k, v in next, weapons.GetList() do
 		local class = v.ClassName
 		local dat = self.GunData[ class ]

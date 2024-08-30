@@ -21,7 +21,7 @@
 --	https://steamcommunity.com/id/Taxin2012/
 
 
-
+/*
 PLUGIN.AmmoData[ "assault" ] = {
 	Name = "Ammo for assault rifles",
 	Amount = 30,
@@ -30,3 +30,4 @@ PLUGIN.AmmoData[ "assault" ] = {
 	Width = 1,
 	Height = 1
 }
+*/
