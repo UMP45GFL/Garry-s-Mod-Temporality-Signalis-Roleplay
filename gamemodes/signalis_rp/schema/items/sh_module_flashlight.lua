@@ -184,14 +184,8 @@ ITEM.functions.Equip = {
 		local items = char:GetInventory():GetItems()
 
 		for _, v in pairs(items) do
-			if (v.id != item.id) then
-				local itemTable = ix.item.instances[v.id]
-
-				for _, v in pairs(items) do
-					if (v.uniqueID and v.uniqueID == "module_flashlight" and v.id != item.id and v.data.equip) then
-						return false
-					end
-				end
+			if (v.uniqueID and v.uniqueID == "module_flashlight" and v.id != item.id and v.data.equip) then
+                return false
 			end
 		end
 
@@ -200,6 +194,19 @@ ITEM.functions.Equip = {
 	end,
 	OnCanRun = function(item)
 		local client = item.player
+
+		if client:Team() != FACTION_REPLIKA then
+			return false
+		end
+
+		local char = client:GetCharacter()
+		local items = char:GetInventory():GetItems()
+
+		for _, v in pairs(items) do
+			if (v.uniqueID and v.uniqueID == "module_flashlight" and v.id != item.id and v.data.equip) then
+                return false
+			end
+		end
 
 		return !IsValid(item.entity) and IsValid(client) and item:GetData("equip") != true and
 			hook.Run("CanPlayerEquipItem", client, item) != false
