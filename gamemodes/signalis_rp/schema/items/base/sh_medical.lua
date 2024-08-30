@@ -86,6 +86,6 @@ ITEM.functions.Apply = {
 
 		SendHealingEffect(client)
 
-		client:SetHealth( math.Clamp(client:Health() + addHealth, client:GetMaxHealth()) )
+		client:SetHealth( math.Clamp(client:Health() + addHealth, 0, client:GetMaxHealth()) )
 	end
 }

@@ -32,7 +32,7 @@ ITEM.functions.Eat = {
 			client:EmitSound(eatSound)
 		end
 
-		client:SetHealth(math.min(client:Health() + itemTable.addHealth, client:GetMaxHealth()))
+		client:SetHealth( math.Clamp(client:Health() + itemTable.addHealth, 0, client:GetMaxHealth()) )
 
 		return true
 	end,
