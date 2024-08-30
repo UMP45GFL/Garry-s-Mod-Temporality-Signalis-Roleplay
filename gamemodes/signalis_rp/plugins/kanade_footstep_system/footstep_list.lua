@@ -115,10 +115,16 @@ ETERNALIS_FOOTSTEP_LIST = {
         }
     },
     {
-        -- we need a snow sound
         mat = MAT_SNOW,
         surface = "snow",
-        sounds = true -- default
+        sounds = {
+            path.."snow1.wav",
+            path.."snow2.wav",
+            path.."snow3.wav",
+            path.."snow4.wav",
+            path.."snow5.wav",
+            path.."snow6.wav"
+        }
     },
     {
         mat = MAT_FLESH,
