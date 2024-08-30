@@ -145,6 +145,27 @@ CLASS.breathing_sound = function(ply)
     end
 end
 
+local maleDeathSounds = {
+    {
+        snd = "eternalis/player/death/death_gestalt_m_1.wav",
+        volume = 1,
+        sndLevel = 100,
+        pitch = 100
+    },
+    {
+        snd = "eternalis/player/death/death_gestalt_m_2.wav",
+        volume = 1,
+        sndLevel = 100,
+        pitch = 100
+    },
+}
+
+CLASS.death_sounds = function(ply)
+    if !ply:IsFemale() then
+        return maleDeathSounds
+    end
+end
+
 -- attributes
 CLASS.remove_attributes = true
 
