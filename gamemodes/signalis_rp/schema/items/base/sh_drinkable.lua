@@ -22,6 +22,11 @@ ITEM.functions.Drink = {
 		local client = itemTable.player
 
 		if ix.config.Get("hungerThirstSystemEnabled", true) then
+			if client.thirst / client:GetMaxThirst() > 0.9 then
+				client:NotifyLocalized("You don't need to drink right now.")
+				return false
+			end
+
 			client:AddHunger(hunger)
 			client:AddThirst(thirst)
 		end
