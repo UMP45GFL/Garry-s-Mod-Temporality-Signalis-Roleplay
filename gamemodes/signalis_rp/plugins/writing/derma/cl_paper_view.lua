@@ -7,6 +7,29 @@ AccessorFunc(PANEL, "itemID", "ItemID", FORCE_NUMBER)
 PANEL.page = -1
 PANEL.pages = {}
 
+local function splitLines(lines, maxSize)
+	surface.SetFont("SignalisDocumentsFontMedium")
+
+	local newLines = {}
+
+	for k,v in pairs(lines) do
+		local words = string.Split(v, " ")
+		local line = ""
+
+		for k2,v2 in pairs(words) do
+			local lineW, lineH = surface.GetTextSize(line .. v2)
+			if lineW > maxSize then
+				table.insert(newLines, line)
+				line = ""
+			end
+			line = line .. v2 .. " "
+		end
+
+		table.insert(newLines, line)
+	end
+	return newLines
+end
+
 local turnPageSound = "eternalis/signalis_ui/page_turn.wav"
 local nextPageTurn = 0
 function PANEL:Init()
@@ -140,7 +163,10 @@ function PANEL:Init()
 	self.text.Paint = function(this, w, h)
 		if self.pages[self.page] then
 			if isstring(self.pages[self.page]) then
-				for k,v in pairs(string.Split(self.pages[self.page], "\n")) do
+				local preparedLines = string.Split(self.pages[self.page], "\n")
+				preparedLines = splitLines(preparedLines, w)
+
+				for k,v in ipairs(preparedLines) do
 					draw.TextShadow({
 						text = v,
 						font = "SignalisDocumentsFontMedium",
@@ -153,14 +179,18 @@ function PANEL:Init()
 			end
 
 			if istable(self.pages[self.page]) then
+				local posY = 8
 				for k,v in pairs(self.pages[self.page]) do
 					local txt = ""
 					local clr = color_white
 					local xalign = TEXT_ALIGN_LEFT
-					local pos = 8
+					local posX = 8
+
 					if isstring(v) then
 						txt = v
+						posY = posY + 42
 					end
+
 					if istable(v) then
 						txt = v[1]
 						if v[2] then
@@ -169,18 +199,24 @@ function PANEL:Init()
 						if v[3] then
 							xalign = v[3]
 							if xalign == TEXT_ALIGN_CENTER then
-								pos = w / 2
+								posX = w / 2
 							end
 						end
 					end
-					draw.TextShadow({
-						text = txt,
-						font = "SignalisDocumentsFontMedium",
-						pos = {pos, 8 + (k - 1) * 42},
-						xalign = xalign,
-						yalign = TEXT_ALIGN_TOP,
-						color = clr
-					}, 1, 255)
+
+					local preparedLines = string.Split(txt, "\n")
+					preparedLines = splitLines(preparedLines, w)
+
+					for k,v in ipairs(preparedLines) do
+						draw.TextShadow({
+							text = v,
+							font = "SignalisDocumentsFontMedium",
+							pos = {posX, posY + (k - 1) * 42},
+							xalign = xalign,
+							yalign = TEXT_ALIGN_TOP,
+							color = color_white
+						}, 1, 255)
+					end
 				end
 			end
 		end
