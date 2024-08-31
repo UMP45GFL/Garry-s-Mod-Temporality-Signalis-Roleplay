@@ -1,6 +1,6 @@
 
-RECIPE.name = "Burger"
-RECIPE.description = "Craft a burger."
+RECIPE.name = "Small burger"
+RECIPE.description = "Craft a small burger."
 RECIPE.model = "models/foodnhouseholditems/burgergtaiv.mdl"
 RECIPE.requirements = {
 	["tomato"] = 1,
@@ -10,7 +10,7 @@ RECIPE.requirements = {
 	["meat_cooked"] = 1
 }
 RECIPE.results = {
-	["burger"] = 1,
+	["burger_small"] = 1,
 }
 RECIPE.tools = {
 	"kitchen_knife"

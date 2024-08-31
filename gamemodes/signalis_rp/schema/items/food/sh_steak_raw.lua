@@ -5,7 +5,7 @@ ITEM.width = 1
 ITEM.height = 1
 ITEM.description = "A piece of raw steak. Needs to be cooked."
 
-ITEM.addHunger = -10
+ITEM.addHunger = -25
 ITEM.addThirst = 10
 ITEM.addHealth = -8
 ITEM.addStamina = 0

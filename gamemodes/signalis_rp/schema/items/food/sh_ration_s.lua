@@ -5,7 +5,7 @@ ITEM.width = 2
 ITEM.height = 1
 ITEM.description = "Fish noodle soup, dehydrated. Produced on Leng in S-23 Sierpinski. 400kJ worth of energy."
 
-ITEM.addHunger = -20
+ITEM.addHunger = -40
 ITEM.addThirst = 0
 ITEM.addHealth = 10
 ITEM.addStamina = 0

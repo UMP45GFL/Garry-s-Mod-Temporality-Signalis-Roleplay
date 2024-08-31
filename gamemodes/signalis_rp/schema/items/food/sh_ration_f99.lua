@@ -5,7 +5,7 @@ ITEM.width = 1
 ITEM.height = 2
 ITEM.description = "White sausage with sweet mustard and lye dough pieces reconstituted condensate vitamin enriched. From Rotfront Orbital Hydroponics. 900kJ worth of energy."
 
-ITEM.addHunger = -40
+ITEM.addHunger = -65
 ITEM.addThirst = 0
 ITEM.addHealth = 16
 ITEM.addStamina = 0

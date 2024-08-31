@@ -5,7 +5,7 @@ ITEM.width = 1
 ITEM.height = 2
 ITEM.description = "Schnitzel with cranberries, long-lasting concentrate, self-heating. From Rotfront Orbital Hydroponics. 1200kJ worth of energy."
 
-ITEM.addHunger = -50
+ITEM.addHunger = -70
 ITEM.addThirst = 0
 ITEM.addHealth = 18
 ITEM.addStamina = 0
