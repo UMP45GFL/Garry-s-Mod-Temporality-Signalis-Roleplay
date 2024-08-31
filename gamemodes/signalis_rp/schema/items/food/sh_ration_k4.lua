@@ -7,6 +7,6 @@ ITEM.description = "Schnitzel with cranberries, long-lasting concentrate, self-h
 
 ITEM.addHunger = -70
 ITEM.addThirst = 0
-ITEM.addHealth = 18
+ITEM.addHealth = 17
 ITEM.addStamina = 0
 ITEM.eatSound = nil

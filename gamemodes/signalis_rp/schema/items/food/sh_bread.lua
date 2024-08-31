@@ -7,7 +7,7 @@ ITEM.description = "A loaf of bread, it looks delicious."
 
 ITEM.addHunger = -40
 ITEM.addThirst = 0
-ITEM.addHealth = 6
+ITEM.addHealth = 10
 ITEM.addStamina = 0
 ITEM.eatSound = nil
 ITEM.sliceableInto = {"bread_slice", 4}

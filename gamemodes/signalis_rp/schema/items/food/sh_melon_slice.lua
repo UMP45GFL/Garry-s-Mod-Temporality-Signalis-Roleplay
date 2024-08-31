@@ -5,6 +5,6 @@ ITEM.description = "A slice of watermelon. It's juicy and sweet."
 
 ITEM.addHunger = -15
 ITEM.addThirst = -2
-ITEM.addHealth = 2
+ITEM.addHealth = 3
 ITEM.addStamina = 8
 ITEM.eatSound = nil

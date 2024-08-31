@@ -2,38 +2,79 @@ AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 include("shared.lua")
 
+sound.Add({
+    name = "cooking",
+    channel = CHAN_STATIC,
+    volume = 0.9,
+    level = 60,
+    pitch = {95, 110},
+    sound = "cooking/cookersound.wav"
+})
+
 local COOKING = {
-    meat_raw = {
-        cooked = {"meat_cooked", 1},
-        pos = Vector(-9, -12.7, 0),
+    tritip_raw = {
+        cooked = {"tritip_cooked", 1},
+        offset = Vector(0, 0, 5),
         scale = nil,
-        time = 30
+        time = 8 * 60,
+        temperature = 204
     },
     steak_raw = {
         cooked = {"steak_cooked", 1},
-        pos = Vector(-9, -12.7, 0),
+        offset = Vector(0, 0, 3),
         scale = nil,
-        time = 20
+        time = 3 * 60,
+        temperature = 190
     },
-
-    /*
-    egg = 30,
-    pancake = 38,
-    bacon = 25,
-    meat = 25,
-    meat2 = 35,
-    fish1 = 35,
-    fish2 = 20,
-    fish3 = 18,
-    cake = 35,
-    pizza = 45
-    */
+    fish_bass_raw = {
+        cooked = {"fish_steak", 3},
+        offset = Vector(0, 0, 4),
+        scale = nil,
+        time = 4 * 60,
+        temperature = 177
+    },
+    bacon_raw = {
+        cooked = {"bacon_cooked", 1},
+        offset = Vector(0, 0, 2),
+        scale = nil,
+        time = 1 * 60 + 30,
+        temperature = {149, 163}
+    },
+    bacon_raw_big = {
+        cooked = {"bacon_cooked", 5},
+        offset = Vector(0, 0, 4),
+        scale = nil,
+        time = 6 * 60,
+        temperature = {163, 177}
+    }
 }
 
-local SOUND_CHANNEL = CHAN_STATIC
-local COOKING_SOUND = "cooking/cookersound.wav"
-local COOKING_SOUND_VOLUME = 0.9
-local COOKING_SOUND_LEVEL = 60
+local panPositions = {
+    -- bottom right
+    {
+        up = 40.5,
+        right = -9,
+        forward = -12.5
+    },
+    -- bottom left
+    {
+        up = 40.5,
+        right = 9,
+        forward = -11.2
+    },
+    -- top right
+    {
+        up = 40.5,
+        right = -9,
+        forward = -23.7
+    },
+    -- top left
+    {
+        up = 40.5,
+        right = 9,
+        forward = -23.7
+    }
+}
 
 function ENT:Initialize()
     self:SetModel("models/furniturepack3/kitchen/counter_stove.mdl")
@@ -48,92 +89,126 @@ function ENT:Initialize()
 
     self:SetModelScale(1.25)
 
-    -- Initialize cooking state
-    self.cookingSlots = {
-        egg = false,
-        bacon = false,
-        meat = false,
-        pancake = false,
-        meat2 = false,
-        fish1 = false,
-        fish2 = false,
-        fish3 = false,
-        cake = false,
-        pizza = false
-    }
-
-    self.panslot = 0
-    self.cooldown = 0
-    self.finishTimes = {}
-
-    -- Add sound configuration
-    sound.Add({
-        name = "cooking",
-        channel = SOUND_CHANNEL,
-        volume = COOKING_SOUND_VOLUME,
-        level = COOKING_SOUND_LEVEL,
-        pitch = {95, 110},
-        sound = COOKING_SOUND
-    })
+    self.itemsBeingCooked = {}
+    self.pans = {}
 end
 
 -- Utility to start cooking a food item
-function ENT:StartCooking(foodType, model, posOffset, scale, bakeTime)
-    self.cookingSlots[foodType] = true
-    self.cooldown = CurTime() + 1
-    self.finishTimes[foodType] = CurTime() + bakeTime
+function ENT:StartCooking(foodTable, ent)
+    local panSlot = self:FindClosestPanSlot(ent, true)
+    if panSlot == nil then
+        return
+    end
+    local pan = self.pans[panSlot]
 
+    -- this is not a pan, its the item that will be cooked
     local prop = ents.Create("et_pan1")
-    prop:SetPos(self:GetPos() + self:GetAngles():Up() * 43.5 + posOffset)
-    prop:SetAngles(self:GetAngles())
+    prop:SetPos(pan:GetPos() + foodTable.offset)
+
+    local ang = self:GetAngles()
+    ang:RotateAroundAxis(ang:Up(), math.random(45, 135))
+
+    prop:SetAngles(ang)
     prop:Spawn()
-    prop:SetModel(model)
-    if scale then prop:SetModelScale(scale) end
+    prop:SetModel(ent:GetModel())
     prop:Activate()
     prop:SetParent(self)
     prop:SetSolid(SOLID_VPHYSICS)
+    if foodTable.scale then
+        prop:SetModelScale(foodTable.scale)
+    end
 
-    self:EmitSound("cooking")
+    pan:EmitSound("cooking")
+    ent:Remove()
 
-    -- Stop cooking and remove the entity after bake time
-    timer.Create(foodType .. "_timer", bakeTime, 1, function()
-        prop:Remove()
-        self:StopSound("cooking")
-        self.cookingSlots[foodType] = false
-    end)
+    --print("starting cooking at panslot: " .. panSlot .. " with pan: " .. tostring(pan))
+    self.itemsBeingCooked[panSlot] = {
+        item = foodTable.cooked[1],
+        count = foodTable.cooked[2],
+        pan = pan,
+        prop = prop,
+        cookingUntil = CurTime() + foodTable.time + math.random(-30, 30)
+    }
 end
 
-function ENT:StartTouch(ent)
-    local class = ent:GetClass()
+function ENT:FindClosestPanSlot(ent, valid)
+    local closestPan = nil
+    for i=1, 4 do
+        if IsValid(self.pans[i]) == valid then
+            local pos = self:GetPos() + self:GetAngles():Up() * panPositions[i].up + self:GetAngles():Right() * panPositions[i].right + self:GetAngles():Forward() * panPositions[i].forward
+            local dist = ent:GetPos():Distance(pos)
+            if dist < 15 then
+                if closestPan == nil or dist < closestPan.dist then
+                    closestPan = {
+                        dist = dist,
+                        panSlot = i
+                    }
+                end
+            end
+        end
+    end
+    if closestPan == nil then
+        return nil
+    end
+    return closestPan.panSlot
+end
 
-    if class != "ix_item" then return end
+function ENT:CreatePan(ent)
+    local panSlot = self:FindClosestPanSlot(ent, false)
+    if panSlot == nil then
+        return
+    end
 
-    class = ent:GetItemTable().uniqueID
-    local model = ent:GetModel()
-    -- ix.item.Get("meat_cooked").model
-    
-    if COOKING[class] then
-        self:StartCooking(COOKING[class].cooked, model, COOKING[class].pos, COOKING[class].scale, COOKING[class].time)
+    local ang = self:GetAngles()
+    ang:RotateAroundAxis(ang:Up(), math.random(45, 135))
 
-    elseif class == "et_pan" and self.panslot == 0 then
+    local newPan = ents.Create("et_pan1")
+    if IsValid(newPan) then
+        newPan:SetPos(self:GetPos() + self:GetAngles():Up() * panPositions[panSlot].up + self:GetAngles():Right() * panPositions[panSlot].right + self:GetAngles():Forward() * panPositions[panSlot].forward)
+        newPan:SetAngles(ang)
+        newPan:Spawn()
+        newPan:Activate()
+        newPan:SetParent(self)
+        newPan:SetSolid(SOLID_VPHYSICS)
+
+        self.pans[panSlot] = newPan
         ent:Remove()
-        self.panslot = 1
-        self.cooldown = CurTime() + 1
     end
 end
 
-function ENT:CanCook(foodType, requiredPanSlot)
-    return not self.cookingSlots[foodType] and self.panslot == requiredPanSlot and self.cooldown <= CurTime()
+function ENT:StartTouch(ent)
+    local entClass = ent:GetClass()
+
+    if entClass != "ix_item" then
+        return
+    end
+
+    local model = ent:GetModel()
+    local class = ent:GetItemTable().uniqueID
+    
+    if class == "frying_pan" and table.Count(self.pans) < 4 then
+        self:CreatePan(ent)
+
+    elseif COOKING[class] and table.Count(self.itemsBeingCooked) < 4 then
+        self:StartCooking(COOKING[class], ent)
+    end
 end
 
+-- Check for finished food and spawn completed items
 function ENT:Think()
-    -- Check for finished food and spawn completed items
-    for foodType, isCooking in pairs(self.cookingSlots) do
-        if isCooking and self.finishTimes[foodType] <= CurTime() then
-            self.cookingSlots[foodType] = false
-            --local cookedFood = ents.Create("cm_food_" .. foodType)
-            --cookedFood:SetPos(self:GetPos() + Vector(0, 0, 50))
-            --cookedFood:Spawn()
+    for panSlot, itemCookingTab in ipairs(self.itemsBeingCooked) do
+
+        if itemCookingTab and itemCookingTab.cookingUntil <= CurTime() then
+            --print("panslot: " .. panSlot .. " finished cooking with pan: " .. tostring(itemCookingTab.pan))
+            itemCookingTab.pan:StopSound("cooking")
+            itemCookingTab.prop:Remove()
+
+            for i=1, itemCookingTab.count do
+                ix.item.Spawn(itemCookingTab.item, itemCookingTab.pan:GetPos() + Vector(0, 0, 5 * i))
+            end
+
+            table.RemoveByValue(self.itemsBeingCooked, itemCookingTab)
         end
+
     end
 end

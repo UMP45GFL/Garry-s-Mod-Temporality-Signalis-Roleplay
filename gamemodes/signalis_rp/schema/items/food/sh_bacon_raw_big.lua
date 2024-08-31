@@ -7,7 +7,7 @@ ITEM.description = "A big piece of raw bacon. Needs to be sliced and then cooked
 
 ITEM.addHunger = -65
 ITEM.addThirst = 20
-ITEM.addHealth = -18
+ITEM.addHealth = -16
 ITEM.addStamina = 0
 ITEM.eatSound = nil
 ITEM.sliceableInto = {"bacon_raw", 5}

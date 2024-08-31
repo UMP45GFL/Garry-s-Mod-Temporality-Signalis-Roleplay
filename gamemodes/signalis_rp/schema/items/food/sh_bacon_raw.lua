@@ -7,7 +7,7 @@ ITEM.description = "A piece of raw bacon. Needs to be cooked."
 
 ITEM.addHunger = -13
 ITEM.addThirst = 10
-ITEM.addHealth = -7
+ITEM.addHealth = -6
 ITEM.addStamina = 0
 ITEM.eatSound = nil
 ITEM.eatMessage = "That didn't feel good..."

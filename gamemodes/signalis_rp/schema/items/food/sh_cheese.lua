@@ -9,3 +9,4 @@ ITEM.addHealth = 10
 ITEM.addStamina = 0
 ITEM.eatSound = nil
 ITEM.sliceableInto = {"cheese_slice", 4}
+ITEM.scale = 0.5

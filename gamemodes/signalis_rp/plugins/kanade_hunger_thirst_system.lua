@@ -258,14 +258,12 @@ local THIRSTY = 100
 local TOO_THIRSTY = 25
 
 great foods:
-meat_cooked (very big chunk of meat) 200
-burger_big 95
 ration_k4 1200kj 70
 chicken_wrap 70
-burger_small 70
 sandwich 65
 ration_f99 900kj 65
 ration_c 800kj 60
+tritip_cooked 70
 steak_cooked (normal sized steak) 60
 
 good foods:
@@ -273,8 +271,8 @@ chicken_leg_cooked 40
 ration_s 400kj 40
 bread 40
 cheese 40
+fish_steak 35
 melon 30
-fish_steak 25
 bacon_cooked 25
 toast 25
 
@@ -282,7 +280,8 @@ melon_slice 15
 corn 15
 bellpepper 15
 orange 15
-tomato 15
+
+tomato 10
 bread_slice 10
 cheese_slice 10
 
