@@ -36,12 +36,14 @@ CLASS.models = {
 		gender = "female"
     },
     */
+    /*
     {
         mdl = "models/voxaid/isa/isa_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
 		gender = "female"
     },
+    */
 
     -- female gestalt - different hair
     {
