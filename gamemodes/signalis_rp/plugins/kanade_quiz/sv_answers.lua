@@ -50,6 +50,8 @@ end
 local function quizFailed(ply)
     ply.startedEternalisQuiz = nil
 
+    createAfkLimitTimer(ply)
+
 	local query = mysql:Select("ix_quiz_whitelist")
 		query:Select("answered_incorrectly")
 		query:Where("steamid", ply:SteamID64())
@@ -130,7 +132,7 @@ util.AddNetworkString("quizsubmit")
 util.AddNetworkString("quiznofocus")
 util.AddNetworkString("questionanswered")
 
-net.Receive("startedbeingactive", function(len, ply)
+function createAfkLimitTimer(ply)
     if timer.Exists("quizAfkTimeLimit_" .. ply:SteamID64()) then
         timer.Remove("quizAfkTimeLimit_" .. ply:SteamID64())
     end
@@ -141,6 +143,10 @@ net.Receive("startedbeingactive", function(len, ply)
             RunConsoleCommand("ulx", "kick", tostring(ply:Nick()), kickText)
         end
     end)
+end
+
+net.Receive("startedbeingactive", function(len, ply)
+    createAfkLimitTimer(ply)
 end)
 
 net.Receive("quizstarted", function(len, ply)

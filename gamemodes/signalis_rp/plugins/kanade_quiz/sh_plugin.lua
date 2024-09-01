@@ -417,7 +417,6 @@ if CLIENT then
                     lastMouseX = gui.MouseX()
                 elseif lastMouseX != gui.MouseX() then
                     lastMouseX = gui.MouseX()
-                    print("client started doing something")
                     startedDoingSomething = true
                     net.Start("startedbeingactive")
                     net.SendToServer()
