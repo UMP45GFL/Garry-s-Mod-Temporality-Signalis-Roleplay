@@ -3,6 +3,7 @@ util.AddNetworkString("openquiz")
 util.AddNetworkString("quizstarted")
 util.AddNetworkString("openquizfailed")
 util.AddNetworkString("quizcompleted")
+util.AddNetworkString("startedbeingactive")
 
 /*
 lua_run local query = mysql:Delete("ix_quiz_whitelist") query:Where("steamid", '76561198156389563') query:Execute()
@@ -42,17 +43,6 @@ local function checkPlayerQuizWhitelist(ply)
 
         net.Start("openquiz")
         net.Send(ply)
-
-        if timer.Exists("quizAfkTimeLimit_" .. ply:SteamID64()) then
-            timer.Remove("quizAfkTimeLimit_" .. ply:SteamID64())
-        end
-    
-        timer.Create("quizAfkTimeLimit_" .. ply:SteamID64(), ix.config.Get("QuizModuleMaxNoQuizAfkTime", 140), 1, function()
-            if IsValid(ply) then
-                local kickText = "Occupied AFK slot"
-                RunConsoleCommand("ulx", "kick", tostring(ply:Nick()), tostring(banLength), kickText)
-            end
-        end)
     end)
 	query:Execute()
 end
@@ -139,6 +129,19 @@ KANADE_QUIZ_ANSWERS = {
 util.AddNetworkString("quizsubmit")
 util.AddNetworkString("quiznofocus")
 util.AddNetworkString("questionanswered")
+
+net.Receive("startedbeingactive", function(len, ply)
+    if timer.Exists("quizAfkTimeLimit_" .. ply:SteamID64()) then
+        timer.Remove("quizAfkTimeLimit_" .. ply:SteamID64())
+    end
+
+    timer.Create("quizAfkTimeLimit_" .. ply:SteamID64(), ix.config.Get("QuizModuleMaxNoQuizAfkTime", 200), 1, function()
+        if IsValid(ply) then
+            local kickText = "Occupied AFK slot"
+            RunConsoleCommand("ulx", "kick", tostring(ply:Nick()), kickText)
+        end
+    end)
+end)
 
 net.Receive("quizstarted", function(len, ply)
     ply.startedEternalisQuiz = CurTime()

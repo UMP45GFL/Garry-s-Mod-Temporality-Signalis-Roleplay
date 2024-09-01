@@ -28,7 +28,7 @@ ix.config.Add("QuizModuleMaxSpentTimeAnswering", 100, "Max time a player can be 
     category = "Quiz Module"
 })
 
-ix.config.Add("QuizModuleMaxNoQuizAfkTime", 140, "Max time a player can be afk not in the quiz (in seconds)", nil, {
+ix.config.Add("QuizModuleMaxNoQuizAfkTime", 200, "Max time a player can be afk not in the quiz (in seconds)", nil, {
     data = {min = 1, max = 360},
     category = "Quiz Module"
 })
@@ -382,6 +382,10 @@ if CLIENT then
         end
     end
 
+    local startedDoingSomething = false
+    local lastMouseX = nil
+    local lastMouseY = nil
+
     function OpenQuizModule()
         if quizFrame then
             quizFrame:Remove()
@@ -406,6 +410,18 @@ if CLIENT then
             if !IsValid(quizFrame) then
                 hook.Remove("Tick", "QuizModule_Tick")
                 return
+            end
+
+            if !startedDoingSomething and system.UpTime() > 1 then
+                if lastMouseX == nil then
+                    lastMouseX = gui.MouseX()
+                elseif lastMouseX != gui.MouseX() then
+                    lastMouseX = gui.MouseX()
+                    print("client started doing something")
+                    startedDoingSomething = true
+                    net.Start("startedbeingactive")
+                    net.SendToServer()
+                end
             end
 
             if currentQuestion > 0 and not system.HasFocus() and sentNoFocus == 0 then
