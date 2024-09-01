@@ -2,6 +2,7 @@ CLASS.name = "Gestalt"
 CLASS.faction = FACTION_GESTALT
 CLASS.isDefault = true
 CLASS.models = {
+    /*
     {
         mdl = "models/voxaid/alina/alina_pm.mdl",
         hullMins = Vector(-10, -10, 0),
@@ -16,6 +17,7 @@ CLASS.models = {
         skin = "2",
 		gender = "female"
     },
+    */
     /* polytechnical school
     {
         mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
@@ -160,8 +162,25 @@ local maleDeathSounds = {
     },
 }
 
+local femaleDeathSounds = {
+    {
+        snd = "eternalis/player/death/death_gestalt_f_1.wav",
+        volume = 1,
+        sndLevel = 100,
+        pitch = 100
+    },
+    {
+        snd = "eternalis/player/death/death_gestalt_f_2.wav",
+        volume = 1,
+        sndLevel = 100,
+        pitch = 100
+    },
+}
+
 CLASS.death_sounds = function(ply)
-    if !ply:IsFemale() then
+    if ply:IsFemale() then
+        return femaleDeathSounds
+    else
         return maleDeathSounds
     end
 end

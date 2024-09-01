@@ -32,8 +32,8 @@ CLASS.talkPitch = 106
 CLASS.talkSpeed = 0.88
 CLASS.death_sounds = {
 	{
-		snd = "eternalis/player/death/death_eulr.wav",
-		volume = 0.92,
+		snd = "eternalis/player/death/death_klbr.wav",
+		volume = 1,
 		sndLevel = 100,
 		pitch = 100
 	}
