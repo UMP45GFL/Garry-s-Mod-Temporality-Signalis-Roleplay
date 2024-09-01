@@ -11,7 +11,51 @@ ix.config.Add("weaponProficiencyEffectsSystemEnabled", true, "Enable the weapon 
 if SERVER then
 	util.AddNetworkString("updatepweaponinfo")
 
-	hook.Add("PlayerSwitchWeapon", "Kanade_WeaponProficiency_PlayerSwitchWeapon", function(ply, oldWeapon, newWeapon)
+	hook.Add("PostEntityFireBullets", "WeaponProficiencyEffects_PlayerSwitchWeapon", function(ply, data)
+		if !ix.config.Get("weaponProficiencyEffectsSystemEnabled", true) then return end
+
+		if ply:IsPlayer() then
+			local weapon = ply:GetActiveWeapon()
+
+			if IsValid(weapon) and weapon:GetClass() == "kanade_tfa_signalis_bw5" then
+				local character = ply:GetCharacter()
+				if character then
+					local attrib = character:GetAttribute("weapon", 0)
+
+					local aimAngles = ply:EyeAngles()
+					aimAngles.p = 10
+
+					local direction = aimAngles:Forward()
+
+					if attrib == 0 then
+						local vel = -500
+						if !ply:IsOnGround() then
+							vel = -150
+						end
+						ply:SetVelocity(direction * vel)
+						ply:SetRagdolled(true, 10)
+
+					elseif attrib == 1 then
+						local vel = -350
+						if !ply:IsOnGround() then
+							vel = -100
+						end
+						ply:SetVelocity(direction * vel)
+
+					elseif attrib == 2 then
+						local vel = -200
+						if !ply:IsOnGround() then
+							vel = -70
+						end
+						ply:SetVelocity(direction * vel)
+					end
+				end
+			end
+		end
+	end)
+
+
+	hook.Add("PlayerSwitchWeapon", "WeaponProficiencyEffects_PlayerSwitchWeapon", function(ply, oldWeapon, newWeapon)
 		if !ix.config.Get("weaponProficiencyEffectsSystemEnabled", true) then return end
 
 		if newWeapon.SetStatRawL and !newWeapon.DidWeaponProficiencyCheck then
