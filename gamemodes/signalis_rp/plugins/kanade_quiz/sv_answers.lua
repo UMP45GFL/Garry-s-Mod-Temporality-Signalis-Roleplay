@@ -20,6 +20,17 @@ hook.Add("OnLoadDatabaseTables", "QuizModule_OnLoadDatabaseTables", function()
 end)
 
 local function checkPlayerQuizWhitelist(ply)
+    if timer.Exists("quizAfkTimeLimit_" .. ply:SteamID64()) then
+        timer.Remove("quizAfkTimeLimit_" .. ply:SteamID64())
+    end
+
+    timer.Create("quizAfkTimeLimit_" .. ply:SteamID64(), ix.config.Get("QuizModuleMaxNoQuizAfkTime", 140), 1, function()
+        if IsValid(ply) then
+            local kickText = "Occupied AFK slot"
+            RunConsoleCommand("ulx", "kick", tostring(ply:Nick()), tostring(banLength), kickText)
+        end
+    end)
+
 	local query = mysql:Select("ix_quiz_whitelist")
     query:Select("answered_incorrectly")
     query:Select("quiz_completed_time")
@@ -48,6 +59,10 @@ end
 
 local function quizFailed(ply)
     ply.startedEternalisQuiz = nil
+
+    if timer.Exists("quizAfkTimeLimit_" .. ply:SteamID64()) then
+        timer.Remove("quizAfkTimeLimit_" .. ply:SteamID64())
+    end
 
 	local query = mysql:Select("ix_quiz_whitelist")
 		query:Select("answered_incorrectly")
@@ -129,7 +144,9 @@ util.AddNetworkString("quizsubmit")
 util.AddNetworkString("quiznofocus")
 util.AddNetworkString("questionanswered")
 
-local function createQuestionTimer(ply)
+net.Receive("quizstarted", function(len, ply)
+    ply.startedEternalisQuiz = CurTime()
+
     if timer.Exists("quizTimeLimit_" .. ply:SteamID64()) then
         timer.Remove("quizTimeLimit_" .. ply:SteamID64())
     end
@@ -142,12 +159,6 @@ local function createQuestionTimer(ply)
             RunConsoleCommand("ulx", "ban", tostring(ply:Nick()), tostring(banLength), banText)
         end
     end)
-end
-
-net.Receive("quizstarted", function(len, ply)
-    ply.startedEternalisQuiz = CurTime()
-
-    createQuestionTimer(ply)
 end)
 
 net.Receive("quiznofocus", function(len, ply)

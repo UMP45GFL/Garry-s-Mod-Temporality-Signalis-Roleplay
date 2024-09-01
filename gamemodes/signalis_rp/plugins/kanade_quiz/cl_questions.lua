@@ -3,10 +3,9 @@ KANADE_QUIZ_FIRSTINFO = {
     "Welcome to the SIGNALIS Quiz!",
     "This quiz will test your knowledge of the SIGNALIS universe.",
     "You will be asked a series of questions, and you must answer them correctly.",
-    "You will have limited time to answer each question.",
+    "You will have limited time to answer the whole quiz.",
     "Do not minimize the game.",
-    "If you do not accept the rules of the server,",
-    "disconnect now. You can retake the quiz later."
+    "If you do not want to take the quiz now, you can retake it later."
 }
 
 KANADE_QUIZ_QUESTIONS = {
