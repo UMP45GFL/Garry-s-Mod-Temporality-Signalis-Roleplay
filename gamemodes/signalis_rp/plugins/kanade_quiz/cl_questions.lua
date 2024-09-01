@@ -1,7 +1,7 @@
 ﻿
 KANADE_QUIZ_QUESTIONS = {
     {
-        question = "What type of [GAME GENRE] do we currently roleplay in?",
+        question = "What type of game genre is Signalis?",
         options = {
             "Sandbox",
             "Visual novel",
