@@ -9,6 +9,7 @@ KANADE_QUIZ_FIRSTINFO = {
 }
 
 KANADE_QUIZ_QUESTIONS = {
+    /*
     {
         question = "What type of game genre is SIGNALIS?",
         options = {
@@ -20,12 +21,13 @@ KANADE_QUIZ_QUESTIONS = {
             "Survival horror"
         }
     },
+    */
     {
         question = "What is a notable feature of the visual style in SIGNALIS?",
         options = {
             "0-bit pixel art",
             "Hand-drawn animation",
-            "Realistic 3D rendering",
+            --"Realistic 3D rendering",
             "Retro-futuristic and pixelated graphics",
             "Minecraft themed but pixelated",
         }
@@ -35,9 +37,9 @@ KANADE_QUIZ_QUESTIONS = {
         options = {
             "A replika",
             "A gestalt",
-            "an Elster",
+            --"an Elster",
             "A KLBR unit",
-            "A Vinetan",
+            --"A Vinetan",
             "An Advanced Reconnaissance and Assault Robot"
         }
     },
@@ -45,7 +47,7 @@ KANADE_QUIZ_QUESTIONS = {
         question = "Remember _ ...? (Finish the sentence)",
         options = {
             "Perhaps this is hell.",
-            "Me?",
+            --"Me?",
             "Our Promise.",
             "A Dream about Dreaming.",
             "She'll never dance with us again."
@@ -57,8 +59,8 @@ KANADE_QUIZ_QUESTIONS = {
             "ARAR",
             "Elster",
             "Ariane",
-            "MNHR",
-            "Isa",
+            --"MNHR",
+            --"Isa",
             "KLBR"
         }
     }
