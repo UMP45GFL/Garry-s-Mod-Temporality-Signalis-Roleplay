@@ -47,9 +47,18 @@ if CLIENT then
         surface.PlaySound("eternalis/signalis_ui/no.wav")
     end)
 
+    sound.Add({
+        name = "signalis_keyboard_tap",
+        channel = CHAN_AUTO,
+        volume = 0.7,
+        level = 60,
+        pitch = 100,
+        sound = "eternalis/signalis_ui/keyboard_tap.wav"
+    })
+
     -- keyboard sound
     hook.Add("ChatTextChanged", "ChatTextChangedSound", function(text)
-        surface.PlaySound("eternalis/signalis_ui/keyboard_tap.wav")
+        surface.PlaySound("signalis_keyboard_tap")
     end)
 else
     -- character saved

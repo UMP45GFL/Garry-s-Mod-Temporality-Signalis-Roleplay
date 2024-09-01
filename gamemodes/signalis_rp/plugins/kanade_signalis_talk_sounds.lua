@@ -4,9 +4,12 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Adds hunger & thirst."
 PLUGIN.license = [[meow]]
 
-local sound = "eternalis/ui/voice_text.wav"
-
 ix.config.Add("SignalisTalkSoundsEnabled", true, "Enable the signalis talk sounds", nil, {
+	category = "Signalis Talk Sounds"
+})
+
+ix.config.Add("SignalisTalkSoundVolume", 0.4, "Volume of the signalis talk sound", nil, {
+	data = {min = 0.1, max = 1, decimals = 1},
 	category = "Signalis Talk Sounds"
 })
 
@@ -17,7 +20,7 @@ ix.config.Add("SignalisTalkSoundsSpeed", 0.075, "Speed of the signalis talk soun
 
 if SERVER then
 	local function PlaySSound(client, pitch)
-		client:EmitSound(sound, 60, pitch, 1, CHAN_AUTO)
+		client:EmitSound("eternalis/ui/voice_text.wav", 60, pitch, ix.config.Get("SignalisTalkSoundVolume", 0.075), CHAN_AUTO)
 	end
 
 	local function OnTalk(client, chatType, message, anonymous)
