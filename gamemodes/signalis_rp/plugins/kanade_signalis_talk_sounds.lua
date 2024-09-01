@@ -19,12 +19,13 @@ ix.config.Add("SignalisTalkSoundsSpeed", 0.075, "Speed of the signalis talk soun
 })
 
 if SERVER then
-	local function PlaySSound(client, pitch)
-		client:EmitSound("eternalis/ui/voice_text.wav", 60, pitch, ix.config.Get("SignalisTalkSoundVolume", 0.075), CHAN_AUTO)
+	local function PlaySSound(client, pitch, sndLevel, volume)
+		client:EmitSound("eternalis/ui/voice_text.wav", sndLevel, pitch, ix.config.Get("SignalisTalkSoundVolume", 0.4) * volume, CHAN_AUTO)
 	end
 
 	local function OnTalk(client, chatType, message, anonymous)
-		if ix.config.Get("SignalisTalkSoundsEnabled", true) and chatType == "ic" then
+		if ix.config.Get("SignalisTalkSoundsEnabled", true) and
+		(chatType == "ic" or chatType == "w" or chatType == "y") then
 			-- split the message into a table of words
 			local words = string.Explode(" ", message)
 			-- then split words that are longer than 6 chars into separate table entries by 5 chars
@@ -47,6 +48,7 @@ if SERVER then
 				words = words,
 				pitch = pitch,
 				speed = speed,
+				chatType = chatType,
 				next = 0
 			}
 		end
@@ -57,13 +59,20 @@ if SERVER then
 			for _, client in ipairs(player.GetAll()) do
 				if client.sTalkInfo and client.sTalkInfo.next < CurTime() then
 					local speed = ix.config.Get("SignalisTalkSoundsSpeed", 0.075) * (2 - client.sTalkInfo.speed)
-					
 					client.sTalkInfo.next = CurTime() + speed
 
-					-- grab the first word from the words
-					local firstChar = client.sTalkInfo.words[1]
+					local sndLevel = 60
+					local volume = 0.9
+					if client.sTalkInfo.chatType == "y" then
+						sndLevel = 75
+						volume = 1.2
 
-					PlaySSound(client, client.sTalkInfo.pitch)
+					elseif client.sTalkInfo.chatType == "w" then
+						sndLevel = 45
+					end
+
+
+					PlaySSound(client, client.sTalkInfo.pitch, sndLevel, volume)
 
 					-- remove the first word from the table
 					table.remove(client.sTalkInfo.words, 1)
