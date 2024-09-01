@@ -27,6 +27,8 @@ CLASS.ladder_speed = 1
 CLASS.jump_power = 0.7
 CLASS.max_stamina = 1.75
 
+CLASS.talkPitch = 103
+CLASS.talkSpeed = 0.85
 CLASS.death_sounds = {
 	{
 		snd = "eternalis/player/death/death_eulr.wav",

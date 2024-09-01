@@ -28,6 +28,8 @@ CLASS.ladder_speed = 1.2
 CLASS.jump_power = 1.04 -- short baby
 CLASS.max_stamina = 2.05
 
+CLASS.talkPitch = 90
+CLASS.talkSpeed = 0.65
 CLASS.death_sounds = {
 	{
 		snd = "eternalis/player/death/death_adlr.wav",

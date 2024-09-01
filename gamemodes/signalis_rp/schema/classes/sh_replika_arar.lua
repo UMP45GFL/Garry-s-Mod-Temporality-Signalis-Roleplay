@@ -36,6 +36,8 @@ CLASS.ladder_speed = 1.15
 CLASS.jump_power = 0.9 -- not as bad because they are tall
 CLASS.max_stamina = 1.87
 
+CLASS.talkPitch = 98
+CLASS.talkSpeed = 0.8
 CLASS.death_sounds = {
 	{
 		snd = "eternalis/player/death/death_arar.wav",

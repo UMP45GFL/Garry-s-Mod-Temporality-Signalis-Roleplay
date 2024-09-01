@@ -23,3 +23,20 @@ end
 function meta:IsReplika()
 	return self:Team() == FACTION_REPLIKA
 end
+
+function meta:GetTalkPitchAndSpeed()
+	local character = self:GetCharacter()
+	if character then
+		local class = ix.class.GetClass(character.vars.class)
+
+		if character.vars.faction == "replika" then
+			return class.talkPitch, class.talkSpeed or 1
+		end
+
+		if character.vars.faction == "gestalt" then
+			return character.vars.pitch or 100, character.vars.talkspeed or 1
+		end
+	end
+
+	return 100, 1
+end
