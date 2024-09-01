@@ -1,7 +1,12 @@
 ﻿
 util.AddNetworkString("openquiz")
+util.AddNetworkString("quizstarted")
 util.AddNetworkString("openquizfailed")
 util.AddNetworkString("quizcompleted")
+
+/*
+lua_run local query = mysql:Delete("ix_quiz_whitelist") query:Where("steamid", '76561198156389563') query:Execute()
+*/
 
 hook.Add("OnLoadDatabaseTables", "QuizModule_OnLoadDatabaseTables", function()
 	query = mysql:Create("ix_quiz_whitelist")
@@ -37,24 +42,13 @@ local function checkPlayerQuizWhitelist(ply)
 
         net.Start("openquiz")
         net.Send(ply)
-
-        if timer.Exists("quizTimeLimit_" .. ply:SteamID64()) then
-            timer.Remove("quizTimeLimit_" .. ply:SteamID64())
-        end
-
-        timer.Create("quizTimeLimit_" .. ply:SteamID64(), ix.config.Get("QuizModuleMaxSpentTimeAnswering", 8) * 60, 1, function()
-            if IsValid(ply) then
-                local banLength = ix.config.Get("QuizModuleAfkBanTime", 15)
-                local niceBanTime = string.NiceTime(banLength * 60)
-                local banText = "You took too long to answer the quiz. Return in " .. niceBanTime .. "."
-                RunConsoleCommand("ulx", "ban", tostring(ply:Nick()), tostring(banLength), banText)
-            end
-        end)
     end)
 	query:Execute()
 end
 
 local function quizFailed(ply)
+    ply.startedEternalisQuiz = nil
+
 	local query = mysql:Select("ix_quiz_whitelist")
 		query:Select("answered_incorrectly")
 		query:Where("steamid", ply:SteamID64())
@@ -99,9 +93,18 @@ hook.Add("PostPlayerInitialized", "QuizModule_PostPlayerInitialized", function(p
     end)
 end)
 
+hook.Add("PlayerDisconnected", "QuizModule_PlayerDisconnected", function(ply)
+    if ply.startedEternalisQuiz != nil then
+        local banLength = ix.config.Get("QuizModuleAfkBanTime", 15)
+        local niceBanTime = string.NiceTime(banLength * 60)
+        local banText = "You disconnected while in the quiz. Return in " .. niceBanTime .. "."
+        RunConsoleCommand("ulx", "ban", tostring(ply:Nick()), tostring(banLength), banText)
+    end
+end)
+
 KANADE_QUIZ_ANSWERS = {
     {
-        question = "What type of [GAME GENRE] do we currently roleplay in?",
+        question = "What type of game genre is SIGNALIS?",
         right_option = "Survival horror",
     },
     {
@@ -124,6 +127,28 @@ KANADE_QUIZ_ANSWERS = {
 
 util.AddNetworkString("quizsubmit")
 util.AddNetworkString("quiznofocus")
+util.AddNetworkString("questionanswered")
+
+local function createQuestionTimer(ply)
+    if timer.Exists("quizTimeLimit_" .. ply:SteamID64()) then
+        timer.Remove("quizTimeLimit_" .. ply:SteamID64())
+    end
+
+    timer.Create("quizTimeLimit_" .. ply:SteamID64(), ix.config.Get("QuizModuleMaxSpentTimeAnsweringQuestion", 100), 1, function()
+        if IsValid(ply) then
+            local banLength = ix.config.Get("QuizModuleAfkBanTime", 15)
+            local niceBanTime = string.NiceTime(banLength * 60)
+            local banText = "You took too long to answer the quiz. Return in " .. niceBanTime .. "."
+            RunConsoleCommand("ulx", "ban", tostring(ply:Nick()), tostring(banLength), banText)
+        end
+    end)
+end
+
+net.Receive("quizstarted", function(len, ply)
+    ply.startedEternalisQuiz = CurTime()
+
+    createQuestionTimer(ply)
+end)
 
 net.Receive("quiznofocus", function(len, ply)
 	local query = mysql:Select("ix_quiz_whitelist")
@@ -174,6 +199,8 @@ net.Receive("quizsubmit", function(len, ply)
             end
         end
     end
+
+    ply.startedEternalisQuiz = nil
 
     net.Start("quizcompleted")
     net.Send(ply)

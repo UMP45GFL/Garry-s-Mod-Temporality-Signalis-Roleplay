@@ -1,7 +1,17 @@
 ﻿
+KANADE_QUIZ_FIRSTINFO = {
+    "Welcome to the SIGNALIS Quiz!",
+    "This quiz will test your knowledge of the SIGNALIS universe.",
+    "You will be asked a series of questions, and you must answer them correctly.",
+    "You will have limited time to answer each question.",
+    "Do not minimize the game.",
+    "If you do not accept the rules of the server,",
+    "disconnect now. You can retake the quiz later."
+}
+
 KANADE_QUIZ_QUESTIONS = {
     {
-        question = "What type of game genre is Signalis?",
+        question = "What type of game genre is SIGNALIS?",
         options = {
             "Sandbox",
             "Visual novel",
