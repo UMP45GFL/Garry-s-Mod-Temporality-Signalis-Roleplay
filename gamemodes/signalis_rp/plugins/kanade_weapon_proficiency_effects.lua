@@ -27,7 +27,7 @@ if SERVER then
 
 					local direction = aimAngles:Forward()
 
-					if attrib == 0 then
+					if (attrib == 0 or character.vars.class == "replika_klbr") and character.vars.class != "replika_arar" then
 						local vel = -500
 						if !ply:IsOnGround() then
 							vel = -150
@@ -42,7 +42,7 @@ if SERVER then
 						end
 						ply:SetVelocity(direction * vel)
 
-					elseif attrib == 2 then
+					elseif attrib == 2 and character.vars.class == "replika_arar" then
 						local vel = -200
 						if !ply:IsOnGround() then
 							vel = -70
