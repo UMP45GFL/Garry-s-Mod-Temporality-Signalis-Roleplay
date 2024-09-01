@@ -20,17 +20,6 @@ hook.Add("OnLoadDatabaseTables", "QuizModule_OnLoadDatabaseTables", function()
 end)
 
 local function checkPlayerQuizWhitelist(ply)
-    if timer.Exists("quizAfkTimeLimit_" .. ply:SteamID64()) then
-        timer.Remove("quizAfkTimeLimit_" .. ply:SteamID64())
-    end
-
-    timer.Create("quizAfkTimeLimit_" .. ply:SteamID64(), ix.config.Get("QuizModuleMaxNoQuizAfkTime", 140), 1, function()
-        if IsValid(ply) then
-            local kickText = "Occupied AFK slot"
-            RunConsoleCommand("ulx", "kick", tostring(ply:Nick()), tostring(banLength), kickText)
-        end
-    end)
-
 	local query = mysql:Select("ix_quiz_whitelist")
     query:Select("answered_incorrectly")
     query:Select("quiz_completed_time")
@@ -53,16 +42,23 @@ local function checkPlayerQuizWhitelist(ply)
 
         net.Start("openquiz")
         net.Send(ply)
+
+        if timer.Exists("quizAfkTimeLimit_" .. ply:SteamID64()) then
+            timer.Remove("quizAfkTimeLimit_" .. ply:SteamID64())
+        end
+    
+        timer.Create("quizAfkTimeLimit_" .. ply:SteamID64(), ix.config.Get("QuizModuleMaxNoQuizAfkTime", 140), 1, function()
+            if IsValid(ply) then
+                local kickText = "Occupied AFK slot"
+                RunConsoleCommand("ulx", "kick", tostring(ply:Nick()), tostring(banLength), kickText)
+            end
+        end)
     end)
 	query:Execute()
 end
 
 local function quizFailed(ply)
     ply.startedEternalisQuiz = nil
-
-    if timer.Exists("quizAfkTimeLimit_" .. ply:SteamID64()) then
-        timer.Remove("quizAfkTimeLimit_" .. ply:SteamID64())
-    end
 
 	local query = mysql:Select("ix_quiz_whitelist")
 		query:Select("answered_incorrectly")
@@ -218,6 +214,9 @@ net.Receive("quizsubmit", function(len, ply)
 
     if timer.Exists("quizTimeLimit_" .. ply:SteamID64()) then
         timer.Remove("quizTimeLimit_" .. ply:SteamID64())
+    end
+    if timer.Exists("quizAfkTimeLimit_" .. ply:SteamID64()) then
+        timer.Remove("quizAfkTimeLimit_" .. ply:SteamID64())
     end
 
 	local query = mysql:Select("ix_quiz_whitelist")
