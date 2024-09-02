@@ -33,7 +33,7 @@ if SERVER then
 							vel = -150
 						end
 						ply:SetVelocity(direction * vel)
-						ply:SetRagdolled(true, 10)
+						ply:SetRagdolled(true, 15)
 
 					elseif attrib == 1 then
 						local vel = -350
