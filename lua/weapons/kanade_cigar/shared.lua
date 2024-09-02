@@ -1,6 +1,6 @@
 //AeroMatix || https://www.youtube.com/channel/UCzA_5QTwZxQarMzwZFBJIAw || http://steamcommunity.com/profiles/76561198176907257
 
-SWEP.PrintName = "Marlboro"
+SWEP.PrintName = "Cigarette"
 
 SWEP.IconLetter	= ""
 SWEP.Category = "AeroMatix's SWEPS"

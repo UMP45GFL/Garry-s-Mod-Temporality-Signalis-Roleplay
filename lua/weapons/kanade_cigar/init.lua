@@ -37,7 +37,7 @@ end)
 
 function Releaseciga(ply)
 	if not ply.cigaCount then ply.cigaCount = 0 end
-	if IsValid(ply:GetActiveWeapon()) and ply:GetActiveWeapon():GetClass():sub(1,11) == "kanade_cigar" then
+	if IsValid(ply:GetActiveWeapon()) and ply:GetActiveWeapon():GetClass() == "kanade_cigar" then
 		if ply.cigaCount >= 5 then
 			net.Start("ciga")
 			net.WriteEntity(ply)
