@@ -24,11 +24,6 @@ ITEM.functions.Use = {
 				target:SetNetVar("tying")
 				target:NotifyLocalized("fTiedUp")
 
-				if (target:IsCombine()) then
-					Schema:AddCombineDisplayMessage("@cLosingContact", Color(255, 255, 255, 255))
-					Schema:AddCombineDisplayMessage("@cLostContact", Color(255, 0, 0, 255))
-				end
-
 				itemTable:Remove()
 			end, 5, function()
 				client:SetAction()
