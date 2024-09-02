@@ -161,7 +161,7 @@ local maleDeathSounds = {
         volume = 1,
         sndLevel = 100,
         pitch = 100
-    },
+    }
 }
 
 local femaleDeathSounds = {
@@ -176,14 +176,14 @@ local femaleDeathSounds = {
         volume = 1,
         sndLevel = 100,
         pitch = 100
-    },
+    }
 }
 
 CLASS.death_sounds = function(ply)
     if ply:IsFemale() then
-        return femaleDeathSounds
+        return table.Random(femaleDeathSounds)
     else
-        return maleDeathSounds
+        return table.Random(maleDeathSounds)
     end
 end
 

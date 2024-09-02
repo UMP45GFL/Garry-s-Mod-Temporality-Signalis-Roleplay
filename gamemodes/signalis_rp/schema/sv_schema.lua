@@ -118,18 +118,20 @@ function Schema:GetPlayerDeathSound(ply)
 		local class = ix.class.GetClass(character.vars.class)
 		if class and class.death_sounds then
 			local sndTable
+
 			if istable(class.death_sounds) then
 				sndTable = table.Random(class.death_sounds)
+
 			elseif isfunction(class.death_sounds) then
 				sndTable = class.death_sounds(ply)
 			end
 
 			if sndTable then
 				local pitch = sndTable.pitch or 100
-
 				pitch = math.random(pitch - 5, pitch + 5)
 
 				ply:EmitSound(sndTable.snd, sndTable.sndLevel, pitch, sndTable.volume)
+
 				if ply:Team() == FACTION_REPLIKA then
 					ply:SendPlaySound("eternalis/player/death/flatline.wav")
 				end
