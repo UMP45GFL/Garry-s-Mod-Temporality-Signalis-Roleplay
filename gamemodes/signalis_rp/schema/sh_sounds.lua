@@ -60,6 +60,46 @@ if CLIENT then
     hook.Add("ChatTextChanged", "ChatTextChangedSound", function(text)
         surface.PlaySound("signalis_keyboard_tap")
     end)
+
+    --cigarette sounds
+    hook.Add("PlayerCigarInhaleSound", "Eternalis_PlayerCigarInhaleSound", function(ply)
+        local pitch = 100
+
+        if ply:IsFemale() then
+            pitch = 120
+        end
+
+        ply:EmitSound("cigainhale.wav", 65, pitch, 1, CHAN_WEAPON)
+        return false
+    end)
+
+    hook.Add("PlayerStopCigarInhaleSound", "Eternalis_PlayerStopCigarInhaleSound", function(ply)
+        ply:StopSound("cigainhale.wav")
+        return false
+    end)
+
+    hook.Add("PlayerCigarBreath1Sound", "Eternalis_PlayerCigarBreath1Sound", function(ply, amt)
+        local pitch = 100
+
+        if ply:IsFemale() then
+            pitch = 110
+        end
+
+        ply:EmitSound("cigabreath2.wav", 70, pitch, 0.7)
+        return false
+    end)
+
+    hook.Add("PlayerCigarBreath2Sound", "Eternalis_PlayerCigarBreath2Sound", function(ply, amt)
+        local pitch = 130 - math.min(100, amt * 2), 0.4 + (amt * 0.005)
+
+        if ply:IsFemale() then
+            pitch = pitch * 1.2
+        end
+
+        ply:EmitSound("cigabreath1.wav", 70, pitch, 0.7)
+        return false
+    end)
+
 else
     -- character saved
     hook.Add("OnCharacterCreated", "OnCharacterCreatedSound", function(client, char)
