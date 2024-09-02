@@ -55,8 +55,12 @@ ITEM.functions.Slice = {
 		local ply = item.player
 
 		if (IsValid(ply)) then
+			local character = ply:GetCharacter()
+			if not character then return false end
 			local inventory = ply:GetCharacter():GetInventory()
+			if not inventory then return false end
 			local items = inventory:GetItems()
+			if not items then return false end
 	
 			for _, v in pairs(items) do
 				if (v.id != item.id and v.canSlice) then
