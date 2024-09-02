@@ -49,10 +49,10 @@ SWEP.FireModeName = nil --Change to a text value to override it
 --Ammo Related
 SWEP.Primary.ClipSize = 1 -- This is the size of a clip
 SWEP.Primary.DefaultClip = SWEP.Primary.ClipSize * 20 -- This is the number of bullets the gun gives you, counting a clip as defined directly above.
-SWEP.Primary.Ammo = "SMG1_Grenade" -- What kind of ammo.  Options, besides custom, include pistol, 357, smg1, ar2, buckshot, slam, SniperPenetratedRound, and AirboatGun.
+SWEP.Primary.Ammo = "ammoflare" -- What kind of ammo.  Options, besides custom, include pistol, 357, smg1, ar2, buckshot, slam, SniperPenetratedRound, and AirboatGun.
 SWEP.Primary.AmmoConsumption = 1 --Ammo consumed per shot
 --Pistol, buckshot, and slam like to ricochet. Use AirboatGun for a light metal peircing shotgun pellets
-SWEP.AmmoTypeStrings = {SMG1_Grenade = "26.5mm"}
+SWEP.AmmoTypeStrings = {flare = "26.5mm flare"}
 SWEP.DisableChambering = true --Disable round-in-the-chamber
 --Recoil Related
 SWEP.Primary.KickUp = 0.5 -- This is the maximum upwards recoil (rise)

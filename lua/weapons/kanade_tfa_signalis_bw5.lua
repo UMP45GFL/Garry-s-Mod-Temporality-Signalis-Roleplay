@@ -50,7 +50,7 @@ SWEP.Primary.SoundEchoTable = {
 }
 SWEP.Primary.Sound_DryFire = "weapon_bo3_dryfire.shotgun"
 SWEP.Primary.Sound_Blocked = "weapon_bo3_dryfire.shotgun"
-SWEP.Primary.Ammo = "buckshot"
+SWEP.Primary.Ammo = "nitro16mm"
 SWEP.Primary.Automatic = false
 SWEP.Primary.RPM = 212
 SWEP.Primary.RPM_Semi = nil
@@ -172,7 +172,7 @@ SWEP.JamChance = 0.04
 SWEP.JamFactor = 0.055
 
 --[Misc]--
-SWEP.AmmoTypeStrings = {buckshot = "16mm armor-piercing rounds"}
+SWEP.AmmoTypeStrings = {nitro16mm = "16mm armor-piercing rounds"}
 SWEP.FireModeSound = "weapon_bo3_misc.switch"
 SWEP.PickupSound = "weapon_bo3_pickup.ammo"
 SWEP.InspectPos = Vector(11, -2, -3)
@@ -337,12 +337,12 @@ SWEP.WElements = {
 }
 
 SWEP.Attachments = {
-[1] = {atts = {"signalis_rifle_long_barrel"}, order = 1},
+[1] = {atts = {"signalis_rifle_long_barrel"}, order = 1, select = 1},
 --[2] = {atts = {"bo3_suppressor"}, order = 2},
 [6] = {atts = {"bo3_fast_mag"}, order = 3},
 [7] = {atts = {"ins2_ub_laser"}, order = 4},
 [12] = {atts = {"bo3_rapidfire_shotgun"}, order = 5},
-[99] = {atts = { "sg_frag","sg_slug", "spas_dragonbreath_shells", "fas2tfa_ammo_incn", "ammo_flechette_shells", "amno_flechette", "kzsf_vc30_incendiary"},},
+[99] = {atts = { "sg_frag","sg_slug", "spas_dragonbreath_shells", "fas2tfa_ammo_incn", "ammo_flechette_shells", "amno_flechette", "kzsf_vc30_incendiary"}},
 }
 
 SWEP.AttachmentDependencies     = {}

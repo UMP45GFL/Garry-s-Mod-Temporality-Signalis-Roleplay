@@ -55,13 +55,13 @@ SWEP.Primary.SoundEchoTable = {
 }
 SWEP.Primary.Sound_DryFire = "weapon_bo3_dryfire.assault"
 SWEP.Primary.Sound_Blocked = "weapon_bo3_dryfire.assault"
-SWEP.Primary.Ammo = "smg1"
+SWEP.Primary.Ammo = "ammo8mm"
 SWEP.Primary.Automatic = false
 SWEP.Primary.RPM = nil
 SWEP.Primary.RPM_Semi = 800
 SWEP.Primary.RPM_Burst = 800
 SWEP.Primary.RPM_rapidfire = nil
-SWEP.Primary.Damage = 30
+SWEP.Primary.Damage = 22
 SWEP.Primary.NumShots = 1
 SWEP.Primary.AmmoConsumption = 1
 SWEP.Primary.ClipSize = 30

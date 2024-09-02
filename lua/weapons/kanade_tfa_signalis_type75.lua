@@ -50,12 +50,12 @@ SWEP.Primary.SoundEchoTable = {
 }
 SWEP.Primary.Sound_DryFire = "weapon_bo3_dryfire.assault"
 SWEP.Primary.Sound_Blocked = "weapon_bo3_dryfire.assault"
-SWEP.Primary.Ammo = "pistol"
+SWEP.Primary.Ammo = "ammo10mm"
 SWEP.Primary.Automatic = false
 SWEP.Primary.RPM = 625
 SWEP.Primary.RPM_Semi = nil
 SWEP.Primary.RPM_Burst = nil
-SWEP.Primary.Damage = 25
+SWEP.Primary.Damage = 20
 SWEP.Primary.NumShots = 1
 SWEP.Primary.AmmoConsumption = 1
 SWEP.Primary.ClipSize = 10
@@ -147,7 +147,7 @@ SWEP.data = {}
 SWEP.data.ironsights = 1
 SWEP.IronInSound = "weapon_bo3_gear.rattle"
 SWEP.IronOutSound = "weapon_bo3_gear.rattle"
-SWEP.Secondary.IronFOV = 60
+SWEP.Secondary.IronFOV = 56
 SWEP.IronSightsPos = Vector(-2.5, 0, 0.63)
 SWEP.IronSightsAng = Vector(0.3, 0, 0)
 

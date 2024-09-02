@@ -6,6 +6,7 @@ Schema.description = "Roleplayed based on the universe of Signalis."
 -- Include netstream
 ix.util.Include("libs/thirdparty/sh_netstream2.lua")
 
+ix.util.Include("sh_ammo.lua")
 ix.util.Include("sh_configs.lua")
 ix.util.Include("sh_commands.lua")
 

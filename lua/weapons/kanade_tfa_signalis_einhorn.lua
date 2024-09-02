@@ -19,7 +19,7 @@ SWEP.Weight				= 60			-- This controls how "good" the weapon is for autopickup.
 --[[WEAPON HANDLING]]--
 SWEP.Primary.Sound = Sound("TFA_L4D2.RHINO.1") -- This is the sound of the weapon, when you shoot.
 SWEP.Primary.PenetrationMultiplier = 1 --Change the amount of something this gun can penetrate through
-SWEP.Primary.Damage = 105 -- Damage, in standard damage points.
+SWEP.Primary.Damage = 50 -- Damage, in standard damage points.
 SWEP.Primary.DamageTypeHandled = true --true will handle damagetype in base
 SWEP.Primary.DamageType = nil --See DMG enum.  This might be DMG_SHOCK, DMG_BURN, DMG_BULLET, etc.  Leave nil to autodetect.  DMG_AIRBOAT opens doors.
 SWEP.Primary.Force = nil --Force value, leave nil to autocalc
@@ -44,7 +44,7 @@ SWEP.OnlyBurstFire = false --No auto, only burst/single?
 --Ammo Related
 SWEP.Primary.ClipSize = 6 -- This is the size of a clip
 SWEP.Primary.DefaultClip = SWEP.Primary.ClipSize * 5 -- This is the number of bullets the gun gives you, counting a clip as defined directly above.
-SWEP.Primary.Ammo = "357" -- What kind of ammo.  Options, besides custom, include pistol, 357, smg1, ar2, buckshot, slam, SniperPenetratedRound, and AirboatGun.
+SWEP.Primary.Ammo = "ammo357" -- What kind of ammo.  Options, besides custom, include pistol, 357, smg1, ar2, buckshot, slam, SniperPenetratedRound, and AirboatGun.
 SWEP.Primary.AmmoConsumption = 1 --Ammo consumed per shot
 --Pistol, buckshot, and slam like to ricochet. Use AirboatGun for a light metal peircing shotgun pellets
 SWEP.DisableChambering = true --Disable round-in-the-chamber

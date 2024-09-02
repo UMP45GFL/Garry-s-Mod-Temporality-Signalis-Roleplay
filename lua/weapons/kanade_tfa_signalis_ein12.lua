@@ -23,7 +23,7 @@ SWEP.Type					= "Pump-Action Shotgun"
 SWEP.Primary.Sound = Sound("TFA_COD13_SPAS12.1") -- This is the sound of the weapon, when you shoot.
 SWEP.Primary.SilencedSound = Sound("TFA_COD13_SPAS12.2") -- This is the sound of the weapon, when silenced.
 SWEP.Primary.PenetrationMultiplier = 1 --Change the amount of something this gun can penetrate through
-SWEP.Primary.Damage = 16 -- Damage, in standard damage points.
+SWEP.Primary.Damage = 12 -- Damage, in standard damage points.
 SWEP.Primary.DamageTypeHandled = true --true will handle damagetype in base
 SWEP.Primary.DamageType = nil --See DMG enum.  This might be DMG_SHOCK, DMG_BURN, DMG_BULLET, etc.  Leave nil to autodetect.  DMG_AIRBOAT opens doors.
 SWEP.Primary.Force = nil --Force value, leave nil to autocalc
@@ -64,11 +64,11 @@ SWEP.FireModeName = "Pump-Action" --Change to a text value to override it
 --Ammo Related
 SWEP.Primary.ClipSize = 6 -- This is the size of a clip
 SWEP.Primary.DefaultClip = 60 -- This is the number of bullets the gun gives you, counting a clip as defined directly above.
-SWEP.Primary.Ammo = "buckshot" -- What kind of ammo.  Options, besides custom, include pistol, 357, smg1, ar2, buckshot, slam, SniperPenetratedRound, and AirboatGun.
+SWEP.Primary.Ammo = "flechette12g" -- What kind of ammo.  Options, besides custom, include pistol, 357, smg1, ar2, buckshot, slam, SniperPenetratedRound, and AirboatGun.
 SWEP.Primary.AmmoConsumption = 1 --Ammo consumed per shot
 --Pistol, buckshot, and slam like to ricochet. Use AirboatGun for a light metal peircing shotgun pellets
 SWEP.DisableChambering = true --Disable round-in-the-chamber
-SWEP.AmmoTypeStrings = {buckshot = "16mm armor-piercing rounds"}
+SWEP.AmmoTypeStrings = {flechette12g = "12 gauge flechette shotgun shells"}
 --Recoil Related
 SWEP.Primary.KickUp = 2 -- This is the maximum upwards recoil (rise)
 SWEP.Primary.KickDown = 0.33 -- This is the maximum downwards recoil (skeet)
@@ -101,7 +101,7 @@ SWEP.IronSightsMoveSpeed = 0.8 --Multiply the player's movespeed by this when si
 
 --[[VIEWMODEL]]--
 SWEP.ViewModel				= "models/weapons/signalis/c_signalis_spas.mdl" --Viewmodel path
-SWEP.ViewModelFOV			= 70		-- This controls how big the viewmodel looks.  Less is more.
+SWEP.ViewModelFOV			= 66		-- This controls how big the viewmodel looks.  Less is more.
 SWEP.ViewModelFlip			= false		-- Set this to true for CSS models, or false for everything else (with a righthanded viewmodel.)
 SWEP.UseHands = true 		--Use gmod c_arms system.
 SWEP.VMPos = Vector(-1,1,1) 	--The viewmodel positional offset, constantly.  Subtract this from any other modifications to viewmodel position.
