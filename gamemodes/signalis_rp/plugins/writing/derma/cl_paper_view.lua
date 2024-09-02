@@ -162,6 +162,8 @@ function PANEL:Init()
 	self.text:SetSize(tW, tH)
 	self.text.Paint = function(this, w, h)
 		if self.pages[self.page] then
+			local textHeight = draw.GetFontHeight( "SignalisDocumentsFontMedium") + 4
+
 			if isstring(self.pages[self.page]) then
 				local preparedLines = string.Split(self.pages[self.page], "\n")
 				preparedLines = splitLines(preparedLines, w)
@@ -170,7 +172,7 @@ function PANEL:Init()
 					draw.TextShadow({
 						text = v,
 						font = "SignalisDocumentsFontMedium",
-						pos = {8, 8 + (k - 1) * 42},
+						pos = {8, 8 + (k - 1) * textHeight},
 						xalign = TEXT_ALIGN_LEFT,
 						yalign = TEXT_ALIGN_TOP,
 						color = color_white
@@ -188,7 +190,7 @@ function PANEL:Init()
 
 					if isstring(v) then
 						txt = v
-						posY = posY + 42
+						posY = posY + textHeight
 					end
 
 					if istable(v) then
@@ -211,7 +213,7 @@ function PANEL:Init()
 						draw.TextShadow({
 							text = v,
 							font = "SignalisDocumentsFontMedium",
-							pos = {posX, posY + (k - 1) * 42},
+							pos = {posX, posY + (k - 1) * textHeight},
 							xalign = xalign,
 							yalign = TEXT_ALIGN_TOP,
 							color = color_white
