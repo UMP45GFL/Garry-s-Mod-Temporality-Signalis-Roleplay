@@ -45,7 +45,7 @@ function Schema:RenderScreenspaceEffects()
 	colorModify["$pp_colour_colour"] = 0.9
 	colorModify["$pp_colour_mulr"] = 0.07
 	colorModify["$pp_colour_brightness"] = 0
-	colorModify["$pp_colour_contrast"] = 1.1
+	colorModify["$pp_colour_contrast"] = 1
 	DrawColorModify(colorModify)
 end
 
