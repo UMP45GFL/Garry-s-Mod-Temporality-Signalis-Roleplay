@@ -54,7 +54,7 @@ KANADE_QUIZ_QUESTIONS = {
         }
     },
     {
-        question = "In question 4. who has said this sentence?",
+        question = "In question 3. who has said this sentence?",
         options = {
             "ARAR",
             "Elster",
