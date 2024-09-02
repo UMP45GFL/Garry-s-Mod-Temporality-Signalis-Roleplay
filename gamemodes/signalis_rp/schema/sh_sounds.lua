@@ -71,10 +71,12 @@ else
         "eternalis/player/damage/hurt_2.wav"
     }
 
-    function Schema:GetPlayerPainSound(client)
+    hook.Add("GetPlayerPainSound", "Eternalis_GetPlayerPainSound", function(client)
         if client:IsReplika() then
-            return table.Random(replikaHurtSounds)
+            local snd = table.Random(replikaHurtSounds)
+            client:SendPlaySound(snd)
+            return snd
         end
-    end
+    end)
 end
 
