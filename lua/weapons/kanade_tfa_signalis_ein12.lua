@@ -101,7 +101,7 @@ SWEP.IronSightsMoveSpeed = 0.8 --Multiply the player's movespeed by this when si
 
 --[[VIEWMODEL]]--
 SWEP.ViewModel				= "models/weapons/signalis/c_signalis_spas.mdl" --Viewmodel path
-SWEP.ViewModelFOV			= 66		-- This controls how big the viewmodel looks.  Less is more.
+SWEP.ViewModelFOV			= 60		-- This controls how big the viewmodel looks.  Less is more.
 SWEP.ViewModelFlip			= false		-- Set this to true for CSS models, or false for everything else (with a righthanded viewmodel.)
 SWEP.UseHands = true 		--Use gmod c_arms system.
 SWEP.VMPos = Vector(-1,1,1) 	--The viewmodel positional offset, constantly.  Subtract this from any other modifications to viewmodel position.

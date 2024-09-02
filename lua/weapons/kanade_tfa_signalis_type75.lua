@@ -14,7 +14,7 @@ SWEP.DrawCrosshairIronSights = false
 
 --[Model]--
 SWEP.ViewModel			= "models/weapons/signalis/c_signalis_cz75.mdl"
-SWEP.ViewModelFOV = 70
+SWEP.ViewModelFOV = 60
 SWEP.WorldModel			= "models/weapons/signalis/w_signalis_cz75.mdl"
 SWEP.HoldType = "pistol"
 SWEP.CameraAttachmentOffsets = {}
@@ -147,7 +147,7 @@ SWEP.data = {}
 SWEP.data.ironsights = 1
 SWEP.IronInSound = "weapon_bo3_gear.rattle"
 SWEP.IronOutSound = "weapon_bo3_gear.rattle"
-SWEP.Secondary.IronFOV = 56
+SWEP.Secondary.IronFOV = 60
 SWEP.IronSightsPos = Vector(-2.5, 0, 0.63)
 SWEP.IronSightsAng = Vector(0.3, 0, 0)
 
