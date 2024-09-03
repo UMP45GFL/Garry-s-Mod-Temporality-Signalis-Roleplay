@@ -46,6 +46,7 @@ if SERVER then
             query:Create("steamid", "VARCHAR(20) NOT NULL")
             query:Create("init_time", "INT(11) UNSIGNED NOT NULL")
             query:Create("trust_score", "INT(8) UNSIGNED NOT NULL")
+            query:Create("info", "TEXT(200) UNSIGNED NOT NULL")
             query:PrimaryKey("steamid")
         query:Execute()
     end)
@@ -127,6 +128,52 @@ if SERVER then
         return trustScore
     end
 
+    local addToString(string, toAdd)
+        if string == "" then
+            return toAdd
+        else
+            return string .. ", " .. toAdd
+        end
+    end
+
+    local function getImportantInfo(data)
+        local info = ""
+
+        if data["PRIVATE_ACCOUNT"] then
+            info = addToString(info, "Private Account")
+        end
+
+        if data["PRIVATE_GAMES"] then
+            info = addToString(info, "Private Games")
+        end
+
+        if data["HIDDEN_GAME_HOURS"] then
+            info = addToString(info, "Hidden Game Hours")
+        end
+
+        if data["NON_DECORATED_PROFILE"] then
+            info = addToString(info, "Non Decorated Profile")
+        end
+
+        if data["VAC_BANNED"] then
+            info = addToString(info, "VAC Banned")
+        end
+
+        if data["PROFILE_PROFANITIES"] then
+            info = addToString(info, "Profanities: ")
+            
+            for profanity, score in pairs(data["PROFILE_PROFANITIES"]) do
+                info = addToString(info, profanity .. " (" .. score .. ")")
+            end
+        end
+
+        return info
+    end
+
+	ix.log.AddType("ewps", function(client, logText)
+		return logText
+	end, FLAG_DANGER)
+
     function runNewPlayerEWPS(ply)
         local steamid = ply:SteamID64()
 
@@ -144,19 +191,25 @@ if SERVER then
                     return
                 end
 
-                print("EWPS succeded:", code, body)
                 local trustScore = calculateTrustScore(data)
+                local info = getImportantInfo(data)
 
-                ply.ewps = trustScore
-                ply:SetNWInt('ewps', trustScore)
+                ply.ewpsTrustScore = trustScore
+                ply.ewpsInfo = info
+                ply:SetNWInt('ewpsTrustScore', trustScore)
+                ply:SetNWInt('ewpsInfo', info)
 
                 local insertQuery = mysql:Insert("ix_ewps")
                 insertQuery:Insert("steamid", ply:SteamID64())
                 insertQuery:Insert("init_time", os.time())
                 insertQuery:Insert("trust_score", trustScore)
+                insertQuery:Insert("info", info)
                 insertQuery:Execute()
-                print("EWPS created cache for " .. steamid .. " with trust score " .. trustScore)
 
+                local logText = "EWPS created cache for player" .. ply:Name() .. "(" .. steamid .. ") with trust score " .. trustScore .. " and info " .. info
+
+                ix.log.Add(ply, "ewps", logText)
+                print(logText)
             end,
             method = "GET",
             headers = {
@@ -171,9 +224,7 @@ if SERVER then
     -- lua_run loadPlayerEWPS(Entity(1))
 
     /*
-    for k,v in pairs(player.GetAll()) do
-        loadPlayerEWPS(v)
-    end
+    lua_run for k,v in pairs(player.GetAll()) do loadPlayerEWPS(v) end
     */
 
     function loadPlayerEWPS(ply)
@@ -181,12 +232,19 @@ if SERVER then
 
         local query = mysql:Select("ix_ewps")
         query:Select("trust_score")
+        query:Select("info")
         query:Where("steamid", ply:SteamID64())
         query:Callback(function(data)
             if istable(data) and #data > 0 then
-                ply.ewps = data[1].trust_score
-                ply:SetNWInt('ewps', ply.ewps)
-                print("EWPS loaded cache for " .. steamid)
+                ply.ewpsTrustScore = data[1].trust_score
+                ply.ewpsInfo = data[1].info
+                ply:SetNWInt('ewpsTrustScore', ply.ewpsTrustScore)
+                ply:SetNWInt('ewpsInfo', ply.ewpsInfo)
+
+                local logText = "EWPS loaded cache for player" .. ply:Name() .. "(" .. steamid .. ") with trust score" .. ply.ewps .. " and info " .. ply.ewpsInfo
+
+                ix.log.Add(ply, "ewps", logText)
+                print(logText)
             else
                 runNewPlayerEWPS(ply)
             end
@@ -205,9 +263,8 @@ if SERVER then
     end)
 else
     hook.Add("OnObserverESP", "EWPS_OnObserverESP", function(ply, x, y, size, alpha)
-        local trustScore = ply:GetNWInt('ewps', nil)
+        local trustScore = ply:GetNWInt('ewpsTrustScore', nil)
         if trustScore then
-            local trustScore = ply.ewps
             local trustColor = Color(255, 255, 255, alpha)
 
             if trustScore < 50 then
@@ -218,6 +275,11 @@ else
             end
 
             draw.SimpleTextOutlined("Trust: " .. trustScore, "ixSmallFont", x, y - 20, trustColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0, alpha))
+        end
+
+        local info = ply:GetNWInt('ewpsInfo', nil)
+        if info then
+            draw.SimpleTextOutlined(info, "ixSmallFont", x, y - 40, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0, alpha))
         end
     end)
 end
