@@ -128,7 +128,7 @@ if SERVER then
         return trustScore
     end
 
-    local addToString(string, toAdd)
+    local function addToString(string, toAdd)
         if string == "" then
             return toAdd
         else
@@ -160,10 +160,10 @@ if SERVER then
         end
 
         if data["PROFILE_PROFANITIES"] then
-            info = addToString(info, "Profanities: ")
+            info = addToString(info, "Profanities")
             
             for profanity, score in pairs(data["PROFILE_PROFANITIES"]) do
-                info = addToString(info, profanity .. " (" .. score .. ")")
+                info = addToString(info, profanity .. " " .. score)
             end
         end
 
@@ -197,7 +197,7 @@ if SERVER then
                 ply.ewpsTrustScore = trustScore
                 ply.ewpsInfo = info
                 ply:SetNWInt('ewpsTrustScore', trustScore)
-                ply:SetNWInt('ewpsInfo', info)
+                ply:SetNWString('ewpsInfo', info)
 
                 local insertQuery = mysql:Insert("ix_ewps")
                 insertQuery:Insert("steamid", ply:SteamID64())
@@ -206,10 +206,9 @@ if SERVER then
                 insertQuery:Insert("info", info)
                 insertQuery:Execute()
 
-                local logText = "EWPS created cache for player" .. ply:Name() .. "(" .. steamid .. ") with trust score " .. trustScore .. " and info " .. info
+                local logText = "EWPS created cache for player " .. ply:Name() .. "(" .. steamid .. ") with trust score " .. trustScore .. " and info " .. info
 
                 ix.log.Add(ply, "ewps", logText)
-                print(logText)
             end,
             method = "GET",
             headers = {
@@ -239,12 +238,11 @@ if SERVER then
                 ply.ewpsTrustScore = data[1].trust_score
                 ply.ewpsInfo = data[1].info
                 ply:SetNWInt('ewpsTrustScore', ply.ewpsTrustScore)
-                ply:SetNWInt('ewpsInfo', ply.ewpsInfo)
+                ply:SetNWString('ewpsInfo', ply.ewpsInfo)
 
-                local logText = "EWPS loaded cache for player" .. ply:Name() .. "(" .. steamid .. ") with trust score" .. ply.ewps .. " and info " .. ply.ewpsInfo
+                local logText = "EWPS loaded cache for player " .. ply:Name() .. "(" .. steamid .. ") with trust score " .. ply.ewpsTrustScore .. " and info " .. ply.ewpsInfo
 
                 ix.log.Add(ply, "ewps", logText)
-                print(logText)
             else
                 runNewPlayerEWPS(ply)
             end
@@ -262,24 +260,55 @@ if SERVER then
         end)
     end)
 else
+    local isEWPStoggled = true
+
+    concommand.Add("eternalis_toggle_ewps_esp", function()  
+        isEWPStoggled = !isEWPStoggled
+    end)
+
+    -- Function to get color based on trust score (0 to 100)
+    function GetTrustColor(trustScore)
+        -- Ensure the trust score is clamped between 0 and 100
+        trustScore = math.Clamp(trustScore, 0, 100)
+
+        -- Calculate the red and green values based on the trust score
+        local red = (100 - trustScore) * 2.55  -- Red goes from 255 to 0 as trust increases
+        local green = trustScore * 2.55         -- Green goes from 0 to 255 as trust increases
+
+        -- Return the RGB color with 0 blue (R, G, B, A)
+        return Color(red, green, 0, 255)
+    end
+
     hook.Add("OnObserverESP", "EWPS_OnObserverESP", function(ply, x, y, size, alpha)
-        local trustScore = ply:GetNWInt('ewpsTrustScore', nil)
-        if trustScore then
-            local trustColor = Color(255, 255, 255, alpha)
+        if isEWPStoggled then
+            local trustScore = ply:GetNWInt('ewpsTrustScore', nil)
 
-            if trustScore < 50 then
-                trustColor = Color(255, 0, 0, alpha)
-                
-            elseif trustScore < 75 then
-                trustColor = Color(255, 255, 0, alpha)
+            local fsize = draw.GetFontHeight("ixSmallFont")
+
+            if trustScore then
+                trustScore = tonumber(trustScore)
+
+                local trustColor = GetTrustColor(trustScore)
+                trustColor.a = alpha
+
+                draw.SimpleTextOutlined("Trust score: " .. trustScore, "ixSmallFont", x, y - size - fsize - 1, trustColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0, alpha))
+            
+                local info = ply:GetNWString('ewpsInfo', nil)
+                if info and info != "" then
+                    local info2 = info
+                    if string.len(info) > 60 then
+                        info = string.sub(info, 1, 60)
+                        info2 = string.sub(info2, 61)
+    
+                        draw.SimpleTextOutlined(info2, "ixSmallFont", x, y - size - (fsize * 2), trustColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0, alpha))
+                        draw.SimpleTextOutlined(info, "ixSmallFont", x, y - size - (fsize * 3), trustColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0, alpha))
+                    else
+                        draw.SimpleTextOutlined(info, "ixSmallFont", x, y - size - (fsize * 2), trustColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0, alpha))
+                    end
+                end
+
+                return trustColor
             end
-
-            draw.SimpleTextOutlined("Trust: " .. trustScore, "ixSmallFont", x, y - 20, trustColor, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0, alpha))
-        end
-
-        local info = ply:GetNWInt('ewpsInfo', nil)
-        if info then
-            draw.SimpleTextOutlined(info, "ixSmallFont", x, y - 40, Color(255, 255, 255, alpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER, 1, Color(0, 0, 0, alpha))
         end
     end)
 end
