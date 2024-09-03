@@ -28,6 +28,7 @@ function Schema:ZeroNumber(number, length)
 	return string.rep("0", amount)..tostring(number)
 end
 
+/* hl2rp
 do
 	local CLASS = {}
 	CLASS.color = Color(150, 100, 100)
@@ -47,6 +48,7 @@ do
 
 	ix.chat.Register("dispatch", CLASS)
 end
+*/
 
 do
 	local CLASS = {}

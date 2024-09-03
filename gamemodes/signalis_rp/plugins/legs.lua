@@ -112,7 +112,7 @@ if (CLIENT) then
 	end
 
 	function Legs:Update(maxSeqGroundSpeed)
-		if (IsValid(self.LegEnt)) then
+		if (IsValid(self.LegEnt) and self.LegEnt.LastTick != nil) then
 			self.Velocity = LocalPlayer():GetVelocity():Length2D()
 
 			self.PlaybackRate = 1
