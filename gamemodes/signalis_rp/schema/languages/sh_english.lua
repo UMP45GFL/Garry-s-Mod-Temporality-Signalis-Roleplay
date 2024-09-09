@@ -32,4 +32,5 @@ LANGUAGE = {
 	noSlicingItems = "You need an item that can slice.",
 	cmdT = "Say something telepathically to the people around you.",
 	cmdTPM = "Send a telepathic message to a specific person.",
+	cmdMec = "Perform a physical action in whisper range.",
 }
