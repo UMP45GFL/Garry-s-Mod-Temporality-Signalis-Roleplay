@@ -76,7 +76,7 @@ if CLIENT then
 		local FT = FrameTime()
 		
 		if ix.config.Get("lowHealthEffectsEnableMuffleEffect", true) then
-			if ply:Health() <= ix.config.Get("lowHealthEffectsEnableMuffleEffectThreshold", 10) then
+			if ply:Alive() and ply:Team() != TEAM_SPECTATOR and ply:Health() <= ix.config.Get("lowHealthEffectsEnableMuffleEffectThreshold", 10) then
 				if not ply.lastDSP then
 					ply:SetDSP(14)
 					ply.lastDSP = 14
