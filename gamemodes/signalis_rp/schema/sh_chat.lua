@@ -1,6 +1,17 @@
 ﻿
 hook.Add("InitializedConfig", "BioresonanceTelepathy", function()
 
+    -- Close range action
+    ix.chat.Register("mec", {
+        format = "** %s %s",
+        GetColor = ix.chat.classes.ic.GetColor,
+        CanHear = ix.config.Get("chatRange", 280) * 0.5,
+        prefix = {"/Mec", "/ActionWhisper"},
+        description = "@cmdMec",
+        indicator = "chatPerforming",
+        deadCanChat = true
+    })
+
     -- Telepathy around chat.
     ix.chat.Register("t", {
         format = "%s says telepathically \"%s\"",
@@ -12,7 +23,7 @@ hook.Add("InitializedConfig", "BioresonanceTelepathy", function()
         CanHear = function(self, speaker, listener)
             local dist = speaker:GetPos():Distance(listener:GetPos())
 
-            if (dist <= ix.config.Get("chatRange", 280) * 0.4) then
+            if dist <= ix.config.Get("chatRange", 280) then
                 return true
             end
 
@@ -34,7 +45,7 @@ hook.Add("InitializedConfig", "BioresonanceTelepathy", function()
         CanHear = function(self, speaker, listener)
             local dist = speaker:GetPos():Distance(listener:GetPos())
 
-            if (dist <= ix.config.Get("chatRange", 280) * 0.4) then
+            if dist <= ix.config.Get("chatRange", 280) then
                 return true
             end
 
