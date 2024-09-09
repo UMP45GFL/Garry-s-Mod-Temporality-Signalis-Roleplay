@@ -7,6 +7,8 @@ CLASS.availableByDefault = false
 CLASS.isAdministration = true
 CLASS.isProtektor = false
 
+CLASS.isBioresonant = true
+
 CLASS.models = {
 	{
 		mdl = "models/citric/signalis_fklr/falke_pm.mdl",

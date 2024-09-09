@@ -7,6 +7,8 @@ CLASS.availableByDefault = false
 CLASS.isAdministration = false
 CLASS.isProtektor = true
 
+CLASS.isBioresonant = true
+
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_kolibri/kolibri_pm.mdl",

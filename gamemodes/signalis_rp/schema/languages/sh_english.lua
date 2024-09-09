@@ -17,7 +17,6 @@ LANGUAGE = {
 	citizenid = "Citizen ID",
 	lastEdit = "Last revision by",
 	lastEditDate = "Last revised on",
-	objectivesTitle = "Current Objectives",
 	searchingCorpse = "Searching corpse...",
 	radioNotOn = "Your radio isn't on!",
 	radioRequired = "You need a radio to do this.",
@@ -31,4 +30,6 @@ LANGUAGE = {
 	changedReplikaNextNameNumber = "Changed next name number for class %s to %s.",
 	invalidReplikaClass = "Invalid replika class.",
 	noSlicingItems = "You need an item that can slice.",
+	cmdT = "Say something telepathically to the people around you.",
+	cmdTPM = "Send a telepathic message to a specific person.",
 }

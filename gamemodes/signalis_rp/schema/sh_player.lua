@@ -63,3 +63,20 @@ function meta:GetTalkPitchAndSpeed()
 
 	return 100, 1
 end
+
+function meta:IsBioresonant()
+	local character = self:GetCharacter()
+	if character then
+		local bioresonance = character:GetData("bioresonance", 0)
+		if bioresonance >= 1 then
+			return true
+		end
+
+		local classTable = ix.class.GetClass(character.vars.class)
+		if classTable and classTable.isBioresonant then
+			return true
+		end
+	end
+
+	return false
+end

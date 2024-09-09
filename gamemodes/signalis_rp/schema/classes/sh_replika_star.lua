@@ -7,6 +7,8 @@ CLASS.availableByDefault = false
 CLASS.isAdministration = false
 CLASS.isProtektor = true
 
+CLASS.isBioresonant = false
+
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_star/star_pm.mdl",

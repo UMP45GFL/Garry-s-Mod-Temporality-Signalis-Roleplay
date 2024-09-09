@@ -7,6 +7,8 @@ CLASS.availableByDefault = false
 CLASS.isAdministration = false
 CLASS.isProtektor = false
 
+CLASS.isBioresonant = false
+
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
