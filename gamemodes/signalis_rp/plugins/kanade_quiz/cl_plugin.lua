@@ -213,10 +213,9 @@ function generateButtons()
         local fontHeight = draw.GetFontHeight("quizFirstInfoFont") + 6
 
         local firstInfoPanel = vgui.Create("DPanel", questionPanel)
-        firstInfoPanel:SetHeight(300)
         firstInfoPanel:Dock(TOP)
         firstInfoPanel:DockPadding(8, 8, 8, 8)
-        firstInfoPanel:SetHeight(300)
+        firstInfoPanel:SetHeight(ScrH() * 0.22)
         firstInfoPanel.Paint = function(self, w, h)
             --draw.RoundedBox(4, 0, 0, w, h, Color(100, 0, 0, 150))
 
@@ -237,18 +236,20 @@ function generateButtons()
         scrollPanel:AddItem(firstInfoPanel)
     end
     
+    /*
     local space = vgui.Create("DPanel", questionPanel)
     space:Dock(TOP)
     space:SetHeight(64)
     space.Paint = function() end
     scrollPanel:AddItem(space)
     table.insert(optionList, space)
+    */
 
     local submitButton = vgui.Create("DButton", questionPanel)
     submitButton:SetWidth(ScrW() * 0.6)
     submitButton:SetHeight(draw.GetFontHeight("quizSubmitFont") + 16)
-    submitButton:DockPadding(8, 8, 8, 8)
-    submitButton:DockMargin(4, 32, 4, 32)
+    --submitButton:DockPadding(8, 8, 8, 8)
+    --submitButton:DockMargin(4, 32, 4, 32)
     submitButton:Dock(TOP)
     submitButton:SetText("Start the quiz!")
     submitButton:SetFont("quizSubmitFont")
@@ -323,8 +324,8 @@ function generateButtons()
         leaveButton = vgui.Create("DButton", questionPanel)
         leaveButton:SetWidth(ScrW() * 0.6)
         leaveButton:SetHeight(draw.GetFontHeight("quizSubmitFont") + 16)
-        leaveButton:DockPadding(8, 8, 8, 8)
-        leaveButton:DockMargin(4, 32, 4, 32)
+        --leaveButton:DockPadding(8, 8, 8, 8)
+        --leaveButton:DockMargin(4, 32, 4, 32)
         leaveButton:Dock(TOP)
         leaveButton:SetText("Leave")
         leaveButton:SetFont("quizSubmitFont")
