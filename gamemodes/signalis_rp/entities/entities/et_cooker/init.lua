@@ -16,28 +16,28 @@ local COOKING = {
         cooked = {"tritip_cooked", 1},
         offset = Vector(0, 0, 5),
         scale = 0.5,
-        time = 35,
+        time = 45,
         temperature = 204
     },
     steak_raw = {
         cooked = {"steak_cooked", 1},
         offset = Vector(0, 0, 3),
         scale = nil,
-        time = 25,
+        time = 30,
         temperature = 190
     },
     fish_bass_raw = {
         cooked = {"fish_steak", 3},
         offset = Vector(0, 0, 4),
         scale = nil,
-        time = 25,
+        time = 30,
         temperature = 177
     },
     bacon_raw = {
         cooked = {"bacon_cooked", 1},
         offset = Vector(0, 0, 2),
         scale = nil,
-        time = 15,
+        time = 20,
         temperature = {149, 163}
     },
     bacon_raw_big = {
