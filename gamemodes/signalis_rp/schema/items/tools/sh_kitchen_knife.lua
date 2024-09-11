@@ -43,7 +43,7 @@ ITEM.functions.Suicide = {
 	OnCanRun = function(item)
         local character = ply:GetCharacter()
         if character and character.vars and character.vars.class
-        and (character.vars.class == "replika_fklr" or character.vars.class == "replika_stcr")  then
+        and (character.vars.class == "replika_fklr" or character.vars.class == "replika_stcr" or character.vars.class == "replika_kncr")  then
             return false
         end
 

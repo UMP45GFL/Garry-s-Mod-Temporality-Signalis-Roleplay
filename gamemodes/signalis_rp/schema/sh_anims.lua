@@ -142,6 +142,7 @@ ix.anim.SetModelClass("models/citric/signalis_fklr/falke_pm.mdl", "replika")
 ix.anim.SetModelClass("models/voxaid/signalis_kolibri/kolibri_pm.mdl", "replika")
 ix.anim.SetModelClass("models/citric/signalis_lstr/elster_pm.mdl", "replika")
 ix.anim.SetModelClass("models/voxaid/signalis_mynah/mynah_pm.mdl", "replika")
+ix.anim.SetModelClass("models/krizhovnik/kncr2.mdl", "replika")
 
 ix.anim.SetModelClass("models/voxaid/alina/alina_pm.mdl", "gestalt")
 ix.anim.SetModelClass("models/citric/signalis_ariane/ariane_pm.mdl", "gestalt")
