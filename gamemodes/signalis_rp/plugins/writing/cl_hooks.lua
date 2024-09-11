@@ -20,3 +20,8 @@ netstream.Hook("ixViewPaper", function(maxPages, startFromPage0, backgroundPhoto
 		panel:SetItemID(itemID)
 	end
 end)
+
+netstream.Hook("ixEditTitlePaper", function(itemID)
+	local panel = vgui.Create("ixPaperEditTitle")
+	panel:SetItemID(itemID)
+end)
