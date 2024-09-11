@@ -27,12 +27,14 @@ SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
 
 SWEP.DrawAmmo = false
-SWEP.HoldType = "slam"
+SWEP.HoldType = "pistol"
+
+--SWEP.IsAlwaysRaised = true
 
 SWEP.cigaID = 1
 
 function SWEP:Deploy()
-	self:SetHoldType("slam")
+	self:SetHoldType("pistol")
 end
 
 function SWEP:SecondaryAttack()
