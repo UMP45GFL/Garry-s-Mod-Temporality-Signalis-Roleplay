@@ -6,7 +6,7 @@ hook.Add("InitializedConfig", "BioresonanceTelepathy", function()
         format = "** %s %s",
         GetColor = ix.chat.classes.ic.GetColor,
         CanHear = ix.config.Get("chatRange", 280) * 0.5,
-        prefix = {"/Mec", "/ActionWhisper"},
+        prefix = {"/Mec", "/ActionClose"},
         description = "@cmdMec",
         indicator = "chatPerforming",
         deadCanChat = true
