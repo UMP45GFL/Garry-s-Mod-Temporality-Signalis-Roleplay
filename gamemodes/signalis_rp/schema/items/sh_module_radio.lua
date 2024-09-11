@@ -20,7 +20,6 @@ if CLIENT then
 
 		if index then
 			local panel = ix.gui["inv"..index]
-			print(panel)
 			if (IsValid(panel)) then
 				panel:Remove()
 			end
@@ -37,13 +36,56 @@ if CLIENT then
 else
 	util.AddNetworkString("ixUnequippedRadioModule")
 	util.AddNetworkString("ixEquippedRadioModule")
+
+	util.AddNetworkString("ixRadioEnabled")
+	util.AddNetworkString("ixRadioFrequency")
+
+	net.Receive("ixRadioEnabled", function(len, client)
+		local invID = net.ReadUInt(18)
+		local frequency = net.ReadUInt(18)
+		local enabled = net.ReadBool()
+	
+		if isnumber(invID) and isbool(enabled) then
+			local character = client:GetCharacter()
+			if character then
+				local inventory = character:GetInventory()
+				if inventory then
+					for k,v in pairs(inventory:GetItemsByUniqueID("module_radio", true)) do
+						if v.invID == invID then
+							v:SetData("enabled", enabled)
+							v:SetData("frequency", frequency)
+						end
+					end
+				end
+			end
+		end
+	end)
+
+	net.Receive("ixRadioFrequency", function(len, client)
+		local invID = net.ReadUInt(18)
+		local frequency = net.ReadUInt(18)
+	
+		if isnumber(invID) and isnumber(frequency) then
+			local character = client:GetCharacter()
+			if character then
+				local inventory = character:GetInventory()
+				if inventory then
+					for k,v in pairs(inventory:GetItemsByUniqueID("module_radio", true)) do
+						if v.invID == invID then
+							v:SetData("frequency", frequency)
+						end
+					end
+				end
+			end
+		end
+	end)
 end
 
 function ITEM:EquipRadioModule(client)
 	self:SetData("equip", true)
 
 	net.Start("ixEquippedRadioModule")
-	net.WriteString(self:GetData("id", ""))
+		net.WriteString(self.invID)
 	net.Send(client)
 end
 
@@ -51,7 +93,7 @@ function ITEM:UnequipRadioModule(client)
 	self:SetData("equip", false)
 
 	net.Start("ixUnequippedRadioModule")
-		net.WriteString(self:GetData("id", ""))
+		net.WriteString(self.invID)
 	net.Send(client)
 end
 
@@ -150,6 +192,7 @@ function CreateRadioPanel(index)
 		panel:SetParent(parent)
 		panel:ShowCloseButton(true)
 		panel:MoveToFront()
+		panel.index = index
 
 		ix.gui["inv"..index] = panel
 	end
@@ -158,10 +201,8 @@ end
 ITEM.functions.View = {
 	icon = "icon16/briefcase.png",
 	OnClick = function(item)
-		local index = item:GetData("id", "")
-
-		if index and item:GetData("equip") then
-			CreateRadioPanel(index)
+		if item:GetData("equip") then
+			CreateRadioPanel(item.invID)
 		end
 
 		return false

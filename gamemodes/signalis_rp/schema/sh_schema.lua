@@ -57,18 +57,28 @@ do
 	CLASS.format = "%s radios in \"%s\""
 
 	function CLASS:CanHear(speaker, listener)
-		local character = listener:GetCharacter()
-		local inventory = character:GetInventory()
-		local bHasRadio = false
+		if speaker == listener then return true end
 
-		for k, v in pairs(inventory:GetItemsByUniqueID("handheld_radio", true)) do
-			if (v:GetData("enabled", false) and speaker:GetCharacter():GetData("frequency") == character:GetData("frequency")) then
-				bHasRadio = true
-				break
+		local speakerInv = speaker:GetCharacter():GetInventory()
+		local listenerInv = listener:GetCharacter():GetInventory()
+
+		local matchFrequencies = false
+
+		for k, v in pairs(listenerInv:GetItemsByUniqueID("module_radio", true)) do
+			if v:GetData("equip", false) and v:GetData("enabled", false) then
+				for k2, v2 in pairs(speakerInv:GetItemsByUniqueID("module_radio", true)) do
+					if v2:GetData("equip", false) and v2:GetData("enabled", false) then
+						local dist = math.abs(v:GetData("frequency") - v2:GetData("frequency"))
+						if dist < 7000 then
+							matchFrequencies = true
+							break
+						end
+					end
+				end
 			end
 		end
 
-		return bHasRadio
+		return matchFrequencies
 	end
 
 	function CLASS:OnChatAdd(speaker, text)

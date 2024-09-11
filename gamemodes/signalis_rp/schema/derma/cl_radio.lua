@@ -14,6 +14,8 @@ local radio_icon_data = "eternalis/radio/radio_icon_data.png"
 local sound_switch = "eternalis/signalis_ui/radio_switch.wav"
 local sound_static = "sound/eternalis/signalis_radio/tcp_random_radio_static.mp3"
 
+local static_enabled = false
+
 local signals = {
 	{
 		frequency = 84000,
@@ -25,13 +27,20 @@ local signals = {
 		--length = 23,
 
 		strength = 0.7,
+		pos = Vector(203.994431, 4891.487793, -6245.80566),
+		posMaxDistance = 10000
 	},
+	/*
 	{
 		frequency = 190000,
 		snd = "sound/eternalis/signalis_radio/tcp_d1_01_the_swedish_rhapsody_irdial.mp3",
 		length = 454,
+
 		strength = 0.7,
-	},
+		pos = Vector(1241.349365, 5154.740723, -6324.580566),
+		posMaxDistance = 20000
+	}
+	*/
 }
 
 local size = 2
@@ -50,7 +59,7 @@ local nextChangeVolume = 0
 local nextStaticSoundPlay = 0
 
 local function KillAllSounds()
-    if IsValid(loopedStaticSound) then
+    if static_enabled and IsValid(loopedStaticSound) then
         loopedStaticSound:SetVolume(0)
         loopedStaticSound:Stop()
         loopedStaticSound = nil
@@ -76,14 +85,80 @@ local function GetClosestSignal()
 	return closestSignal
 end
 
+local function frequencyChanged(panel, frequency)
+	if IsValid(panel) and isnumber(panel.index) then
+		local character = LocalPlayer():GetCharacter()
+		if character then
+			local inventory = character:GetInventory()
+			if inventory then
+				local items = inventory:GetItemsByUniqueID("module_radio", true)
+				if items then
+					for k,v in pairs(items) do
+						if v.invID == panel.index then
+							net.Start("ixRadioFrequency")
+								net.WriteUInt(v.invID, 18)
+								net.WriteUInt(frequency, 18)
+							net.SendToServer()
+							return
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+local function setEnabledAndFrequency(panel, enabled, frequency)
+	if IsValid(panel) and isnumber(panel.index) then
+		local character = LocalPlayer():GetCharacter()
+		if character then
+			local inventory = character:GetInventory()
+			if inventory then
+				local items = inventory:GetItemsByUniqueID("module_radio", true)
+				if items then
+					for k,v in pairs(items) do
+						if v.invID == panel.index then
+							net.Start("ixRadioEnabled")
+								net.WriteUInt(v.invID, 18)
+								net.WriteUInt(frequency, 18)
+								net.WriteBool(enabled)
+							net.SendToServer()
+							return
+						end
+					end
+				end
+			end
+		end
+	end
+end
+
+local function FindClosestSignal()
+	local closestSignal = nil
+	local closestDistance = nil
+
+	for k,v in pairs(signals) do
+		local posDist = LocalPlayer():GetPos():Distance(v.pos)
+		local posMaxDist = v.posMaxDistance * v.strength
+
+		if posDist < posMaxDist and closestDistance == nil or posDist < closestDistance then
+			closestSignal = v
+			closestDistance = dist
+		end
+	end
+
+	return closestSignal
+end
+
 local function WhileRadioRunning()
 	if enabled then
-		if (IsValid(loopedStaticSound) and !loopedStaticSound:IsLooping() and nextStaticSoundPlay < CurTime()) then
+		-- If we have a static sound and its not looping, and it has ended, then stop it
+		if static_enabled and (IsValid(loopedStaticSound) and !loopedStaticSound:IsLooping() and nextStaticSoundPlay < CurTime()) then
 			loopedStaticSound:Stop()
 			loopedStaticSound = nil
 		end
 
-        if !IsValid(loopedStaticSound) then
+		-- If there is no static sound, play it
+        if static_enabled and !IsValid(loopedStaticSound) then
 			sound.PlayFile(sound_static, "noplay", function(station, errCode, errStr)
 				if IsValid(station) then
 					loopedStaticSound = station
@@ -94,35 +169,42 @@ local function WhileRadioRunning()
         end
 
 		for k,v in pairs(signals) do
-			local dist = math.abs(frequency - v.frequency)
+			local freqDist = math.abs(frequency - v.frequency)
 
-			if IsValid(v.sound) and dist > 25000 then
+			local posDist = LocalPlayer():GetPos():Distance(v.pos)
+			local posMaxDist = v.posMaxDistance * v.strength
+			
+			-- If we have a sound and its too far away, stop it
+			if IsValid(v.sound) and (freqDist > 25000 or posDist > posMaxDist) then
 				v.sound:SetVolume(0, 0)
 				v.signalPaused = true
 				v.lastDistance = nil
 			end
 
-			if dist < 40000 then
-				v.lastDistance = dist
+			if freqDist < 40000 then
+				v.lastDistance = freqDist
 
 				if nextChangeVolume < CurTime() then
 					nextChangeVolume = CurTime() + 0.02
 
-					local intensity = math.Clamp(dist / 40000, 0.05, 1)
+					local intensity = math.Clamp(freqDist / 40000, 0.05, 1)
 
-					if IsValid(loopedStaticSound) then
+					-- Update volume of looped static
+					if static_enabled and IsValid(loopedStaticSound) then
 						loopedStaticSound:SetVolume(math.Clamp(intensity, 0.1, 1), 0)
 					end
 
-					if dist < 25000 then
-						intensity = math.Clamp(dist / 25000, 0.05, 1)
+					if freqDist < 25000 then
+						intensity = math.Clamp(freqDist / 25000, 0.05, 1)
  
+						-- If we have a sound and its not looping, and it has ended, then play it
 						if (IsValid(v.sound) and !v.sound:IsLooping() and v.nextSoundPlay < CurTime()) then
 							v.sound:Stop()
 							v.sound = nil
 						end
 
 						if !IsValid(v.sound) then
+							-- If the sound is not playing, play it
 							sound.PlayFile(v.snd, "noplay", function(station, errCode, errStr)
 								if IsValid(station) then
 									v.sound = station
@@ -131,10 +213,13 @@ local function WhileRadioRunning()
 								end
 							end)
 						else
+							-- If the sound is paused, play it
 							if IsValid(v.sound) and v.sound:GetState() == GMOD_CHANNEL_PAUSED then
 								v.sound:Play()
 							end
 						end
+
+						-- If the sound is playing, set the volume
 						if IsValid(v.sound) then
 							v.sound:SetVolume(math.Clamp((1 - intensity) * v.strength, 0.1, 1), 0)
 						end
@@ -221,6 +306,7 @@ function PANEL:Init()
 	buttonDecrease.Think = function()
 		if enabled and buttonDecrease:IsDown() then
 			frequency = math.Clamp(frequency - freqIncreaseAmount, 50000, 250000)
+			frequencyChanged(self, frequency)
 		end
 	end
 
@@ -234,6 +320,9 @@ function PANEL:Init()
 			enabled = !enabled
 			surface.PlaySound(sound_switch)
 			nextToggle = CurTime() + 0.2
+
+			setEnabledAndFrequency(self, enabled, frequency)
+
 			if !enabled then
 				KillAllSounds()
 				hook.Remove("Tick", "SignalisRadioTick")
@@ -284,6 +373,7 @@ function PANEL:Init()
 	buttonIncrease.Think = function()
 		if enabled and buttonIncrease:IsDown() then
 			frequency = math.Clamp(frequency + freqIncreaseAmount, 50000, 250000)
+			frequencyChanged(self, frequency)
 		end
 	end
 
@@ -514,4 +604,3 @@ function PANEL:Init()
 end
 
 vgui.Register("ixRadioPanel", PANEL, "DFrame")
-
