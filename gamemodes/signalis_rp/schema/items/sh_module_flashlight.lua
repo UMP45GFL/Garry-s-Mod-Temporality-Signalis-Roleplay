@@ -38,11 +38,14 @@ if CLIENT then
 		hook.Remove("CalcView", "FlashlightModule_CalcView")
 	end)
 else
+	local flashlights = {}
+
 	util.AddNetworkString("ixFlashlightModuleEquip")
 	util.AddNetworkString("ixFlashlightModuleUnequip")
 
 	function Remove3DFlashlight(ply)
 		if IsValid(ply.flashlight3d) then
+			table.RemoveByValue(flashlights, ply.flashlight3d)
 			ply.flashlight3d:Remove()
 		end
 	end
@@ -57,6 +60,14 @@ else
 
 	hook.Add("PlayerDeath", "FlashlightModule_PlayerDeath", function(victim, inflictor, attacker)
 		Remove3DFlashlight(victim)
+	end)
+
+	timer.Create("RemoveUnusedFlashlight", 1, 0, function()
+		for k,v in pairs(flashlights) do
+			if not IsValid(v) or not IsValid(v:GetParent()) then
+				table.remove(flashlights, k)
+			end
+		end
 	end)
 
 	function Create3DFlashlight(ply)
@@ -99,6 +110,7 @@ else
         end
 
 		ply:SetNWEntity("flashlight3d", ply.flashlight3d)
+		table.insert(flashlights, ply.flashlight3d)
 	end
 
 	hook.Add("PlayerSwitchFlashlight", "BlockFlashLight", function(ply, enabled)
