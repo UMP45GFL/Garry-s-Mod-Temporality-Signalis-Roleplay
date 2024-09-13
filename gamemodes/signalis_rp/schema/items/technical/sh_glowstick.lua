@@ -5,6 +5,7 @@ ITEM.description = "A small, disposable light source that can be activated by be
 ITEM.skin = 0
 
 local glowstickLife = 3600
+glowstickLife = 30
 
 -- Inventory drawing
 if (CLIENT) then
@@ -26,7 +27,7 @@ ITEM.functions.Activate = {
 		return false
 	end,
 	OnCanRun = function(item)
-		return !IsValid(item.entity) and IsValid(item.player) and item:GetData("activated") != true
+		return !IsValid(item.entity) and IsValid(item.player) and item:GetData("activated") != true and item:GetData("usedup", false) != true
 	end
 }
 
@@ -38,6 +39,10 @@ if CLIENT then
                 if itemTable.uniqueID == "glowstick" then
                     local dist = LocalPlayer():GetPos():Distance(entity:GetPos())
                     local dlight = DynamicLight(entity:EntIndex())
+
+                    local lifeTimePerc = (entity:GetData("stopIn") - CurTime()) / glowstickLife
+                    local size = (220 - (dist / 9)) * lifeTimePerc
+
                     if dlight then
                         dlight.pos = entity:GetPos()
                         dlight.r = 255
@@ -53,12 +58,13 @@ if CLIENT then
         end
     end)
 else
-    hook.Add("Think", "GlowstickChecks", function()
+    timer.Create("GlowstickChecks", 1, 0, function()
         for _, entity in ipairs(ents.FindByClass("ix_item")) do
             if entity.GetItemTable and entity:GetData("activated") then
                 local itemTable = entity:GetItemTable()
-                if itemTable.uniqueID == "glowstick" and entity:GetData("stopIn") < CurTime() then
-                    entity:Remove()
+                if itemTable.uniqueID == "glowstick" and entity:GetData("stopIn",  0) < CurTime() then
+                    entity:SetData("activated", false)
+                    entity:SetData("usedup", false)
                 end
             end
         end
