@@ -185,7 +185,8 @@ function ciga_interpolate_arm(ply, mult, mouth_delay)
 		ply.cigaMouthOpenAmt = mult
 	end
 
-	mult = mult / 5
+	--mult = mult / 5
+	--mult = mult * 1.5
 
 	local b1 = ply:LookupBone("ValveBiped.Bip01_R_Upperarm")
 	local b2 = ply:LookupBone("ValveBiped.Bip01_R_Forearm")
