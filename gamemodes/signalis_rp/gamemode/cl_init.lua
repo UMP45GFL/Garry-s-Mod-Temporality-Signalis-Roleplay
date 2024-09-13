@@ -7,21 +7,8 @@ local fontSettings = {
 	extended = true,
 	size = 32,
 	weight = 0,
-	blursize = 0,
-	scanlines = 0,
 	antialias = false,
-	underline = false,
-	italic = false,
-	strikeout = false,
-	symbol = false,
-	rotary = false,
-	shadow = false,
-	additive = false,
-	outline = false,
 }
-surface.CreateFont("SignalisDocumentsFontMedium", fontSettings)
-fontSettings.size = 38
-surface.CreateFont("SignalisDocumentsFontBig", fontSettings)
 
 fontSettings.size = 32
 surface.CreateFont("SignalisRadioFontToggle", fontSettings)
