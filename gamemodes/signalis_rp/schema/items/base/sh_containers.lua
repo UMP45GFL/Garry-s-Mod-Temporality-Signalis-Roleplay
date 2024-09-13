@@ -14,6 +14,7 @@ ITEM.invHeight = 2
 ITEM.isBag = true
 
 ITEM.AcceptableItems = nil
+ITEM.AcceptableBases = nil
 
 ITEM.functions.View = {
 	icon = "icon16/briefcase.png",
@@ -202,7 +203,7 @@ function ITEM:CanTransfer(oldInventory, newInventory)
 	local index = self:GetData("id")
 
 	if (newInventory) then
-		if (newInventory.vars and newInventory.vars.isBag) then
+		if (newInventory.vars and newInventory.vars.isBag and self.AllowItemNesting != true) then
 			return false
 		end
 
