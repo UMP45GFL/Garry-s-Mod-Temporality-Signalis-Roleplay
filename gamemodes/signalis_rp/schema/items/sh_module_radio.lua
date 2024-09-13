@@ -179,6 +179,8 @@ end
 ----------------------------------------- PANEL -----------------------------------------
 
 ITEM.isBag = true
+ITEM.dontShowView = true
+ITEM.AllowItemNesting = true
 
 function CreateRadioPanel(index)
 	local panel = ix.gui["inv"..index]
