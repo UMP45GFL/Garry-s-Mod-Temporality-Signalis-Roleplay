@@ -16,6 +16,7 @@ end
 do
 	local COMMAND = {}
 	COMMAND.arguments = ix.type.text
+	COMMAND.alias = {"r"}
 
 	function COMMAND:OnRun(client, message)
 		local character = client:GetCharacter()
