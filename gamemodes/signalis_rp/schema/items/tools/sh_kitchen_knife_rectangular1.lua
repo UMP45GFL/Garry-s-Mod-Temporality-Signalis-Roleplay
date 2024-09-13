@@ -11,6 +11,6 @@ ITEM.canSlice = true
 
 ITEM.functions.Suicide = {
     icon = "icon16/cross.png",
-	OnRun = SuicideItemFunction(item),
-	OnCanRun = CanSuicide(item)
+	OnRun = SuicideItemFunction,
+	OnCanRun = CanSuicide
 }
