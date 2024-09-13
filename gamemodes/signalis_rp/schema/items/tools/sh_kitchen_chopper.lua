@@ -1,7 +1,7 @@
 
 ITEM.name = "Kitchen chopper"
 ITEM.model = Model("models/eternalis/items/weapons/kitchen/chopper_smaller.mdl")
-ITEM.description = "A small, sharp kitchen chopper. Perfect for cutting vegetables and meat."
+ITEM.description = "A sharp kitchen chopper. Perfect for cutting vegetables and meat."
 ITEM.skin = 0
 
 ITEM.width = 2
