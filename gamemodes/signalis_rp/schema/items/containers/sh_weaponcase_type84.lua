@@ -9,3 +9,5 @@ ITEM.invHeight = 2
 
 ITEM.width = 3
 ITEM.height = 2
+
+ITEM.weight = 1

@@ -4,6 +4,8 @@ ITEM.model = Model("models/eternalis/items/library/folder.mdl")
 ITEM.description = "Overview of the MNHR Replika."
 ITEM.skin = 0
 
+ITEM.weight = 0.1
+
 ITEM.maxPages = 4
 ITEM.startFromPage0 = true
 ITEM.backgroundPhoto = "eternalis/documents/RES_Dossier_MNHR.png"

@@ -11,6 +11,8 @@ ITEM.weaponCategory = "primary"
 ITEM.width = 5
 ITEM.height = 1
 
+ITEM.weight = 6.5
+
 ITEM.forceRender = false
 /*
 ITEM.iconCam = {

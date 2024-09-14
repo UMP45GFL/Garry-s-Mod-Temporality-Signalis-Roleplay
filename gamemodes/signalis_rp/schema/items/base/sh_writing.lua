@@ -7,6 +7,8 @@ ITEM.height = 1
 ITEM.business = true
 ITEM.bAllowMultiCharacterInteraction = true
 
+ITEM.weight = 0.1
+
 ITEM.maxPages = 3
 ITEM.startFromPage0 = false
 

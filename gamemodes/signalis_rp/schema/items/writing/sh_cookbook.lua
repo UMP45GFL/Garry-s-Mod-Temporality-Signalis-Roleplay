@@ -3,6 +3,8 @@ ITEM.model = Model("models/eternalis/items/library/book_slim.mdl")
 ITEM.description = "A piece of paper, %s."
 ITEM.skin = 0
 
+ITEM.weight = 0.2
+
 ITEM.maxPages = 5
 ITEM.startFromPage0 = true
 ITEM.backgroundPhoto = "eternalis/documents/DET_GenericNote.png"

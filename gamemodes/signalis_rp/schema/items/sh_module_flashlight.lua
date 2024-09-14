@@ -4,6 +4,8 @@ ITEM.model = Model("models/eternalis/items/equipment/flashlight.mdl")
 ITEM.description = "Shoulder-mounted flashlight module. Powered by internal Replika power supply when installed."
 ITEM.skin = 0
 
+ITEM.weight = 0.6
+
 -- Inventory drawing
 if (CLIENT) then
 	function ITEM:PaintOver(item, w, h)

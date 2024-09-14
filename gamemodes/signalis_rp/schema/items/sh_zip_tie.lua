@@ -4,6 +4,8 @@ ITEM.description = "An orange zip-tie used to restrict people."
 ITEM.price = 8
 ITEM.model = "models/items/crossbowrounds.mdl"
 
+ITEM.weight = 0.4
+
 ITEM.functions.Use = {
 	OnRun = function(itemTable)
 		local client = itemTable.player

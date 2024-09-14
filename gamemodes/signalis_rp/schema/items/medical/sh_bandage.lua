@@ -5,5 +5,7 @@ ITEM.description = "A small roll of bandage."
 ITEM.category = "Medical"
 ITEM.price = 18
 
+ITEM.weight = 0.1
+
 ITEM.addHealth = 25
 ITEM.applySound = "items/medshot4.wav"

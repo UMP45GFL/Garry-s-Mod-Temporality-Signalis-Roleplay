@@ -4,6 +4,8 @@ ITEM.model = Model("models/eternalis/items/equipment/radio_module.mdl")
 ITEM.description = "Radio receiver module that operates between 50 and 250 KHz. Powered by internal Replika power supply when installed."
 ITEM.skin = 0
 
+ITEM.weight = 0.3
+
 -- Inventory drawing
 if (CLIENT) then
 	function ITEM:PaintOver(item, w, h)

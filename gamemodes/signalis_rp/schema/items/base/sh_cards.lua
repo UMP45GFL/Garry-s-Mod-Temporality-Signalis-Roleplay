@@ -5,3 +5,5 @@ ITEM.width = 1
 ITEM.height = 1
 ITEM.category = "Cards"
 ITEM.description = "Base card item"
+
+ITEM.weight = 0.1

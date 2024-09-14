@@ -11,3 +11,5 @@ ITEM.addHealth = 7
 ITEM.addStamina = 15
 ITEM.eatSound = nil
 ITEM.sliceableInto = {"melon_slice", 2}
+
+ITEM.weight = 1.5

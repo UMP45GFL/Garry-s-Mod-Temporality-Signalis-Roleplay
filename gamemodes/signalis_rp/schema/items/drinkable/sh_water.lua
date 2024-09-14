@@ -8,3 +8,5 @@ ITEM.addThirst = -30
 ITEM.addHealth = 6
 ITEM.addStamina = 25
 ITEM.eatSound = "npc/barnacle/barnacle_gulp2.wav"
+
+ITEM.weight = 0.5

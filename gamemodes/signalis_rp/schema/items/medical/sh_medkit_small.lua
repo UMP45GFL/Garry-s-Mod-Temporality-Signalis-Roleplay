@@ -8,5 +8,7 @@ ITEM.price = 35
 ITEM.width = 1
 ITEM.height = 2
 
+ITEM.weight = 1
+
 ITEM.addHealth = 50
 ITEM.applySound = "items/medshot4.wav"

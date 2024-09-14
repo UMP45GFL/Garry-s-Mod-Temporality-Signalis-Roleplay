@@ -11,3 +11,5 @@ ITEM.addHealth = 15
 ITEM.addStamina = 0
 ITEM.eatSound = nil
 ITEM.eatMessage = "That was tasty..."
+
+ITEM.weight = 0.3

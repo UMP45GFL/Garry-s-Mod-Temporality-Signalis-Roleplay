@@ -12,3 +12,5 @@ ITEM.addStamina = 0
 ITEM.eatSound = nil
 ITEM.sliceableInto = {"bacon_raw", 5}
 ITEM.eatMessage = "That didn't feel good..."
+
+ITEM.weight = 0.5

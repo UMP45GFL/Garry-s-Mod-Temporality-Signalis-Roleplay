@@ -6,3 +6,5 @@ ITEM.skin = 0
 
 ITEM.width = 2
 ITEM.height = 2
+
+ITEM.weight = 1

@@ -4,6 +4,8 @@ ITEM.model = Model("models/eternalis/items/library/book.mdl")
 ITEM.description = ""
 ITEM.skin = 8
 
+ITEM.weight = 0.4
+
 ITEM.maxPages = 2
 ITEM.startFromPage0 = true
 ITEM.backgroundPhoto = "eternalis/documents/RES_Dossier_STCR.png" -- TODO: Change

@@ -4,6 +4,8 @@ ITEM.model = Model("models/eternalis/items/technical/glowstick.mdl")
 ITEM.description = "A small, disposable light source that can be activated by bending the stick."
 ITEM.skin = 0
 
+ITEM.weight = 0.1
+
 local glowstickLife = 3600
 glowstickLife = 30
 

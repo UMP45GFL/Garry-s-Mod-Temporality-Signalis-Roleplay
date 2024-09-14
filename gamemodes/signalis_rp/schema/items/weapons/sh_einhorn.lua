@@ -10,6 +10,7 @@ ITEM.weaponCategory = "sidearm"
 ITEM.width = 2
 ITEM.height = 2
 
+ITEM.weight = 1
 
 ITEM.forceRender = false
 ITEM.iconCam = {

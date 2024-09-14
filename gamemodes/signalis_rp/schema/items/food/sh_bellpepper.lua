@@ -8,3 +8,5 @@ ITEM.addThirst = -3
 ITEM.addHealth = 1
 ITEM.addStamina = 15
 ITEM.eatSound = nil
+
+ITEM.weight = 0.1

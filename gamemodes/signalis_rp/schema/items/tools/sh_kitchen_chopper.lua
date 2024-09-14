@@ -7,6 +7,8 @@ ITEM.skin = 0
 ITEM.width = 2
 ITEM.height = 1
 
+ITEM.weight = 0.3
+
 ITEM.canSlice = true
 
 ITEM.functions.Suicide = {

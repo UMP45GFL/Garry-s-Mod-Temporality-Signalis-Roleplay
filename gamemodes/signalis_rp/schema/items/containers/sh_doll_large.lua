@@ -10,6 +10,8 @@ ITEM.invHeight = 1
 ITEM.width = 2
 ITEM.height = 2
 
+ITEM.weight = 0.6
+
 ITEM.AcceptableItems = {
     ["doll_mid"] = true
 }

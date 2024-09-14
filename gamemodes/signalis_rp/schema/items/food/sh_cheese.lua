@@ -10,3 +10,5 @@ ITEM.addStamina = 0
 ITEM.eatSound = nil
 ITEM.sliceableInto = {"cheese_slice", 4}
 ITEM.scale = 0.5
+
+ITEM.weight = 0.5

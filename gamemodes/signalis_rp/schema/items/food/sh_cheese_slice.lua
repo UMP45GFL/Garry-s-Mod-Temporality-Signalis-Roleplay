@@ -9,3 +9,5 @@ ITEM.addHealth = 2
 ITEM.addStamina = 0
 ITEM.eatSound = nil
 ITEM.scale = 0.5
+
+ITEM.weight = 0.1

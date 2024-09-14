@@ -6,6 +6,8 @@ ITEM.description = "A pack of cigarettes."
 ITEM.invWidth = 2
 ITEM.invHeight = 2
 
+ITEM.weight = 0.1
+
 ITEM.AcceptableItems = {
     ["cigarette"] = true
 }

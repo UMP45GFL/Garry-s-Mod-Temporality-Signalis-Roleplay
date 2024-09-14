@@ -4,6 +4,8 @@ ITEM.model = Model("models/eternalis/items/library/magazine.mdl")
 ITEM.description = "A short book about Bioresonance Technology and its Limitations"
 ITEM.skin = 6
 
+ITEM.weight = 0.1
+
 ITEM.maxPages = 5
 ITEM.startFromPage0 = true
 ITEM.backgroundPhoto = "eternalis/documents/ROT_Bioresonance.png"
