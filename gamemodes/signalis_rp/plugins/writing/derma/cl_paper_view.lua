@@ -7,21 +7,6 @@ AccessorFunc(PANEL, "itemID", "ItemID", FORCE_NUMBER)
 PANEL.page = -1
 PANEL.pages = {}
 
-local function createDocumentFonts()
-	local fontSettings = {
-		font = "Perfect DOS VGA 437",
-		--font = "Pokémon DP Pro",
-		extended = true,
-		size = ScreenScaleH(15),
-		weight = 0,
-		antialias = false,
-	}
-	surface.CreateFont("SignalisDocumentsFontMedium", fontSettings)
-	
-	fontSettings.size = ScreenScaleH(18)
-	surface.CreateFont("SignalisDocumentsFontBig", fontSettings)
-end
-
 local function splitLines(lines, maxSize)
 	surface.SetFont("SignalisDocumentsFontMedium")
 
@@ -51,8 +36,6 @@ function PANEL:Init()
 	if (IsValid(PLUGIN.panel)) then
 		PLUGIN.panel:Remove()
 	end
-
-	createDocumentFonts()
 
 	nextPageTurn = CurTime() + 1
 
