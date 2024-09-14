@@ -11,7 +11,7 @@ SWEP.Pickupable 	= true
 
 SWEP.ViewModel 		= "models/weapons/c_stunstick.mdl"
 SWEP.WorldModel 	= "models/eternalis/items/weapons/star_baton.mdl"
-SWEP.ViewModelFOV 	= 54
+SWEP.ViewModelFOV 	= 50
 SWEP.AnimPrefix 	= "stunstick"
 SWEP.Slot			= 1
 SWEP.SlotPos		= 0
@@ -62,12 +62,39 @@ SWEP.Offset = {
 
 SWEP.ShowViewModel = false
 SWEP.ShowWorldModel = false
-SWEP.VElements = {
-	["baton"] = { type = "Model", model = "models/eternalis/items/weapons/star_baton.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.799, -3.5), angle = Angle(-83, -5, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
-}
 
 SWEP.WElements = {
-	["baton"] = { type = "Model", model = "models/eternalis/items/weapons/star_baton.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3, 1.799, -3.5), angle = Angle(-83, -5, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["baton"] = {
+		type = "Model",
+		model = "models/eternalis/items/weapons/star_baton.mdl",
+		bone = "ValveBiped.Bip01_R_Hand",
+		rel = "",
+		pos = Vector(3, 1.799, -3.5),
+		angle = Angle(-83, -5, 0),
+		size = Vector(1, 1, 1),
+		color = Color(255, 255, 255, 255),
+		surpresslightning = false,
+		material = "",
+		skin = 0,
+		bodygroup = {}
+	}
+}
+
+SWEP.VElements = {
+	["baton"] = {
+		type = "Model",
+		model = "models/eternalis/items/weapons/star_baton.mdl",
+		bone = "ValveBiped.Bip01_R_Hand",
+		rel = "",
+		pos = Vector(3, 1.799, -5.5),
+		angle = Angle(-83, -5, 0),
+		size = Vector(1, 1, 1),
+		color = Color(255, 255, 255, 255),
+		surpresslightning = false,
+		material = "",
+		skin = 0,
+		bodygroup = {}
+	}
 }
 
 /*

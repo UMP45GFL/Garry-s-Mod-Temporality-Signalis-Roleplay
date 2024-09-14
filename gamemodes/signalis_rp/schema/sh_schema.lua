@@ -176,3 +176,21 @@ do
 
 	ix.chat.Register("broadcast", CLASS)
 end
+
+function CanSuicide(item)
+	if !IsValid(item.player) then
+		return false
+	end
+
+	local character = item.player:GetCharacter()
+	if character and character.vars and character.vars.class
+	and (
+		character.vars.class == "replika_fklr" or
+		character.vars.class == "replika_stcr" or
+		character.vars.class == "replika_kncr"
+	)  then
+		return false
+	end
+
+	return true
+end
