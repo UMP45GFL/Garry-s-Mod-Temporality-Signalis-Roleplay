@@ -30,7 +30,12 @@ hook.Add("InitializedConfig", "BioresonanceTelepathy", function()
             return false
         end,
         CanSay = function(self, speaker, text)
-            return speaker:IsBioresonant()
+            if !speaker:IsBioresonant() then
+                speaker:NotifyLocalized("notBioresonant")
+                return false
+            end
+
+            return true
         end,
         prefix = {"/T", "/Telepathy"},
         description = "@cmdT"
@@ -56,10 +61,15 @@ hook.Add("InitializedConfig", "BioresonanceTelepathy", function()
             return false
         end,
         CanSay = function(self, speaker, text)
-            return speaker:IsBioresonant()
+            if !speaker:IsBioresonant() then
+                speaker:NotifyLocalized("notBioresonant")
+                return false
+            end
+
+            return true
         end,
-        prefix = {"/T", "/Telepathy"},
-        description = "@cmdT"
+        prefix = {"/TBR"},
+        description = "@cmdTBR"
     })
 
     ix.chat.Register("tpm", {
@@ -78,7 +88,12 @@ hook.Add("InitializedConfig", "BioresonanceTelepathy", function()
             return false
         end,
         CanSay = function(self, speaker, text)
-            return speaker:IsBioresonant()
+            if !speaker:IsBioresonant() then
+                speaker:NotifyLocalized("notBioresonant")
+                return false
+            end
+
+            return true
         end
     })
 
@@ -90,6 +105,11 @@ hook.Add("InitializedConfig", "BioresonanceTelepathy", function()
             ix.type.text
         },
         OnRun = function(self, client, target, message)
+            if !client:IsBioresonant() then
+                client:NotifyLocalized("notBioresonant")
+                return false
+            end
+
             if client != target then
 			    ix.chat.Send(client, "tpm", message, false, {client, target}, {target = target})
             end
