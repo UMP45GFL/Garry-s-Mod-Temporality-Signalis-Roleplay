@@ -67,9 +67,9 @@ end
 function meta:IsBioresonant()
 	local character = self:GetCharacter()
 	if character then
-		local bioresonance = character:GetData("bioresonance", 0)
-		if bioresonance >= 1 then
-			return true
+		local bioresonance = character:GetData("bioresonance", nil)
+		if bioresonance then
+			return bioresonance >= 1
 		end
 
 		local classTable = ix.class.GetClass(character.vars.class)
