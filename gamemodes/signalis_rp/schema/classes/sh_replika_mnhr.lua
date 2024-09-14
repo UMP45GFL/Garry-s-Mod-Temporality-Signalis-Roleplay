@@ -28,7 +28,10 @@ CLASS.speed = 0.82
 CLASS.ladder_speed = 1
 CLASS.jump_power = 0.7
 CLASS.max_stamina = 1.75
+
 CLASS.add_max_weight = 15
+CALSS.add_inventory_width = 1
+CLASS.add_inventory_height = 1
 
 CLASS.talkPitch = 103
 CLASS.talkSpeed = 0.85
