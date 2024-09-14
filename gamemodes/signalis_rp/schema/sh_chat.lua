@@ -23,8 +23,34 @@ hook.Add("InitializedConfig", "BioresonanceTelepathy", function()
         CanHear = function(self, speaker, listener)
             local dist = speaker:GetPos():Distance(listener:GetPos())
 
-            if dist <= ix.config.Get("chatRange", 280) then
+            if dist <= ix.config.Get("chatRange", 280) * 1.2 then
                 return true
+            end
+
+            return false
+        end,
+        CanSay = function(self, speaker, text)
+            return speaker:IsBioresonant()
+        end,
+        prefix = {"/T", "/Telepathy"},
+        description = "@cmdT"
+    })
+
+    -- Telepathy around for bioresonants chat.
+    ix.chat.Register("tbr", {
+        format = "%s says telepathically \"%s\"",
+        GetColor = function(self, speaker, text)
+            local color = ix.chat.classes.ic:GetColor(speaker, text)
+
+            return Color(color.r, color.g - 60, color.b - 60)
+        end,
+        CanHear = function(self, speaker, listener)
+            if listener:IsBioresonant() then
+                local dist = speaker:GetPos():Distance(listener:GetPos())
+
+                if dist <= ix.config.Get("chatRange", 280) * 1.2 then
+                    return true
+                end
             end
 
             return false
