@@ -297,7 +297,7 @@ function PANEL:Init()
 		if enabled then
 			draw.TextShadow({
 				text = "<",
-				font = "SignalisDocumentsFontBig",
+				font = "SignalisRadioButtons",
 				pos = {w / 2, h / 2},
 				xalign = TEXT_ALIGN_CENTER,
 				yalign = TEXT_ALIGN_CENTER,
@@ -369,7 +369,7 @@ function PANEL:Init()
 		if enabled then
 			draw.TextShadow({
 				text = ">",
-				font = "SignalisDocumentsFontBig",
+				font = "SignalisRadioButtons",
 				pos = {w / 2, h / 2},
 				xalign = TEXT_ALIGN_CENTER,
 				yalign = TEXT_ALIGN_CENTER,
@@ -631,7 +631,6 @@ function PANEL:Init()
 		end
 	end
 
-
 	frequencyTextEntry.OnValueChange = function(this, value)
 		changedValue = true
 
@@ -651,7 +650,7 @@ function PANEL:Init()
 			frequency = tonumber(value)
 		end
 	end
-	frequencyTextEntry:SetFont("SignalisDocumentsFontMedium")
+	frequencyTextEntry:SetFont("SignalisRadioFrequency")
 	frequencyTextEntry:SetPaintBackground(false)
 	frequencyTextEntry:SetTextColor(color_white)
 
@@ -660,7 +659,7 @@ function PANEL:Init()
 			local txt = this:GetText()
 			local caretPos = this:GetCaretPos()
 
-			surface.SetFont("SignalisDocumentsFontMedium")
+			surface.SetFont("SignalisRadioFrequency")
 			local cW, cH = surface.GetTextSize("9")
 			local sW, sH = surface.GetTextSize(txt)
 			local tW, tH = surface.GetTextSize(string.sub(txt, 1, caretPos))
@@ -668,7 +667,7 @@ function PANEL:Init()
 			-- draw caret pos line after the text
 			draw.Text({
 				text = txt,
-				font = "SignalisDocumentsFontMedium",
+				font = "SignalisRadioFrequency",
 				pos = {w / 2, h / 2 + 2},
 				xalign = TEXT_ALIGN_CENTER,
 				yalign = TEXT_ALIGN_CENTER,
@@ -679,7 +678,7 @@ function PANEL:Init()
 				-- draw caret
 				draw.Text({
 					text = "|",
-					font = "SignalisDocumentsFontMedium",
+					font = "SignalisRadioFrequency",
 					pos = {((w - sW) / 2) + tW - (cW / 2), h / 2 + 2},
 					xalign = TEXT_ALIGN_LEFT,
 					yalign = TEXT_ALIGN_CENTER,

@@ -20,8 +20,11 @@ surface.CreateFont("SignalisRadioFontToggle", fontSettings)
 fontSettings.size = 22
 surface.CreateFont("SignalisRadioReceiver", fontSettings)
 
-fontSettings.size = 44
+fontSettings.size = 46
 surface.CreateFont("SignalisRadioFrequency", fontSettings)
+
+fontSettings.size = 54
+surface.CreateFont("SignalisRadioButtons", fontSettings)
 
 fontSettings.size = 32
 surface.CreateFont("SignalisRadioTranscription", fontSettings)
