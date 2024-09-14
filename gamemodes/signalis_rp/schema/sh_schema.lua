@@ -194,3 +194,19 @@ function CanSuicide(item)
 
 	return true
 end
+
+function Schema:GetMaxPlayerCharacter(client)
+	local maxch = ix.config.Get("maxCharacters", 5)
+
+	if client:IsSuperAdmin() then
+		maxch = maxch + 5
+		
+	elseif client:IsAdmin() then
+		maxch = maxch + 4
+
+	elseif client:IsUserGroup("operator") || client:IsUserGroup("moderator") || client:IsUserGroup("gamemaster") then
+		maxch = maxch + 3
+	end
+
+	return maxch
+end
