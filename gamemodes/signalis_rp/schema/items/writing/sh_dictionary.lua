@@ -8,7 +8,7 @@ ITEM.weight = 0.4
 
 ITEM.maxPages = 2
 ITEM.startFromPage0 = true
-ITEM.backgroundPhoto = "eternalis/documents/RES_Dossier_STCR.png" -- TODO: Change
+ITEM.backgroundPhoto = "eternalis/documents/DET_GuardBooklet.png" -- TODO: Change
 
 ITEM.pages = {
     {
