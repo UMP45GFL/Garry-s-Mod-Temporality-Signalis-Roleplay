@@ -29,9 +29,20 @@ LANGUAGE = {
 	cmdChangeReplikaNextNameNumber = "Change the next number in the naming system for a specific replika class.",
 	changedReplikaNextNameNumber = "Changed next name number for class %s to %s.",
 	invalidReplikaClass = "Invalid replika class.",
+
 	noSlicingItems = "You need an item that can slice.",
 	cmdT = "Say something telepathically to the people around you.",
+	cmdTBR = "Say something telepathically to other bioresonant people around you.",
 	cmdTPM = "Send a telepathic message to a specific person.",
+
 	cmdMec = "Perform a physical action in whisper range.",
 	SetTitle = "Set Title",
+
+	addBioresonance = "%s added bioresonance for character %s.",
+	removeBioresonance = "%s removed bioresonance from character %s.",
+	noBioresonance = "This character does not have bioresonance.",
+	cmdAddCharBioresonance = "Add bioresonance to a character.",
+	cmdRemoveCharBioresonance = "Remove bioresonance from a character.",
+
+	notBioresonant = "You are not bioresonant.",
 }
