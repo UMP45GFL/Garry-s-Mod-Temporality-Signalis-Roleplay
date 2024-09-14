@@ -10,7 +10,7 @@ SWEP.Category 		= "Kanade's TFA Signalis"
 SWEP.Pickupable 	= true
 
 SWEP.ViewModel 		= "models/weapons/c_stunstick.mdl"
-SWEP.WorldModel 	= "models/eternalis/items/weapons/star_baton.mdl"
+SWEP.WorldModel 	= "models/eternalis/items/weapons/eig2.mdl"
 SWEP.ViewModelFOV 	= 50
 SWEP.AnimPrefix 	= "stunstick"
 SWEP.Slot			= 1
@@ -66,11 +66,11 @@ SWEP.ShowWorldModel = false
 SWEP.WElements = {
 	["baton"] = {
 		type = "Model",
-		model = "models/eternalis/items/weapons/star_baton.mdl",
+		model = "models/eternalis/items/weapons/eig2.mdl",
 		bone = "ValveBiped.Bip01_R_Hand",
 		rel = "",
-		pos = Vector(3, 1.799, -3.5),
-		angle = Angle(-83, -5, 0),
+		pos = Vector(3, 0.9, -6.5),
+		angle = Angle(0, 160, 270),
 		size = Vector(1, 1, 1),
 		color = Color(255, 255, 255, 255),
 		surpresslightning = false,
@@ -83,11 +83,11 @@ SWEP.WElements = {
 SWEP.VElements = {
 	["baton"] = {
 		type = "Model",
-		model = "models/eternalis/items/weapons/star_baton.mdl",
+		model = "models/eternalis/items/weapons/eig2.mdl",
 		bone = "ValveBiped.Bip01_R_Hand",
 		rel = "",
-		pos = Vector(3, 1.799, -5.5),
-		angle = Angle(-83, -5, 0),
+		pos = Vector(3, 0.9, -12.5),
+		angle = Angle(0, 180, 270),
 		size = Vector(1, 1, 1),
 		color = Color(255, 255, 255, 255),
 		surpresslightning = false,
@@ -97,25 +97,6 @@ SWEP.VElements = {
 	}
 }
 
-/*
-function SWEP:NewPrimaryAttack()
-	--local vm = self:GetOwner():GetViewModel()
-	--if not IsValid(vm) then return end
-	--vm:SendViewModelMatchingSequence(vm:LookupSequence("attackch"))
-end
-
-function SWEP:Think()
-	self.Fixed = self.Fixed or false
-	if self.Fixed == false then
-		self.OldPrimaryAttack = self.PrimaryAttack
-		self.PrimaryAttack = function()
-			self:OldPrimaryAttack()
-			self:NewPrimaryAttack()
-		end
-		self.Fixed = true
-	end
-end
-*/
 function SWEP:SecondaryAttack()
 end
 
