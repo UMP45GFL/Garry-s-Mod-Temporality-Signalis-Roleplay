@@ -12,6 +12,7 @@ function ix.weight.CalculateWeight(character) -- Calculates the total weight of 
 	return weight
 end
 
+
 function ix.weight.Update(character) -- Updates the specified character's current carry weight.
 	character:SetData("carry", ix.weight.CalculateWeight(character))
 end

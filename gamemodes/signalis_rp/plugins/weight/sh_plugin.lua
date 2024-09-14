@@ -8,7 +8,7 @@ ix.lang.AddTable("english", {
 	optImperial = "Use Imperial units",
 })
 
-ix.config.Add("maxWeight", 25, "The maximum weight in Kilograms someone can carry in their inventory.", nil, {
+ix.config.Add("maxWeight", 20, "The maximum weight in Kilograms someone can carry in their inventory.", nil, {
 	data = {min = 1, max = 100},
 	category = "Weight"
 })
@@ -40,11 +40,19 @@ end
 function ix.weight.BaseWeight(character)
 	local base = ix.config.Get("maxWeight", 30)
 
+	local class = ix.class.GetClass(character.vars.class)
+	
+	if class and class.add_max_weight then
+		base = base + class.add_max_weight
+	end
+
 	return base
 end
 
 function ix.weight.CanCarry(weight, carry, character) -- Calculate if you are able to carry something.
 	local max = ix.weight.BaseWeight(character) + ix.config.Get("maxOverWeight", 20)
+
+
 
 	return (weight + carry) <= max
 end
@@ -112,7 +120,7 @@ if (CLIENT) then
 				local character = LocalPlayer():GetCharacter()
 				local carry = character:GetData("carry", 0)
 				local color = ix.config.Get("color")
-				local maxWeight = ix.config.Get("maxWeight", 30)
+				local maxWeight = ix.weight.BaseWeight(character)
 
 				local w, h = panel:GetSize()
 

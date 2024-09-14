@@ -29,6 +29,7 @@ CLASS.speed = 1.07
 CLASS.ladder_speed = 1.2
 CLASS.jump_power = 1.04 -- short baby
 CLASS.max_stamina = 2.05
+CLASS.add_max_weight = 5
 
 CLASS.talkPitch = 90
 CLASS.talkSpeed = 0.65

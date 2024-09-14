@@ -30,6 +30,7 @@ CLASS.speed = 0.97
 CLASS.ladder_speed = 1.15
 CLASS.jump_power = 1.22
 CLASS.max_stamina = 1.9
+CLASS.add_max_weight = 9
 
 CLASS.talkPitch = 90
 CLASS.talkSpeed = 0.8
