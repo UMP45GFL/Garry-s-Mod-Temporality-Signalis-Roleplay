@@ -1,8 +1,8 @@
 
 ITEM.name = "Dictionary"
-ITEM.model = Model("models/eternalis/items/library/book.mdl")
+ITEM.model = Model("models/eternalis/items/library/book_small.mdl")
 ITEM.description = ""
-ITEM.skin = 8
+ITEM.skin = 9
 
 ITEM.weight = 0.4
 
