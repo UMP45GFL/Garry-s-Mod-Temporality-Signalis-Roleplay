@@ -31,7 +31,7 @@ CLASS.jump_power = 1.04 -- short baby
 CLASS.max_stamina = 2.05
 
 CLASS.add_max_weight = 5
-CALSS.add_inventory_width = 1
+CLASS.add_inventory_width = 1
 CLASS.add_inventory_height = 1
 
 CLASS.talkPitch = 90

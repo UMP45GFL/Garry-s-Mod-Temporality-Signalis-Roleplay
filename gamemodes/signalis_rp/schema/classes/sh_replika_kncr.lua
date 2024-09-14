@@ -32,7 +32,7 @@ CLASS.jump_power = 1.22
 CLASS.max_stamina = 1.9
 
 CLASS.add_max_weight = 9
-CALSS.add_inventory_width = 1
+CLASS.add_inventory_width = 1
 CLASS.add_inventory_height = 1
 
 CLASS.talkPitch = 90
