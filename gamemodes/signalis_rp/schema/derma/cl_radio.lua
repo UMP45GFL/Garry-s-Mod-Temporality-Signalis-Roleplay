@@ -625,7 +625,6 @@ function PANEL:Init()
 		if enabled and originalCaretPos == nil and frequencyTextEntry:GetCaretPos() != 0 then
 			if originalCaretPos != frequencyTextEntry:GetCaretPos() then
 				originalCaretPos = frequencyTextEntry:GetCaretPos()
-				print(originalCaretPos)
 				frequencyTextEntry.Think = nil
 			end
 		end
