@@ -5,10 +5,14 @@ local fontSettings = {
 	font = "Perfect DOS VGA 437",
 	--font = "Pokémon DP Pro",
 	extended = true,
-	size = 32,
+	size = ScreenScaleH(15),
 	weight = 0,
 	antialias = false,
 }
+surface.CreateFont("SignalisDocumentsFontMedium", fontSettings)
+
+fontSettings.size = ScreenScaleH(18)
+surface.CreateFont("SignalisDocumentsFontBig", fontSettings)
 
 fontSettings.size = 32
 surface.CreateFont("SignalisRadioFontToggle", fontSettings)

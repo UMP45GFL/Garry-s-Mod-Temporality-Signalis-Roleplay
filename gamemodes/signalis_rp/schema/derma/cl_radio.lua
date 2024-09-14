@@ -49,7 +49,7 @@ local radioColor = Color(204, 53, 0, 255)
 
 local enabled = false
 local frequency = 160000
-local freqIncreaseAmount = 100
+local freqIncreaseAmount = 50
 local nextToggle = 0
 
 local lastSignalDistance = nil
@@ -272,6 +272,8 @@ local is_icon_welle_enabled = true
 local receivedSignal = 0
 local transcription_text = ""
 
+local frequencyTextEntry = nil
+
 function PANEL:Init()
 	self:SetSize(146 * size, 255 * size + bH)
 	self:SetPos(4, 4)
@@ -307,6 +309,7 @@ function PANEL:Init()
 		if enabled and buttonDecrease:IsDown() then
 			frequency = math.Clamp(frequency - freqIncreaseAmount, 50000, 250000)
 			frequencyChanged(self, frequency)
+			frequencyTextEntry:SetValue(tostring(frequency))
 		end
 	end
 
@@ -327,9 +330,13 @@ function PANEL:Init()
 				KillAllSounds()
 				hook.Remove("Tick", "SignalisRadioTick")
 				hook.Remove("HUDPaint", "SignalisRadioDrawOutside")
+				frequencyTextEntry:SetText("")
+				frequencyTextEntry:SetDisabled(true)
 			else
 				hook.Add("Tick", "SignalisRadioTick", WhileRadioRunning)
 				hook.Add("HUDPaint", "SignalisRadioDrawOutside", DrawOutsideRadio)
+				frequencyTextEntry:SetDisabled(false)
+				frequencyTextEntry:SetValue(tostring(frequency))
 			end
 		end
 	end
@@ -373,6 +380,7 @@ function PANEL:Init()
 	buttonIncrease.Think = function()
 		if enabled and buttonIncrease:IsDown() then
 			frequency = math.Clamp(frequency + freqIncreaseAmount, 50000, 250000)
+			frequencyTextEntry:SetValue(tostring(frequency))
 			frequencyChanged(self, frequency)
 		end
 	end
@@ -542,6 +550,7 @@ function PANEL:Init()
 
 		if enabled then
 			-- draw frequency
+			/*
 			local frq = tostring(frequency)
 			if string.len(frq) < 6 then
 				frq = "0" .. frq
@@ -554,6 +563,7 @@ function PANEL:Init()
 				yalign = TEXT_ALIGN_CENTER,
 				color = radioColor
 			}, 1, 255)
+			*/
 
 			-- frequency bar
 			surface.SetDrawColor(255, 255, 255, 255)
@@ -600,6 +610,87 @@ function PANEL:Init()
 				pos = pos + v
 			end
 		end
+	end
+
+	frequencyTextEntry = vgui.Create("DTextEntry", self)
+	frequencyTextEntry:SetPos(28 * size + 1 + 4, 34 * size + 1)
+	frequencyTextEntry:SetSize(92 * size - 2 - 4, 36 * size)
+	frequencyTextEntry:SetNumeric(true)
+	frequencyTextEntry:SetEditable(true)
+	frequencyTextEntry:SetDisabled(false)
+	frequencyTextEntry:SetMultiline(false)
+
+	local originalCaretPos = nil
+	frequencyTextEntry.Think = function()
+		if enabled and originalCaretPos == nil and frequencyTextEntry:GetCaretPos() != 0 then
+			if originalCaretPos != frequencyTextEntry:GetCaretPos() then
+				originalCaretPos = frequencyTextEntry:GetCaretPos()
+				print(originalCaretPos)
+				frequencyTextEntry.Think = nil
+			end
+		end
+	end
+
+
+	frequencyTextEntry.OnValueChange = function(this, value)
+		changedValue = true
+
+		if tonumber(value) > 200000 then
+			local caretPos = this:GetCaretPos()
+			this:SetText("200000")
+			this:SetCaretPos(caretPos - 1)
+			frequency = 200000
+
+		elseif tonumber(value) < 50000 then
+			local caretPos = this:GetCaretPos()
+			this:SetText("50000")
+			this:SetCaretPos(caretPos + 1)
+			frequency = 50000
+		else
+
+			frequency = tonumber(value)
+		end
+	end
+	frequencyTextEntry:SetFont("SignalisDocumentsFontMedium")
+	frequencyTextEntry:SetPaintBackground(false)
+	frequencyTextEntry:SetTextColor(color_white)
+
+	frequencyTextEntry.Paint = function(this, w, h)
+		if enabled then
+			local txt = this:GetText()
+			local caretPos = this:GetCaretPos()
+
+			surface.SetFont("SignalisDocumentsFontMedium")
+			local cW, cH = surface.GetTextSize("9")
+			local sW, sH = surface.GetTextSize(txt)
+			local tW, tH = surface.GetTextSize(string.sub(txt, 1, caretPos))
+
+			-- draw caret pos line after the text
+			draw.Text({
+				text = txt,
+				font = "SignalisDocumentsFontMedium",
+				pos = {w / 2, h / 2 + 2},
+				xalign = TEXT_ALIGN_CENTER,
+				yalign = TEXT_ALIGN_CENTER,
+				color = radioColor
+			}, 1, 255)
+
+			if originalCaretPos then
+				-- draw caret
+				draw.Text({
+					text = "|",
+					font = "SignalisDocumentsFontMedium",
+					pos = {((w - sW) / 2) + tW - (cW / 2), h / 2 + 2},
+					xalign = TEXT_ALIGN_LEFT,
+					yalign = TEXT_ALIGN_CENTER,
+					color = color_white
+				}, 1, 255)
+			end
+		end
+	end
+
+	if enabled then
+		frequencyTextEntry:SetValue(tostring(frequency))
 	end
 end
 
