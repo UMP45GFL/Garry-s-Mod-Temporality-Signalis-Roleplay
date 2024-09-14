@@ -32,7 +32,7 @@ CLASS.max_stamina = 2
 
 CLASS.add_max_weight = 5
 CLASS.add_inventory_width = 1
-CLASS.add_inventory_height = 1
+CLASS.add_inventory_height = 0
 
 CLASS.talkPitch = 110
 CLASS.talkSpeed = 0.88
