@@ -45,4 +45,6 @@ LANGUAGE = {
 	cmdRemoveCharBioresonance = "Remove bioresonance from a character.",
 
 	notBioresonant = "You are not bioresonant.",
+
+	weaponTooHeavy = "This weapon is too heavy for you to carry.",
 }
