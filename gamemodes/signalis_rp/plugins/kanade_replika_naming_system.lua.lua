@@ -8,266 +8,151 @@ ix.config.Add("ReplikaNamingSystemEnabled", true, "Whether to enable the replika
     category = "Replika Naming System"
 })
 
-if SERVER then
+function CreateNextReplikaNumberConfigs()
+    for k,v in pairs(ix.class.list) do
+        if v.faction == FACTION_REPLIKA and v.shortName then
+            print("Creating nn config for " .. v.shortName)
 
-hook.Add("OnLoadDatabaseTables", "ReplikaNamingSystem_OnLoadDatabaseTables", function()
-    if not ix.config.Get("ReplikaNamingSystemEnabled", true) then
+            ix.config.Add("Next " .. v.shortName .. " Number", 0, "The next number of " .. v.name, nil, {
+                category = "Replika Naming System",
+                data = {min = 0, max = 99},
+            })
+        end
+    end
+end
+
+hook.Add("InitPostEntity", "ReplikaNamingSystem_InitPostEntity", function()
+    CreateNextReplikaNumberConfigs()
+end)
+
+function GetNewCharacterName(className)
+    local facilityName = ix.config.Get("facilityShortName", nil)
+    local class = ix.class.GetClass(className)
+
+    if not facilityName or not class or not class.shortName then
+        print("GetNewCharacterName: facilityName or class or class.shortName is nil")
         return
     end
 
-	query = mysql:Create("ix_replika_names")
-        --query:Create("id", "INT(11) UNSIGNED NOT NULL AUTO_INCREMENT")
-		query:Create("class", "VARCHAR(20) NOT NULL")
-		query:Create("next_number", "INT(11) UNSIGNED NOT NULL")
-		query:PrimaryKey("next_number")
-	query:Execute()
+    local num = ix.config.Get("Next " .. class.shortName .. " Number", 1)
+    local newName = class.shortName .. "-" .. facilityName .. string.format("%02d", num)
 
-    for k,v in pairs(ix.class.list) do
-        local query = mysql:Select("ix_replika_names")
-        query:Select("next_number")
-        query:Where("class", v.uniqueID)
+    return newName
+end
+
+if SERVER then
+    function GetNextNumberForClassFromChars(className, func, ignoreNonFacilityChars, ignoreCharTable)
+        if ignoreNonFacilityChars == nil then
+            ignoreNonFacilityChars = true
+        end
+
+        local query = mysql:Select("ix_characters")
+        query:Select("name")
+        query:Where("class", className)
         query:Callback(function(data)
-            if not data or !istable(data) or #data == 0 then
-                local insertQuery = mysql:Insert("ix_replika_names")
-                insertQuery:Insert("next_number", 1)
-                insertQuery:Insert("class", v.uniqueID)
-                insertQuery:Execute()
+            if (istable(data) and #data > 0) then
+                local facilityName = ix.config.Get("facilityShortName", nil)
+                local class = ix.class.GetClass(className)
+
+                if not class or not class.shortName then
+                    return
+                end
+
+                local replikaName = class.shortName
+                local highestNum = nil
+
+                for i, char in ipairs(data) do
+                    local charName = char.name
+
+                    if ignoreCharTable and table.HasValue(ignoreCharTable, charName) then
+                        continue
+                    end
+
+                    -- remove facility name from the character name
+                    if facilityName then
+                        if string.find(charName, facilityName) then
+                            charName = string.gsub(charName, facilityName, "")
+                            
+                        elseif ignoreNonFacilityChars then
+                            continue
+                        end
+                    end
+
+                    -- remove replika name from the character name
+                    if replikaName then
+                        charName = string.gsub(charName, replikaName, "")
+                    end
+                    charName = string.gsub(charName, "-", "")
+
+                    local len = string.len(charName)
+                    local foundNum = false
+                    local numString = ""
+                    for i=1, len do
+                        local ch = string.sub(charName, i, i)
+
+                        if tonumber(ch) then
+                            numString = numString .. ch
+                            foundNum = true
+
+                        elseif foundNum then
+                            break
+                        end
+                    end
+
+                    --print(i, char.name, charName, numString)
+
+                    local num = tonumber(numString)
+                    if num and (highestNum == nil or num > highestNum) then
+                        highestNum = num
+                    end
+                end
+
+                if highestNum != nil and func then
+                    func(highestNum)
+                end
             end
         end)
         query:Execute()
     end
-end)
 
-function GetNextNumberForClassFromChars(className, func, ignoreNonFacilityChars, ignoreCharTable)
-    if ignoreNonFacilityChars == nil then
-        ignoreNonFacilityChars = true
-    end
-
-	local query = mysql:Select("ix_characters")
-	query:Select("name")
-    query:Where("class", className)
-	query:Callback(function(data)
-		if (istable(data) and #data > 0) then
-            local facilityName = ix.config.Get("facilityShortName", nil)
-            local class = ix.class.GetClass(className)
-
-            if not class or not class.shortName then
-                return
+    function UpdateNextNameNumbersFromChars()
+        for k, class in pairs(ix.class.list) do
+            if not class.shortName then
+                continue
             end
 
-            local replikaName = class.shortName
-            local highestNum = nil
-
-            for i, char in ipairs(data) do
-                local charName = char.name
-
-                if ignoreCharTable and table.HasValue(ignoreCharTable, charName) then
-                    continue
-                end
-
-                -- remove facility name from the character name
-                if facilityName then
-                    if string.find(charName, facilityName) then
-                        charName = string.gsub(charName, facilityName, "")
-                        
-                    elseif ignoreNonFacilityChars then
-                        continue
-                    end
-                end
-
-                -- remove replika name from the character name
-                if replikaName then
-                    charName = string.gsub(charName, replikaName, "")
-                end
-                charName = string.gsub(charName, "-", "")
-
-                local len = string.len(charName)
-                local foundNum = false
-                local numString = ""
-                for i=1, len do
-                    local ch = string.sub(charName, i, i)
-
-                    if tonumber(ch) then
-                        numString = numString .. ch
-                        foundNum = true
-
-                    elseif foundNum then
-                        break
-                    end
-                end
-
-                --print(i, char.name, charName, numString)
-
-                local num = tonumber(numString)
-                if num and (highestNum == nil or num > highestNum) then
-                    highestNum = num
-                end
-            end
-
-            if highestNum != nil and func then
-                func(highestNum)
-            end
-		end
-	end)
-	query:Execute()
-end
-
-function UpdateNextNameNumbersFromChars()
-    for k, class in pairs(ix.class.list) do
-        if not class.shortName then
-            continue
-        end
-
-        GetNextNumberForClassFromChars(class.uniqueID, function(highestNum)
-            local updateQuery = mysql:Update("ix_replika_names")
-            updateQuery:Update("next_number", highestNum + 1)
-            updateQuery:Where("class", class.uniqueID)
-            updateQuery:Execute()
-            print("Updated next number for " .. class.uniqueID .. " to " .. highestNum + 1)
-        end)
-    end
-end
-
-hook.Add("OnCharacterCreated", "ReplikaNamingSystem_OnCharacterCreated", function(client, character)
-    local query = mysql:Select("ix_replika_names")
-    query:Select("next_number")
-    query:Where("class", character.vars.class)
-    query:Callback(function(data)
-        if istable(data) and #data > 0 and data[1].next_number then
-            local updateQuery = mysql:Update("ix_replika_names")
-            updateQuery:Update("next_number", data[1].next_number + 1)
-            updateQuery:Where("class", character.vars.class)
-            updateQuery:Execute()
-            print("Replika naming system: Updated next number for class " .. character.vars.class .. " to " .. data[1].next_number + 1)
-        else
-            print("Replika naming system: Next number not found for class" .. character.vars.class)
-        end
-    end)
-    query:Execute()
-end)
-
-/*
-
-print all replika names
-lua_run query = mysql:Select("ix_replika_names") query:Select("class") query:Select("next_number") query:Callback(function(data) PrintTable(data) end) query:Execute()
-
-print all characters
-lua_run query = mysql:Select("ix_characters") query:Select("name") query:Select("class") query:Callback(function(data) for k,v in pairs(data) do print(v.name) end end) query:Execute()
-
-lua_run GetNextNumberForClassFromChars("replika_arar")
-
-lua_run UpdateNextNameNumbersFromChars()
-
-lua_run GetNewCharacterName("replika_arar")
-
-*/
-
-function GetNewCharacterName(className, func)
-	local facilityName = ix.config.Get("facilityShortName", nil)
-	local class = ix.class.GetClass(className)
-
-	if not facilityName or not class or not class.shortName then
-        print("GetNewCharacterName: facilityName or class or class.shortName is nil")
-		return
-	end
-
-	local query = mysql:Select("ix_replika_names")
-    query:Select("next_number")
-    query:Where("class", className)
-    query:Callback(function(data)
-        local num = 0
-
-        if istable(data) and #data > 0 then
-	        num = data[1].next_number
-        else
-            local insertQuery = mysql:Insert("ix_replika_names")
-            insertQuery:Insert("next_number", 1)
-            insertQuery:Insert("class", className)
-            insertQuery:Execute()
-        end
-
-        local newName = class.shortName .. "-" .. facilityName .. string.format("%02d", num)
-        if func then
-            func(newName)
-        end
-    end)
-	query:Execute()
-end
-
-end
-
-ix.command.Add("ChangeReplikaNextNameNumber", {
-	description = "@cmdChangeReplikaNextNameNumber",
-	privilege = "Manage Replika Naming System",
-	superAdminOnly = true,
-	arguments = {
-		ix.type.string,
-		ix.type.number
-	},
-	OnRun = function(self, client, className, number)
-		if (className == "") then
-			return "@invalidArg", 1
-		end
-
-		local class = ix.class.list[className]
-		if (!class) then
-			for _, v in ipairs(ix.class.list) do
-				if (ix.util.StringMatches(L(v.name, client), className) or ix.util.StringMatches(v.uniqueID, className)) then
-					class = v
-					break
-				end
-			end
-		end
-
-		if (class and class.shortName and class.faction == FACTION_REPLIKA) then
-            local updateQuery = mysql:Update("ix_replika_names")
-            updateQuery:Update("next_number", number)
-            updateQuery:Where("class", class.uniqueID)
-            updateQuery:Execute()
-            return "@changedReplikaNextNameNumber", class.uniqueID, number
-		else
-			return "@invalidReplikaClass"
-		end
-	end
-})
-
-if SERVER then
-	util.AddNetworkString("getDefaultCharacterName")
-
-	net.Receive("getDefaultCharacterName", function(len, ply)
-		local faction = net.ReadString()
-		local class = net.ReadString()
-
-        local classTable = ix.class.GetClass(class)
-
-        if classTable and classTable.shortName and classTable.faction == tonumber(faction) then
-            GetNewCharacterName(class, function(newName)
-                --print("GetDefaultCharacterName has given " .. newName)
-
-                net.Start("getDefaultCharacterName")
-                    net.WriteString(newName)
-                    net.WriteBool(!ply:IsAdmin())
-                net.Send(ply)
+            GetNextNumberForClassFromChars(class.uniqueID, function(highestNum)
+                print("Updated next number for " .. class.name .. " to " .. highestNum + 1)
+                ix.config.Set("Next " .. class.shortName .. " Number", highestNum + 1)
             end)
         end
-	end)
-else
-	lastNamePanel = nil
-	lastPayload = nil
+    end
 
-	net.Receive("getDefaultCharacterName", function(len)
-		local name = net.ReadString()
-		local disabled = net.ReadBool()
+    hook.Add("OnCharacterCreated", "ReplikaNamingSystem_OnCharacterCreated", function(client, character)
+        local class = ix.class.GetClass(character.vars.class)
+        if class and class.shortName then
+            local num = ix.config.Get("Next " .. class.shortName .. " Number", 0)
 
-		if lastNamePanel then
-			lastNamePanel:SetText(name)
-			lastPayload:Set("name", name)
-			if disabled then
-				lastNamePanel:SetDisabled(true)
-				lastNamePanel:SetEditable(false)
-			end
-		end
-	end)
+            ix.config.Set("Next " .. class.shortName .. " Number", num + 1)
+            print("Replika naming system: Updated next number for class " .. class.name .. " to " .. num + 1)
+        end
+    end)
+
+    /*
+
+    print all replika names
+    lua_run query = mysql:Select("ix_replika_names") query:Select("class") query:Select("next_number") query:Callback(function(data) PrintTable(data) end) query:Execute()
+
+    print all characters
+    lua_run query = mysql:Select("ix_characters") query:Select("name") query:Select("class") query:Callback(function(data) for k,v in pairs(data) do print(v.name) end end) query:Execute()
+
+    lua_run GetNextNumberForClassFromChars("replika_arar")
+
+    lua_run UpdateNextNameNumbersFromChars()
+
+    lua_run GetNewCharacterName("replika_arar")
+
+    */
 end
 
 hook.Add("GetDefaultCharacterName", "ReplikaNamingSystem_GetDefaultCharacterName", function(client, payload, value, panel)
@@ -280,18 +165,12 @@ hook.Add("GetDefaultCharacterName", "ReplikaNamingSystem_GetDefaultCharacterName
 		return value, false
 	end
 
-    if CLIENT then
-        if value == nil and payload.faction and payload.class and ix.class.list[tonumber(payload.class)] then
-            local class = ix.class.list[tonumber(payload.class)]
-            if class.shortName then
-                lastNamePanel = panel
-                lastPayload = payload
-                net.Start("getDefaultCharacterName")
-                    net.WriteString(payload.faction)
-                    net.WriteString(class.uniqueID)
-                net.SendToServer()
-            end
+    if value == nil and payload.faction and payload.class and ix.class.list[tonumber(payload.class)] then
+        local class = ix.class.list[tonumber(payload.class)]
+        if class.shortName then
+            return GetNewCharacterName(class.uniqueID), !client:IsAdmin()
         end
-        return
     end
+
+    return
 end)
