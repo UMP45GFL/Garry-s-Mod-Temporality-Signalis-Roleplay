@@ -2,7 +2,7 @@ SWEP.Base 			= "tfa_melee_base"
 DEFINE_BASECLASS(SWEP.Base)
 
 SWEP.Author 		= "Kanade"
-SWEP.PrintName 		= "Disposable stun prod"
+SWEP.PrintName 		= "Stun prod"
 SWEP.Purpose		= "Short-range high-voltage electroshock weapon. Can be used one-handed. Non-lethal weapon that instantly incapacitates the target with arcing electricity." 
 SWEP.Spawnable 		= true
 SWEP.AdminSpawnable = true

@@ -1,4 +1,4 @@
-ITEM.name = "Disposable stun prod"
+ITEM.name = "Stun prod"
 ITEM.description = [[Short-range high-voltage electroshock weapon. Can be used one-handed. Non-lethal weapon that instantly incapacitates the target with arcing electricity.]]
 
 ITEM.model = "models/eternalis/items/weapons/star_baton.mdl"
