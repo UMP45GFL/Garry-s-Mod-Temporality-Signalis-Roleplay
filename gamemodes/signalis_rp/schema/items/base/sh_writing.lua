@@ -6,6 +6,7 @@ ITEM.width = 1
 ITEM.height = 1
 ITEM.business = true
 ITEM.bAllowMultiCharacterInteraction = true
+ITEM.category = "Documents"
 
 ITEM.weight = 0.1
 
