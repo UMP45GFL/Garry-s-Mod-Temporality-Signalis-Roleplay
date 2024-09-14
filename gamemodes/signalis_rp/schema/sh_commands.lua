@@ -128,3 +128,58 @@ do
 
 	ix.command.Add("CharSearch", COMMAND)
 end
+
+-- make character bioresonant
+do
+	local COMMAND = {}
+	COMMAND.adminOnly = true
+	COMMAND.arguments = {
+		ix.type.character
+	}
+	COMMAND.syntax = "<string name>"
+
+	function COMMAND:OnRun(client, target)
+		if target:GetData("bioresonance", 0) == 1 then
+			return "@alreadyHasBioresonance", target:GetName()
+		end
+
+		target:SetData("bioresonance", 1)
+
+		for _, v in ipairs(player.GetAll()) do
+			if (self:OnCheckAccess(v) or v == client) then
+				v:NotifyLocalized("addBioresonance", client:GetName(), target:GetName())
+			end
+		end
+	end
+
+	ix.command.Add("AddCharBioresonance", COMMAND)
+end
+
+-- remove character bioresonance
+do
+	ix.command.Add("RemoveCharBioresonance", {
+		description = "@cmdRemoveCharBioresonance",
+		superAdminOnly = true,
+		syntax = "<string name>",
+		arguments = {
+			ix.type.character,
+		},
+		OnRun = function(self, client, target, name)
+			if target:GetData("bioresonance", 0) == 0 then
+				return "@noBioresonance", target:GetName()
+			end
+
+			target:SetData("bioresonance", 0)
+	
+			for _, v in ipairs(player.GetAll()) do
+				if (self:OnCheckAccess(v) or v == client) then
+					v:NotifyLocalized("removeBioresonance", client:GetName(), target:GetName())
+				end
+			end
+		end
+	})
+end
+
+/*
+lua_run player.GetBySteamID64('76561198014356895'):GetCharacter():SetData("bioresonance", 1)
+*/
