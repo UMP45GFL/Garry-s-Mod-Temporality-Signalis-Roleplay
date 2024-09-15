@@ -28,32 +28,19 @@ SWEP.AutoSwitchTo           = false      -- Auto switch to if we pick it up
 SWEP.AutoSwitchFrom         = false      -- Auto switch from if you pick up a better weapon
 SWEP.Weight             = 30            -- This controls how "good" the weapon is for autopickup.
 
-
+sound.Add({
+	name = "mininglasershoot",
+	channel = CHAN_WEAPON,
+	volume = 1.0,
+	level = 90,
+	pitch = 100,
+	sound = "eternalis/weapons/mining_laser/laser_shot.wav"
+})
 
 -- [[WEAPON HANDLING]] --
-SWEP.Primary.Sound = Sound("eternalis/weapons/mining_laser/laser_shot.wav") --Sound("40k/pulse_2.wav") -- This is the sound of the weapon, when you shoot.
+SWEP.Primary.Sound = Sound("mininglasershoot") --Sound("40k/pulse_2.wav") -- This is the sound of the weapon, when you shoot.
 SWEP.Primary.SilencedSound = nil -- This is the sound of the weapon, when silenced.
 SWEP.Primary.PenetrationMultiplier = 1 -- Change the amount of something this gun can penetrate through
--- the LESSER this value is, the BETTER is penetration
--- this is basically multiplier for next values
--- you don't need to uncomment these if you are not going to modify them!
---[[
-SWEP.PenetrationMaterials = {
-	[MAT_DEFAULT] = 1,
-	[MAT_VENT] = 0.4, --Since most is aluminum and stuff
-	[MAT_METAL] = 0.6, --Since most is aluminum and stuff
-	[MAT_WOOD] = 0.2,
-	[MAT_PLASTIC] = 0.23,
-	[MAT_FLESH] = 0.48,
-	[MAT_CONCRETE] = 0.87,
-	[MAT_GLASS] = 0.16,
-	[MAT_SAND] = 1,
-	[MAT_SLOSH] = 1,
-	[MAT_DIRT] = 0.95, --This is plaster, not dirt, in most cases.
-	[MAT_FOLIAGE] = 0.9
-}
-]]
-
 SWEP.Primary.Damage = 40 -- Damage, in standard damage points.
 SWEP.Primary.DamageTypeHandled = true -- true will handle damagetype in base
 SWEP.Primary.DamageType = nil -- See DMG enum.  This might be DMG_SHOCK, DMG_BURN, DMG_BULLET, etc.  Leave nil to autodetect.  DMG_AIRBOAT opens doors.
@@ -97,62 +84,7 @@ SWEP.ViewModelPunchYawMultiplier_IronSights = nil -- Default value is 0.25
 
 SWEP.CanJam = false -- whenever weapon cam jam
 SWEP.JamChance = 0 -- the (maximal) chance the weapon will jam. Newly spawned weapon will never jam on first shot for example.
--- Default value is 0.04 (4%)
--- Maxmial value is 1, means weapon will always jam when factor become 100
--- Also remember that there is a minimal factor before weapon can jam
--- This number is not treated "as-is" but as basic value that needs to be concluded as chance
--- You don't really need to cry over it and trying to balance it, TFA Base will do the job for you
--- (TFA Base will calculate the best value between 0 and JamChance based on current JamFactor of the weapon)
 SWEP.JamFactor = 0 -- How to increase jam factor after each shot.
--- When factor reach 100 it will mean that on each shot there will be SWEP.Primary.JamChance chance to jam
--- When factor reach 50 it will mean that on each shot there will be SWEP.Primary.JamChance / 2 chance to jam
--- and so on
--- Default value is 0.06, means weapon will jam with SWEP.Primary.JamChance chance right after 1666 shots
-
--- These settings are good for Assault Rifles, however, not good for anything else.
--- Suggested stats:
-
---[[
--- Pistols
-SWEP.JamChance = 0.20
-SWEP.JamFactor = 0.14
-]]
-
---[[
--- Revolvers
-SWEP.JamChance = 0.17
-SWEP.JamFactor = 0.50
-]]
-
---[[
--- Miniguns
-SWEP.JamChance = 0.03
-SWEP.JamFactor = 0.01
-]]
-
---[[
--- Submachine gun
-SWEP.JamChance = 0.04
-SWEP.JamFactor = 0.09
-]]
-
---[[
--- Auto shotguns
-SWEP.JamChance = 0.15
-SWEP.JamFactor = 0.2
-]]
-
---[[
--- Pump-action shotguns
-SWEP.JamChance = 0.25
-SWEP.JamFactor = 0.3
-]]
-
---[[
--- Sniper rifle
-SWEP.JamChance = 0.17
-SWEP.JamFactor = 0.35
-]]
 
 SWEP.FiresUnderwater = true
 -- Miscelaneous Sounds
@@ -207,111 +139,6 @@ SWEP.Primary.FalloffMetricBased = false -- Set to true if you set up values belo
 SWEP.Primary.FalloffByMeter = -1  -- How much damage points will bullet loose when travel
 SWEP.Primary.MinRangeStartFalloff = -1 -- How long will bullet travel in Meters before starting to lose damage?
 SWEP.Primary.MaxFalloff = 0 -- Maximal amount of damage to be lost
-
--- Use this for full control over damage dropoff.
---[[
-SWEP.Primary.RangeFalloffLUT = {
-	bezier = true, -- Whenever to use Bezier or not to interpolate points?
-	-- you probably always want it to be set to true
-	range_func = "quintic", -- function to spline range
-	-- "linear" for linear splining.
-	-- Possible values are "quintic", "cubic", "cosine", "sinusine", "linear" or your own function
-	units = "meters", -- possible values are "inches", "inch", "hammer", "hu" (are all equal)
-	-- everything else is considered to be meters
-	lut = { -- providing zero point is not required
-		-- without zero point it is considered to be as {range = 0, damage = 1}
-		{range = 5, damage = 0.9},
-		{range = 12, damage = 0.8},
-		{range = 18, damage = 0.5},
-		{range = 24, damage = 0.2},
-		{range = 30, damage = 0.55},
-		{range = 38, damage = 0.76},
-		{range = 50, damage = 1},
-		{range = 52, damage = 0.96},
-		{range = 60, damage = 0.3},
-		{range = 70, damage = 0.1},
-	}
-}
-]]
-
---[[
-SWEP.Primary.RecoilLUT_IronSightsMult = nil -- Defaults to 0.5
--- controls how much effective LUT is when iron sighting
-SWEP.Primary.RecoilLUT_AnglePunchMult = nil -- Defaults to 0.25
--- controls how much effective LUT at pushing EyeAngles of shooter
-SWEP.Primary.RecoilLUT_ViewPunchMult = nil -- Defaults to 1
--- controls how much effective LUT at viewpunch
-
-SWEP.Primary.RecoilLUT = {
-	["in"] = {
-		bezier = true,
-		func = "quintic", -- function to inerpolate progress when sampling points from table
-		-- Possible values are "quintic", "cubic", "cosine", "sinusine", "linear" or your own function
-		cooldown_speed = 1, -- how much to loose progress when we are at this stage
-		-- 1 means we lose entire progress in a second
-		increase = 0.1, -- how much to increase progress after shot
-		-- 0.1 means that this stage would be full after 10 shots
-		wait = 0.1, -- how much time do we wait in seconds after we stopped shooting
-		-- after this time, IN stage begin to cooldown until it reach zero
-
-		-- table is always prepended with an Angle()
-		-- only Pitch and Yaw are utilized
-		-- sampled point is added to aimvector of player
-		-- when they shoot
-		points = {
-			Angle(-1, 0.4),
-			Angle(-4, -2),
-			Angle(-6, -4),
-			Angle(-10, -6),
-		}
-	},
-
-	["loop"] = {
-		bezier = true,
-		func = "quintic",
-		-- this stage can not cooldown, so no cooldown_speed is defined
-		increase = 0.1, -- when LOOP stage reach 1, it is reset to 0
-		wait = 0.1, -- how much time do we wait in seconds after we stopped shooting
-		-- after this time, stage switch to OUT
-
-		-- table is NOT prepended with an Angle()
-		-- make sure it's starting point match the one from IN stage
-		-- last and first points are connected automatically
-		points = {
-			Angle(-10, -6),
-			Angle(-12, -0.4),
-			Angle(-8, 9),
-			Angle(-11, 12),
-			Angle(-13, 2),
-			Angle(-8, -4),
-		}
-	},
-
-	["out"] = {
-		bezier = true,
-		func = "quintic",
-		-- this stage is different
-		-- it is only started after LOOP took place
-		-- shooting in this stage will actually roll back it's state
-		-- until it reach zero and switch back to LOOP
-		-- cooling down actually increase stage's progress
-		cooldown_speed = 1,
-		-- increase act as negative number to reach zero in this stage
-		increase = 0.2,
-
-		-- after this stage reach 1, everything reset to IN and wait for next fire
-		-- table is always appended with an Angle()
-
-		-- starting point is dynamic
-		-- and will always match current LOOP's one
-		points = {
-			Angle(-7, -2),
-			Angle(-4, -1),
-			Angle(-2, 0),
-		}
-	}
-}
-]]
 
 -- Penetration Related
 SWEP.MaxPenetrationCounter = 10 -- The maximum number of ricochets.  To prevent stack overflows.
@@ -464,135 +291,9 @@ SWEP.Idle_Smooth = 0.05 -- Start an idle this far early into the end of another 
 -- MDL Animations Below
 
 SWEP.Sights_Mode = TFA.Enum.LOCOMOTION_LUA -- LOCOMOTION_ANI = mdl, LOCOMOTION_HYBRID = ani + lua, LOCOMOTION_LUA = lua only
---[[
-SWEP.IronAnimation = {
-	["in"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "Idle_To_Iron", -- Number for act, String/Number for sequence
-		["value_empty"] = "Idle_To_Iron_Dry",
-		["transition"] = true
-	}, -- Inward transition
-	["loop"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "Idle_Iron", -- Number for act, String/Number for sequence
-		["value_empty"] = "Idle_Iron_Dry"
-	}, -- Looping Animation
-	["out"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "Iron_To_Idle", -- Number for act, String/Number for sequence
-		["value_empty"] = "Iron_To_Idle_Dry",
-		["transition"] = true
-	}, -- Outward transition
-	["shoot"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "Fire_Iron", -- Number for act, String/Number for sequence
-		["value_last"] = "Fire_Iron_Last",
-		["value_empty"] = "Fire_Iron_Dry"
-	} -- What do you think
-}
-]]
-
 SWEP.Sprint_Mode = TFA.Enum.LOCOMOTION_LUA -- LOCOMOTION_ANI = mdl, LOCOMOTION_HYBRID = ani + lua, LOCOMOTION_LUA = lua only
---[[
-SWEP.SprintAnimation = {
-	["in"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "Idle_to_Sprint", -- Number for act, String/Number for sequence
-		["value_empty"] = "Idle_to_Sprint_Empty",
-		["transition"] = true
-	}, -- Inward transition
-	["loop"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "Sprint_", -- Number for act, String/Number for sequence
-		["value_empty"] = "Sprint_Empty_",
-		["is_idle"] = true
-	}, -- looping animation
-	["out"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "Sprint_to_Idle", -- Number for act, String/Number for sequence
-		["value_empty"] = "Sprint_to_Idle_Empty",
-		["transition"] = true
-	} -- Outward transition
-}
-]]
-
 SWEP.Walk_Mode = TFA.Enum.LOCOMOTION_LUA -- LOCOMOTION_ANI = mdl, LOCOMOTION_HYBRID = ani + lua, LOCOMOTION_LUA = lua only
---[[
-SWEP.WalkAnimation = {
-	["in"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "Idle_to_Walk", -- Number for act, String/Number for sequence
-		["value_empty"] = "Idle_to_Walk_Empty",
-		["transition"] = true
-	}, -- Inward transition
-	["loop"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "Walk", -- Number for act, String/Number for sequence
-		["value_empty"] = "Walk_Empty",
-		["is_idle"] = true
-	}, -- looping animation
-	["out"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "Walk_to_Idle", -- Number for act, String/Number for sequence
-		["value_empty"] = "Walk_to_Idle_Empty",
-		["transition"] = true
-	} -- Outward transition
-}
-]]
-
---[[
--- Looping fire animation (full-auto only)
-SWEP.ShootAnimation = {
-	["in"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "ShootLoop_Start", -- Number for act, String/Number for sequence
-		["value_is"] = "ShootLoop_Iron_Start", -- Number for act, String/Number for sequence
-		["transition"] = true
-	}, -- Looping Start, fallbacks to loop
-	["loop"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "ShootLoop", -- Number for act, String/Number for sequence,
-		["value_is"] = "ShootLoop_Iron", -- Number for act, String/Number for sequence,
-		["is_idle"] = true,
-	}, -- Looping Animation
-	["out"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "ShootLoop_End", -- Number for act, String/Number for sequence
-		["value_is"] = "ShootLoop_Iron_End", -- Number for act, String/Number for sequence
-		["transition"] = true
-	}, -- Looping End
-}
-]]
-
 SWEP.Customize_Mode = TFA.Enum.LOCOMOTION_LUA -- LOCOMOTION_ANI = mdl, LOCOMOTION_HYBRID = ani + lua, LOCOMOTION_LUA = lua only
---[[
-SWEP.CustomizeAnimation = {
-	["in"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "customization_in", -- Number for act, String/Number for sequence
-		["transition"] = true
-	},
-	["loop"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "customization_idle", -- Number for act, String/Number for sequence
-		["is_idle"] = true
-	},
-	["out"] = {
-		["type"] = TFA.Enum.ANIMATION_SEQ, -- Sequence or act
-		["value"] = "customization_out", -- Number for act, String/Number for sequence
-		["transition"] = true
-	}
-}
-]]
-
---[[
-SWEP.PumpAction = { -- Pump/bolt animations
-	["type"] = TFA.Enum.ANIMATION_ACT, -- Sequence or act
-	["value"] = ACT_VM_PULLBACK_HIGH, -- Number for act, String/Number for sequence
-	["value_empty"] = ACT_VM_PULLBACK, -- Last shot pump
-	["value_is"] = ACT_VM_PULLBACK_LOW, -- ADS pump
-}
-]] --
 
 -- [[EFFECTS]] --
 -- Attachments
@@ -712,37 +413,7 @@ SWEP.DInv2_GridSizeY = nil
 SWEP.DInv2_Volume = nil
 SWEP.DInv2_Mass = nil
 
--- [[MISC INFO FOR MODELERS]] --
---[[
 
-Used Animations (for modelers):
-
-ACT_VM_DRAW - Draw
-ACT_VM_DRAW_EMPTY - Draw empty
-ACT_VM_DRAW_SILENCED - Draw silenced, overrides empty
-
-ACT_VM_IDLE - Idle
-ACT_VM_IDLE_SILENCED - Idle empty, overwritten by silenced
-ACT_VM_IDLE_SILENCED - Idle silenced
-
-ACT_VM_PRIMARYATTACK - Shoot
-ACT_VM_PRIMARYATTACK_EMPTY - Shoot last chambered bullet
-ACT_VM_PRIMARYATTACK_SILENCED - Shoot silenced, overrides empty
-ACT_VM_PRIMARYATTACK_1 - Shoot ironsights, overriden by everything besides normal shooting
-ACT_VM_DRYFIRE - Dryfire
-
-ACT_VM_RELOAD - Reload / Tactical Reload / Insert Shotgun Shell
-ACT_SHOTGUN_RELOAD_START - Start shotgun reload, unless ACT_VM_RELOAD_EMPTY is there.
-ACT_SHOTGUN_RELOAD_FINISH - End shotgun reload.
-ACT_VM_RELOAD_EMPTY - Empty mag reload, chambers the new round.  Works for shotguns too, where applicable.
-ACT_VM_RELOAD_SILENCED - Silenced reload, overwrites all
-
-
-ACT_VM_HOLSTER - Holster
-ACT_VM_HOLSTER_SILENCED - Holster empty, overwritten by silenced
-ACT_VM_HOLSTER_SILENCED - Holster silenced
-]] --
- 
 DEFINE_BASECLASS( SWEP.Base )
 
 SWEP.Primary.Knockback = 0 --Autodetected if nil; this is the velocity kickback
@@ -795,15 +466,6 @@ local cd = {}
 local rtmod2 = Color(255,255,255,2)
 SWEP.RTMaterialOverride =23
 
-
-
-
-
-
-
-
-
-
-
-
-
+function SWEP:PostReload(released)
+	self:SetNextPrimaryFire(CurTime() + 4)
+end
