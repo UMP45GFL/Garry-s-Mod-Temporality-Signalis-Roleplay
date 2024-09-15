@@ -16,30 +16,7 @@ if (CLIENT) then
 	end
 end
 
-if CLIENT then
-	function CreateCalcViewHook()
-		hook.Remove("CalcView", "FlashlightModule_CalcView")
-		/*
-		hook.Add("CalcView", "FlashlightModule_CalcView", function(client, position, angles, fov)
-			for k,ply in pairs(player.GetAll()) do
-				local flashlight3d = ply:GetNWEntity("flashlight3d")
-				if flashlight3d:IsValid() then
-					flashlight3d:SetPos(ply:EyePos() + ply:EyeAngles():Forward() * 15)
-					flashlight3d:SetAngles(ply:EyeAngles())
-				end
-			end
-		end)
-		*/
-	end
-
-	net.Receive("ixFlashlightModuleEquip", function()
-		CreateCalcViewHook()
-	end)
-
-	net.Receive("ixFlashlightModuleUnequip", function()
-		hook.Remove("CalcView", "FlashlightModule_CalcView")
-	end)
-else
+if SERVER then
 	local flashlights = {}
 
 	util.AddNetworkString("ixFlashlightModuleEquip")
