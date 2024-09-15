@@ -1,6 +1,6 @@
 
 ITEM.name = "AVA Suit"
-ITEM.description = ""
+ITEM.description = "Environmental suit used for protection from the harsh environments."
 ITEM.category = "Clothing"
 ITEM.model = "models/eternalis/items/equipment/ava_suit.mdl"
 ITEM.outfitCategory = "body"
@@ -12,10 +12,19 @@ ITEM.bodyGroups = {
 	["tasche"] = 0,
 }
 
-ITEM.weight = 1
+ITEM.weight = 8
 
 ITEM.width = 2
-ITEM.height = 3
+ITEM.height = 4
+
+ITEM.forceRender = true
+ITEM.iconCam = {
+    pos = Vector(-50, 0, 31),
+    ang = Angle(0, 0, 0),
+    fov = 36
+}
+
+-- lua_run_cl FORCE_ICONCAM = { pos = Vector(-10, -5, -1), ang = Angle(0, 30, 180), fov = 55 }
 
 function ITEM:CanEquipOutfit(client)
     local character = client:GetCharacter()
