@@ -3,6 +3,7 @@ ITEM.name = "ARAR helmet"
 ITEM.description = "Helmet that protects the head from injury due to falling objects."
 ITEM.category = "Clothing"
 ITEM.model = "models/eternalis/items/equipment/arar_helmet.mdl"
+ITEM.outfitCategory = "hat"
 
 ITEM.bodyGroups = {
 	["helmet"] = 0
@@ -22,5 +23,6 @@ function ITEM:CanEquipOutfit(client)
         return true
     end
 
+    client:NotifyLocalized("cannotEquipOutfit")
 	return false
 end

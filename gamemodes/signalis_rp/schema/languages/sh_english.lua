@@ -47,4 +47,5 @@ LANGUAGE = {
 	notBioresonant = "You are not bioresonant.",
 
 	weaponTooHeavy = "This weapon is too heavy for you to carry.",
+	cannotEquipOutfit = "You cannot equip this outfit.",
 }
