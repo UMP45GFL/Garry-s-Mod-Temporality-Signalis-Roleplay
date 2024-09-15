@@ -1,3 +1,4 @@
+
 function ix.weight.CalculateWeight(character) -- Calculates the total weight of all items a character is carrying.
 	local inventory = character:GetInventory()
 
@@ -5,6 +6,9 @@ function ix.weight.CalculateWeight(character) -- Calculates the total weight of 
 
 	for i, v in pairs(inventory:GetItems()) do
 		if (v:GetWeight()) then
+			if v.ShouldCalculateWeight and v:ShouldCalculateWeight(v, character) != true then
+				continue
+			end
 			weight = weight + v:GetWeight()
 		end
 	end
