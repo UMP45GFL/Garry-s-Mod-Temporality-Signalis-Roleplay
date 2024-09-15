@@ -96,4 +96,8 @@ function CLASS:OnCharacterCreated(client, character)
 		skin = 3,
 		name = character:GetName()
 	})
+	local x, y, id = inventory:Add("helmet_arar", 1, {
+		equip = true
+	})
+
 end
