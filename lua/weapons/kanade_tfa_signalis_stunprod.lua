@@ -23,7 +23,7 @@ SWEP.IsStunBaton 	= true
 SWEP.InspectPos = Vector(0, 0, 0)
 SWEP.InspectAng = Vector(0, 0, 0)
 
-SWEP.StunningEnabled = false
+SWEP.StunningMode = 0
 SWEP.Primary.Directional = true
 SWEP.Primary.Attacks = {
 	{
@@ -103,14 +103,24 @@ end
 SWEP.NextToggle = 0
 function SWEP:Reload()
 	if self.NextToggle < CurTime() then
-		self.StunningEnabled = !self.StunningEnabled
-		if SERVER then
-			if self.StunningEnabled then
-				sound.Play("weapons/stunstick/spark"..math.random(1,3)..".wav", self.Owner:GetPos(), 75, 100, 1)
-				self.Primary.Hit = self.Sound_Enabled
+		self.StunningMode = self.StunningMode + 1
+		if self.StunningMode > 2 then
+			self.StunningMode = 0
+		end
+
+		if SERVER and self.StunningMode > 0 then
+			sound.Play("weapons/stunstick/spark"..math.random(1,3)..".wav", self.Owner:GetPos(), 75, 100, 1)
+			self.Primary.Hit = self.Sound_Enabled
+
+			if self.StunningMode == 1 then
+				self.Primary.Attacks[1].dmg = 10
+
+			elseif self.StunningMode == 2 then
+				self.Primary.Attacks[1].dmg = 20
 			end
 		end
-		if self.StunningEnabled then
+
+		if self.StunningMode > 0 then
 			self.Primary.Attacks[1].snd = Sound("weapons/stunstick/stunstick_swing1.wav")
 			self.Primary.Attacks[1].hitflesh = Sound("weapons/stunstick/stunstick_fleshhit2.wav")
 			self.Primary.Attacks[1].hitworld = Sound("weapons/stunstick/stunstick_impact1.wav")
@@ -119,6 +129,7 @@ function SWEP:Reload()
 			self.Primary.Attacks[1].hitflesh = Sound("Weapon_Crowbar.Melee_Hit")
 			self.Primary.Attacks[1].hitworld = Sound("Weapon_Crowbar.Melee_Hit")
 		end
+
 		self.NextToggle = CurTime() + 1
 	end
 end
@@ -154,7 +165,7 @@ function SWEP:SmackEffect(trace, dmg)
 	local dam, force, dt = dmg:GetBaseDamage(), dmg:GetDamageForce(), dmg:GetDamageType()
 	
 	--if (trace.Hit and bFirstTimePredicted and (not trSplash) and self:DoImpactEffect(trace, dt) ~= true) then
-	if trace.Hit and bFirstTimePredicted and (not trSplash) and self.StunningEnabled then
+	if trace.Hit and bFirstTimePredicted and (not trSplash) and self.StunningMode > 0 then
 		local data = EffectData()
 		data:SetOrigin(trace.HitPos)
 		data:SetStart(vSrc)
@@ -165,9 +176,17 @@ function SWEP:SmackEffect(trace, dmg)
 		util.Effect("StunstickImpact", data)
 	end
 
-	if SERVER and self.StunningEnabled and trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() and trace.Entity:Team() != TEAM_SPECTATOR and trace.Entity:Team() != FACTION_STAFF and not IsValid(trace.Entity.ixRagdoll) then
-		trace.Entity:EmitSound("eternalis/weapons/stun_prod/taser_shot_multiple.wav", 110, 100, 1)
-		trace.Entity:SetRagdolled(true, 15)
+	if SERVER and self.StunningMode > 0 and trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() and trace.Entity:Team() != TEAM_SPECTATOR and trace.Entity:Team() != FACTION_STAFF and not IsValid(trace.Entity.ixRagdoll) then
+		-- low voltage mode
+		if self.StunningMode == 1 then
+			trace.Entity:StunPlayer(4, 6)
+			trace.Entity:EmitSound("eternalis/weapons/stun_prod/taser_shot_multiple.wav", 90, 100, 1)
+
+		-- high voltage mode
+		elseif self.StunningMode == 2 then
+			trace.Entity:SetRagdolled(true, 30)
+			trace.Entity:EmitSound("eternalis/weapons/stun_prod/taser_shot_multiple.wav", 110, 100, 1)
+		end
 	end
 	
 	dmg:SetDamage(dam)
@@ -175,14 +194,21 @@ function SWEP:SmackEffect(trace, dmg)
 end
 
 function SWEP:DrawHUD()
-	if !self.StunningEnabled then
-		draw.Text({
-			text = "Reload to enable stunning",
-			pos = { ScrW() / 2, ScrH() - 6},
-			font = "HudDefault",
-			color = Color(255,255,255,50),
-			xalign = TEXT_ALIGN_CENTER,
-			yalign = TEXT_ALIGN_BOTTOM,
-		})
+	local text = "Reload to enable stunning"
+
+	if self.StunningMode == 1 then
+		text = "Low voltage mode"
+
+	elseif self.StunningMode == 2 then
+		text = "High voltage mode"
 	end
+
+	draw.Text({
+		text = text,
+		pos = {ScrW() / 2, ScrH() - 6},
+		font = "HudDefault",
+		color = Color(255,255,255,50),
+		xalign = TEXT_ALIGN_CENTER,
+		yalign = TEXT_ALIGN_BOTTOM,
+	})
 end
