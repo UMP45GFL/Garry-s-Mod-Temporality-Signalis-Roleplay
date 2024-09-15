@@ -32,7 +32,7 @@ sound.Add({
 	name = "mininglasershoot",
 	channel = CHAN_WEAPON,
 	volume = 1.0,
-	level = 90,
+	level = 60,
 	pitch = 100,
 	sound = "eternalis/weapons/mining_laser/laser_shot.wav"
 })
