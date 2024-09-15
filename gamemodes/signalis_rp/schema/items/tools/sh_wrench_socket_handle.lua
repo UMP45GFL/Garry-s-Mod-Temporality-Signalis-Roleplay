@@ -10,9 +10,10 @@ ITEM.height = 2
 
 ITEM.weight = 0.3
 
-ITEM.forceRender = true
-ITEM.iconCam = {
-	pos = Vector(-10, -5, -1),
-	ang = Angle(0, 30, 180),
-	fov = 55
+/*
+ITEM.renderModelPanel = {
+    fov = 10,
+    offset = Vector(0, 0, 0),
+    lookat = Vector(0, 0, 0),
 }
+*/
