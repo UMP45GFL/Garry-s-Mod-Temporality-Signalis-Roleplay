@@ -6,6 +6,10 @@ ITEM.skin = 0
 
 ITEM.weight = 0.3
 
+ITEM.isBag = true
+ITEM.dontShowView = true
+ITEM.AllowItemNesting = true
+
 -- Inventory drawing
 if (CLIENT) then
 	function ITEM:PaintOver(item, w, h)
@@ -179,10 +183,6 @@ end
 
 
 ----------------------------------------- PANEL -----------------------------------------
-
-ITEM.isBag = true
-ITEM.dontShowView = true
-ITEM.AllowItemNesting = true
 
 function CreateRadioPanel(index)
 	local panel = ix.gui["inv"..index]
