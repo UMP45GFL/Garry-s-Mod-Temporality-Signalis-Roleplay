@@ -107,8 +107,8 @@ SWEP.FireSoundAffectedByClipSize = true -- Whenever adjuct pitch (and proably ot
 -- Weapon is a shotgun
 -- Ammo Related
 SWEP.Primary.ClipSize = 1 -- This is the size of a clip
-SWEP.Primary.DefaultClip = 0 -- This is the number of bullets the gun gives you, counting a clip as defined directly above.
-SWEP.Primary.Ammo = "AR2AltFire" -- What kind of ammo.  Options, besides custom, include pistol, 357, smg1, ar2, buckshot, slam, SniperPenetratedRound, and AirboatGun.
+SWEP.Primary.DefaultClip = 20 -- This is the number of bullets the gun gives you, counting a clip as defined directly above.
+SWEP.Primary.Ammo = "ammolaser" -- What kind of ammo.  Options, besides custom, include pistol, 357, smg1, ar2, buckshot, slam, SniperPenetratedRound, and AirboatGun.
 SWEP.Primary.AmmoConsumption = 1 -- Ammo consumed per shot
 -- Pistol, buckshot, and slam like to ricochet. Use AirboatGun for a light metal peircing shotgun pellets
 SWEP.DisableChambering = true -- Disable round-in-the-chamber
@@ -157,9 +157,9 @@ SWEP.Primary.ProjectileVelocity = 0 -- Entity to shoot's velocity
 SWEP.Primary.ProjectileModel = nil -- Entity to shoot's model
 
 -- VIEWMODEL
-SWEP.ViewModel          = "models/weapons/c_shotgun.mdl" -- Viewmodel path
+SWEP.ViewModel          = "models/bf2017/c_dlt19.mdl" -- Viewmodel path
 SWEP.ShowViewModel = false
-SWEP.ViewModelFOV           = 70        -- This controls how big the viewmodel looks.  Less is more.
+SWEP.ViewModelFOV           = 65        -- This controls how big the viewmodel looks.  Less is more.
 SWEP.ViewModelFlip          = false     -- Set this to true for CSS models, or false for everything else (with a righthanded viewmodel.)
 SWEP.UseHands = false -- Use gmod c_arms system.
 SWEP.VMPos = Vector(0, 0, 0) -- The viewmodel positional offset, constantly.  Subtract this from any other modifications to viewmodel position.
@@ -339,28 +339,47 @@ SWEP.AkimboHUD = true -- Draw holographic HUD for both weapons?
 -- [[ATTACHMENTS]] --
 SWEP.ViewModelBoneMods = {}
 
+
 SWEP.VElements = {
-	["laser"] = {
+	/*
+	["gun"] = {
+		type = "Model",
+		model = "models/weapons/w_MNHR_LaserRifle.mdl",
+		bone = "weapon_bone",
+		rel = "",
+		pos = Vector(0, 0, 6),
+		angle = Angle(0, -90, 180),
+		size = Vector(1.4, 1.4, 1.4),
+		color = Color(255, 255, 255, 255),
+		surpresslightning = false,
+		material = "",
+		skin = 0,
+		bodygroup = {[1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 3, [7] = 0} , active = true },
+		*/
+	
+
+	["gun"] = {
 		type = "Model",
 		model = "models/eternalis/items/weapons/laserminer.mdl",
 		bone = "weapon_bone",
 		rel = "",
-		pos = Vector(11, -10, -2),
-		angle = Angle(2.7, 77, 180),
+		pos = Vector(-2, 4, 5),
+		angle = Angle(2.7, 272.5, 90),
 		size = Vector(1, 1, 1),
 		color = Color(255, 255, 255, 255),
 		surpresslightning = false,
 		material = "",
 		skin = 0,
-		bodygroup = {}
+		active = true,
+		bodygroup = {[1] = 0, [2] = 0, [3] = 0, [4] = 0, [5] = 0, [6] = 3, [7] = 0}
 	},
 	["beam"] = {
 		type = "Model",
 		model = "models/tfa/lbeam.mdl",
 		bone = "weapon_bone",
 		rel = "",
-		pos = Vector(12.5, -21, -1),
-		angle = Angle(2.7, 77, 90),
+		pos = Vector(-1.85, 10, 5),
+		angle = Angle(2.7, 272.5, 90),
 		size = Vector(2, 2, 2),
 		color = Color(255, 255, 255, 255),
 		surpresslightning = false,
@@ -369,6 +388,7 @@ SWEP.VElements = {
 		bodygroup = {}
 	}
 }
+
 
 SWEP.WElements = {
 	["laser"] = {

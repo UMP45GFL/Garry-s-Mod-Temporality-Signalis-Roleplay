@@ -77,6 +77,19 @@ game.AddAmmoType({
     flags = 0
 })
 
+game.AddAmmoType({
+    name = "ammolaser",
+    dmgtype = DMG_ENERGYBEAM, 
+    tracer = TRACER_BEAM,
+    plydmg = 40,
+    npcdmg = 40,
+    force = 3000,
+    maxcarry = 20,
+    minsplash = 2,
+    maxsplash = 4,
+    flags = 0
+})
+
 if CLIENT then
     language.Add("#flechette12g", "Flechette 12g")
     language.Add("#nitro16mm", "16mm Nitro Express")
@@ -84,4 +97,5 @@ if CLIENT then
     language.Add("#ammo10mm", "10mm")
     language.Add("#ammo8mm", "8mm")
     language.Add("#ammo357", ".357")
+    language.Add("#ammolaser", "Mining laser ammo")
 end
