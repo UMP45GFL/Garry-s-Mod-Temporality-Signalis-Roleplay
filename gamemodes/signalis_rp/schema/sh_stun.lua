@@ -59,7 +59,7 @@ if CLIENT then
         flashFinishTime = flash_time + CurTime()
         afterEffectsFinishTime = flashFinishTime + after_time
 
-        surface.PlaySound("eternalis/weapons/stun_prod/taser_shot_multiple.wav")
+        surface.PlaySound("eternalis/player/damage/shock.wav")
         
         hook.Add("HUDPaint", "DrawStunEffect_HUDPaint", DrawStunEffect)
         hook.Add("RenderScreenspaceEffects", "DrawStunMotionEffects_RenderScreenspaceEffects", DrawStunMotionEffects)
