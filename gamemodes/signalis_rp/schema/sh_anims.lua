@@ -63,8 +63,19 @@ ix.anim.replika = {
 	vehicle = ix.anim.citizen_male.vehicle
 }
 
--- lua_run ix.anim.gestalt.pistol[ACT_MP_WALK] = ACT_WALK_STEALTH_PISTOL
--- lua_run_cl ix.anim.gestalt.pistol[ACT_MP_WALK] = {ACT_WALK_STEALTH_PISTOL, ACT_WALK_AIM_PISTOL}
+ix.anim.adlr = ix.anim.replika
+ix.anim.adlr.pistol = {
+	[ACT_MP_STAND_IDLE] = {ACT_IDLE, ACT_RANGE_ATTACK_PISTOL},
+	[ACT_MP_CROUCH_IDLE] = {ACT_COVER_LOW, ACT_RANGE_AIM_SMG1_LOW},
+	--[ACT_MP_WALK] = {ACT_WALK_AIM_PISTOL, ACT_WALK_AIM_PISTOL},
+	[ACT_MP_CROUCHWALK] = {ACT_WALK_CROUCH, ACT_WALK_CROUCH_AIM_RIFLE},
+	--[ACT_MP_RUN] = {ACT_RUN, ACT_RUN_AIM_PISTOL},
+	[ACT_LAND] = {ACT_RESET, ACT_RESET},
+	attack = ACT_GESTURE_RANGE_ATTACK_PISTOL,
+	reload = ACT_RELOAD_PISTOL
+}
+--ix.anim.adlr.pistol = nil
+
 ix.anim.gestalt = {
 	normal = {
 		[ACT_MP_STAND_IDLE] = {ACT_IDLE, ACT_IDLE_ANGRY},
@@ -79,15 +90,10 @@ ix.anim.gestalt = {
 	pistol = {
 		[ACT_MP_STAND_IDLE] = {ACT_IDLE_PISTOL, ACT_IDLE_ANGRY_PISTOL},
 		[ACT_MP_CROUCH_IDLE] = {ACT_COVER_LOW, ACT_RANGE_AIM_SMG1_LOW},
-
 		[ACT_MP_WALK] = {"walkunarmed_all", ACT_WALK_AIM_PISTOL},
-
 		[ACT_MP_CROUCHWALK] = {ACT_WALK_CROUCH, ACT_WALK_CROUCH_AIM_RIFLE},
-		
 		[ACT_MP_RUN] = {ACT_RUN, ACT_RUN_AIM_PISTOL},
-		
 		[ACT_LAND] = {ACT_RESET, ACT_RESET},
-
 		attack = ACT_GESTURE_RANGE_ATTACK_PISTOL,
 		reload = ACT_RELOAD_PISTOL
 	},
@@ -132,15 +138,17 @@ ix.anim.gestalt = {
 	vehicle = ix.anim.citizen_male.vehicle
 }
 
-ix.anim.SetModelClass("models/citric/signalis_adlr/adler_pm.mdl", "replika")
+ix.anim.SetModelClass("models/citric/signalis_adlr/adler_pm.mdl", "adlr")
+
 ix.anim.SetModelClass("models/citric/signalis_stcr/stcr_pm.mdl", "replika")
+ix.anim.SetModelClass("models/citric/signalis_fklr/falke_pm.mdl", "replika")
+ix.anim.SetModelClass("models/citric/signalis_lstr/elster_pm.mdl", "replika")
+
 ix.anim.SetModelClass("models/voxaid/signalis_star/star_pm.mdl", "replika")
 ix.anim.SetModelClass("models/voxaid/signalis_eule/eule_pm.mdl", "replika")
 ix.anim.SetModelClass("models/voxaid/araV2/araV2_pm.mdl", "replika")
 ix.anim.SetModelClass("models/voxaid/signalis_arar/arar_pm.mdl", "replika")
-ix.anim.SetModelClass("models/citric/signalis_fklr/falke_pm.mdl", "replika")
 ix.anim.SetModelClass("models/voxaid/signalis_kolibri/kolibri_pm.mdl", "replika")
-ix.anim.SetModelClass("models/citric/signalis_lstr/elster_pm.mdl", "replika")
 ix.anim.SetModelClass("models/voxaid/signalis_mynah/mynah_pm.mdl", "replika")
 ix.anim.SetModelClass("models/krizhovnik/kncr2.mdl", "replika")
 
