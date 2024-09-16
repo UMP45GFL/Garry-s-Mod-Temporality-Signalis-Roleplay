@@ -2,7 +2,7 @@ SWEP.Base 			= "tfa_melee_base"
 DEFINE_BASECLASS(SWEP.Base)
 
 SWEP.Author 		= "Kanade"
-SWEP.PrintName 		= "Stun prod"
+SWEP.PrintName 		= "Disposable stun prod"
 SWEP.Purpose		= "Short-range high-voltage electroshock weapon. Can be used one-handed. Non-lethal weapon that instantly incapacitates the target with arcing electricity." 
 SWEP.Spawnable 		= true
 SWEP.AdminSpawnable = true
@@ -23,7 +23,7 @@ SWEP.IsStunBaton 	= true
 SWEP.InspectPos = Vector(0, 0, 0)
 SWEP.InspectAng = Vector(0, 0, 0)
 
-SWEP.StunningMode = 0
+SWEP.StunningEnabled = false
 SWEP.Primary.Directional = true
 SWEP.Primary.Attacks = {
 	{
@@ -103,24 +103,14 @@ end
 SWEP.NextToggle = 0
 function SWEP:Reload()
 	if self.NextToggle < CurTime() then
-		self.StunningMode = self.StunningMode + 1
-		if self.StunningMode > 2 then
-			self.StunningMode = 0
-		end
+		self.StunningEnabled = !self.StunningEnabled
 
-		if SERVER and self.StunningMode > 0 then
+		if SERVER and self.StunningEnabled then
 			sound.Play("weapons/stunstick/spark"..math.random(1,3)..".wav", self.Owner:GetPos(), 75, 100, 1)
 			self.Primary.Hit = self.Sound_Enabled
-
-			if self.StunningMode == 1 then
-				self.Primary.Attacks[1].dmg = 10
-
-			elseif self.StunningMode == 2 then
-				self.Primary.Attacks[1].dmg = 20
-			end
 		end
 
-		if self.StunningMode > 0 then
+		if self.StunningEnabled then
 			self.Primary.Attacks[1].snd = Sound("weapons/stunstick/stunstick_swing1.wav")
 			self.Primary.Attacks[1].hitflesh = Sound("weapons/stunstick/stunstick_fleshhit2.wav")
 			self.Primary.Attacks[1].hitworld = Sound("weapons/stunstick/stunstick_impact1.wav")
@@ -144,6 +134,7 @@ function SWEP:SmackEffect(trace, dmg)
 		start = trace.HitPos,
 		endpos = vSrc,
 		mask = MASK_WATER
+
 	}) or not (bHitWater or bEndNotWater) and util.TraceLine({
 		start = vSrc,
 		endpos = trace.HitPos,
@@ -165,7 +156,7 @@ function SWEP:SmackEffect(trace, dmg)
 	local dam, force, dt = dmg:GetBaseDamage(), dmg:GetDamageForce(), dmg:GetDamageType()
 	
 	--if (trace.Hit and bFirstTimePredicted and (not trSplash) and self:DoImpactEffect(trace, dt) ~= true) then
-	if trace.Hit and bFirstTimePredicted and (not trSplash) and self.StunningMode > 0 then
+	if trace.Hit and bFirstTimePredicted and (not trSplash) and self.StunningEnabled then
 		local data = EffectData()
 		data:SetOrigin(trace.HitPos)
 		data:SetStart(vSrc)
@@ -176,17 +167,9 @@ function SWEP:SmackEffect(trace, dmg)
 		util.Effect("StunstickImpact", data)
 	end
 
-	if SERVER and self.StunningMode > 0 and trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() and trace.Entity:Team() != TEAM_SPECTATOR and trace.Entity:Team() != FACTION_STAFF and not IsValid(trace.Entity.ixRagdoll) then
-		-- low voltage mode
-		if self.StunningMode == 1 then
-			trace.Entity:StunPlayer(4, 6)
-			trace.Entity:EmitSound("eternalis/weapons/stun_prod/taser_shot_multiple.wav", 90, 100, 1)
-
-		-- high voltage mode
-		elseif self.StunningMode == 2 then
-			trace.Entity:SetRagdolled(true, 30)
-			trace.Entity:EmitSound("eternalis/weapons/stun_prod/taser_shot_multiple.wav", 110, 100, 1)
-		end
+	if SERVER and self.StunningEnabled and trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() and trace.Entity:Team() != TEAM_SPECTATOR and trace.Entity:Team() != FACTION_STAFF and not IsValid(trace.Entity.ixRagdoll) then
+		trace.Entity:SetRagdolled(true, 30)
+		trace.Entity:EmitSound("eternalis/weapons/stun_prod/taser_shot_multiple.wav", 110, 100, 1)
 	end
 	
 	dmg:SetDamage(dam)
@@ -196,11 +179,8 @@ end
 function SWEP:DrawHUD()
 	local text = "Reload to enable stunning"
 
-	if self.StunningMode == 1 then
-		text = "Low voltage mode"
-
-	elseif self.StunningMode == 2 then
-		text = "High voltage mode"
+	if self.StunningEnabled then
+		text = "Stunning enabled"
 	end
 
 	draw.Text({
