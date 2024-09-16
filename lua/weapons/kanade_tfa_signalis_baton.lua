@@ -19,11 +19,17 @@ SWEP.SlotPos		= 0
 SWEP.UseHands 		= true
 SWEP.HoldType 		= "melee"
 SWEP.IsStunBaton 	= true
+SWEP.StunningMode = 0
 
 SWEP.InspectPos = Vector(0, 0, 0)
 SWEP.InspectAng = Vector(0, 0, 0)
 
-SWEP.StunningMode = 0
+SWEP.Primary.NumShots = 1
+SWEP.Primary.Ammo = "ammostun"
+SWEP.Primary.AmmoConsumption = 1
+SWEP.Primary.ClipSize = 4
+SWEP.Primary.DefaultClip = 4
+
 SWEP.Primary.Directional = true
 SWEP.Primary.Attacks = {
 	{
@@ -102,7 +108,7 @@ end
 
 SWEP.NextToggle = 0
 function SWEP:Reload()
-	if self.NextToggle < CurTime() then
+	if self.NextToggle < CurTime() and self:Clip1() > 0 then
 		self.StunningMode = self.StunningMode + 1
 		if self.StunningMode > 2 then
 			self.StunningMode = 0
@@ -165,7 +171,7 @@ function SWEP:SmackEffect(trace, dmg)
 	local dam, force, dt = dmg:GetBaseDamage(), dmg:GetDamageForce(), dmg:GetDamageType()
 	
 	--if (trace.Hit and bFirstTimePredicted and (not trSplash) and self:DoImpactEffect(trace, dt) ~= true) then
-	if trace.Hit and bFirstTimePredicted and (not trSplash) and self.StunningMode > 0 then
+	if trace.Hit and bFirstTimePredicted and (not trSplash) and self.StunningMode > 0 and self:Clip1() > 0 then
 		local data = EffectData()
 		data:SetOrigin(trace.HitPos)
 		data:SetStart(vSrc)
@@ -176,16 +182,22 @@ function SWEP:SmackEffect(trace, dmg)
 		util.Effect("StunstickImpact", data)
 	end
 
-	if SERVER and self.StunningMode > 0 and trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() and trace.Entity:Team() != TEAM_SPECTATOR and trace.Entity:Team() != FACTION_STAFF and not IsValid(trace.Entity.ixRagdoll) then
+	if SERVER and self.StunningMode > 0 and self:Clip1() > 0 and trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() and trace.Entity:Team() != TEAM_SPECTATOR and trace.Entity:Team() != FACTION_STAFF and not IsValid(trace.Entity.ixRagdoll) then
 		-- low voltage mode
 		if self.StunningMode == 1 then
 			trace.Entity:StunPlayer(4, 6)
 			trace.Entity:EmitSound("eternalis/weapons/stun_prod/taser_shot_multiple.wav", 90, 100, 1)
+			self:TakePrimaryAmmo(1)
 
 		-- high voltage mode
 		elseif self.StunningMode == 2 then
 			trace.Entity:SetRagdolled(true, 30)
 			trace.Entity:EmitSound("eternalis/weapons/stun_prod/taser_shot_multiple.wav", 110, 100, 1)
+			self:TakePrimaryAmmo(2)
+		end
+
+		if self:Clip1() == 0 then
+			self.StunningMode = 0
 		end
 	end
 	
@@ -196,7 +208,10 @@ end
 function SWEP:DrawHUD()
 	local text = "Reload to enable stunning"
 
-	if self.StunningMode == 1 then
+	if self:Clip1() == 0 then
+		text = "Out of charge"
+
+	elseif self.StunningMode == 1 then
 		text = "Low voltage mode"
 
 	elseif self.StunningMode == 2 then

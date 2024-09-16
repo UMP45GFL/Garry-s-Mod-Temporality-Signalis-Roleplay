@@ -90,6 +90,19 @@ game.AddAmmoType({
     flags = 0
 })
 
+game.AddAmmoType({
+    name = "ammostun",
+    dmgtype = DMG_SHOCK, 
+    tracer = TRACER_NONE,
+    plydmg = 20,
+    npcdmg = 20,
+    force = 2000,
+    maxcarry = 4,
+    minsplash = 2,
+    maxsplash = 4,
+    flags = 0
+})
+
 if CLIENT then
     language.Add("#flechette12g", "Flechette 12g")
     language.Add("#nitro16mm", "16mm Nitro Express")
@@ -98,4 +111,5 @@ if CLIENT then
     language.Add("#ammo8mm", "8mm")
     language.Add("#ammo357", ".357")
     language.Add("#ammolaser", "Mining laser ammo")
+    language.Add("#ammostun", "Stun ammo")
 end
