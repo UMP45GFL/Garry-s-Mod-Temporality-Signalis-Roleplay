@@ -168,8 +168,21 @@ function SWEP:SmackEffect(trace, dmg)
 	end
 
 	if SERVER and self.StunningEnabled and trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() and trace.Entity:Team() != TEAM_SPECTATOR and trace.Entity:Team() != FACTION_STAFF and not IsValid(trace.Entity.ixRagdoll) then
-		trace.Entity:SetRagdolled(true, 30)
+		if trace.Entity.SetRagdolled then
+			trace.Entity:SetRagdolled(true, 30)
+		end
+		
 		trace.Entity:EmitSound("eternalis/weapons/stun_prod/taser_shot_multiple.wav", 110, 100, 1)
+
+		local ply = self.Owner
+
+		ply:StripWeapon(self:GetClass())
+
+		if ply:HasWeapon("ix_hands") then
+			ply:SelectWeapon("ix_hands")
+		else
+			ply:ConCommand("lastinv")
+		end
 	end
 	
 	dmg:SetDamage(dam)
