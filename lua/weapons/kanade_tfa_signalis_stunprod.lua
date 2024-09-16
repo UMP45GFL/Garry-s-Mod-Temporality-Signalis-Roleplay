@@ -19,6 +19,7 @@ SWEP.SlotPos		= 0
 SWEP.UseHands 		= true
 SWEP.HoldType 		= "melee"
 SWEP.IsStunBaton 	= true
+SWEP.UsedUp = false
 
 SWEP.InspectPos = Vector(0, 0, 0)
 SWEP.InspectAng = Vector(0, 0, 0)
@@ -156,7 +157,7 @@ function SWEP:SmackEffect(trace, dmg)
 	local dam, force, dt = dmg:GetBaseDamage(), dmg:GetDamageForce(), dmg:GetDamageType()
 	
 	--if (trace.Hit and bFirstTimePredicted and (not trSplash) and self:DoImpactEffect(trace, dt) ~= true) then
-	if trace.Hit and bFirstTimePredicted and (not trSplash) and self.StunningEnabled then
+	if trace.Hit and bFirstTimePredicted and (not trSplash) and self.StunningEnabled and !self.UsedUp then
 		local data = EffectData()
 		data:SetOrigin(trace.HitPos)
 		data:SetStart(vSrc)
@@ -167,22 +168,30 @@ function SWEP:SmackEffect(trace, dmg)
 		util.Effect("StunstickImpact", data)
 	end
 
-	if SERVER and self.StunningEnabled and trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() and trace.Entity:Team() != TEAM_SPECTATOR and trace.Entity:Team() != FACTION_STAFF and not IsValid(trace.Entity.ixRagdoll) then
-		if trace.Entity.SetRagdolled then
+	if self.StunningEnabled and !self.UsedUp and trace.Hit and IsValid(trace.Entity) and trace.Entity:IsPlayer() and trace.Entity:Team() != TEAM_SPECTATOR and trace.Entity:Team() != FACTION_STAFF then
+		if SERVER and trace.Entity.SetRagdolled and not IsValid(trace.Entity.ixRagdoll) then
 			trace.Entity:SetRagdolled(true, 30)
+			trace.Entity:EmitSound("eternalis/weapons/stun_prod/taser_shot_multiple.wav", 110, 100, 1)
+
+			if self.Owner.GetCharacter then
+				local char = self.Owner:GetCharacter()
+				if char then
+					local inventory = char:GetInventory()
+					if inventory then
+						local items = inventory:GetItems()
+						if items then
+							for _, v in pairs(items) do
+								if (v.isWeapon and v:GetData("equip") and v.class == self:GetClass()) then
+									v:SetData("usedup", true)
+								end
+							end
+						end
+					end
+				end
+			end
 		end
-		
-		trace.Entity:EmitSound("eternalis/weapons/stun_prod/taser_shot_multiple.wav", 110, 100, 1)
 
-		local ply = self.Owner
-
-		ply:StripWeapon(self:GetClass())
-
-		if ply:HasWeapon("ix_hands") then
-			ply:SelectWeapon("ix_hands")
-		else
-			ply:ConCommand("lastinv")
-		end
+		self.UsedUp = true
 	end
 	
 	dmg:SetDamage(dam)
@@ -192,7 +201,10 @@ end
 function SWEP:DrawHUD()
 	local text = "Reload to enable stunning"
 
-	if self.StunningEnabled then
+	if self.UsedUp then
+		text = "Stun prod used up"
+
+	elseif self.StunningEnabled then
 		text = "Stunning enabled"
 	end
 
