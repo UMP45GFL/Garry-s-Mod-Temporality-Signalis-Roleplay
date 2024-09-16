@@ -15,6 +15,7 @@ CLASS.models = {
 		hullMins = Vector(-12, -12, 0),
 		hullMaxs = Vector(12, 12, 70),
         skin = "0",
+        bodygroups = "0001",
 		gender = "female"
 	}
 }
@@ -89,5 +90,8 @@ function CLASS:OnCharacterCreated(client, character)
 	inventory:Add("id_lstr", 1, {
 		skin = 9,
 		name = character:GetName()
+	})
+	inventory:Add("pilotka", 1, {
+		equip = true
 	})
 end

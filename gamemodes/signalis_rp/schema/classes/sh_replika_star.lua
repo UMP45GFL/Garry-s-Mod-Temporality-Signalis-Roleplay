@@ -84,11 +84,14 @@ end
 function CLASS:OnCharacterCreated(client, character)
 	local inventory = character:GetInventory()
 	
-	inventory:Add("cigarettes", 1)
 	inventory:Add("ration_k4", 1)
-
-	local idCard = inventory:Add("id_star", 1, {
+	inventory:Add("id_star", 1, {
 		skin = 1,
 		name = character:GetName()
 	})
+	inventory:Add("armor_star", 1, {
+		equip = true
+	})
+	inventory:Add("baton", 1)
+	inventory:Add("cigarette", 1)
 end

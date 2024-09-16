@@ -83,4 +83,7 @@ function CLASS:OnCharacterCreated(client, character)
 		skin = 2,
 		name = character:GetName()
 	})
+	inventory:Add("armor_klbr", 1, {
+		equip = true
+	})
 end

@@ -77,6 +77,8 @@ function CLASS:OnCharacterCreated(client, character)
 	local inventory = character:GetInventory()
 
 	inventory:Add("suitcase", 1)
+	inventory:Add("paper", 1)
+	inventory:Add("paper", 1)
 	inventory:Add("ration_k4", 1)
 	inventory:Add("id_adlr", 1, {
 		skin = 8,
