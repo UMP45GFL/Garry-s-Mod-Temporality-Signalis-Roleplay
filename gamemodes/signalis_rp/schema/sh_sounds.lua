@@ -13,7 +13,7 @@ if SERVER then
 
 	function meta:SendPlaySound(snd)
 		net.Start("sendPlaySound")
-		net.WriteString(snd)
+		    net.WriteString(snd)
 		net.Send(self)
 	end
 end

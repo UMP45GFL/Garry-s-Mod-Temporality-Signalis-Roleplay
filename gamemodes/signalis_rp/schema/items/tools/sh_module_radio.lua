@@ -90,6 +90,8 @@ end
 function ITEM:EquipRadioModule(client)
 	self:SetData("equip", true)
 
+	client:SendPlaySound("eternalis/items/equip.wav")
+
 	net.Start("ixEquippedRadioModule")
 		net.WriteString(self.invID)
 	net.Send(client)
@@ -121,6 +123,7 @@ ITEM.functions.EquipUn = {
 		local character = ix.char.loaded[item.owner]
 		local client = character and character:GetPlayer() or item:GetOwner()
 
+		client:SendPlaySound("eternalis/items/equip.wav")
         item:UnequipRadioModule(client)
 		return false
 	end,

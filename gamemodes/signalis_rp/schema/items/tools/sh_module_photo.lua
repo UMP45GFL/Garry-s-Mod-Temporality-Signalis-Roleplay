@@ -18,6 +18,7 @@ end
 
 function ITEM:EquipPhotoModule(client)
 	self:SetData("equip", true)
+	client:SendPlaySound("eternalis/items/equip.wav")
 end
 
 function ITEM:UnequipPhotoModule(client)
@@ -43,6 +44,7 @@ ITEM.functions.EquipUn = {
 		local client = character and character:GetPlayer() or item:GetOwner()
 
         item:UnequipPhotoModule(client)
+		client:SendPlaySound("eternalis/items/equip.wav") 
 		return false
 	end,
 	OnCanRun = function(item)

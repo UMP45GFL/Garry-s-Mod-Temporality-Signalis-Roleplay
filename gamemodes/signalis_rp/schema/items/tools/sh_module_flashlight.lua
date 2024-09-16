@@ -120,6 +120,8 @@ function ITEM:EquipFlashlightModule(client)
 
 	Create3DFlashlight(client)
 
+	client:SendPlaySound("eternalis/items/equip.wav")
+
 	net.Start("ixFlashlightModuleEquip")
 	net.Send(client)
 end
@@ -150,6 +152,7 @@ ITEM.functions.EquipUn = {
 		local character = ix.char.loaded[item.owner]
 		local client = character and character:GetPlayer() or item:GetOwner()
 
+		client:SendPlaySound("eternalis/items/equip.wav")
         item:UnequipFlashlightModule(client)
 		return false
 	end,
