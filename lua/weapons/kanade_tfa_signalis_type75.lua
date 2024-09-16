@@ -29,9 +29,9 @@ SWEP.CrouchAng    = Vector(0, 0, -10 )
 
 SWEP.Offset = { --Procedural world model animation, defaulted for CS:S purposes.
 	Pos = {
-		Up = 1,
+		Up = -2,
 		Right = 1.2,
-		Forward = 3.5,
+		Forward = 4.5,
 	},
 	Ang = {
 		Up = -90,
@@ -341,22 +341,51 @@ SWEP.WorldModelBoneMods = {
 
 SWEP.VElements = {
 --[Attachments]--
-["suppressor"] = { type = "Model", model = "models/weapons/signalis/upgrades/v_lowpoly_suppressor.mdl", bone = "tag_silencer", rel = "", pos = Vector(-16.8, -1.58, 1.77), angle = Angle(0, 0, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bonemerge = false, active = false, bodygroup = {} },
-["sight_low_mini"] = { type = "Model", model = "models/weapons/signalis/upgrades/lowpoly_scope_mini.mdl", bone = "tag_slide_attach_animate", rel = "", pos = Vector(-8.5, -1.58, 0.9), angle = Angle(0, 0, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bonemerge = false, active = false, bodygroup = {} },
-["laser_beam"] = { type = "Model", model = "models/tfa/lbeam.mdl", bone = "tag_laser1", rel = "", pos = Vector(-6.3, 0.74, 0.75), angle = Angle(0, 0, 0), size = Vector(2.5, 0.3, 0.3), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}, active = false },
-
+	["suppressor"] = { type = "Model", model = "models/weapons/signalis/upgrades/v_lowpoly_suppressor.mdl", bone = "tag_silencer", rel = "", pos = Vector(-16.8, -1.58, 1.77), angle = Angle(0, 0, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bonemerge = false, active = false, bodygroup = {} },
+	["sight_low_mini"] = { type = "Model", model = "models/weapons/signalis/upgrades/lowpoly_scope_mini.mdl", bone = "tag_slide_attach_animate", rel = "", pos = Vector(-8.5, -1.58, 0.9), angle = Angle(0, 0, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bonemerge = false, active = false, bodygroup = {} },
+	
+	["laser_beam"] = {
+		type = "Model",
+		model = "models/tfa/lbeam.mdl",
+		bone = "tag_laser1",
+		rel = "",
+		pos = Vector(-1.1, 0, 1),
+		angle = Angle(0, 0, 0),
+		size = Vector(2.5, 0.3, 0.3),
+		color = Color(255, 255, 255, 255),
+		surpresslightning = false,
+		material = "",
+		skin = 0,
+		bodygroup = {},
+		active = false
+	},
 }
 SWEP.WElements = {
-["laser_beam"] = { type = "Model", model = "models/tfa/lbeam.mdl", bone = "prp_grip", rel = "", pos = Vector(-0.75, 0, 1), angle = Angle(0, 90, 90), size = Vector(2.5, 0.3, 0.3), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}, active = false },
-["suppressor"] = { type = "Model", model = "models/weapons/signalis/upgrades/v_lowpoly_suppressor.mdl", bone = "prp_grip", rel = "", pos = Vector(-3.75, 7, 1.8), angle = Angle(0, 90, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bonemerge = false, active = false, bodygroup = {} },
-["sight_low_mini"] = { type = "Model", model = "models/weapons/signalis/upgrades/lowpoly_scope_mini.mdl", bone = "prp_grip", rel = "", pos = Vector(-3, 8, -1.5), angle = Angle(0, 90, -90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bonemerge = false, active = false, bodygroup = {} },
+	["laser_beam"] = {
+		type = "Model",
+		model = "models/tfa/lbeam.mdl",
+		bone = "prp_grip",
+		rel = "",
+		pos = Vector(-1.1, 0, 0),
+		angle = Angle(0, 90, 90),
+		size = Vector(2.5, 0.3, 0.3),
+		color = Color(255, 255, 255, 255),
+		surpresslightning = false,
+		material = "",
+		skin = 0,
+		bodygroup = {},
+		active = false
+	},
+	
+	["suppressor"] = { type = "Model", model = "models/weapons/signalis/upgrades/v_lowpoly_suppressor.mdl", bone = "prp_grip", rel = "", pos = Vector(-3.75, 7, 1.8), angle = Angle(0, 90, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bonemerge = false, active = false, bodygroup = {} },
+	["sight_low_mini"] = { type = "Model", model = "models/weapons/signalis/upgrades/lowpoly_scope_mini.mdl", bone = "prp_grip", rel = "", pos = Vector(-3, 8, -1.5), angle = Angle(0, 90, -90), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bonemerge = false, active = false, bodygroup = {} },
 }
 
 SWEP.Attachments = {
 	[1] = {atts = {"ins2_br_supp"}, order = 1},
 	[2] = {atts = {"signalis_lowpoly_mini_smg",}, order = 2},
 	[3] = {atts = {"bo3_fast_mag"}, order = 5},
-	[5] = {atts = {"ins2_ub_laser"}, order = 7},
+	[5] = {atts = {"ins2_ub_laser"}, order = 7, sel = 1},
 	--[8] = {atts = {"bo3_quickdraw"}, order = 8},
 	[99] = { atts = { "bo3_hical_sights", "bo3_fmj", "am_match"}, order = 99 },	
 }

@@ -445,7 +445,7 @@ SWEP.WElements = {
 SWEP.Attachments = {
 [1] = {atts = {"ins2_br_supp"}, order = 1},
 [2] = {atts = {"signalis_lowpoly_acog","signalis_lowpoly_holo","signalis_lowpoly_microt1",--[["signalis_lowpoly_mini_smg",]]"signalis_lowpoly_reflex"}, order = 2},
-[3] = {atts = {"ins2_ub_laser"}, order = 3},
+[3] = {atts = {"ins2_ub_laser"}, order = 3, sel = 1},
 [4] = {atts = {"signalis_shortstock"}, order = 4},
 [99] = { atts = { "am_match", "am_magnum" }, order = 99 },
 }

@@ -362,7 +362,7 @@ ACT_VM_HOLSTER_SILENCED - Holster silenced
 
 SWEP.Attachments = {
 	[1] = { offset = { 0, 0 }, atts = { "sg_frag","sg_slug", "ammo_dragonbreath_shells", "fas2tfa_ammo_incn", "ammo_flechette_shells", "amno_flechette", "kzsf_vc30_incendiary"}, order = 1 },
-	[3] = {atts = {"ins2_ub_laser"}, order = 3},	
+	[3] = { atts = {"ins2_ub_laser"}, order = 3, sel = 1 },	
 	[4] = { offset = { 0, 0 }, atts = { "stock2","signalis_lowpoly_acog","signalis_lowpoly_holo","signalis_lowpoly_microt1",--[["signalis_lowpoly_mini_smg",]]"signalis_lowpoly_reflex"}, order = 4 },
 	[5] = { offset = { 0, 0 }, atts = { "stock1","stock3"}, order = 5 },	
 	[99] = { offset = { 0, 0 }, atts = { "spas_auto",},  },			
@@ -370,7 +370,24 @@ SWEP.Attachments = {
 
 SWEP.VElements = {
 	["laser"] = { type = "Model", model = "models/weapons/tfa_ins2/upgrades/a_laser_band.mdl", bone = "tag_weapon", rel = "", pos = Vector(20, 0.02, 0.7), angle = Angle(0, 0, 0), size = Vector(1.25, 1.25 ,1.25), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}, bonemerge = false, active = false },
-	["laser_beam"] = { type = "Model", model = "models/tfa/lbeam.mdl", bone = "A_Beam", rel = "laser", pos = Vector(0, 0, 0), angle = Angle(0, 0.1, 0), size = Vector(2.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}, bonemerge = false, active = false },
+	
+	["laser_beam"] = {
+		type = "Model",
+		model = "models/tfa/lbeam.mdl",
+		bone = "A_Beam",
+		rel = "laser",
+		pos = Vector(0, 0, 0),
+		angle = Angle(0, 0.1, 0),
+		size = Vector(2.5, 0.5, 0.5),
+		color = Color(255, 255, 255, 255),
+		surpresslightning = false,
+		material = "",
+		skin = 0,
+		bodygroup = {},
+		bonemerge = false,
+		active = false
+	},
+	
 	["sight_low_acog"] = { type = "Model", model = "models/weapons/signalis/upgrades/lowpoly_scope_acog.mdl", bone = "tag_weapon", rel = "", pos = Vector(-16.2, -2.8, 5.2), angle = Angle(0, 0, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bonemerge = false, active = false, bodygroup = {} },
 	["sight_low_holo"] = { type = "Model", model = "models/weapons/signalis/upgrades/lowpoly_scope_holo.mdl", bone = "tag_weapon", rel = "", pos = Vector(-13.2, -1.55, 3.6), angle = Angle(0, 0, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bonemerge = false, active = false, bodygroup = {} },
 	["sight_low_t1"] = { type = "Model", model = "models/weapons/signalis/upgrades/lowpoly_scope_microt1.mdl", bone = "tag_weapon", rel = "", pos = Vector(-13.2, -1.55, 3.6), angle = Angle(0, 0, 0), size = Vector(1, 1, 1), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bonemerge = false, active = false, bodygroup = {} },

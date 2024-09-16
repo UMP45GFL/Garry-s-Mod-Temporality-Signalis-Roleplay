@@ -337,12 +337,12 @@ SWEP.WElements = {
 }
 
 SWEP.Attachments = {
-[1] = {atts = {"signalis_rifle_long_barrel"}, order = 1, select = 1},
---[2] = {atts = {"bo3_suppressor"}, order = 2},
-[6] = {atts = {"bo3_fast_mag"}, order = 3},
-[7] = {atts = {"ins2_ub_laser"}, order = 4},
-[12] = {atts = {"bo3_rapidfire_shotgun"}, order = 5},
-[99] = {atts = { "sg_frag","sg_slug", "spas_dragonbreath_shells", "fas2tfa_ammo_incn", "ammo_flechette_shells", "amno_flechette", "kzsf_vc30_incendiary"}},
+	[1] = {atts = {"signalis_rifle_long_barrel"}, order = 1, sel = 1},
+	--[2] = {atts = {"bo3_suppressor"}, order = 2},
+	[6] = {atts = {"bo3_fast_mag"}, order = 3},
+	[7] = {atts = {"ins2_ub_laser"}, order = 4, sel = 1},
+	[12] = {atts = {"bo3_rapidfire_shotgun"}, order = 5},
+	[99] = {atts = { "sg_frag","sg_slug", "spas_dragonbreath_shells", "fas2tfa_ammo_incn", "ammo_flechette_shells", "amno_flechette", "kzsf_vc30_incendiary"}},
 }
 
 SWEP.AttachmentDependencies     = {}
