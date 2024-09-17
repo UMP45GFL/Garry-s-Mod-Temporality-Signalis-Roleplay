@@ -6,10 +6,10 @@ ITEM.model = "models/eternalis/items/weapons/fklr_halo.mdl"
 ITEM.outfitCategory = "halo"
 
 ITEM.bodyGroups = {
-	["halo"] = 0
+	["halo"] = 1
 }
 ITEM.bodyGroupsUnequipped = {
-	["halo"] = 1
+	["halo"] = 0
 }
 
 ITEM.weight = 0

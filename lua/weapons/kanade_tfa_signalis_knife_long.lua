@@ -8,7 +8,10 @@ SWEP.AdminSpawnable = true
 SWEP.Category 		= "Kanade's TFA Signalis"
 SWEP.Pickupable 	= true
 
-SWEP.WorldModel 	= "models/eternalis/items/weapons/kitchen/longer_sharper_knife.mdl"
+SWEP.Model = "models/eternalis/items/weapons/kitchen/longer_sharper_knife.mdl"
+SWEP.Damage = 38
+
+SWEP.WorldModel 	= SWEP.Model
 SWEP.HoldType 		= "melee"
 
 SWEP.Primary.Attacks = {
@@ -20,8 +23,8 @@ SWEP.Primary.Attacks = {
 		["dmgtype"] = DMG_SLASH, --DMG_SLASH,DMG_CRUSH, etc.
 		["delay"] = 0.2, --Delay
 		["spr"] = true, --Allow attack while sprinting?
-		["snd"] = Sound("weapons/melee/fireaxe/fireaxe_light1.wav"), -- Sound ID
-		["snd_delay"] = 0.22,
+		["snd"] = Sound("Weapon_Crowbar.Single"), -- Sound ID
+		["snd_delay"] = 0.1,
 		["viewpunch"] = Angle(5, 5, 0), --viewpunch angle
 		["end"] = 1.3, --time before next attack
 		["hull"] = 15, --Hullsize
@@ -32,10 +35,27 @@ SWEP.Primary.Attacks = {
 	}
 }
 
-SWEP.WElements = {
+SWEP.VElementsNormal = {
 	["knife"] = {
 		type = "Model",
-		model = "models/eternalis/items/weapons/kitchen/longer_sharper_knife.mdl",
+		model = SWEP.Model,
+		bone = "ValveBiped.Bip01_R_Hand",
+		rel = "",
+		pos = Vector(3, 2, -17.5),
+		angle = Angle(90, 61.111, 3.332),
+		size = Vector(1, 1, 1),
+		color = Color(255, 255, 255, 255),
+		surpresslightning = false,
+		material = "",
+		skin = 0,
+		bodygroup = {}
+	}
+}
+
+SWEP.WElementsNormal = {
+	["knife"] = {
+		type = "Model",
+		model = SWEP.Model,
 		bone = "ValveBiped.Bip01_R_Hand",
 		rel = "",
 		pos = Vector(3, 2, -10.5),
@@ -49,19 +69,5 @@ SWEP.WElements = {
 	}
 }
 
-SWEP.VElements = {
-	["knife"] = {
-		type = "Model",
-		model = "models/eternalis/items/weapons/kitchen/longer_sharper_knife.mdl",
-		bone = "ValveBiped.Bip01_R_Hand",
-		rel = "",
-		pos = Vector(3, 2, -17.5),
-		angle = Angle(90, 61.111, 3.332),
-		size = Vector(1, 1, 1),
-		color = Color(255, 255, 255, 255),
-		surpresslightning = false,
-		material = "",
-		skin = 0,
-		bodygroup = {}
-	}
-}
+SWEP.VElements = SWEP.VElementsNormal
+SWEP.WElements = SWEP.WElementsNormal

@@ -14,7 +14,8 @@ SWEP.WorldModel = "models/weapons/ageofchivalry/w_spear.mdl"
 SWEP.Primary.DefaultClip = 10
 SWEP.Primary.Ammo = "spears"
 
-SWEP.HoldType = "spear"
+
+SWEP.HoldType 		= "melee"
 
 SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = false
@@ -489,5 +490,89 @@ if CLIENT then
 		end
 		
 		return res
+	end
+end
+
+function SWEP:Think()
+	if SERVER then
+		if self:GetLoaded() and GetConVarNumber("gmod_suit") ~= 0 and self.Owner:IsPlayer() then
+			local stamina = self.Owner:GetSuitPower()
+
+			self.MaxStamina = math.min( self.MaxStamina or stamina , stamina )
+		
+			if stamina > self.MaxStamina then
+				self.Owner:SetSuitPower( self.MaxStamina )
+			end
+		else
+			self.MaxStamina = nil
+		end
+	end
+
+	if self:GetLoaded() and not self.Owner:KeyDown(IN_ATTACK) and not self.Owner:KeyDown(IN_ATTACK2) then
+		if CurTime() >= self:GetThrowTime() then
+			self:EmitSound( self.ThrowSound )
+			self:SendWeaponAnim( ACT_VM_THROW )
+			local dur = self:SequenceDuration()
+			
+			self.Owner:DoAttackEvent()
+			self:SetNextIdle( 0 )
+			self:SetNextPrimaryFire( CurTime() + dur )
+			self:SetNextDraw( CurTime() + dur )
+			self:TakePrimaryAmmo(1)
+
+			if SERVER then
+				self:Throw()
+
+				if GetConVarNumber("gmod_suit") ~= 0 then
+					self.Owner:SetSuitPower( math.max( self.Owner:GetSuitPower() - 10 , 0 ) )
+				end
+
+				self:SetNoDraw( true )
+			end
+
+			self:SetLoaded( false )
+			self:SetThrowTime( 0 )
+			if SERVER then
+				self.Owner:SetNextStamina(CurTime() + dur)
+			end
+		end
+	end
+
+	if self:GetNextDraw() ~= 0 and CurTime() >= self:GetNextDraw() then
+		if SERVER then
+			self:SetNoDraw( false )
+		end
+		self:SendWeaponAnim( ACT_VM_DRAW )
+		self:SetNextDraw( 0 )
+		
+	elseif self:GetNextIdle() ~= 0 and CurTime() >= self:GetNextIdle() then
+		self:SendWeaponAnim(ACT_VM_IDLE)
+		self:SetNextIdle( 0 ) -- CurTime() + self:SequenceDuration()
+	end
+
+	if SERVER and CurTime() >= self:GetNextPrimaryFire() and self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 then
+		local ply = self.Owner
+		local class = self:GetClass()
+
+		ply:StripWeapon(class)
+
+		if ply.GetCharacter then
+			local char = ply:GetCharacter()
+			if char then
+				local inventory = char:GetInventory()
+				if inventory then
+					local items = inventory:GetItems()
+					if items then
+						for _, v in pairs(items) do
+							if (v.isWeapon and v:GetData("equip") and v.class == class) then
+								v:Remove()
+							end
+						end
+					end
+				end
+			end
+		end
+
+		return nil
 	end
 end

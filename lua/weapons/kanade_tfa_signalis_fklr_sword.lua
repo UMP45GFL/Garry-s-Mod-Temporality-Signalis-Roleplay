@@ -1,4 +1,4 @@
-SWEP.Base 			= "kanade_tfa_signalis_melee_base"
+SWEP.Base 			= "tfa_melee_base"
 DEFINE_BASECLASS(SWEP.Base)
 
 SWEP.Author 		= "Kanade"
@@ -8,8 +8,13 @@ SWEP.AdminSpawnable = true
 SWEP.Category 		= "Kanade's TFA Signalis"
 SWEP.Pickupable 	= true
 
+SWEP.ViewModel 		= "models/weapons/c_stunstick.mdl"
 SWEP.WorldModel 	= "models/eternalis/items/weapons/fklr_sword.mdl"
 SWEP.HoldType 		= "melee"
+
+SWEP.ShowViewModel = false
+SWEP.ShowWorldModel = false
+SWEP.UseHands = true
 
 SWEP.Primary.Attacks = {
 	{
@@ -20,10 +25,10 @@ SWEP.Primary.Attacks = {
 		["dmgtype"] = DMG_SLASH, --DMG_SLASH,DMG_CRUSH, etc.
 		["delay"] = 0.2, --Delay
 		["spr"] = true, --Allow attack while sprinting?
-		["snd"] = Sound("weapons/melee/fireaxe/fireaxe_light1.wav"), -- Sound ID
-		["snd_delay"] = 0.22,
+		["snd"] = Sound("Weapon_Crowbar.Single"), -- Sound ID
+		["snd_delay"] = 0.1,
 		["viewpunch"] = Angle(5, 5, 0), --viewpunch angle
-		["end"] = 1.3, --time before next attack
+		["end"] = 2, --time before next attack
 		["hull"] = 15, --Hullsize
 		["direction"] = "L", --Swing dir,
 		["hitflesh"] = Sound("Weapon_Melee_Sharp.Impact_Light"),
@@ -65,3 +70,50 @@ SWEP.VElements = {
 		bodygroup = {}
 	}
 }
+
+function SWEP:SmackEffect(trace, dmg)
+	local vSrc = trace.StartPos
+	local bFirstTimePredicted = IsFirstTimePredicted()
+	local bHitWater = bit.band(util.PointContents(vSrc), MASK_WATER) ~= 0
+	local bEndNotWater = bit.band(util.PointContents(trace.HitPos), MASK_WATER) == 0
+
+	local trSplash = bHitWater and bEndNotWater and util.TraceLine({
+		start = trace.HitPos,
+		endpos = vSrc,
+		mask = MASK_WATER
+	}) or not (bHitWater or bEndNotWater) and util.TraceLine({
+		start = vSrc,
+		endpos = trace.HitPos,
+		mask = MASK_WATER
+	})
+
+	if (trSplash and bFirstTimePredicted) then
+		local data = EffectData()
+		data:SetOrigin(trSplash.HitPos)
+		data:SetScale(1)
+
+		if (bit.band(util.PointContents(trSplash.HitPos), CONTENTS_SLIME) ~= 0) then
+			data:SetFlags(1) --FX_WATER_IN_SLIME
+		end
+
+		util.Effect("watersplash", data)
+	end
+
+	local dam, force, dt = dmg:GetBaseDamage(), dmg:GetDamageForce(), dmg:GetDamageType()
+	
+	--if (trace.Hit and bFirstTimePredicted and (not trSplash) and self:DoImpactEffect(trace, dt) ~= true) then
+	if trace.Hit and bFirstTimePredicted and (not trSplash) then
+		local data = EffectData()
+		data:SetOrigin(trace.HitPos)
+		data:SetStart(vSrc)
+		data:SetSurfaceProp(trace.SurfaceProps)
+		data:SetDamageType(dt)
+		data:SetHitBox(trace.HitBox)
+		data:SetEntity(trace.Entity)
+		util.Effect("Impact", data)
+	end
+	
+	dmg:SetDamage(dam)
+	dmg:SetDamageForce(force)
+end
+
