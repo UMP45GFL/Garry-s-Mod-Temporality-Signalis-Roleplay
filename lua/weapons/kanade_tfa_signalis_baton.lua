@@ -41,9 +41,9 @@ SWEP.Primary.Attacks = {
 		["delay"] = 0.2, --Delay
 		["spr"] = true, --Allow attack while sprinting?
 		["snd"] = Sound("Weapon_Crowbar.Single"), -- Sound ID
-		["snd_delay"] = 0.22,
+		["snd_delay"] = 0.1,
 		["viewpunch"] = Angle(5, 5, 0), --viewpunch angle
-		["end"] = 1, --time before next attack
+		["end"] = 1.2, --time before next attack
 		["hull"] = 15, --Hullsize
 		["direction"] = "L", --Swing dir,
 		["hitflesh"] = Sound("Weapon_Crowbar.Melee_Hit"),
@@ -59,9 +59,9 @@ SWEP.Primary.Attacks = {
 		["delay"] = 0.2, --Delay
 		["spr"] = true, --Allow attack while sprinting?
 		["snd"] = Sound("weapons/stunstick/stunstick_swing1.wav"), -- Sound ID
-		["snd_delay"] = 0.22,
+		["snd_delay"] = 0.1,
 		["viewpunch"] = Angle(5, 5, 0), --viewpunch angle
-		["end"] = 1, --time before next attack
+		["end"] = 1.2, --time before next attack
 		["hull"] = 15, --Hullsize
 		["direction"] = "L", --Swing dir,
 		["hitflesh"] = Sound("weapons/stunstick/stunstick_fleshhit2.wav"),
@@ -77,9 +77,9 @@ SWEP.Primary.Attacks = {
 		["delay"] = 0.2, --Delay
 		["spr"] = true, --Allow attack while sprinting?
 		["snd"] = Sound("weapons/stunstick/stunstick_swing1.wav"), -- Sound ID
-		["snd_delay"] = 0.22,
+		["snd_delay"] = 0.1,
 		["viewpunch"] = Angle(5, 5, 0), --viewpunch angle
-		["end"] = 1, --time before next attack
+		["end"] = 1.2, --time before next attack
 		["hull"] = 15, --Hullsize
 		["direction"] = "L", --Swing dir,
 		["hitflesh"] = Sound("weapons/stunstick/stunstick_fleshhit2.wav"),
@@ -145,7 +145,7 @@ end
 function SWEP:GetMelAttackID()
 	if self.StunningMode == 1 and self:Clip1() > 0 then
 		return 2
-	elseif self.StunningMode == 1 and self:Clip1() > 0 then
+	elseif self.StunningMode == 2 and self:Clip1() > 0 then
 		return 3
 	else
 		return 1
