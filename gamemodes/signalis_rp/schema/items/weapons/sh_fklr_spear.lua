@@ -1,13 +1,13 @@
 
-ITEM.name = "Golden Sword"
-ITEM.model = Model("models/eternalis/items/weapons/fklr_sword.mdl")
+ITEM.name = "Golden Spear"
+ITEM.model = Model("models/eternalis/items/weapons/fklr_spear.mdl")
 ITEM.description = ""
 ITEM.skin = 0
 
 ITEM.width = 2
 ITEM.height = 1
 
-ITEM.class = "kanade_tfa_signalis_fklr_sword"
+ITEM.class = "kanade_signalis_fklr_spear"
 ITEM.weaponCategory = "melee"
 
 ITEM.weight = 0

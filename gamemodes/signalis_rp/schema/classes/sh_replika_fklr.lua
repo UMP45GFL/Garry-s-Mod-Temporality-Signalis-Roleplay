@@ -86,4 +86,7 @@ function CLASS:OnCharacterCreated(client, character)
 	inventory:Add("armor_fklr", 1, {
 		equip = true
 	})
+	inventory:Add("fklr_halo", 1)
+	inventory:Add("fklr_spear", 1)
+	inventory:Add("fklr_sword", 1)
 end
