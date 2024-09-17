@@ -216,14 +216,14 @@ self.TracerName = "tfa_tracer_incendiary"
 self.MuzzleFlashEffect = "tfa_muzzleflash_incendiary"
 self.MoveSpeed = 1
 self.Attachments = {
-[1] = {atts = {"signalis_rifle_long_barrel"}, order = 1, select = 1},
-[2] = {atts = {"bo3_suppressor"}, order = 2},
-[3] = {atts = {"bo3_si_elo","bo3_si_reflex","bo3_si_boa3"}, order = 3},
-[6] = {atts = {"bo3_fast_mag"}, order = 6, select = 1},
-[7] = {atts = {"bo3_ub_laser"}, order = 7},
-[9] = {atts = {"bo3_quickdraw"}, order = 9},
-[11] = {atts = {"bo3_stock"}, order = 11},
-[12] = {atts = {"bo3_rapidfire"}, order = 12},
+	[1] = {atts = {"signalis_rifle_long_barrel"}, order = 1, select = 1},
+	[2] = {atts = {"bo3_suppressor"}, order = 2},
+	[3] = {atts = {"bo3_si_elo","bo3_si_reflex","bo3_si_boa3"}, order = 3},
+	[6] = {atts = {"bo3_fast_mag"}, order = 6, select = 1},
+	[7] = {atts = {"bo3_ub_laser"}, order = 7},
+	[9] = {atts = {"bo3_quickdraw"}, order = 9},
+	[11] = {atts = {"bo3_stock"}, order = 11},
+	[12] = {atts = {"bo3_rapidfire"}, order = 12},
 }
 self:ClearStatCache()
 return true
@@ -342,7 +342,7 @@ SWEP.Attachments = {
 	[6] = {atts = {"bo3_fast_mag"}, order = 3},
 	[7] = {atts = {"ins2_ub_laser"}, order = 4, sel = 1},
 	[12] = {atts = {"bo3_rapidfire_shotgun"}, order = 5},
-	[99] = {atts = { "sg_frag","sg_slug", "spas_dragonbreath_shells", "fas2tfa_ammo_incn", "ammo_flechette_shells", "amno_flechette", "kzsf_vc30_incendiary"}},
+	[99] = {atts = { "sg_frag","sg_slug", "spas_dragonbreath_shells", "fas2tfa_ammo_incn", "ammo_flechette_shells", "amno_flechette", "kzsf_vc30_incendiary"}, sel = 2},
 }
 
 SWEP.AttachmentDependencies     = {}
