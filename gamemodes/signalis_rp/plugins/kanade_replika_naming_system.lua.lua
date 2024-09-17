@@ -11,7 +11,7 @@ ix.config.Add("ReplikaNamingSystemEnabled", true, "Whether to enable the replika
 function CreateNextReplikaNumberConfigs()
     for k,v in pairs(ix.class.list) do
         if v.faction == FACTION_REPLIKA and v.shortName then
-            print("Creating nn config for " .. v.shortName)
+            --print("Creating nn config for " .. v.shortName)
 
             ix.config.Add("Next " .. v.shortName .. " Number", 0, "The next number of " .. v.name, nil, {
                 category = "Replika Naming System",
