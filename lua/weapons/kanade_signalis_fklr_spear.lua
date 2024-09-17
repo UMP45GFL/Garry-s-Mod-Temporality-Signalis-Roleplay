@@ -29,7 +29,7 @@ SWEP.WElements = {
 }
 
 function SWEP:Throw()
-	local spear = ents.Create( "kanade_thrown_fklr_spear" )
+	local spear = ents.Create( "kanade_thrown_melee" )
 
 	local shoot = self.Owner:GetShootPos()
 	local aim = self.Owner:GetAimVector() + vector_up * 0.1
@@ -44,6 +44,23 @@ function SWEP:Throw()
 	phys:SetVelocityInstantaneous(aim * 1400)
 	phys:AddAngleVelocity( Vector( 0 , 0 , -10 ) ) -- might be zero
 	spear:StartThrowSound("AOC_Spear.Thrown_Fly")
+
+	if self.Owner.GetCharacter then
+		local char = self.Owner:GetCharacter()
+		if char then
+			local inventory = char:GetInventory()
+			if inventory then
+				local items = inventory:GetItems()
+				if items then
+					for _, v in pairs(items) do
+						if (v.isWeapon and v:GetData("equip") and v.class == self:GetClass()) then
+							spear.Item = v
+						end
+					end
+				end
+			end
+		end
+	end
 
 	return spear
 end

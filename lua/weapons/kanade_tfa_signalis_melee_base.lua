@@ -587,7 +587,9 @@ function SWEP:RemoveAfterThrow()
 	local class = self:GetClass()
 
 	ply:StripWeapon(class)
+	ply:ConCommand("lastinv")
 
+	/*
 	if ply.GetCharacter then
 		local char = ply:GetCharacter()
 		if char then
@@ -604,10 +606,11 @@ function SWEP:RemoveAfterThrow()
 			end
 		end
 	end
+	*/
 end
 
 function SWEP:Throw()
-	local dagger = ents.Create( "aoc_throwndagger" )
+	local dagger = ents.Create( "kanade_thrown_melee" )
 	local shoot = self.Owner:GetShootPos()
 	local aim = self.Owner:GetAimVector() + vector_up * 0.1
 	local ang = self.Owner:EyeAngles()
@@ -624,8 +627,78 @@ function SWEP:Throw()
 	
 	dagger:SetModel(self.Model)
 
+	if self.Owner.GetCharacter then
+		local char = self.Owner:GetCharacter()
+		if char then
+			local inventory = char:GetInventory()
+			if inventory then
+				local items = inventory:GetItems()
+				if items then
+					for _, v in pairs(items) do
+						if (v.isWeapon and v:GetData("equip") and v.class == self:GetClass()) then
+							dagger.Item = v
+							if istable(self.Owner.thrownItems)	then
+								table.ForceInsert(self.Owner.thrownItems, {dagger, v, CurTime()})
+							else
+								self.Owner.thrownItems = {dagger, v, CurTime()}
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+
 	return dagger
 end
+
+hook.Add("PlayerDisconnect", "ThrownMelee_PlayerDisconnect", function(ply)
+	if istable(ply.thrownItems) then
+		for k, v in pairs(ply.thrownItems) do
+			if IsValid(v[1]) then
+				v[1]:Remove()
+			end
+			if v[2] then
+				self.Item:SetData("equip", false)
+				local it = self.Item:Transfer(nil, nil, nil, self.Item.player)
+				if isentity(it) then
+					it:Remove()
+				else
+					self.Item:Remove()
+				end
+			end
+		end
+	end
+end)
+
+local function canAction(client, item)
+	local itemId = nil
+
+	if item and isnumber(item) then
+		local it = ix.item.instances[item]
+		if it then
+			itemId = item
+		end
+
+	elseif item and istable(item) then
+		itemId = item.id
+	end
+
+	if itemId and istable(client.thrownItems) then
+		for k, v in pairs(client.thrownItems) do
+			print(v, v[3])
+			if (CurTime() - v[3]) < 6 and v[2].id == itemId then
+				return false
+			end
+		end
+	end
+
+	return true
+end
+
+hook.Add("CanPlayerEquipItem", "ThrownMelee_CanPlayerEquipItem", canAction)
+hook.Add("CanPlayerUnequipItem", "ThrownMelee_CanPlayerUnequipItem", canAction)
+hook.Add("CanPlayerDropItem", "ThrownMelee_CanPlayerDropItem", canAction)
 
 function SWEP:Initialize()
 	BaseClass.Initialize(self)
