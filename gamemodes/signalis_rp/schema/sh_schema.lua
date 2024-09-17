@@ -1,7 +1,7 @@
 
 Schema.name = "Signalis RP"
 Schema.author = "Kanade"
-Schema.description = "Roleplayed based on the universe of Signalis."
+Schema.description = "Roleplay based on the universe of Signalis."
 
 -- Include netstream
 ix.util.Include("libs/thirdparty/sh_netstream2.lua")
