@@ -451,18 +451,7 @@ end
 
 
 
-SWEP.DrawAmmo = true
-
-SWEP.Primary.Damage = 1
-SWEP.Primary.ClipSize = -1
-SWEP.Primary.DefaultClip = 1
-SWEP.Primary.Automatic = false
-SWEP.Primary.Ammo = "daggers"
-
-SWEP.Secondary.ClipSize = -1
-SWEP.Secondary.DefaultClip = -1
-SWEP.Secondary.Automatic = false
-SWEP.Secondary.Ammo = "none"
+SWEP.DrawAmmo = false
 
 SWEP.BobScale = 1
 SWEP.SwayScale = 1
@@ -471,6 +460,12 @@ SWEP.ThrowSound = "WeaponFrag.Throw"
 
 function SWEP:SecondaryAttack()
 	self:PrimaryAttack()
+end
+
+function SWEP:CanPrimaryAttack()
+	if self.Owner:IsNPC() then return true end
+	
+	return CurTime() >= self:GetNextPrimaryFire()
 end
 
 function SWEP:PrimaryAttack()
@@ -551,7 +546,6 @@ function SWEP:Think()
 			self:SetNextIdle( 0 )
 			self:SetNextPrimaryFire( CurTime() + dur )
 			self:SetNextDraw( CurTime() + dur )
-			self:TakePrimaryAmmo(1)
 
 			if SERVER then
 				self:Throw()
@@ -568,6 +562,10 @@ function SWEP:Think()
 			if SERVER then
 				self.Owner:SetNextStamina(CurTime() + dur)
 			end
+
+			if SERVER then
+				self:RemoveAfterThrow()
+			end
 		end
 	end
 
@@ -582,31 +580,29 @@ function SWEP:Think()
 		self:SendWeaponAnim(ACT_VM_IDLE)
 		self:SetNextIdle( 0 ) -- CurTime() + self:SequenceDuration()
 	end
+end
 
-	if SERVER and CurTime() >= self:GetNextPrimaryFire() and self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 then
-		local ply = self.Owner
-		local class = self:GetClass()
+function SWEP:RemoveAfterThrow()
+	local ply = self.Owner
+	local class = self:GetClass()
 
-		ply:StripWeapon(class)
+	ply:StripWeapon(class)
 
-		if ply.GetCharacter then
-			local char = ply:GetCharacter()
-			if char then
-				local inventory = char:GetInventory()
-				if inventory then
-					local items = inventory:GetItems()
-					if items then
-						for _, v in pairs(items) do
-							if (v.isWeapon and v:GetData("equip") and v.class == class) then
-								v:Remove()
-							end
+	if ply.GetCharacter then
+		local char = ply:GetCharacter()
+		if char then
+			local inventory = char:GetInventory()
+			if inventory then
+				local items = inventory:GetItems()
+				if items then
+					for _, v in pairs(items) do
+						if (v.isWeapon and v:GetData("equip") and v.class == class) then
+							v:Remove()
 						end
 					end
 				end
 			end
 		end
-
-		return nil
 	end
 end
 
