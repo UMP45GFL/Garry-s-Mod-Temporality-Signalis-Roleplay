@@ -21,9 +21,7 @@ function CreateNextReplikaNumberConfigs()
     end
 end
 
-hook.Add("InitPostEntity", "ReplikaNamingSystem_InitPostEntity", function()
-    CreateNextReplikaNumberConfigs()
-end)
+CreateNextReplikaNumberConfigs()
 
 function GetNewCharacterName(className)
     local facilityName = ix.config.Get("facilityShortName", nil)
