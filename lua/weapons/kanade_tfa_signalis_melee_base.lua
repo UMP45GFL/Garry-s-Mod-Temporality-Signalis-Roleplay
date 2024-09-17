@@ -26,15 +26,15 @@ SWEP.Primary.Attacks = {
 	{
 		["act"] = ACT_VM_MISSCENTER, -- Animation; ACT_VM_THINGY, ideally something unique per-sequence
 		["len"] = 50, -- Trace distance
-		["dir"] = Vector(15,0,5),
+		["dir"] = Vector(15, 0, 5),
 		["dmg"] = 40, --Damage
 		["dmgtype"] = DMG_SLASH, --DMG_SLASH,DMG_CRUSH, etc.
 		["delay"] = 0.2, --Delay
 		["spr"] = true, --Allow attack while sprinting?
-		["snd"] = Sound("weapons/melee/fireaxe/fireaxe_light1.wav"), -- Sound ID
+		["snd"] = Sound("Weapon_Crowbar.Single"), -- Sound ID
 		["snd_delay"] = 0.22,
 		["viewpunch"] = Angle(5, 5, 0), --viewpunch angle
-		["end"] = 1.3, --time before next attack
+		["end"] = 1, --time before next attack
 		["hull"] = 15, --Hullsize
 		["direction"] = "L", --Swing dir,
 		["hitflesh"] = Sound("Weapon_Melee_Sharp.Impact_Light"),
@@ -153,6 +153,7 @@ function SWEP:SmackEffect(trace, dmg)
 	dmg:SetDamageForce(force)
 end
 
+/*
 local att = {}
 local lvec, ply, targ
 lvec = Vector()
@@ -295,3 +296,4 @@ function SWEP:PrimaryAttack()
 	self:GetOwner():SetAnimation(PLAYER_ATTACK1)
 	self:SetComboCount(self:GetComboCount() + 1)
 end
+*/

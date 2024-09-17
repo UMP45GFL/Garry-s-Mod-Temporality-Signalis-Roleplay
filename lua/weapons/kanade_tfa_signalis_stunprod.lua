@@ -30,22 +30,99 @@ SWEP.Primary.Attacks = {
 	{
 		["act"] = ACT_VM_MISSCENTER, -- Animation; ACT_VM_THINGY, ideally something unique per-sequence
 		["len"] = 40, -- Trace distance
-		["dir"] = Vector(-75, 20, -5), -- Trace arc cast
+		["dir"] = Vector(15, 0, 5), -- Trace arc cast
 		["dmg"] = 20, --Damage
-		["dmgtype"] = DMG_SHOCK, --DMG_SLASH,DMG_CRUSH, etc.
-		["delay"] = 0.28, --Delay
+		["dmgtype"] = DMG_CLUB, --DMG_SLASH,DMG_CRUSH, etc.
+		["delay"] = 0.2, --Delay
 		["spr"] = true, --Allow attack while sprinting?
 		["snd"] = Sound("Weapon_Crowbar.Single"), -- Sound ID
 		["snd_delay"] = 0.22,
-		["viewpunch"] = Angle(10, 20, 0), --viewpunch angle
-		["end"] = 0.9, --time before next attack
-		["hull"] = 10, --Hullsize
+		["viewpunch"] = Angle(5, 5, 0), --viewpunch angle
+		["end"] = 1, --time before next attack
+		["hull"] = 15, --Hullsize
 		["direction"] = "L", --Swing dir,
 		["hitflesh"] = Sound("Weapon_Crowbar.Melee_Hit"),
 		["hitworld"] = Sound("Weapon_Crowbar.Melee_Hit"),
 		["combotime"] = 0
+	},
+	{
+		["act"] = ACT_VM_MISSCENTER, -- Animation; ACT_VM_THINGY, ideally something unique per-sequence
+		["len"] = 40, -- Trace distance
+		["dir"] = Vector(15, 0, 5), -- Trace arc cast
+		["dmg"] = 35, --Damage
+		["dmgtype"] = DMG_SHOCK, --DMG_SLASH,DMG_CRUSH, etc.
+		["delay"] = 0.2, --Delay
+		["spr"] = true, --Allow attack while sprinting?
+		["snd"] = Sound("weapons/stunstick/stunstick_swing1.wav"), -- Sound ID
+		["snd_delay"] = 0.22,
+		["viewpunch"] = Angle(5, 5, 0), --viewpunch angle
+		["end"] = 1, --time before next attack
+		["hull"] = 15, --Hullsize
+		["direction"] = "L", --Swing dir,
+		["hitflesh"] = Sound("weapons/stunstick/stunstick_fleshhit2.wav"),
+		["hitworld"] = Sound("weapons/stunstick/stunstick_impact1.wav"),
+		["combotime"] = 0
 	}
 }
+
+function SWEP:GetMelAttackID()
+	if self.StunningEnabled and !self.UsedUp then
+		return 2
+	else
+		return 1
+	end
+end
+
+function SWEP:StrikeThink()
+	if self:GetSprinting() and not self:GetStatL("AllowSprintAttack", false) then
+		self:SetComboCount(0)
+		--return
+	end
+
+	if self:IsSafety() then
+		self:SetComboCount(0)
+		return
+	end
+
+	if not IsFirstTimePredicted() then return end
+	if self:GetStatus() ~= TFA.Enum.STATUS_SHOOTING then return end
+	if self.up_hat then return end
+
+	local ind = 1
+
+	if self.StunningEnabled and !self.UsedUp then
+		ind = 2
+	end
+
+	local attack = self.Primary.Attacks[ind]
+
+	if self.AttackSoundTime ~= -1 and CurTime() > self.AttackSoundTime then
+		self:EmitSound(attack.snd)
+
+		if self:GetOwner().Vox then
+			self:GetOwner():Vox("bash", 4)
+		end
+
+		self.AttackSoundTime = -1
+	end
+
+	if self:GetOwner().Vox and self.VoxSoundTime ~= -1 and CurTime() > self.VoxSoundTime - self:GetOwner():Ping() * 0.001 then
+		if self:GetOwner().Vox then
+			self:GetOwner():Vox("bash", 4)
+		end
+
+		self.VoxSoundTime = -1
+	end
+
+	if CurTime() > self:GetStatusEnd() then
+		self.DamageType = attack.dmgtype
+		--Just attacked, so don't do it again
+		self.up_hat = true
+		self:SetStatus(TFA.Enum.STATUS_IDLE, math.huge)
+
+		self:Strike(attack, self.Precision)
+	end
+end
 
 SWEP.Offset = {
 	Pos = {
@@ -108,17 +185,6 @@ function SWEP:Reload()
 
 		if SERVER and self.StunningEnabled then
 			sound.Play("weapons/stunstick/spark"..math.random(1,3)..".wav", self.Owner:GetPos(), 75, 100, 1)
-			self.Primary.Hit = self.Sound_Enabled
-		end
-
-		if self.StunningEnabled then
-			self.Primary.Attacks[1].snd = Sound("weapons/stunstick/stunstick_swing1.wav")
-			self.Primary.Attacks[1].hitflesh = Sound("weapons/stunstick/stunstick_fleshhit2.wav")
-			self.Primary.Attacks[1].hitworld = Sound("weapons/stunstick/stunstick_impact1.wav")
-		else
-			self.Primary.Attacks[1].snd = Sound("Weapon_Crowbar.Single")
-			self.Primary.Attacks[1].hitflesh = Sound("Weapon_Crowbar.Melee_Hit")
-			self.Primary.Attacks[1].hitworld = Sound("Weapon_Crowbar.Melee_Hit")
 		end
 
 		self.NextToggle = CurTime() + 1
