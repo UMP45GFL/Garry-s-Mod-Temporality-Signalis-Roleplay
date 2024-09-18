@@ -99,4 +99,3 @@ ITEM.functions.take.OnCanRun = function(item)
 	local owner = item:GetData("owner", 0)
 	return IsValid(item.entity) and (owner == 0 or owner == item.player:GetCharacter():GetID())
 end
-
