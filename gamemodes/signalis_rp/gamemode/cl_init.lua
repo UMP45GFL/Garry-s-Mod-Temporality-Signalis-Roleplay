@@ -3,7 +3,7 @@ DeriveGamemode("helix")
 
 local fontSettings = {
 	font = "Perfect DOS VGA 437",
-	--font = "Pokémon DP Pro",
+	--font = "signapoke",
 	extended = true,
 	size = ScreenScaleH(15),
 	weight = 0,
@@ -14,6 +14,7 @@ surface.CreateFont("SignalisDocumentsFontMedium", fontSettings)
 fontSettings.size = ScreenScaleH(18)
 surface.CreateFont("SignalisDocumentsFontBig", fontSettings)
 
+-- Radio fonts
 fontSettings.size = 32
 surface.CreateFont("SignalisRadioFontToggle", fontSettings)
 
