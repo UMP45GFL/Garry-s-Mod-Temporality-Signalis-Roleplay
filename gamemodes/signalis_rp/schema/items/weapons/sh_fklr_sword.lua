@@ -4,8 +4,8 @@ ITEM.model = Model("models/eternalis/items/weapons/fklr_sword.mdl")
 ITEM.description = ""
 ITEM.skin = 0
 
-ITEM.width = 2
-ITEM.height = 1
+ITEM.width = 1
+ITEM.height = 2
 
 ITEM.class = "kanade_tfa_signalis_fklr_sword"
 ITEM.weaponCategory = "melee"
