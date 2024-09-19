@@ -152,6 +152,11 @@ function PANEL:SetText(text)
 	self.pages[self.page] = text
 end
 
+function PANEL:SetPages(pages)
+	self.pages = pages
+	self.text:SetValue(pages[self.page] or "")
+end
+
 function PANEL:OnRemove()
 	PLUGIN.panel = nil
 end

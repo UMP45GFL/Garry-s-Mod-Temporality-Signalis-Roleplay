@@ -75,10 +75,20 @@ ITEM.functions.Edit = {
 		netstream.Start(item.player, "ixViewPaper", item.maxPages, item.startFromPage0, item.backgroundPhoto, item:GetID(), item:GetData("pages", {}), 1)
 		return false
 	end,
-
 	OnCanRun = function(item)
-		local owner = item:GetData("owner", 0)
+		local client = item.player
+
+		/*
+		if client:IsAdmin()
+        || client:IsUserGroup("operator")
+        || client:IsUserGroup("moderator")
+        || client:IsUserGroup("gamemaster")
+        then
+			return true
+		end
+		*/
 		
+		-- fix
 		if item.pages and #item:GetData("pages", {}) == 0 then
 			item:SetData("pages", item.pages)
 		end
@@ -91,7 +101,9 @@ ITEM.functions.Edit = {
 			end
 		end
 
-		return isEmpty and (owner == 0 or owner == item.player:GetCharacter():GetID())
+		local owner = item:GetData("owner", 0)
+
+		return isEmpty || (owner == client:GetCharacter():GetID())
 	end
 }
 

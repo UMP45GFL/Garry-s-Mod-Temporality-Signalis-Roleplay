@@ -4,7 +4,7 @@ netstream.Hook("ixViewPaper", function(maxPages, startFromPage0, backgroundPhoto
 
 	if bEditable then
 		local panel = vgui.Create("ixPaperEdit")
-		panel.pages = pages
+		panel:SetPages(pages)
 		panel.maxPages = maxPages
 		panel.startFromPage0 = startFromPage0
 		panel:SetEditable(bEditable)
