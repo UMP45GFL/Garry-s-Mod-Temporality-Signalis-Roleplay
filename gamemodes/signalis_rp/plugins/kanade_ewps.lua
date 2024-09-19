@@ -206,7 +206,11 @@ if SERVER then
                 insertQuery:Insert("info", info)
                 insertQuery:Execute()
 
-                local logText = "EWPS created cache for player " .. ply:Name() .. "(" .. steamid .. ") with trust score " .. trustScore .. " and info " .. info
+                local logText = "EWPS created cache for player " .. ply:Name() .. "(" .. steamid .. ") with trust score " .. trustScore
+
+                if string.len(info) > 0 then
+                    logText = logText .. " and info " .. info
+                end
 
                 ix.log.Add(ply, "ewps", logText)
             end,
