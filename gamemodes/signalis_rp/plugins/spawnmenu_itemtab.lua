@@ -10,141 +10,171 @@ This work is licensed under the Creative Commons Attribution-NonCommercial-Share
 	DISCORD: Rune Knight#5972
 ]]
 
-
 CAMI.RegisterPrivilege({
 	Name = "Spawn Menu: Items - Spawning",
-	MinAccess = "superadmin"
+	MinAccess = "admin"
 })
 
-function PLUGIN:GetExpectedIcon( s )
-	local i = {
-		["Ammunition"] = "icon16/tab.png", -- :shrug:
-		["Clothing"] = "icon16/user_suit.png",
-		["Consumables"] = "icon16/pill.png",
-		["Medical"] = "icon16/heart.png",
-		["misc"] = "icon16/error.png",
-		["Permits"] = "icon16/note.png",
-		["Storage"] = "icon16/package.png",
-		["Weapons"] = "icon16/gun.png",
+local iconTab = {
+	[1] = {"Ammunition", "icon16/tab.png"}, -- :shrug:
+	[2] = {"Weapons", "icon16/gun.png"},
 
-	};
-	return hook.Run( "GetIconsForSpawnMenuItems", s ) or i[s] or "icon16/folder.png";
+	[10] = {"Clothing", "icon16/user_suit.png"},
+	[11] = {"Consumables", "icon16/pill.png"},
+	[12] = {"Medical", "icon16/heart.png"},
+
+	[20] = {"Storage", "icon16/package.png"},
+
+	[30] = {"Permits", "icon16/note.png"},
+	[31] = {"Documents", "icon16/newspaper_delete.png"},
+	[32] = {"Writing", "icon16/newspaper_add.png"},
+	[33] = {"Photos", "icon16/photo.png"},
+
+	[40] = {"Keys", "icon16/key.png"},
+	[41] = {"Tools", "icon16/wrench.png"},
+	[42] = {"Technical", "icon16/cog.png"},
+	
+	[50] = {"Miscellaneous", "icon16/error.png"},
+};
+
+function PLUGIN:GetExpectedIcon(s)
+	for k,v in pairs(iconTab) do
+		if v[1] == s then
+			return v[2];
+		end
+	end
+
+	return hook.Run("GetIconsForSpawnMenuItems", s) or "icon16/folder.png";
 end
 
-if( SERVER ) then
-	util.AddNetworkString( "spawnmenuspawnitem" );
+if(SERVER) then
+	util.AddNetworkString("spawnmenuspawnitem");
 
-	ix.log.AddType( "spawnmenuspawnitem", function( client, name )
-		return string.format( "%s has spawned \"%s\".", client:GetCharacter():GetName(), tostring( name ) )
-	end );
+	ix.log.AddType("spawnmenuspawnitem", function(client, name)
+		return string.format("%s has spawned \"%s\".", client:GetCharacter():GetName(), tostring(name))
+	end);
 
-	net.Receive("spawnmenuspawnitem", function( len, client )
+	net.Receive("spawnmenuspawnitem", function(len, client)
 		local u = net.ReadString();
-		if( !CAMI.PlayerHasAccess( client, "Spawn Menu: Items - Spawning", nil ) ) then return end;
-		for _, t in pairs( ix.item.list ) do
-			if( t.uniqueID == u ) then
-				ix.item.Spawn( t.uniqueID, client:GetShootPos() + client:GetAimVector() * 84 + Vector( 0, 0, 16 ) );
-				ix.log.Add( client, "spawnmenuspawnitem", t.name )
+		if(!CAMI.PlayerHasAccess(client, "Spawn Menu: Items - Spawning", nil)) then return end;
+		for _, t in pairs(ix.item.list) do
+			if(t.uniqueID == u) then
+				ix.item.Spawn(t.uniqueID, client:GetShootPos() + client:GetAimVector() * 84 + Vector(0, 0, 16));
+				ix.log.Add(client, "spawnmenuspawnitem", t.name)
 				break;
 			end
 		end
-	end );
+	end);
 else
-
 	function PLUGIN:InitializedPlugins()
-		if( SERVER ) then return end;
-		RunConsoleCommand( "spawnmenu_reload" ); -- If someone legit knows how to insert stuff into the spawn menu without breaking it or doing it before the spawn menu is created, please tell me. Otherwise, this is the best I got.
+		if(SERVER) then return end;
+		RunConsoleCommand("spawnmenu_reload"); -- If someone legit knows how to insert stuff into the spawn menu without breaking it or doing it before the spawn menu is created, please tell me. Otherwise, this is the best I got.
 	end
 
 	local PLUGIN = PLUGIN;
 
-	spawnmenu.AddCreationTab( "Items", function()
-	
-		local p = vgui.Create( "SpawnmenuContentPanel" );
+	spawnmenu.AddCreationTab("Items", function()
+		local p = vgui.Create("SpawnmenuContentPanel");
 		local t, n = p.ContentNavBar.Tree, p.OldSpawnlists;
 	
-		local l = {};
-		for uid, i in pairs( ix.item.list ) do
-			local c = i.category;
-			l[c] = l[c] or {};
-			table.insert( l[c], i );
+		local categoryList = {};
+
+		local miscPriority = nil;
+		for i, v in pairs(iconTab) do
+			if v[1] == "Miscellaneous" then
+				miscPriority = i;
+			end
 		end
 
-		for c, i in SortedPairs( l ) do
+		for uid, item in pairs(ix.item.list) do
+			local found = false
 
-			local icon16 = PLUGIN:GetExpectedIcon( c );
-			local node = t:AddNode( L(c), icon16 )
-			node.DoClick = function( self )
-				
-				if( self.PropPanel and IsValid( self.PropPanel ) ) then 
+			for i, v in pairs(iconTab) do
+				if v[1] == item.category then
+					categoryList[i] = categoryList[i] or {};
+					table.ForceInsert(categoryList[i], item);
+					found = true;
+					break;
+				end
+			end
+
+			if !found then
+				categoryList[miscPriority] = categoryList[miscPriority] or {};
+				table.ForceInsert(categoryList[miscPriority], item);
+			end
+		end
+
+		for priority, itemList in SortedPairs(categoryList) do
+			local categ = iconTab[priority][1];
+
+			local icon16 = PLUGIN:GetExpectedIcon(categ);
+			local node = t:AddNode(L(categ), icon16)
+			node.DoClick = function(self)
+				if(self.PropPanel and IsValid(self.PropPanel)) then 
 					self.PropPanel:Remove()
 					self.PropPanel = nil;
 				end;
 
-				self.PropPanel = vgui.Create( "ContentContainer", p );
-				self.PropPanel:SetVisible( false );
-				self.PropPanel:SetTriggerSpawnlistChange( false );
+				self.PropPanel = vgui.Create("ContentContainer", p);
+				self.PropPanel:SetVisible(false);
+				self.PropPanel:SetTriggerSpawnlistChange(false);
 	
-				for _, t in SortedPairsByMemberValue( i, "name" ) do
-	
-					spawnmenu.CreateContentIcon( "item", self.PropPanel, {
-						nicename	= ( t.GetName and t:GetName() ) or t.name,
-						spawnname	= t.uniqueID,
-					} )
-	
+				for k, item in SortedPairsByMemberValue(itemList, "name") do
+					spawnmenu.CreateContentIcon("item", self.PropPanel, {
+						nicename = (item.GetName and item:GetName()) or item.name,
+						spawnname = item.uniqueID,
+					})
 				end
 	
-				p:SwitchPanel( self.PropPanel );
-	
+				p:SwitchPanel(self.PropPanel);
 			end
-	
 		end
 	
-		local FirstNode = t:Root():GetChildNode( 0 );
-		if ( IsValid( FirstNode ) ) then
+		local FirstNode = t:Root():GetChildNode(0);
+		if (IsValid(FirstNode)) then
 			FirstNode:InternalDoClick();
 		end
 	
 		return p;
 	
-	end, "icon16/cog_add.png", 201 );
+	end, "icon16/cog_add.png", 201);
 
 	spawnmenu.AddContentType("item", function(p, data)
 		local n = data.nicename;
 		local u = data.spawnname;
 		
-		local icon = vgui.Create( "SpawnIcon", p );
-		icon:SetWide( 128 );
-		icon:SetTall( 128 );
-		icon:InvalidateLayout( true );
+		local icon = vgui.Create("SpawnIcon", p);
+		icon:SetWide(128);
+		icon:SetTall(128);
+		icon:InvalidateLayout(true);
 
 		local t = ix.item.list;
 		local i = t[u];
 
-		local mdl = ( i.GetModel and i:GetModel() ) or i.model;
-		local skin = ( i.GetSkin and i:GetSkin() ) or i.skin or 0;
-		local bdgroups = ( i.GetBodyGroups and i:GetBodyGroups() ) or i.bodyGroups;
+		local mdl = (i.GetModel and i:GetModel()) or i.model;
+		local skin = (i.GetSkin and i:GetSkin()) or i.skin or 0;
+		local bdgroups = (i.GetBodyGroups and i:GetBodyGroups()) or i.bodyGroups;
 
-		icon:SetModel( mdl, skin, bdgroups );
-		icon:SetTooltip( n );
+		icon:SetModel(mdl, skin, bdgroups);
+		icon:SetTooltip(n);
 
-		icon.DoClick = function( s ) 
-			surface.PlaySound( "ui/buttonclickrelease.wav" );
-			if( !CAMI.PlayerHasAccess( LocalPlayer(), "Spawn Menu: Items - Spawning", nil ) ) then 
+		icon.DoClick = function(s) 
+			surface.PlaySound("ui/buttonclickrelease.wav");
+			if(!CAMI.PlayerHasAccess(LocalPlayer(), "Spawn Menu: Items - Spawning", nil)) then 
 				return;
 			end
 
-			net.Start( "spawnmenuspawnitem" );
-				net.WriteString( u );
+			net.Start("spawnmenuspawnitem");
+				net.WriteString(u);
 			net.SendToServer();
 		end
 
-		icon:InvalidateLayout( true );
+		icon:InvalidateLayout(true);
 
-		if ( IsValid( p ) ) then
-			p:Add( icon )
+		if (IsValid(p)) then
+			p:Add(icon)
 		end
 
 		return icon;
-	end );
+	end);
 end
