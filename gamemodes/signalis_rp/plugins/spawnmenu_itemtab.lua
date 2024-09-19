@@ -114,8 +114,8 @@ else
 		local u = data.spawnname;
 		
 		local icon = vgui.Create( "SpawnIcon", p );
-		icon:SetWide( 64 );
-		icon:SetTall( 64 );
+		icon:SetWide( 128 );
+		icon:SetTall( 128 );
 		icon:InvalidateLayout( true );
 
 		local t = ix.item.list;
