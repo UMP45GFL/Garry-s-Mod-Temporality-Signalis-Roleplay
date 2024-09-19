@@ -109,8 +109,7 @@ else
 	
 	end, "icon16/cog_add.png", 201 );
 
-	spawnmenu.AddContentType( "item", function( p, data )
-		
+	spawnmenu.AddContentType("item", function(p, data)
 		local n = data.nicename;
 		local u = data.spawnname;
 		
@@ -122,7 +121,11 @@ else
 		local t = ix.item.list;
 		local i = t[u];
 
-		icon:SetModel( ( i.GetModel and i:GetModel() ) or i.model );
+		local mdl = ( i.GetModel and i:GetModel() ) or i.model;
+		local skin = ( i.GetSkin and i:GetSkin() ) or i.skin or 0;
+		local bdgroups = ( i.GetBodyGroups and i:GetBodyGroups() ) or i.bodyGroups;
+
+		icon:SetModel( mdl, skin, bdgroups );
 		icon:SetTooltip( n );
 
 		icon.DoClick = function( s ) 
@@ -143,7 +146,5 @@ else
 		end
 
 		return icon;
-		
 	end );
-
 end
