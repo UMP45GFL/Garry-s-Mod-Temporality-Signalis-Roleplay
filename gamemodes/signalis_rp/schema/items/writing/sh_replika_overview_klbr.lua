@@ -2,7 +2,7 @@
 ITEM.name = "Replika Overview: KLBR"
 ITEM.model = Model("models/eternalis/items/library/folder.mdl")
 ITEM.description = "Overiew of the KLBR Replika."
-ITEM.skin = 0
+ITEM.skin = 1
 
 ITEM.weight = 0.1
 

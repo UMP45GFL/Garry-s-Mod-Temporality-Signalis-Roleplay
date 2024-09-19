@@ -2,7 +2,7 @@
 ITEM.name = "Replika Known Issues, Part 1"
 ITEM.model = Model("models/eternalis/items/library/folder.mdl")
 ITEM.description = "Known replika issues. Part 1."
-ITEM.skin = 0
+ITEM.skin = 1
 
 ITEM.weight = 0.1
 

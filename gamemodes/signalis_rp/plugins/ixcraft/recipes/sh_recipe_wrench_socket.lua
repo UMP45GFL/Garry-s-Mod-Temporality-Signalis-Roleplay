@@ -7,5 +7,5 @@ RECIPE.requirements = {
 	["10mm_socket"] = 1,
 }
 RECIPE.results = {
-	["sh_wrench_socket"] = 1,
+	["wrench_socket"] = 1,
 }

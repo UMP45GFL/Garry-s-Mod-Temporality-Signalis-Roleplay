@@ -2,7 +2,7 @@
 ITEM.name = "Replika Overview: ARAR"
 ITEM.model = Model("models/eternalis/items/library/folder.mdl")
 ITEM.description = "Overview of the ARAR Replika."
-ITEM.skin = 0
+ITEM.skin = 1
 
 ITEM.weight = 0.1
 
