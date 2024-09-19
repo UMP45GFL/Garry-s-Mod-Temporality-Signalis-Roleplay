@@ -29,8 +29,8 @@ PLUGIN.GunData[ "tfa_ins2_ak74m" ] = {
 	Slot = "primary",
 	Model = "path_to_model_of_item",
 	iconCam = {
-		tpos = Vector( 0, 0, 0 ),
-		tang = Angle( 0, 0, 0 ),
+		tpos = Vector(0, 0, 0),
+		tang = Angle(0, 0, 0),
 		tfov = 0
 	},
 	Width = 4,

@@ -90,7 +90,7 @@ function PANEL:Init()
 	end
 	buttonPageRight.DoClick = function()
 		--if self.page > 1 and self.page + 1 <= self.maxPages then
-		if string.len( self.text:GetValue() ) > 0 then
+		if string.len(self.text:GetValue()) > 0 then
 			self.pages[self.page] = self.text:GetValue()
 
 			self.page = self.page + 1

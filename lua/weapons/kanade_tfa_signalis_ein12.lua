@@ -271,7 +271,7 @@ SWEP.LuaShellEject = false --Enable shell ejection through lua?
 SWEP.LuaShellEjectDelay = 0 --The delay to actually eject things
 SWEP.LuaShellModel = nil --The model to use for ejected shells
 SWEP.LuaShellScale = nil --The model scale to use for ejected shells
-SWEP.LuaShellYaw = nil --The model yaw rotation ( relative ) to use for ejected shells
+SWEP.LuaShellYaw = nil --The model yaw rotation (relative) to use for ejected shells
 SWEP.LuaShellEffect = "ShotgunShellEject" --The effect used for shell ejection; Defaults to that used for blowback
 SWEP.ShellScale = nil
 
@@ -300,7 +300,7 @@ function SWEP:NZMaxAmmo()
     local ammo_type = self:GetPrimaryAmmoType() or self.Primary.Ammo
 
     if SERVER then
-        self.Owner:SetAmmo( self.Primary.MaxAmmo, ammo_type )
+        self.Owner:SetAmmo(self.Primary.MaxAmmo, ammo_type)
     end
 end
 -- PaP Function
@@ -418,7 +418,7 @@ SWEP.PumpAction = {
 SWEP.LaserSightModAttachment = 1
 SWEP.LaserSightModAttachmentWorld = 4
 
-DEFINE_BASECLASS( SWEP.Base )
+DEFINE_BASECLASS(SWEP.Base)
 
 SWEP.StatCache_Blacklist = {
     ["IronSightsPos"] = true,

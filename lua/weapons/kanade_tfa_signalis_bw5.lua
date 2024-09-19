@@ -198,8 +198,8 @@ function SWEP:NZMaxAmmo()
     local ammo_type = self:GetPrimaryAmmoType() or self.Primary.Ammo
 
     if SERVER then
-        self.Owner:SetAmmo( self.Primary.MaxAmmo, ammo_type )
-		self:SetClip1( self.Primary.ClipSize )
+        self.Owner:SetAmmo(self.Primary.MaxAmmo, ammo_type)
+		self:SetClip1(self.Primary.ClipSize)
     end
 end
 
@@ -211,7 +211,7 @@ self.Primary.Knockback = 15
 self.Primary.ClipSize = 2
 self.Primary.MaxAmmo = 62
 self.Primary.NumShots = 12
-self.Primary.DamageType = bit.bor( DMG_BURN, DMG_SLOWBURN )
+self.Primary.DamageType = bit.bor(DMG_BURN, DMG_SLOWBURN)
 self.TracerName = "tfa_tracer_incendiary"
 self.MuzzleFlashEffect = "tfa_muzzleflash_incendiary"
 self.MoveSpeed = 1
@@ -405,7 +405,7 @@ SWEP.AttachmentIconOverride     = {
 	["bo3_rapidfire"] = Material("attachments/olympia/t7_icon_attach_shotgun_olympia_rapidfire_01_rwd.png", "smooth"),
 }
 
-DEFINE_BASECLASS( SWEP.Base )
+DEFINE_BASECLASS(SWEP.Base)
 
 SWEP.StatCache_Blacklist = {
     ["IronSightsPos"] = true,

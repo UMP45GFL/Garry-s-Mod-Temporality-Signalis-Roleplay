@@ -1,6 +1,6 @@
 SWEP.Base				= "tfa_bash_base"
 SWEP.Category			= "Kanade's TFA Signalis" --The category.  Please, just choose something generic or something I've already done if you plan on only doing like one swep..
---SWEP.Manufacturer		= "Chiappa Firearms" --Gun Manufactrer (e.g. Hoeckler and Koch )
+--SWEP.Manufacturer		= "Chiappa Firearms" --Gun Manufactrer (e.g. Hoeckler and Koch)
 SWEP.Author				= "Zacks & 1nazuma" --Author Tooltip
 SWEP.Contact			= "" --Contact Info Tooltip
 SWEP.Purpose			= "Eu-K508 S 'Einhorn' Revolver. High damage,knocks back enemies and shields with ease."

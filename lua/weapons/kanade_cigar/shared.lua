@@ -74,9 +74,9 @@ function SWEP:Initialize()
 	if CLIENT then
 	
 		// Create a new table for every weapon instance
-		self.VElements = table.FullCopy( self.VElements )
-		self.WElements = table.FullCopy( self.WElements )
-		self.ViewModelBoneMods = table.FullCopy( self.ViewModelBoneMods )
+		self.VElements = table.FullCopy(self.VElements)
+		self.WElements = table.FullCopy(self.WElements)
+		self.ViewModelBoneMods = table.FullCopy(self.ViewModelBoneMods)
 
 		self:CreateModels(self.VElements) // create viewmodels
 		self:CreateModels(self.WElements) // create worldmodels

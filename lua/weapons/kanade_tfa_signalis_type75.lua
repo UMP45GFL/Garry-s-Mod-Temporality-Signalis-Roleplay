@@ -25,7 +25,7 @@ SWEP.VMPos = Vector(-1, -6, 0)
 SWEP.VMAng = Vector(0, 0, 0)
 SWEP.VMPos_Additive = true
 SWEP.CrouchPos    = Vector(-1, 0, -1.25)
-SWEP.CrouchAng    = Vector(0, 0, -10 )
+SWEP.CrouchAng    = Vector(0, 0, -10)
 
 SWEP.Offset = { --Procedural world model animation, defaulted for CS:S purposes.
 	Pos = {
@@ -202,8 +202,8 @@ function SWEP:NZMaxAmmo()
     local ammo_type = self:GetPrimaryAmmoType() or self.Primary.Ammo
 
     if SERVER then
-        self.Owner:SetAmmo( self.Primary.MaxAmmo, ammo_type )
-		self:SetClip1( self.Primary.ClipSize )
+        self.Owner:SetAmmo(self.Primary.MaxAmmo, ammo_type)
+		self:SetClip1(self.Primary.ClipSize)
     end
 end
 
@@ -215,7 +215,7 @@ function SWEP:OnPaP()
 	self.Primary.ClipSize = 12
 	self.Primary.MaxAmmo = 96
 	self.Primary.IronAccuracy = .001
-	self.Primary.DamageType = bit.bor( DMG_BLAST, DMG_BLAST_SURFACE )
+	self.Primary.DamageType = bit.bor(DMG_BLAST, DMG_BLAST_SURFACE)
 	self.Type_Displayed = "HE Rounds"
 	self.Purpose = "250 HU blast range"
 	self.Primary.BlastRadius = 250
@@ -428,7 +428,7 @@ SWEP.AttachmentIconOverride     = {
 	--["bo3_hical_sights"] = Material("attachments/1911/t7_icon_attach_pistol_m1911_highcaliber_01.png", "smooth"),
 }
 
-DEFINE_BASECLASS( SWEP.Base )
+DEFINE_BASECLASS(SWEP.Base)
 
 SWEP.StatCache_Blacklist = {
     ["IronSightsPos"] = true,

@@ -210,11 +210,11 @@ hook.Add("InitPostEntity", "cigaMouthMoveSetup", function()
 			end
 
 			local FlexNum = ply:GetFlexNum() - 1
-			if ( FlexNum <= 0 ) then return end
+			if (FlexNum <= 0) then return end
 			for i = 0, FlexNum - 1 do
 				local Name = ply:GetFlexName(i)
-				if ( Name == "jaw_drop" || Name == "right_part" || Name == "left_part" || Name == "right_mouth_drop" || Name == "left_mouth_drop" ) then
-					ply:SetFlexWeight(i, math.max(((ply.cigaMouthOpenAmt or 0)*0.5), math.Clamp(((ply.cigaTalkingEndtime or 0)-CurTime())*3.0, 0, 1)*math.Rand(0.1,0.8) ))
+				if (Name == "jaw_drop" || Name == "right_part" || Name == "left_part" || Name == "right_mouth_drop" || Name == "left_mouth_drop") then
+					ply:SetFlexWeight(i, math.max(((ply.cigaMouthOpenAmt or 0)*0.5), math.Clamp(((ply.cigaTalkingEndtime or 0)-CurTime())*3.0, 0, 1)*math.Rand(0.1,0.8)))
 				end
 			end
 		end
@@ -240,14 +240,14 @@ function ciga_do_pulse(ply, amt, spreadadd, fx)
 		pos = angpos.Pos + (fwd*3.5)
 	else
 		fwd = ply:GetAimVector():GetNormalized()
-		pos = ply:GetShootPos() + fwd*1.5 + gui.ScreenToVector( ScrW()/2, ScrH() )*5
+		pos = ply:GetShootPos() + fwd*1.5 + gui.ScreenToVector(ScrW()/2, ScrH())*5
 	end
 
 	fwd = ply:GetAimVector():GetNormalized()
 
 	for i = 1,amt do
 		if !IsValid(ply) then return end
-		local particle = cigaParticleEmitter:Add(string.format("particle/smokesprites_00%02d",math.random(7,16)), pos )
+		local particle = cigaParticleEmitter:Add(string.format("particle/smokesprites_00%02d",math.random(7,16)), pos)
 		if particle then
 			local dir = VectorRand():GetNormalized() * ((amt+5)/10)
 			ciga_do_particle(particle, (ply:GetVelocity()*0.25)+(((fwd*9)+dir):GetNormalized() * math.Rand(50,80) * (amt + 1) * 0.2), fx)
@@ -268,8 +268,8 @@ function ciga_do_particle(particle, vel, fx)
 	if fx == 2 then mega = 4 end
 	mega = mega * 0.3
 	
-	particle:SetVelocity( vel * mega )
-	particle:SetGravity( Vector(0,0,1.5) )
+	particle:SetVelocity(vel * mega)
+	particle:SetGravity(Vector(0,0,1.5))
 	particle:SetLifeTime(0)
 	particle:SetDieTime(math.Rand(80,100)*0.11*mega)
 	particle:SetStartSize(3*mega)
@@ -285,16 +285,16 @@ end
 
 matproxy.Add({
 	name = "cigaTankColor",
-	init = function( self, mat, values )
+	init = function(self, mat, values)
 		self.ResultTo = values.resultvar
 	end,
-	bind = function( self, mat, ent )
-		if ( !IsValid( ent ) ) then return end
+	bind = function(self, mat, ent)
+		if (!IsValid(ent)) then return end
 		if ent:GetClass()=="viewmodel" then 
 			ent=ent:GetOwner()
-			if ( !IsValid( ent ) or !ent:IsPlayer() ) then return end
+			if (!IsValid(ent) or !ent:IsPlayer()) then return end
 			ent=ent:GetActiveWeapon()
-			if ( !IsValid( ent ) ) then return end
+			if (!IsValid(ent)) then return end
 		end
 		local v = ent.cigaTankColor or Vector(0.3,0.3,0.3)
 		if v==Vector(-1,-1,-1) then
@@ -307,16 +307,16 @@ matproxy.Add({
 
 matproxy.Add({
 	name = "cigaAccentColor",
-	init = function( self, mat, values )
+	init = function(self, mat, values)
 		self.ResultTo = values.resultvar
 	end,
-	bind = function( self, mat, ent )
-		if ( !IsValid( ent ) ) then return end
+	bind = function(self, mat, ent)
+		if (!IsValid(ent)) then return end
 		local o = ent:GetOwner()
 		if ent:GetClass()=="viewmodel" then 
 			if (!IsValid(o)) or (!o:IsPlayer()) then return end
 			ent=o:GetActiveWeapon()
-			if ( !IsValid( ent ) ) then return end
+			if (!IsValid(ent)) then return end
 		end
 		local special = false
 		local col = ent.cigaAccentColor or special and Vector(1,0.8,0) or Vector(1,1,1)
@@ -348,7 +348,7 @@ if CLIENT then
 			// we build a render order because sprites need to be drawn after models
 			self.vRenderOrder = {}
 
-			for k, v in pairs( self.VElements ) do
+			for k, v in pairs(self.VElements) do
 				if (v.type == "Model") then
 					table.insert(self.vRenderOrder, 1, k)
 				elseif (v.type == "Sprite" or v.type == "Quad") then
@@ -358,7 +358,7 @@ if CLIENT then
 			
 		end
 
-		for k, name in ipairs( self.vRenderOrder ) do
+		for k, name in ipairs(self.vRenderOrder) do
 		
 			local v = self.VElements[name]
 			if (!v) then self.vRenderOrder = nil break end
@@ -369,13 +369,13 @@ if CLIENT then
 			
 			if (!v.bone) then continue end
 			
-			local pos, ang = self:GetBoneOrientation( self.VElements, v, vm )
+			local pos, ang = self:GetBoneOrientation(self.VElements, v, vm)
 			
 			if (!pos) then continue end
 			
 			if (v.type == "Model" and IsValid(model)) then
 
-				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
+				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z)
 				ang:RotateAroundAxis(ang:Up(), v.angle.y)
 				ang:RotateAroundAxis(ang:Right(), v.angle.p)
 				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
@@ -384,12 +384,12 @@ if CLIENT then
 				//model:SetModelScale(v.size)
 				local matrix = Matrix()
 				matrix:Scale(v.size)
-				model:EnableMatrix( "RenderMultiply", matrix )
+				model:EnableMatrix("RenderMultiply", matrix)
 				
 				if (v.material == "") then
 					model:SetMaterial("")
 				elseif (model:GetMaterial() != v.material) then
-					model:SetMaterial( v.material )
+					model:SetMaterial(v.material)
 				end
 				
 				if (v.skin and v.skin != model:GetSkin()) then
@@ -397,7 +397,7 @@ if CLIENT then
 				end
 				
 				if (v.bodygroup) then
-					for k, v in pairs( v.bodygroup ) do
+					for k, v in pairs(v.bodygroup) do
 						if (model:GetBodygroup(k) != v) then
 							model:SetBodygroup(k, v)
 						end
@@ -432,7 +432,7 @@ if CLIENT then
 				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
 				
 				cam.Start3D2D(drawpos, ang, v.size)
-					v.draw_func( self )
+					v.draw_func(self)
 				cam.End3D2D()
 
 			end
@@ -441,7 +441,7 @@ if CLIENT then
 		
 	end
 
-	function SWEP:GetBoneOrientation( basetab, tab, ent, bone_override )
+	function SWEP:GetBoneOrientation(basetab, tab, ent, bone_override)
 		
 		local bone, pos, ang
 		if (tab.rel and tab.rel != "") then
@@ -452,7 +452,7 @@ if CLIENT then
 			
 			// Technically, if there exists an element with the same name as a bone
 			// you can get in an infinite loop. Let's just hope nobody's that stupid.
-			pos, ang = self:GetBoneOrientation( basetab, v, ent )
+			pos, ang = self:GetBoneOrientation(basetab, v, ent)
 			
 			if (!pos) then return end
 			
@@ -483,14 +483,14 @@ if CLIENT then
 		return pos, ang
 	end
 
-	function SWEP:CreateModels( tab )
+	function SWEP:CreateModels(tab)
 
 		if (!tab) then return end
 
 		// Create the clientside models here because Garry says we can't do it in the render hook
-		for k, v in pairs( tab ) do
+		for k, v in pairs(tab) do
 			if (v.type == "Model" and v.model and v.model != "" and (!IsValid(v.modelEnt) or v.createdModel != v.model) and 
-					string.find(v.model, ".mdl") and file.Exists (v.model, "GAME") ) then
+					string.find(v.model, ".mdl") and file.Exists (v.model, "GAME")) then
 				
 				v.modelEnt = ClientsideModel(v.model, RENDER_GROUP_VIEW_MODEL_OPAQUE)
 				if (IsValid(v.modelEnt)) then
@@ -510,7 +510,7 @@ if CLIENT then
 				local params = { ["$basetexture"] = v.sprite }
 				// make sure we create a unique name based on the selected options
 				local tocheck = { "nocull", "additive", "vertexalpha", "vertexcolor", "ignorez" }
-				for i, j in pairs( tocheck ) do
+				for i, j in pairs(tocheck) do
 					if (v[j]) then
 						params["$"..j] = 1
 						name = name.."1"
@@ -558,7 +558,7 @@ if CLIENT then
 			end
 			// !! ----------- !! //
 			
-			for k, v in pairs( loopthrough ) do
+			for k, v in pairs(loopthrough) do
 				local bone = vm:LookupBone(k)
 				if (!bone) then continue end
 				
@@ -579,13 +579,13 @@ if CLIENT then
 				// !! ----------- !! //
 				
 				if vm:GetManipulateBoneScale(bone) != s then
-					vm:ManipulateBoneScale( bone, s )
+					vm:ManipulateBoneScale(bone, s)
 				end
 				if vm:GetManipulateBoneAngles(bone) != v.angle then
-					vm:ManipulateBoneAngles( bone, v.angle )
+					vm:ManipulateBoneAngles(bone, v.angle)
 				end
 				if vm:GetManipulateBonePosition(bone) != p then
-					vm:ManipulateBonePosition( bone, p )
+					vm:ManipulateBonePosition(bone, p)
 				end
 			end
 		else
@@ -598,9 +598,9 @@ if CLIENT then
 		
 		if (!vm:GetBoneCount()) then return end
 		for i=0, vm:GetBoneCount() do
-			vm:ManipulateBoneScale( i, Vector(1, 1, 1) )
-			vm:ManipulateBoneAngles( i, Angle(0, 0, 0) )
-			vm:ManipulateBonePosition( i, Vector(0, 0, 0) )
+			vm:ManipulateBoneScale(i, Vector(1, 1, 1))
+			vm:ManipulateBoneAngles(i, Angle(0, 0, 0))
+			vm:ManipulateBonePosition(i, Vector(0, 0, 0))
 		end
 		
 	end
@@ -612,12 +612,12 @@ if CLIENT then
 	// Fully copies the table, meaning all tables inside this table are copied too and so on (normal table.Copy copies only their reference).
 	// Does not copy entities of course, only copies their reference.
 	// WARNING: do not use on tables that contain themselves somewhere down the line or you'll get an infinite loop
-	function table.FullCopy( tab )
+	function table.FullCopy(tab)
 
 		if (!tab) then return nil end
 		
 		local res = {}
-		for k, v in pairs( tab ) do
+		for k, v in pairs(tab) do
 			if (type(v) == "table") then
 				res[k] = table.FullCopy(v) // recursion ho!
 			elseif (type(v) == "Vector") then

@@ -30,7 +30,7 @@ Allows to edit weapons parameters without editing the original weapon.
 Before use, edit the sound on those lines in "sh_tfa_support.lua" file:
 142, 236, 306, 354
 
-"sh_tfa_ammo.lua" - Here you can add ammo ( and new ammo types ).
+"sh_tfa_ammo.lua" - Here you can add ammo (and new ammo types).
 "sh_tfa_weps.lua" - Here you can edit weapon parameters.
 "sh_tfa_attach.lua" - Here you can add attachments.
 

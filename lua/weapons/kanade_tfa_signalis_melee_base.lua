@@ -377,7 +377,7 @@ function SWEP:Strike(attk, precision)
 
 			hitFlesh = true
 		end
-		--debugoverlay.Sphere( v.HitPos, 5, 5, color_white )
+		--debugoverlay.Sphere(v.HitPos, 5, 5, color_white)
 	end
 
 	--Handle non-world
@@ -477,12 +477,12 @@ function SWEP:PrimaryAttack()
 	if not self:CanPrimaryAttack() then return end
 
 	if self.Owner:IsNPC() then
-		local dur = self.Owner:SequenceDuration( self.Owner:SelectWeightedSequence( self.ActivityTranslateAI[ ACT_RANGE_ATTACK1 ] ) )
+		local dur = self.Owner:SequenceDuration(self.Owner:SelectWeightedSequence(self.ActivityTranslateAI[ ACT_RANGE_ATTACK1 ]))
 
 		timer.Simple(dur * 0.3,function()
 			if not self:IsValid() or not self.Owner:IsValid() then return end
 
-			self:EmitSound( self.ThrowSound )
+			self:EmitSound(self.ThrowSound)
 		
 			self:Throw()
 
@@ -496,10 +496,10 @@ function SWEP:PrimaryAttack()
 		end)
 
 	elseif not self:GetLoaded() and self:GetThrowTime() == 0 then
-		self:SendWeaponAnim( ACT_VM_PULLBACK_HIGH )
-		self:SetLoaded( true )
-		self:SetThrowTime( CurTime() + self:SequenceDuration() )
-		self:SetNextIdle( 0 )
+		self:SendWeaponAnim(ACT_VM_PULLBACK_HIGH)
+		self:SetLoaded(true)
+		self:SetThrowTime(CurTime() + self:SequenceDuration())
+		self:SetNextIdle(0)
 		if SERVER then
 			self.Owner:SetNextStamina(0)
 		end
@@ -511,7 +511,7 @@ function SWEP:GetNPCBulletSpread(prof)
 end
 
 function SWEP:GetNPCRestTimes()
-	local dur = self.Owner:SequenceDuration( self.Owner:SelectWeightedSequence( self.ActivityTranslateAI[ ACT_RANGE_ATTACK1 ] ) )
+	local dur = self.Owner:SequenceDuration(self.Owner:SelectWeightedSequence(self.ActivityTranslateAI[ ACT_RANGE_ATTACK1 ]))
 
 	return dur,dur
 end
@@ -526,10 +526,10 @@ function SWEP:Think()
 		if self:GetLoaded() and GetConVarNumber("gmod_suit") ~= 0 and self.Owner:IsPlayer() then
 			local stamina = self.Owner:GetSuitPower()
 
-			self.MaxStamina = math.min( self.MaxStamina or stamina , stamina )
+			self.MaxStamina = math.min(self.MaxStamina or stamina , stamina)
 		
 			if stamina > self.MaxStamina then
-				self.Owner:SetSuitPower( self.MaxStamina )
+				self.Owner:SetSuitPower(self.MaxStamina)
 			end
 		else
 			self.MaxStamina = nil
@@ -538,27 +538,27 @@ function SWEP:Think()
 
 	if self:GetLoaded() and not self.Owner:KeyDown(IN_ATTACK) and not self.Owner:KeyDown(IN_ATTACK2) then
 		if CurTime() >= self:GetThrowTime() then
-			self:EmitSound( self.ThrowSound )
-			self:SendWeaponAnim( ACT_VM_THROW )
+			self:EmitSound(self.ThrowSound)
+			self:SendWeaponAnim(ACT_VM_THROW)
 			local dur = self:SequenceDuration()
 			
 			self.Owner:DoAttackEvent()
-			self:SetNextIdle( 0 )
-			self:SetNextPrimaryFire( CurTime() + dur )
-			self:SetNextDraw( CurTime() + dur )
+			self:SetNextIdle(0)
+			self:SetNextPrimaryFire(CurTime() + dur)
+			self:SetNextDraw(CurTime() + dur)
 
 			if SERVER then
 				self:Throw()
 
 				if GetConVarNumber("gmod_suit") ~= 0 then
-					self.Owner:SetSuitPower( math.max( self.Owner:GetSuitPower() - 10 , 0 ) )
+					self.Owner:SetSuitPower(math.max(self.Owner:GetSuitPower() - 10 , 0))
 				end
 
-				self:SetNoDraw( true )
+				self:SetNoDraw(true)
 			end
 
-			self:SetLoaded( false )
-			self:SetThrowTime( 0 )
+			self:SetLoaded(false)
+			self:SetThrowTime(0)
 			if SERVER then
 				self.Owner:SetNextStamina(CurTime() + dur)
 			end
@@ -571,14 +571,14 @@ function SWEP:Think()
 
 	if self:GetNextDraw() ~= 0 and CurTime() >= self:GetNextDraw() then
 		if SERVER then
-			self:SetNoDraw( false )
+			self:SetNoDraw(false)
 		end
-		self:SendWeaponAnim( ACT_VM_DRAW )
-		self:SetNextDraw( 0 )
+		self:SendWeaponAnim(ACT_VM_DRAW)
+		self:SetNextDraw(0)
 		
 	elseif self:GetNextIdle() ~= 0 and CurTime() >= self:GetNextIdle() then
 		self:SendWeaponAnim(ACT_VM_IDLE)
-		self:SetNextIdle( 0 ) -- CurTime() + self:SequenceDuration()
+		self:SetNextIdle(0) -- CurTime() + self:SequenceDuration()
 	end
 end
 
@@ -610,19 +610,31 @@ function SWEP:RemoveAfterThrow()
 end
 
 function SWEP:Throw()
-	local dagger = ents.Create( "kanade_thrown_melee" )
+	local dagger = ents.Create("kanade_thrown_melee")
+
+	if self.Damage then
+		dagger.DamageAmount = self.Damage
+	end
+
+	local ind = self:GetMelAttackID() or 1
+	if self.Primary.Attacks[ind] then
+		dagger.DamageAmount = self.Primary.Attacks[ind].dmg
+	end
+
+
+
 	local shoot = self.Owner:GetShootPos()
 	local aim = self.Owner:GetAimVector() + vector_up * 0.1
 	local ang = self.Owner:EyeAngles()
-	dagger:SetPos( shoot + ang:Forward() * 18 + ang:Right() * 2 )
-	ang:RotateAroundAxis( ang:Forward() , 90 )
-	dagger:SetAngles( ang )
+	dagger:SetPos(shoot + ang:Forward() * 18 + ang:Right() * 2)
+	ang:RotateAroundAxis(ang:Forward() , 90)
+	dagger:SetAngles(ang)
 	dagger:Spawn()
-	dagger:SetOwner( self.Owner )
-	dagger:SetPhysicsAttacker( self.Owner )
+	dagger:SetOwner(self.Owner)
+	dagger:SetPhysicsAttacker(self.Owner)
 	local phys = dagger:GetPhysicsObject()
 	phys:SetVelocityInstantaneous(aim * 950)
-	phys:AddAngleVelocity( Vector( 0 , 0 , -500 ) )
+	phys:AddAngleVelocity(Vector(0 , 0 , -500))
 	dagger:StartThrowSound("AOC_Dagger2.Thrown_Fly")
 	
 	dagger:SetModel(self.Model)
@@ -637,11 +649,8 @@ function SWEP:Throw()
 					for _, v in pairs(items) do
 						if (v.isWeapon and v:GetData("equip") and v.class == self:GetClass()) then
 							dagger.Item = v
-							if istable(self.Owner.thrownItems)	then
-								table.ForceInsert(self.Owner.thrownItems, {dagger, v, CurTime()})
-							else
-								self.Owner.thrownItems = {dagger, v, CurTime()}
-							end
+							self.Owner.thrownItems = self.Owner.thrownItems or {}
+							table.ForceInsert(self.Owner.thrownItems, {dagger, v, CurTime()})
 						end
 					end
 				end
@@ -686,8 +695,7 @@ local function canAction(client, item)
 
 	if itemId and istable(client.thrownItems) then
 		for k, v in pairs(client.thrownItems) do
-			print(v, v[3])
-			if (CurTime() - v[3]) < 6 and v[2].id == itemId then
+			if v[3] and (CurTime() - v[3]) < 6 and v[2].id == itemId then
 				return false
 			end
 		end
@@ -714,16 +722,16 @@ end
 function SWEP:SetupDataTables()
 	BaseClass.SetupDataTables(self)
 
-	self:NetworkVar( "Float" , 0 , "NextIdle" )
-	self:NetworkVar( "Float" , 1 , "NextDraw" )
-	self:NetworkVar( "Float" , 2 , "ThrowTime" )
-	self:NetworkVar( "Bool" , 0, "Loaded" )
+	self:NetworkVar("Float" , 0 , "NextIdle")
+	self:NetworkVar("Float" , 1 , "NextDraw")
+	self:NetworkVar("Float" , 2 , "ThrowTime")
+	self:NetworkVar("Bool" , 0, "Loaded")
 
-	self:SetLoaded( false )
+	self:SetLoaded(false)
 
-	self:SetNextDraw( 0 )
-	self:SetNextIdle( 0 )
-	self:SetThrowTime( 0 )
+	self:SetNextDraw(0)
+	self:SetNextIdle(0)
+	self:SetThrowTime(0)
 end
 
 function SWEP:Deploy()
@@ -731,10 +739,10 @@ function SWEP:Deploy()
 
 	if self.ThrowingEnabled then
 		self:SetHoldType(self.HoldTypeThrowing)
-		self:SetNextIdle( CurTime() + self:SequenceDuration() )
+		self:SetNextIdle(CurTime() + self:SequenceDuration())
 		
 		if self.Owner:IsPlayer() then	
-			self.Owner:DoAnimationEvent( PLAYERANIMEVENT_AOC_DRAW )
+			self.Owner:DoAnimationEvent(PLAYERANIMEVENT_AOC_DRAW)
 		end
 	end
 end
@@ -786,8 +794,8 @@ local function Is_wOS_Loaded()
 	end
 end
 
-function SWEP:SetWeaponHoldType( t )
-	t = string.lower( t )
+function SWEP:SetWeaponHoldType(t)
+	t = string.lower(t)
 
 	-- TODO: Replace wia util.GetActivityIDByName
 	-- Not works because it returns -1 for all custom ACT_* on client but server
@@ -815,18 +823,18 @@ function SWEP:SetWeaponHoldType( t )
 			self.ActivityTranslate[ ACT_AOC_DRAW ]							= "wos_aoc_dagger2_draw"
 			self.ActivityTranslate[ ACT_AOC_HOLSTER ]						= "wos_aoc_dagger2_holster"
 		else
-			BaseClass.SetWeaponHoldType( self , t )
+			BaseClass.SetWeaponHoldType(self , t)
 		end
 		
-		self:SetupWeaponHoldTypeForAI( PlaceholderHoldTypes[ t ] )
+		self:SetupWeaponHoldTypeForAI(PlaceholderHoldTypes[ t ])
 
 		return nil
 	end
 
 	if PlaceholderHoldTypes[ t ] then
-		BaseClass.SetWeaponHoldType( self , PlaceholderHoldTypes[ t ] )
+		BaseClass.SetWeaponHoldType(self , PlaceholderHoldTypes[ t ])
 	else
-		BaseClass.SetWeaponHoldType( self , t )
+		BaseClass.SetWeaponHoldType(self , t)
 	end
 
 	self.ActivityTranslate[ ACT_MP_ATTACK_STAND_SECONDARYFIRE ]		= self.ActivityTranslate[ ACT_MP_ATTACK_STAND_PRIMARYFIRE ]
@@ -844,22 +852,22 @@ function SWEP:SetWeaponHoldType( t )
 
 end
 
-function SWEP:TranslateActivity( act )
-	if not Is_wOS_Loaded() then return BaseClass.TranslateActivity( self , act ) end
+function SWEP:TranslateActivity(act)
+	if not Is_wOS_Loaded() then return BaseClass.TranslateActivity(self , act) end
 	
 	local owner = self:GetOwner()
 
 	if owner:IsNPC() then
-		return BaseClass.TranslateActivity( self , act )
+		return BaseClass.TranslateActivity(self , act)
 	end
 
-	if isstring( self.ActivityTranslate[ act ] ) then
-		self.ActivityTranslate[ act ] = owner:GetSequenceActivity( owner:LookupSequence( self.ActivityTranslate[ act ] ) )
+	if isstring(self.ActivityTranslate[ act ]) then
+		self.ActivityTranslate[ act ] = owner:GetSequenceActivity(owner:LookupSequence(self.ActivityTranslate[ act ]))
 		
 		return self.ActivityTranslate[ act ]
 	end
 
-	return BaseClass.TranslateActivity( self , act )
+	return BaseClass.TranslateActivity(self , act)
 end
 
 if CLIENT then
@@ -871,21 +879,21 @@ hook.Add("DoAnimationEvent","AgeOfChivalry_AnimationEvents",function(ply,event,d
 
 	if wep:IsValid() and wep.AOC_Base and wep.ThrowingEnabled then
 		if event == PLAYERANIMEVENT_CUSTOM_GESTURE then
-			ply:AnimResetGestureSlot( GESTURE_SLOT_CUSTOM )
+			ply:AnimResetGestureSlot(GESTURE_SLOT_CUSTOM)
 
 			if data == PLAYERANIMEVENT_AOC_BLOCK_UP_BLOCK then
 				timer.Remove(tostring(ply)..".AOC_Block")
 
-				local act = wep:TranslateActivity( ACT_AOC_BLOCK_UP_BLOCK )
-				ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD , act , true )
+				local act = wep:TranslateActivity(ACT_AOC_BLOCK_UP_BLOCK)
+				ply:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD , act , true)
 				
 				if act > 0 then
-					local dur = ply:SequenceDuration( ply:SelectWeightedSequence(act) )
+					local dur = ply:SequenceDuration(ply:SelectWeightedSequence(act))
 					
 					timer.Create(tostring(ply)..".AOC_Block",dur,1,function()
 						if not ply:IsValid() then return end
 
-						ply:DoAnimationEvent( PLAYERANIMEVENT_AOC_BLOCK_IDLE )
+						ply:DoAnimationEvent(PLAYERANIMEVENT_AOC_BLOCK_IDLE)
 					end)
 
 					return act
@@ -895,49 +903,49 @@ hook.Add("DoAnimationEvent","AgeOfChivalry_AnimationEvents",function(ply,event,d
 			elseif data == PLAYERANIMEVENT_AOC_BLOCK_UP then
 				timer.Remove(tostring(ply)..".AOC_Block")
 
-				local act = wep:TranslateActivity( ACT_AOC_BLOCK_UP )
-				ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD , act , true )
+				local act = wep:TranslateActivity(ACT_AOC_BLOCK_UP)
+				ply:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD , act , true)
 				
 				if act > 0 then
-					local dur = ply:SequenceDuration( ply:SelectWeightedSequence(act) )
+					local dur = ply:SequenceDuration(ply:SelectWeightedSequence(act))
 
 					timer.Create(tostring(ply)..".AOC_Block",dur,1,function()
 						if not ply:IsValid() then return end
 
-						ply:DoAnimationEvent( PLAYERANIMEVENT_AOC_BLOCK_IDLE )
+						ply:DoAnimationEvent(PLAYERANIMEVENT_AOC_BLOCK_IDLE)
 					end)
 
 					return act
 				end
 
-				act = wep:TranslateActivity( ACT_AOC_BLOCK_IDLE )
-				ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD , act , false )
+				act = wep:TranslateActivity(ACT_AOC_BLOCK_IDLE)
+				ply:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD , act , false)
 				
 				return act
 			elseif data == PLAYERANIMEVENT_AOC_BLOCK_IDLE then
-				local act = wep:TranslateActivity( ACT_AOC_BLOCK_IDLE )
-				ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD , act , false )
+				local act = wep:TranslateActivity(ACT_AOC_BLOCK_IDLE)
+				ply:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD , act , false)
 
 				return act
 			elseif data == PLAYERANIMEVENT_AOC_BLOCK_DOWN then
 				timer.Remove(tostring(ply)..".AOC_Block")
 
-				local act = wep:TranslateActivity( ACT_AOC_BLOCK_DOWN )
+				local act = wep:TranslateActivity(ACT_AOC_BLOCK_DOWN)
 
 				if act > 0 then
-					ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD , act , true )
+					ply:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD , act , true)
 
 					return act
 				end
 
-				ply:AnimResetGestureSlot( GESTURE_SLOT_ATTACK_AND_RELOAD )
+				ply:AnimResetGestureSlot(GESTURE_SLOT_ATTACK_AND_RELOAD)
 
 				return ACT_RESET
 			elseif data == PLAYERANIMEVENT_AOC_DRAW then
-				local act = wep:TranslateActivity( ACT_AOC_DRAW )
+				local act = wep:TranslateActivity(ACT_AOC_DRAW)
 
 				if act > 0 then
-					ply:AnimRestartGesture( GESTURE_SLOT_CUSTOM , act , true )
+					ply:AnimRestartGesture(GESTURE_SLOT_CUSTOM , act , true)
 				end
 
 				return act
@@ -946,18 +954,18 @@ hook.Add("DoAnimationEvent","AgeOfChivalry_AnimationEvents",function(ply,event,d
 			local act
 
 			if data == PLAYERANIMEVENT_ATTACK_PRIMARY then
-				act = wep:TranslateActivity( ply:Crouching() and ACT_MP_ATTACK_CROUCH_PRIMARYFIRE or ACT_MP_ATTACK_STAND_PRIMARYFIRE )
+				act = wep:TranslateActivity(ply:Crouching() and ACT_MP_ATTACK_CROUCH_PRIMARYFIRE or ACT_MP_ATTACK_STAND_PRIMARYFIRE)
 			elseif data == PLAYERANIMEVENT_ATTACK_SECONDARY then
-				act = wep:TranslateActivity( ply:Crouching() and ACT_MP_ATTACK_CROUCH_SECONDARYFIRE or ACT_MP_ATTACK_STAND_SECONDARYFIRE )
+				act = wep:TranslateActivity(ply:Crouching() and ACT_MP_ATTACK_CROUCH_SECONDARYFIRE or ACT_MP_ATTACK_STAND_SECONDARYFIRE)
 			elseif data == PLAYERANIMEVENT_RELOAD then
-				act = wep:TranslateActivity( ply:Crouching() and ACT_MP_RELOAD_CROUCH or ACT_MP_RELOAD_STAND )
+				act = wep:TranslateActivity(ply:Crouching() and ACT_MP_RELOAD_CROUCH or ACT_MP_RELOAD_STAND)
 			elseif data == PLAYERANIMEVENT_ATTACK_GRENADE then
-				act = wep:TranslateActivity( ply:Crouching() and ACT_MP_ATTACK_CROUCH_GRENADE or ACT_MP_ATTACK_STAND_GRENADE )
+				act = wep:TranslateActivity(ply:Crouching() and ACT_MP_ATTACK_CROUCH_GRENADE or ACT_MP_ATTACK_STAND_GRENADE)
 			elseif data == PLAYERANIMEVENT_AOC_DEFLECT then
-				act = wep:TranslateActivity( ACT_AOC_GESTURE_DEFLECT )
+				act = wep:TranslateActivity(ACT_AOC_GESTURE_DEFLECT)
 			end
 
-			ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD , act , true )
+			ply:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD , act , true)
 
 			return act
 		end
@@ -966,7 +974,7 @@ end)
 
 end
 
-function SWEP:SetupWeaponHoldTypeForAI( t )
+function SWEP:SetupWeaponHoldTypeForAI(t)
 	if t == "melee" or t == "melee2" or t == "knife" then
 		self.ActivityTranslateAI = {}
 
@@ -1014,7 +1022,7 @@ function SWEP:SetupWeaponHoldTypeForAI( t )
 		self.ActivityTranslateAI [ ACT_IDLE_AIM_STIMULATED ] 		= ACT_IDLE
 		self.ActivityTranslateAI [ ACT_IDLE_AIM_AGITATED ] 			= ACT_IDLE
 
-		if IsValid( self.Owner ) and self.Owner:GetClass() == "npc_metropolice" then
+		if IsValid(self.Owner) and self.Owner:GetClass() == "npc_metropolice" then
 			self.ActivityTranslateAI [ ACT_RANGE_ATTACK1 ] 				= ACT_MELEE_ATTACK_SWING
 			self.ActivityTranslateAI [ ACT_RANGE_ATTACK1_LOW ]          = ACT_MELEE_ATTACK_SWING
 			self.ActivityTranslateAI [ ACT_MELEE_ATTACK1 ]              = ACT_MELEE_ATTACK_SWING
@@ -1046,6 +1054,6 @@ function SWEP:SetupWeaponHoldTypeForAI( t )
 		self.ActivityTranslateAI [ ACT_SMALL_FLINCH ] 				= ACT_RUN
 		self.ActivityTranslateAI [ ACT_BIG_FLINCH ] 				= ACT_RUN
 	else
-		BaseClass.SetupWeaponHoldTypeForAI( self , t )
+		BaseClass.SetupWeaponHoldTypeForAI(self , t)
 	end
 end

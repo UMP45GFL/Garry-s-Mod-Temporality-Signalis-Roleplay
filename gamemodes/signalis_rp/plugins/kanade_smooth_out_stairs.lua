@@ -94,7 +94,7 @@ if CLIENT then
         abs_diff > ply:GetStepSize() ||
         --abs_diff < vel:Length() * FrameTime() ||
         ply:GetMoveType() != MOVETYPE_WALK ||
-        (IsValid(ground_entity) && ground_entity:GetVelocity():LengthSqr() > 0.01 )
+        (IsValid(ground_entity) && ground_entity:GetVelocity():LengthSqr() > 0.01)
         then
             diff = 0
         end

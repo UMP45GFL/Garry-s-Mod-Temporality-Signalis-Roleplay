@@ -225,8 +225,8 @@ function SWEP:NZMaxAmmo()
     local ammo_type = self:GetPrimaryAmmoType() or self.Primary.Ammo
 
     if SERVER then
-        self.Owner:SetAmmo( self.Primary.MaxAmmo, ammo_type )
-		self:SetClip1( self.Primary.ClipSize )
+        self.Owner:SetAmmo(self.Primary.MaxAmmo, ammo_type)
+		self:SetClip1(self.Primary.ClipSize)
     end
 end
 
@@ -521,7 +521,7 @@ SWEP.AttachmentIconOverride     = {
 	--["bo3_rapidfire"] = Material("attachments/kuda/t7_icon_attach_smg_standard_rapidfire_01_rwd.png", "smooth"),
 }
 
-DEFINE_BASECLASS( SWEP.Base )
+DEFINE_BASECLASS(SWEP.Base)
 
 SWEP.StatCache_Blacklist = {
     ["IronSightsPos"] = true,

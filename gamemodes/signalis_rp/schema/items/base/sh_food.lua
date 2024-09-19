@@ -44,7 +44,7 @@ ITEM.functions.Eat = {
 			client:ChatPrint(eatMessage)
 		end
 
-		client:SetHealth( math.Clamp(client:Health() + itemTable.addHealth, 0, client:GetMaxHealth()) )
+		client:SetHealth(math.Clamp(client:Health() + itemTable.addHealth, 0, client:GetMaxHealth()))
 
 		return true
 	end

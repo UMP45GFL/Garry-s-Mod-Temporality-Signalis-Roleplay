@@ -19,6 +19,7 @@ SWEP.HoldType 		= "melee"
 
 SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = false
+SWEP.Damage = 70
 
 SWEP.VElements = {
 	["spear"] = { type = "Model", model = "models/eternalis/items/weapons/fklr_spear.mdl", bone = "spear", rel = "", pos = Vector(0, 0.1, 0), angle = Angle(0, 0, 0), size = Vector(3, 3, 3), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
@@ -29,20 +30,24 @@ SWEP.WElements = {
 }
 
 function SWEP:Throw()
-	local spear = ents.Create( "kanade_thrown_melee" )
+	local spear = ents.Create("kanade_thrown_melee")
+
+	if self.Damage then
+		spear.DamageAmount = self.Damage
+	end
 
 	local shoot = self.Owner:GetShootPos()
 	local aim = self.Owner:GetAimVector() + vector_up * 0.1
 	local ang = self.Owner:EyeAngles()
-	spear:SetPos( shoot + ang:Forward() * 18 + ang:Right() * 8 )
-	ang:RotateAroundAxis( ang:Forward() , 90 )
-	spear:SetAngles( ang )
+	spear:SetPos(shoot + ang:Forward() * 18 + ang:Right() * 8)
+	ang:RotateAroundAxis(ang:Forward() , 90)
+	spear:SetAngles(ang)
 	spear:Spawn()
-	spear:SetOwner( self.Owner )
-	spear:SetPhysicsAttacker( self.Owner )
+	spear:SetOwner(self.Owner)
+	spear:SetPhysicsAttacker(self.Owner)
 	local phys = spear:GetPhysicsObject()
 	phys:SetVelocityInstantaneous(aim * 1400)
-	phys:AddAngleVelocity( Vector( 0 , 0 , -10 ) ) -- might be zero
+	phys:AddAngleVelocity(Vector(0 , 0 , -10)) -- might be zero
 	spear:StartThrowSound("AOC_Spear.Thrown_Fly")
 
 	if self.Owner.GetCharacter then
@@ -76,9 +81,9 @@ end
 function SWEP:Initialize()
 	if CLIENT then
 		-- Create a new table for every weapon instance
-		self.VElements = table.FullCopy( self.VElements )
-		self.WElements = table.FullCopy( self.WElements )
-		self.ViewModelBoneMods = table.FullCopy( self.ViewModelBoneMods )
+		self.VElements = table.FullCopy(self.VElements)
+		self.WElements = table.FullCopy(self.WElements)
+		self.ViewModelBoneMods = table.FullCopy(self.ViewModelBoneMods)
 
 		self:CreateModels(self.VElements) -- create viewmodels
 		self:CreateModels(self.WElements) -- create worldmodels
@@ -133,7 +138,7 @@ if CLIENT then
 			-- we build a render order because sprites need to be drawn after models
 			self.vRenderOrder = {}
 
-			for k, v in pairs( self.VElements ) do
+			for k, v in pairs(self.VElements) do
 				if (v.type == "Model") then
 					table.insert(self.vRenderOrder, 1, k)
 				elseif (v.type == "Sprite" or v.type == "Quad") then
@@ -142,7 +147,7 @@ if CLIENT then
 			end
 		end
 
-		for k, name in ipairs( self.vRenderOrder ) do
+		for k, name in ipairs(self.vRenderOrder) do
 			local v = self.VElements[name]
 			if (!v) then self.vRenderOrder = nil break end
 			if (v.hide) then continue end
@@ -152,12 +157,12 @@ if CLIENT then
 			
 			if (!v.bone) then continue end
 			
-			local pos, ang = self:GetBoneOrientation( self.VElements, v, vm )
+			local pos, ang = self:GetBoneOrientation(self.VElements, v, vm)
 			
 			if (!pos) then continue end
 			
 			if (v.type == "Model" and IsValid(model)) then
-				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
+				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z)
 				ang:RotateAroundAxis(ang:Up(), v.angle.y)
 				ang:RotateAroundAxis(ang:Right(), v.angle.p)
 				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
@@ -166,12 +171,12 @@ if CLIENT then
 				--model:SetModelScale(v.size)
 				local matrix = Matrix()
 				matrix:Scale(v.size)
-				model:EnableMatrix( "RenderMultiply", matrix )
+				model:EnableMatrix("RenderMultiply", matrix)
 				
 				if (v.material == "") then
 					model:SetMaterial("")
 				elseif (model:GetMaterial() != v.material) then
-					model:SetMaterial( v.material )
+					model:SetMaterial(v.material)
 				end
 				
 				if (v.skin and v.skin != model:GetSkin()) then
@@ -179,7 +184,7 @@ if CLIENT then
 				end
 				
 				if (v.bodygroup) then
-					for k, v in pairs( v.bodygroup ) do
+					for k, v in pairs(v.bodygroup) do
 						if (model:GetBodygroup(k) != v) then
 							model:SetBodygroup(k, v)
 						end
@@ -212,7 +217,7 @@ if CLIENT then
 				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
 				
 				cam.Start3D2D(drawpos, ang, v.size)
-					v.draw_func( self )
+					v.draw_func(self)
 				cam.End3D2D()
 			end
 		end
@@ -229,7 +234,7 @@ if CLIENT then
 		if (!self.wRenderOrder) then
 			self.wRenderOrder = {}
 
-			for k, v in pairs( self.WElements ) do
+			for k, v in pairs(self.WElements) do
 				if (v.type == "Model") then
 					table.insert(self.wRenderOrder, 1, k)
 				elseif (v.type == "Sprite" or v.type == "Quad") then
@@ -245,7 +250,7 @@ if CLIENT then
 			bone_ent = self
 		end
 		
-		for k, name in pairs( self.wRenderOrder ) do
+		for k, name in pairs(self.wRenderOrder) do
 			local v = self.WElements[name]
 			if (!v) then self.wRenderOrder = nil break end
 			if (v.hide) then continue end
@@ -253,9 +258,9 @@ if CLIENT then
 			local pos, ang
 			
 			if (v.bone) then
-				pos, ang = self:GetBoneOrientation( self.WElements, v, bone_ent )
+				pos, ang = self:GetBoneOrientation(self.WElements, v, bone_ent)
 			else
-				pos, ang = self:GetBoneOrientation( self.WElements, v, bone_ent, "ValveBiped.Bip01_R_Hand" )
+				pos, ang = self:GetBoneOrientation(self.WElements, v, bone_ent, "ValveBiped.Bip01_R_Hand")
 			end
 			
 			if (!pos) then continue end
@@ -265,7 +270,7 @@ if CLIENT then
 			
 			if (v.type == "Model" and IsValid(model)) then
 
-				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z )
+				model:SetPos(pos + ang:Forward() * v.pos.x + ang:Right() * v.pos.y + ang:Up() * v.pos.z)
 				ang:RotateAroundAxis(ang:Up(), v.angle.y)
 				ang:RotateAroundAxis(ang:Right(), v.angle.p)
 				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
@@ -274,12 +279,12 @@ if CLIENT then
 				--model:SetModelScale(v.size)
 				local matrix = Matrix()
 				matrix:Scale(v.size)
-				model:EnableMatrix( "RenderMultiply", matrix )
+				model:EnableMatrix("RenderMultiply", matrix)
 				
 				if (v.material == "") then
 					model:SetMaterial("")
 				elseif (model:GetMaterial() != v.material) then
-					model:SetMaterial( v.material )
+					model:SetMaterial(v.material)
 				end
 				
 				if (v.skin and v.skin != model:GetSkin()) then
@@ -287,7 +292,7 @@ if CLIENT then
 				end
 				
 				if (v.bodygroup) then
-					for k, v in pairs( v.bodygroup ) do
+					for k, v in pairs(v.bodygroup) do
 						if (model:GetBodygroup(k) != v) then
 							model:SetBodygroup(k, v)
 						end
@@ -322,14 +327,14 @@ if CLIENT then
 				ang:RotateAroundAxis(ang:Forward(), v.angle.r)
 				
 				cam.Start3D2D(drawpos, ang, v.size)
-					v.draw_func( self )
+					v.draw_func(self)
 				cam.End3D2D()
 
 			end
 		end
 	end
 
-	function SWEP:GetBoneOrientation( basetab, tab, ent, bone_override )
+	function SWEP:GetBoneOrientation(basetab, tab, ent, bone_override)
 		local bone, pos, ang
 		if (tab.rel and tab.rel != "") then
 			
@@ -339,7 +344,7 @@ if CLIENT then
 			
 			-- Technically, if there exists an element with the same name as a bone
 			-- you can get in an infinite loop. Let's just hope nobody's that stupid.
-			pos, ang = self:GetBoneOrientation( basetab, v, ent )
+			pos, ang = self:GetBoneOrientation(basetab, v, ent)
 			
 			if (!pos) then return end
 			
@@ -368,13 +373,13 @@ if CLIENT then
 		return pos, ang
 	end
 
-	function SWEP:CreateModels( tab )
+	function SWEP:CreateModels(tab)
 		if (!tab) then return end
 
 		-- Create the clientside models here because Garry says we can't do it in the render hook
-		for k, v in pairs( tab ) do
+		for k, v in pairs(tab) do
 			if (v.type == "Model" and v.model and v.model != "" and (!IsValid(v.modelEnt) or v.createdModel != v.model) and 
-					string.find(v.model, ".mdl") and file.Exists (v.model, "GAME") )
+					string.find(v.model, ".mdl") and file.Exists (v.model, "GAME"))
 			then
 				v.modelEnt = ClientsideModel(v.model, RENDER_GROUP_VIEW_MODEL_OPAQUE)
 				if (IsValid(v.modelEnt)) then
@@ -394,7 +399,7 @@ if CLIENT then
 				local params = { ["$basetexture"] = v.sprite }
 				-- make sure we create a unique name based on the selected options
 				local tocheck = { "nocull", "additive", "vertexalpha", "vertexcolor", "ignorez" }
-				for i, j in pairs( tocheck ) do
+				for i, j in pairs(tocheck) do
 					if (v[j]) then
 						params["$"..j] = 1
 						name = name.."1"
@@ -438,7 +443,7 @@ if CLIENT then
 			end
 			-- !! ----------- !! --
 			
-			for k, v in pairs( loopthrough ) do
+			for k, v in pairs(loopthrough) do
 				local bone = vm:LookupBone(k)
 				if (!bone) then continue end
 				
@@ -459,13 +464,13 @@ if CLIENT then
 				-- !! ----------- !! --
 				
 				if vm:GetManipulateBoneScale(bone) != s then
-					vm:ManipulateBoneScale( bone, s )
+					vm:ManipulateBoneScale(bone, s)
 				end
 				if vm:GetManipulateBoneAngles(bone) != v.angle then
-					vm:ManipulateBoneAngles( bone, v.angle )
+					vm:ManipulateBoneAngles(bone, v.angle)
 				end
 				if vm:GetManipulateBonePosition(bone) != p then
-					vm:ManipulateBonePosition( bone, p )
+					vm:ManipulateBonePosition(bone, p)
 				end
 			end
 		else
@@ -477,9 +482,9 @@ if CLIENT then
 		if (!vm:GetBoneCount()) then return end
 
 		for i=0, vm:GetBoneCount() do
-			vm:ManipulateBoneScale( i, Vector(1, 1, 1) )
-			vm:ManipulateBoneAngles( i, Angle(0, 0, 0) )
-			vm:ManipulateBonePosition( i, Vector(0, 0, 0) )
+			vm:ManipulateBoneScale(i, Vector(1, 1, 1))
+			vm:ManipulateBoneAngles(i, Angle(0, 0, 0))
+			vm:ManipulateBonePosition(i, Vector(0, 0, 0))
 		end
 	end
 
@@ -490,11 +495,11 @@ if CLIENT then
 	-- Fully copies the table, meaning all tables inside this table are copied too and so on (normal table.Copy copies only their reference).
 	-- Does not copy entities of course, only copies their reference.
 	-- WARNING: do not use on tables that contain themselves somewhere down the line or you'll get an infinite loop
-	function table.FullCopy( tab )
+	function table.FullCopy(tab)
 		if (!tab) then return nil end
 		
 		local res = {}
-		for k, v in pairs( tab ) do
+		for k, v in pairs(tab) do
 			if (type(v) == "table") then
 				res[k] = table.FullCopy(v) -- recursion ho!
 			elseif (type(v) == "Vector") then
@@ -515,10 +520,10 @@ function SWEP:Think()
 		if self:GetLoaded() and GetConVarNumber("gmod_suit") ~= 0 and self.Owner:IsPlayer() then
 			local stamina = self.Owner:GetSuitPower()
 
-			self.MaxStamina = math.min( self.MaxStamina or stamina , stamina )
+			self.MaxStamina = math.min(self.MaxStamina or stamina , stamina)
 		
 			if stamina > self.MaxStamina then
-				self.Owner:SetSuitPower( self.MaxStamina )
+				self.Owner:SetSuitPower(self.MaxStamina)
 			end
 		else
 			self.MaxStamina = nil
@@ -527,28 +532,28 @@ function SWEP:Think()
 
 	if self:GetLoaded() and not self.Owner:KeyDown(IN_ATTACK) and not self.Owner:KeyDown(IN_ATTACK2) then
 		if CurTime() >= self:GetThrowTime() then
-			self:EmitSound( self.ThrowSound )
-			self:SendWeaponAnim( ACT_VM_THROW )
+			self:EmitSound(self.ThrowSound)
+			self:SendWeaponAnim(ACT_VM_THROW)
 			local dur = self:SequenceDuration()
 			
 			self.Owner:DoAttackEvent()
-			self:SetNextIdle( 0 )
-			self:SetNextPrimaryFire( CurTime() + dur )
-			self:SetNextDraw( CurTime() + dur )
+			self:SetNextIdle(0)
+			self:SetNextPrimaryFire(CurTime() + dur)
+			self:SetNextDraw(CurTime() + dur)
 			self:TakePrimaryAmmo(1)
 
 			if SERVER then
 				self:Throw()
 
 				if GetConVarNumber("gmod_suit") ~= 0 then
-					self.Owner:SetSuitPower( math.max( self.Owner:GetSuitPower() - 10 , 0 ) )
+					self.Owner:SetSuitPower(math.max(self.Owner:GetSuitPower() - 10 , 0))
 				end
 
-				self:SetNoDraw( true )
+				self:SetNoDraw(true)
 			end
 
-			self:SetLoaded( false )
-			self:SetThrowTime( 0 )
+			self:SetLoaded(false)
+			self:SetThrowTime(0)
 			if SERVER then
 				self.Owner:SetNextStamina(CurTime() + dur)
 			end
@@ -557,17 +562,17 @@ function SWEP:Think()
 
 	if self:GetNextDraw() ~= 0 and CurTime() >= self:GetNextDraw() then
 		if SERVER then
-			self:SetNoDraw( false )
+			self:SetNoDraw(false)
 		end
-		self:SendWeaponAnim( ACT_VM_DRAW )
-		self:SetNextDraw( 0 )
+		self:SendWeaponAnim(ACT_VM_DRAW)
+		self:SetNextDraw(0)
 		
 	elseif self:GetNextIdle() ~= 0 and CurTime() >= self:GetNextIdle() then
 		self:SendWeaponAnim(ACT_VM_IDLE)
-		self:SetNextIdle( 0 ) -- CurTime() + self:SequenceDuration()
+		self:SetNextIdle(0) -- CurTime() + self:SequenceDuration()
 	end
 
-	if SERVER and CurTime() >= self:GetNextPrimaryFire() and self.Owner:GetAmmoCount( self.Primary.Ammo ) <= 0 then
+	if SERVER and CurTime() >= self:GetNextPrimaryFire() and self.Owner:GetAmmoCount(self.Primary.Ammo) <= 0 then
 		local ply = self.Owner
 		local class = self:GetClass()
 

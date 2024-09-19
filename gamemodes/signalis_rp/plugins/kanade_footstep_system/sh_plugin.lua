@@ -49,7 +49,7 @@ PrecacheSoundsRecursively("sound/physics")
 local function BackwardsEnums(enum_name)
 	local backenums = {}
 
-	for k, v in pairs( _G ) do
+	for k, v in pairs(_G) do
 		if isstring(k) and string.find(k, "^" .. enum_name) then
 			backenums[v] = k
 		end

@@ -47,8 +47,8 @@ if SERVER then
 	resource.AddFile("sound/lowhp/hbeat.wav")
 end
 
-local etb_vignette = GetConVar( "etb_vignette" )
-local etb_muffle_effect = GetConVar( "etb_muffle_effect" )
+local etb_vignette = GetConVar("etb_vignette")
+local etb_muffle_effect = GetConVar("etb_muffle_effect")
 
 if CLIENT then
 	local intensity = 0

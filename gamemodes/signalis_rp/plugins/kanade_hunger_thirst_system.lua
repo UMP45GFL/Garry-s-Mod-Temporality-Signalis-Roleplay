@@ -126,10 +126,10 @@ if SERVER then
 		print("too hungry: " .. tooHungry)
 		*/
 
-		print("Time to be hungry: " .. niceTime( ((maxHunger - hungry) / hungerDecayAmount) * hungerDecaySpeed ) .. ".")
-		print("Time to be very hungry: " .. niceTime( ((maxHunger - veryHungry) / hungerDecayAmount) * hungerDecaySpeed ) .. ".")
-		print("Time to be too hungry: " ..  niceTime( ((maxHunger - tooHungry) / hungerDecayAmount) * hungerDecaySpeed ) .. ".")
-		print("Time to lose all hunger: " .. niceTime( (maxHunger / hungerDecayAmount) * hungerDecaySpeed ) .. ".")
+		print("Time to be hungry: " .. niceTime(((maxHunger - hungry) / hungerDecayAmount) * hungerDecaySpeed) .. ".")
+		print("Time to be very hungry: " .. niceTime(((maxHunger - veryHungry) / hungerDecayAmount) * hungerDecaySpeed) .. ".")
+		print("Time to be too hungry: " ..  niceTime(((maxHunger - tooHungry) / hungerDecayAmount) * hungerDecaySpeed) .. ".")
+		print("Time to lose all hunger: " .. niceTime((maxHunger / hungerDecayAmount) * hungerDecaySpeed) .. ".")
 
 		local thirstDecaySpeed = ix.config.Get("Thirst decay speed", THIRST_DECAY_SPEED)
 		local thirstDecayAmount = ix.config.Get("Thirst decay amount", THIRST_DECAY_AMOUNT)
@@ -138,9 +138,9 @@ if SERVER then
 		local tooThirsty = ix.config.Get("Too thirsty", TOO_THIRSTY)
 		
 		print("")
-		print("Time to be thirsty: " .. niceTime( ((maxThirst - thirsty) / thirstDecayAmount) * thirstDecaySpeed ) .. ".")
-		print("Time to be too thirsty: " .. niceTime( ((maxThirst - tooThirsty) / thirstDecayAmount) * thirstDecaySpeed ) .. ".")
-		print("Time to lose all thirst: " .. niceTime( (maxThirst / thirstDecayAmount) * thirstDecaySpeed ) .. ".")
+		print("Time to be thirsty: " .. niceTime(((maxThirst - thirsty) / thirstDecayAmount) * thirstDecaySpeed) .. ".")
+		print("Time to be too thirsty: " .. niceTime(((maxThirst - tooThirsty) / thirstDecayAmount) * thirstDecaySpeed) .. ".")
+		print("Time to lose all thirst: " .. niceTime((maxThirst / thirstDecayAmount) * thirstDecaySpeed) .. ".")
 	end
 
 	function HandleHungerAndThirst()

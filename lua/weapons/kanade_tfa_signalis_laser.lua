@@ -10,7 +10,7 @@
 
 SWEP.Base               = "tfa_bash_base"
 SWEP.Category               = "Kanade's TFA Signalis" -- The category.  Please, just choose something generic or something I've already done if you plan on only doing like one swep..
-SWEP.Manufacturer = nil -- Gun Manufactrer (e.g. Hoeckler and Koch )
+SWEP.Manufacturer = nil -- Gun Manufactrer (e.g. Hoeckler and Koch)
 SWEP.IconOverride                   = ""
 SWEP.Type							= "High precision laser equipment"
 SWEP.Author             = "Insel" -- Author Tooltip
@@ -310,7 +310,7 @@ SWEP.LuaShellEject = false -- Enable shell ejection through lua?
 SWEP.LuaShellEjectDelay = 0 -- The delay to actually eject things
 SWEP.LuaShellModel = nil -- The model to use for ejected shells
 SWEP.LuaShellScale = nil -- The model scale to use for ejected shells
-SWEP.LuaShellYaw = nil -- The model yaw rotation ( relative ) to use for ejected shells
+SWEP.LuaShellYaw = nil -- The model yaw rotation (relative) to use for ejected shells
 -- Tracer Stuff
 SWEP.TracerName         =  "effect_cerber_lasgun" -- Change to a string of your tracer name.  Can be custom. There is a nice example at https://github.com/garrynewman/garrysmod/blob/master/garrysmod/gamemodes/base/entities/effects/tooltracer.lua
 SWEP.TracerCount        = 1     -- 0 disables, otherwise, 1 in X chance
@@ -434,7 +434,7 @@ SWEP.DInv2_Volume = nil
 SWEP.DInv2_Mass = nil
 
 
-DEFINE_BASECLASS( SWEP.Base )
+DEFINE_BASECLASS(SWEP.Base)
 
 SWEP.Primary.Knockback = 0 --Autodetected if nil; this is the velocity kickback
 

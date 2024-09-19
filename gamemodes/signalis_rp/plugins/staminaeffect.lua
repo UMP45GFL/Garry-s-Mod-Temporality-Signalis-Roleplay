@@ -61,7 +61,7 @@ function PLUGIN:PlayerTick(ply)
     end
 end
 
-if ( CLIENT ) then
+if (CLIENT) then
     local staminabluralpha = 0
     local staminabluramount = 0
     local staminablurmaxamount = 5
@@ -69,11 +69,11 @@ if ( CLIENT ) then
     function PLUGIN:HUDPaint()
         local frametime = RealFrameTime()
         
-        if ( ix.option.Get("cheapBlur", false) ) then
+        if (ix.option.Get("cheapBlur", false)) then
             staminablurmaxamount = 10
         end
         
-        if ( LocalPlayer().ixStaminaBreathe ) then
+        if (LocalPlayer().ixStaminaBreathe) then
             staminabluralpha = Lerp(frametime / 2, staminabluralpha, 255)
             staminabluramount = Lerp(frametime / 2, staminabluramount, staminablurmaxamount)
         else

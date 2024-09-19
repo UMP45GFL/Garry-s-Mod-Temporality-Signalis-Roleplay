@@ -11,13 +11,13 @@ net.Receive("ixOpenDetailedDescriptions", function()
 	Frame:MakePopup()
 
 	local List = vgui.Create("DListView", Frame)
-	List:Dock( FILL )
-	List:DockMargin( 0, 0, 0, 5 )
+	List:Dock(FILL)
+	List:DockMargin(0, 0, 0, 5)
 	List:SetMultiSelect(false)
 	
 	local textEntry = vgui.Create("DTextEntry", List)
-	textEntry:Dock( FILL )
-	textEntry:DockMargin( 0, 0, 0, 0 )
+	textEntry:Dock(FILL)
+	textEntry:DockMargin(0, 0, 0, 0)
 	textEntry:SetMultiline(true)
 	textEntry:SetVerticalScrollbarEnabled(true)
 
@@ -30,8 +30,8 @@ net.Receive("ixOpenDetailedDescriptions", function()
 		DButton:SetTextColor(Color(0, 0, 0, 255))
 	end
 	DButton:SetText("View Reference Picture")
-	DButton:Dock( BOTTOM )
-	DButton:DockMargin( 0, 0, 0, 0 )
+	DButton:Dock(BOTTOM)
+	DButton:DockMargin(0, 0, 0, 0)
 	
 	DButton.DoClick = function()
 		gui.OpenURL(textEntryDataURL)
@@ -49,13 +49,13 @@ net.Receive("ixSetDetailedDescriptions", function()
 	Frame:MakePopup()
 
 	local List = vgui.Create("DListView", Frame)
-	List:Dock( FILL )
-	List:DockMargin( 0, 0, 0, 5 )
+	List:Dock(FILL)
+	List:DockMargin(0, 0, 0, 5)
 	List:SetMultiSelect(false)
 	
 	local textEntry = vgui.Create("DTextEntry", List)
-	textEntry:Dock( FILL )
-	textEntry:DockMargin( 0, 0, 0, 0 )
+	textEntry:Dock(FILL)
+	textEntry:DockMargin(0, 0, 0, 0)
 	textEntry:SetMultiline(true)
 	textEntry:SetVerticalScrollbarEnabled(true)
 	
@@ -64,14 +64,14 @@ net.Receive("ixSetDetailedDescriptions", function()
 	end
 	
 	local DButton = vgui.Create("DButton", List)
-	DButton:DockMargin( 0, 0, 0, 0 )
-	DButton:Dock( BOTTOM )
+	DButton:DockMargin(0, 0, 0, 0)
+	DButton:Dock(BOTTOM)
 	DButton:SetText("Edit")
 	DButton:SetTextColor(Color(0, 0, 0, 255))
 	
 	local textEntryURL = vgui.Create("DTextEntry", List)
-	textEntryURL:Dock( BOTTOM )
-	textEntryURL:DockMargin( 0, 0, 0, 0 )
+	textEntryURL:Dock(BOTTOM)
+	textEntryURL:DockMargin(0, 0, 0, 0)
 	textEntryURL:SetValue("Reference Image URL")
 	
 	if (LocalPlayer():GetCharacter():GetData("textDetDescDataURL")) then

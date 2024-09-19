@@ -42,7 +42,7 @@ function ITEM:CanEquipOutfit(client)
         character.vars.class == "replika_eulr" or
         character.vars.class == "replika_lstr" or
         client:GetModel() == "models/voxaid/alina/alina_pm.mdl"
-    ) then
+   ) then
         return true
     end
 

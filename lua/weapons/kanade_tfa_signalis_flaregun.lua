@@ -1,6 +1,6 @@
 SWEP.Base				= "tfa_gun_base"
 SWEP.Category				= "Kanade's TFA Signalis" --The category.  Please, just choose something generic or something I've already done if you plan on only doing like one swep..
---SWEP.Manufacturer = "N/A" --Gun Manufactrer (e.g. Hoeckler and Koch )
+--SWEP.Manufacturer = "N/A" --Gun Manufactrer (e.g. Hoeckler and Koch)
 SWEP.Author				= "Zacks & 1nazuma" --Author Tooltip
 --SWEP.Contact				= "http://steamcommunity.com/profiles/76561198161775645" --Contact Info Tooltip
 SWEP.Purpose				= "LP-265a Leuchtpistole Flare Gun. While not meant for combat, can be used to set enemies on fire, incapacitating them and dealing a large amount of damage over time." 
@@ -241,7 +241,7 @@ SWEP.EventTable = {} --Event Table, used for custom events when an action is pla
 --example:
 --SWEP.EventTable = {
 --	[ACT_VM_RELOAD] = {
---		{ ["time"] = 0.1, ["type"] = "lua", ["value"] = function( wep, viewmodel ) end, ["client"] = true, ["server"] = true},
+--		{ ["time"] = 0.1, ["type"] = "lua", ["value"] = function(wep, viewmodel) end, ["client"] = true, ["server"] = true},
 --		{ ["time"] = 0.1, ["type"] = "sound", ["value"] = Sound("x") }
 --	}
 --}
@@ -314,93 +314,93 @@ SWEP.Platinum = false
 --[[
 function SWEP:ShootBullet()
 
-	if (SERVER ) then
+	if (SERVER) then
 		if self:GetStat("Red") then --Red
-			self.Weapon:EmitSound( self.Primary.Sound )
+			self.Weapon:EmitSound(self.Primary.Sound)
 			self.flare = ents.Create("gtav_cm_flare_red")
-			self.flare:SetPos( self.Owner:GetShootPos() )
-			self.flare:SetAngles( self.Owner:EyeAngles() )
-			self.flare:SetModel( "models/krazy/gtav/magazines/flareshell.mdl" )
+			self.flare:SetPos(self.Owner:GetShootPos())
+			self.flare:SetAngles(self.Owner:EyeAngles())
+			self.flare:SetModel("models/krazy/gtav/magazines/flareshell.mdl")
 			self.flare:Spawn()
 			self.flare:Fire("kill","",150)
-			self.flare:GetPhysicsObject():ApplyForceCenter( self:GetForward() * 8000 )
+			self.flare:GetPhysicsObject():ApplyForceCenter(self:GetForward() * 8000)
 			self:ShootEffects()
 		end
 		if self:GetStat("Army") then --Army
-			self.Weapon:EmitSound( self.Primary.Sound )
+			self.Weapon:EmitSound(self.Primary.Sound)
 			self.flare = ents.Create("gtav_cm_flare_army")
-			self.flare:SetPos( self.Owner:GetShootPos() )
-			self.flare:SetAngles( self.Owner:EyeAngles() )
-			self.flare:SetModel( "models/krazy/gtav/magazines/flareshell.mdl" )
+			self.flare:SetPos(self.Owner:GetShootPos())
+			self.flare:SetAngles(self.Owner:EyeAngles())
+			self.flare:SetModel("models/krazy/gtav/magazines/flareshell.mdl")
 			self.flare:Spawn()
 			self.flare:Fire("kill","",30)
-			self.flare:GetPhysicsObject():ApplyForceCenter( self:GetForward() * 8000 )
+			self.flare:GetPhysicsObject():ApplyForceCenter(self:GetForward() * 8000)
 			self:ShootEffects()
 		end
 		if  self:GetStat("Green") then --Green
-			self.Weapon:EmitSound( self.Primary.Sound )
+			self.Weapon:EmitSound(self.Primary.Sound)
 			self.flare = ents.Create("gtav_cm_flare_green")
-			self.flare:SetPos( self.Owner:GetShootPos() )
-			self.flare:SetAngles( self.Owner:EyeAngles() )
-			self.flare:SetModel( "models/krazy/gtav/magazines/flareshell.mdl" )
+			self.flare:SetPos(self.Owner:GetShootPos())
+			self.flare:SetAngles(self.Owner:EyeAngles())
+			self.flare:SetModel("models/krazy/gtav/magazines/flareshell.mdl")
 			self.flare:Spawn()
 			self.flare:Fire("kill","",30)
-			self.flare:GetPhysicsObject():ApplyForceCenter( self:GetForward() * 8000 )
+			self.flare:GetPhysicsObject():ApplyForceCenter(self:GetForward() * 8000)
 			self:ShootEffects() 
 		elseif self:GetStat("Orange") then --Orange
-			self.Weapon:EmitSound( self.Primary.Sound )
+			self.Weapon:EmitSound(self.Primary.Sound)
 			self.flare = ents.Create("gtav_cm_flare_orange")
-			self.flare:SetPos( self.Owner:GetShootPos() )
-			self.flare:SetAngles( self.Owner:EyeAngles() )
-			self.flare:SetModel( "models/krazy/gtav/magazines/flareshell.mdl" )
+			self.flare:SetPos(self.Owner:GetShootPos())
+			self.flare:SetAngles(self.Owner:EyeAngles())
+			self.flare:SetModel("models/krazy/gtav/magazines/flareshell.mdl")
 			self.flare:Spawn()
 			self.flare:Fire("kill","",30)
-			self.flare:GetPhysicsObject():ApplyForceCenter( self:GetForward() * 8000 )
+			self.flare:GetPhysicsObject():ApplyForceCenter(self:GetForward() * 8000)
 			self:ShootEffects() 
 		elseif self:GetStat("LSPD") then --LSPD
-			self.Weapon:EmitSound( self.Primary.Sound )
+			self.Weapon:EmitSound(self.Primary.Sound)
 			self.flare = ents.Create("gtav_cm_flare_lspd")
-			self.flare:SetPos( self.Owner:GetShootPos() )
-			self.flare:SetAngles( self.Owner:EyeAngles() )
-			self.flare:SetModel( "models/krazy/gtav/magazines/flareshell.mdl" )
+			self.flare:SetPos(self.Owner:GetShootPos())
+			self.flare:SetAngles(self.Owner:EyeAngles())
+			self.flare:SetModel("models/krazy/gtav/magazines/flareshell.mdl")
 			self.flare:Spawn()
 			self.flare:Fire("kill","",30)
-			self.flare:GetPhysicsObject():ApplyForceCenter( self:GetForward() * 8000 )
+			self.flare:GetPhysicsObject():ApplyForceCenter(self:GetForward() * 8000)
 			self:ShootEffects() 
 		elseif self:GetStat("Pink") then --Pink
-			self.Weapon:EmitSound( self.Primary.Sound )
+			self.Weapon:EmitSound(self.Primary.Sound)
 			self.flare = ents.Create("gtav_cm_flare_pink")
-			self.flare:SetPos( self.Owner:GetShootPos() )
-			self.flare:SetAngles( self.Owner:EyeAngles() )
-			self.flare:SetModel( "models/krazy/gtav/magazines/flareshell.mdl" )
+			self.flare:SetPos(self.Owner:GetShootPos())
+			self.flare:SetAngles(self.Owner:EyeAngles())
+			self.flare:SetModel("models/krazy/gtav/magazines/flareshell.mdl")
 			self.flare:Spawn()
 			self.flare:Fire("kill","",30)
-			self.flare:GetPhysicsObject():ApplyForceCenter( self:GetForward() * 8000 )
+			self.flare:GetPhysicsObject():ApplyForceCenter(self:GetForward() * 8000)
 			self:ShootEffects() 
 		elseif self:GetStat("Gold") then --Gold
-			self.Weapon:EmitSound( self.Primary.Sound )
+			self.Weapon:EmitSound(self.Primary.Sound)
 			self.flare = ents.Create("gtav_cm_flare_gold")
-			self.flare:SetPos( self.Owner:GetShootPos() )
-			self.flare:SetAngles( self.Owner:EyeAngles() )
-			self.flare:SetModel( "models/krazy/gtav/magazines/flareshell.mdl" )
+			self.flare:SetPos(self.Owner:GetShootPos())
+			self.flare:SetAngles(self.Owner:EyeAngles())
+			self.flare:SetModel("models/krazy/gtav/magazines/flareshell.mdl")
 			self.flare:Spawn()
 			self.flare:Fire("kill","",30)
-			self.flare:GetPhysicsObject():ApplyForceCenter( self:GetForward() * 8000 )
+			self.flare:GetPhysicsObject():ApplyForceCenter(self:GetForward() * 8000)
 			self:ShootEffects() 
 		elseif self:GetStat("Platinum") then --Platinum
-			self.Weapon:EmitSound( self.Primary.Sound )
+			self.Weapon:EmitSound(self.Primary.Sound)
 			self.flare = ents.Create("gtav_cm_flare_platinum")
-			self.flare:SetPos( self.Owner:GetShootPos() )
-			self.flare:SetAngles( self.Owner:EyeAngles() )
-			self.flare:SetModel( "models/krazy/gtav/magazines/flareshell.mdl" )
+			self.flare:SetPos(self.Owner:GetShootPos())
+			self.flare:SetAngles(self.Owner:EyeAngles())
+			self.flare:SetModel("models/krazy/gtav/magazines/flareshell.mdl")
 			self.flare:Spawn()
 			self.flare:Fire("kill","",30)
-			self.flare:GetPhysicsObject():ApplyForceCenter( self:GetForward() * 8000 )
+			self.flare:GetPhysicsObject():ApplyForceCenter(self:GetForward() * 8000)
 			self:ShootEffects() 
 		end
 	end
 	
-	if ( self.Owner:IsNPC() ) then return end
+	if (self.Owner:IsNPC()) then return end
 	
 end
 
@@ -409,9 +409,9 @@ function SWEP:OnRestore()
 	self.NextSecondaryAttack = 0
 	
 end
-include( "weapons/gtav_flare_gun/extras.lua" )
+include("weapons/gtav_flare_gun/extras.lua")
 ]]
 SWEP.ProjectileEntity = "signalis_flare_red" --Entity to shoot
 SWEP.ProjectileVelocity = 1550 --Entity to shoot's velocity
 
-DEFINE_BASECLASS( SWEP.Base )
+DEFINE_BASECLASS(SWEP.Base)

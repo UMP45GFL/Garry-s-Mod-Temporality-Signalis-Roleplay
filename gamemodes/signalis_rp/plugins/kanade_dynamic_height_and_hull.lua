@@ -39,16 +39,16 @@ local function CLAMPSIZE(value)
 	return value
 end
 local function CLAMPHEIGHT(value)
-	return math.Clamp( value, ix.config.Get("DynamicHeightAndHullMinHeight", true), ix.config.Get("DynamicHeightAndHullMaxHeight", true) )
+	return math.Clamp(value, ix.config.Get("DynamicHeightAndHullMinHeight", true), ix.config.Get("DynamicHeightAndHullMaxHeight", true))
 end
 local function CLAMPCAMHEIGHT(value)
-	return math.Clamp( value * 1.09121366, ix.config.Get("DynamicHeightAndHullMinHeight", true), ix.config.Get("DynamicHeightAndHullMaxHeight", true) ) / 1.09121366
+	return math.Clamp(value * 1.09121366, ix.config.Get("DynamicHeightAndHullMinHeight", true), ix.config.Get("DynamicHeightAndHullMaxHeight", true)) / 1.09121366
 end
 local function CLAMPCROUCHCAMHEIGHT(ccamheight, height)
 	if ccamheight > height / 1.83214558 then
-		return math.Clamp( ccamheight + 3, ix.config.Get("DynamicHeightAndHullMinHeight", true), ix.config.Get("DynamicHeightAndHullMaxHeight", true) ) - 3
+		return math.Clamp(ccamheight + 3, ix.config.Get("DynamicHeightAndHullMinHeight", true), ix.config.Get("DynamicHeightAndHullMaxHeight", true)) - 3
 	else
-		return math.Clamp( height / 1.83214558, ix.config.Get("DynamicHeightAndHullMinHeight", true), ix.config.Get("DynamicHeightAndHullMaxHeight", true) ) * 1.83214558
+		return math.Clamp(height / 1.83214558, ix.config.Get("DynamicHeightAndHullMinHeight", true), ix.config.Get("DynamicHeightAndHullMaxHeight", true)) * 1.83214558
 	end
 end
 
@@ -67,10 +67,10 @@ if SERVER then
 			ply:SetViewOffsetDucked(Vector(0, 0, 28))
 			
 			net.Start("DynamicCameraHullViewSetup")
-				net.WriteFloat( -1 )
-				net.WriteFloat( -1 )
-				net.WriteFloat( -1 )
-				net.WriteFloat( -1 )
+				net.WriteFloat(-1)
+				net.WriteFloat(-1)
+				net.WriteFloat(-1)
+				net.WriteFloat(-1)
 			net.Send(ply)
 			
 			return
@@ -86,14 +86,14 @@ if SERVER then
 		if bone then
 			height = entity:GetBonePosition(bone).z + 5
 		end
-		attach = entity:LookupAttachment( "eyes" )
+		attach = entity:LookupAttachment("eyes")
 		if attach > 0 then
-			camheight = entity:GetAttachment( entity:LookupAttachment( "eyes" ) ).Pos.z
+			camheight = entity:GetAttachment(entity:LookupAttachment("eyes")).Pos.z
 		end
 		
-		height = CLAMPCAMHEIGHT( height )
+		height = CLAMPCAMHEIGHT(height)
 		if attach > 0 then
-			camheight = CLAMPHEIGHT( camheight )
+			camheight = CLAMPHEIGHT(camheight)
 		end
 		
 		entity:Remove()
@@ -111,13 +111,13 @@ if SERVER then
 		if bone then
 			cheight = entity:GetBonePosition(bone).z + 5
 		end
-		attach = entity:LookupAttachment( "eyes" )
+		attach = entity:LookupAttachment("eyes")
 		if attach > 0 then
-			ccamheight = math.Clamp(entity:GetAttachment( entity:LookupAttachment( "eyes" ) ).Pos.z, ix.config.Get("DynamicHeightAndHullMinHeight", true), 33)
+			ccamheight = math.Clamp(entity:GetAttachment(entity:LookupAttachment("eyes")).Pos.z, ix.config.Get("DynamicHeightAndHullMinHeight", true), 33)
 		end
 		
 		if attach > 0 then
-			ccamheight = CLAMPCROUCHCAMHEIGHT( ccamheight, -1 )
+			ccamheight = CLAMPCROUCHCAMHEIGHT(ccamheight, -1)
 		end
 		
 		entity:Remove()
@@ -126,18 +126,18 @@ if SERVER then
 		ply:SetNWFloat("DynamicCamera:CrouchCamHeight", ccamheight)
 
 		net.Start("DynamicCameraHullViewSetup")
-			net.WriteFloat( height )
-			net.WriteFloat( cheight )
-			net.WriteFloat( camheight )
-			net.WriteFloat( ccamheight )
+			net.WriteFloat(height)
+			net.WriteFloat(cheight)
+			net.WriteFloat(camheight)
+			net.WriteFloat(ccamheight)
 		net.Send(ply)
 
-		ply:SetViewOffset( Vector( 0, 0, camheight > 0 and camheight or height ) )
-		ply:SetViewOffsetDucked( Vector( 0, 0, ccamheight > 0 and ccamheight or cheight ) )
+		ply:SetViewOffset(Vector(0, 0, camheight > 0 and camheight or height))
+		ply:SetViewOffsetDucked(Vector(0, 0, ccamheight > 0 and ccamheight or cheight))
 
-		local hullmin = Vector( math.Round(CLAMPSIZE(height / -4.5)), math.Round(CLAMPSIZE(height / -4.5)), 0)
-		local hullmax = Vector( math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(height * 1.09121366)) )
-		local hullcrouch = Vector( math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(ccamheight > height / 1.83214558 and ccamheight + 3 or height / 1.83214558)) )
+		local hullmin = Vector(math.Round(CLAMPSIZE(height / -4.5)), math.Round(CLAMPSIZE(height / -4.5)), 0)
+		local hullmax = Vector(math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(height * 1.09121366)))
+		local hullcrouch = Vector(math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(ccamheight > height / 1.83214558 and ccamheight + 3 or height / 1.83214558)))
 
 		ply:SetHull(hullmin, hullmax)
 		ply:SetHullDuck(hullmin, hullcrouch)
@@ -145,13 +145,13 @@ if SERVER then
 
 end
 
-local PLY_META = FindMetaTable( "Player" )
+local PLY_META = FindMetaTable("Player")
 
 function PLY_META.GetBodygroupsAsNumber(self)
 	local num = 0
 	local bodys = self:GetNumBodyGroups()
 	for i=0, bodys - 1 do
-		num = num + (self:GetBodygroup(i) < 10 and self:GetBodygroup(i) or 0) * math.pow( 10, bodys - 1 - i )
+		num = num + (self:GetBodygroup(i) < 10 and self:GetBodygroup(i) or 0) * math.pow(10, bodys - 1 - i)
 	end
 	return num
 end
@@ -184,9 +184,9 @@ function PLY_META.ResetHull(self)
 		local cheight = self:GetNWFloat("DynamicCamera:CrouchHeight")
 		local ccamheight = self:GetNWFloat("DynamicCamera:CrouchCamHeight")
 
-		local hullmin = Vector( math.Round(CLAMPSIZE(height / -4.5)), math.Round(CLAMPSIZE(height / -4.5)), 0 )
-		local hullmax = Vector( math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(height * 1.09121366)) )
-		local hullcrouch = Vector( math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(ccamheight > height / 1.83214558 and ccamheight + 3 or height / 1.83214558)) )
+		local hullmin = Vector(math.Round(CLAMPSIZE(height / -4.5)), math.Round(CLAMPSIZE(height / -4.5)), 0)
+		local hullmax = Vector(math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(height * 1.09121366)))
+		local hullcrouch = Vector(math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(ccamheight > height / 1.83214558 and ccamheight + 3 or height / 1.83214558)))
 
 		self:SetHull(hullmin, hullmax)
 		self:SetHullDuck(hullmin, hullcrouch)
@@ -202,9 +202,9 @@ function PLY_META.ResetHull(self)
 		local cheight = self:GetNWFloat("DynamicCamera:CrouchHeight")
 		local ccamheight = self:GetNWFloat("DynamicCamera:CrouchCamHeight")
 
-		local hullmin = Vector( math.Round(CLAMPSIZE(height / -4.5)), math.Round(CLAMPSIZE(height / -4.5)), 0 )
-		local hullmax = Vector( math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(height * 1.09121366)) )
-		local hullcrouch = Vector( math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(ccamheight > height / 1.83214558 and ccamheight + 3 or height / 1.83214558)) )
+		local hullmin = Vector(math.Round(CLAMPSIZE(height / -4.5)), math.Round(CLAMPSIZE(height / -4.5)), 0)
+		local hullmax = Vector(math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(height * 1.09121366)))
+		local hullcrouch = Vector(math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPHEIGHT(ccamheight > height / 1.83214558 and ccamheight + 3 or height / 1.83214558)))
 
 		self:SetHull(hullmin, hullmax)
 		self:SetHullDuck(hullmin, hullcrouch)
@@ -213,7 +213,7 @@ end
 
 if SERVER then
 	function DynamicCameraUpdateTrueModel(ply)
-		local testString = ply.outfitter_mdl_help and ( ply.outfitter_mdl_help ~= "" and ply.outfitter_mdl_help ) or ply:GetModel()
+		local testString = ply.outfitter_mdl_help and (ply.outfitter_mdl_help ~= "" and ply.outfitter_mdl_help) or ply:GetModel()
 		if ply:GetNWString("DynamicCamera:TrueModel") ~= testString then
 			ply:SetNWString("DynamicCamera:TrueModel", testString)
 			DynamicCameraUpdateView(ply)
@@ -234,25 +234,25 @@ if SERVER then
 		DynamicCameraUpdateTrueModel(ply)
 	end)
 	
-	net.Receive( "DynamicCameraHullViewSetup", function()
-		DynamicCameraUpdateView(Entity( net.ReadInt(17) ))
-	end )
+	net.Receive("DynamicCameraHullViewSetup", function()
+		DynamicCameraUpdateView(Entity(net.ReadInt(17)))
+	end)
 	
-	net.Receive( "DynamicCameraOutfitterConnectHelp", function(len, ply)
-		if ( IsValid( ply ) and ply:IsPlayer() ) then
+	net.Receive("DynamicCameraOutfitterConnectHelp", function(len, ply)
+		if (IsValid(ply) and ply:IsPlayer()) then
 			local testString = net.ReadString()
 			if testString == "" then testString = nil end
 			ply.outfitter_mdl_help = testString
 		end
-	end )
+	end)
 	
 	function DynamicCameraNPCCreate(ent)
-		timer.Simple( 0.25, function()
+		timer.Simple(0.25, function()
 			if not IsValid(ent) or not ent:IsNPC() then return end
 			if not ix.config.Get("DynamicHeightAndHullAffectNPCs", true) then return end
 			if ent.IsVJBaseSNPC then return end
-			if string.find( ent:GetClass(), "_torso" ) ~= nil then return end
-			if string.find( ent:GetClass(), "zombie" ) ~= nil then return end
+			if string.find(ent:GetClass(), "_torso") ~= nil then return end
+			if string.find(ent:GetClass(), "zombie") ~= nil then return end
 			
 			if ent:GetModel() == nil or ent:GetModel() == "" then
 				DynamicCameraNPCCreate(ent)
@@ -273,7 +273,7 @@ if SERVER then
 			if bone then
 				local BONEPOS = entity:GetBonePosition(bone)
 				height = entity:GetBonePosition(bone).z + 5
-				if math.abs( BONEPOS.x ) > 10 or math.abs( BONEPOS.y ) > 10 then
+				if math.abs(BONEPOS.x) > 10 or math.abs(BONEPOS.y) > 10 then
 					entity:Remove()
 					return
 				end
@@ -286,22 +286,22 @@ if SERVER then
 			local hullmin = Vector(-height/4.5, -height/4.5, 0)
 			local hullmax = Vector(height/4.5, height/4.5, height * 1.09121366)
 			
-			ent:SetCollisionBounds( hullmin, hullmax )
+			ent:SetCollisionBounds(hullmin, hullmax)
 			
 			entity:Remove()
-		end )
+		end)
 	end
-	hook.Add("OnEntityCreated", "DynamicCamera:OnEntityCreated", DynamicCameraNPCCreate )
+	hook.Add("OnEntityCreated", "DynamicCamera:OnEntityCreated", DynamicCameraNPCCreate)
 
 end
 
 if CLIENT then
-	local function DynamicCameraSetup( height, cheight, camheight, ccamheight )
+	local function DynamicCameraSetup(height, cheight, camheight, ccamheight)
 		if LocalPlayer().SetViewOffset then 
 		else
-			timer.Simple( 2, function()
-				DynamicCameraSetup( height, cheight, camheight, ccamheight )
-			end )
+			timer.Simple(2, function()
+				DynamicCameraSetup(height, cheight, camheight, ccamheight)
+			end)
 			return
 		end
 		
@@ -316,47 +316,47 @@ if CLIENT then
 		LocalPlayer():SetViewOffset(Vector(0, 0, camheight > 0 and camheight or height))
 		LocalPlayer():SetViewOffsetDucked(Vector(0, 0, ccamheight > 0 and ccamheight or cheight))
 
-		local hullmin = Vector( math.Round(CLAMPSIZE(height / -4.5)), math.Round(CLAMPSIZE(height / -4.5)), 0 )
-		local hullmax = Vector( math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(height * 1.09121366) )
-		local hullcrouch = Vector( math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(ccamheight > height / 1.83214558 and ccamheight + 3 or height / 1.83214558) )
+		local hullmin = Vector(math.Round(CLAMPSIZE(height / -4.5)), math.Round(CLAMPSIZE(height / -4.5)), 0)
+		local hullmax = Vector(math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(height * 1.09121366))
+		local hullcrouch = Vector(math.Round(CLAMPSIZE(height / 4.5)), math.Round(CLAMPSIZE(height / 4.5)), math.Round(ccamheight > height / 1.83214558 and ccamheight + 3 or height / 1.83214558))
 		
-		if timer.Exists( "DynamicCameraSetupHullFix"..LocalPlayer():EntIndex() ) then
-			timer.Destroy( "DynamicCameraSetupHullFix"..LocalPlayer():EntIndex() )
+		if timer.Exists("DynamicCameraSetupHullFix"..LocalPlayer():EntIndex()) then
+			timer.Destroy("DynamicCameraSetupHullFix"..LocalPlayer():EntIndex())
 		end
-		timer.Create( "DynamicCameraSetupHullFix"..LocalPlayer():EntIndex(), 2.5, 1, function()
+		timer.Create("DynamicCameraSetupHullFix"..LocalPlayer():EntIndex(), 2.5, 1, function()
 			LocalPlayer():SetHull(hullmin, hullmax)
 			LocalPlayer():SetHullDuck(hullmin, hullcrouch)
-		end )
+		end)
 	end
 	net.Receive("DynamicCameraHullViewSetup", function()
 		local height = net.ReadFloat()
 		local cheight = net.ReadFloat()
 		local camheight = net.ReadFloat()
 		local ccamheight = net.ReadFloat()
-		DynamicCameraSetup( height, cheight, camheight, ccamheight )
+		DynamicCameraSetup(height, cheight, camheight, ccamheight)
 	end)
 	
 	local ECPostDrawViewModelRate = 0.5
 	local ECPostDrawViewModelTime = CurTime()
-	hook.Add("PostDrawViewModel", "DynamicCamera:PostDrawViewModel", function( vm, ply, weapon )
+	hook.Add("PostDrawViewModel", "DynamicCamera:PostDrawViewModel", function(vm, ply, weapon)
 		if ECPostDrawViewModelTime > CurTime() then return end
 		ECPostDrawViewModelTime = CurTime() + ECPostDrawViewModelRate
 		if weapon.UseHands then
 			local hands = LocalPlayer():GetHands()
-			if IsValid( hands ) then 
+			if IsValid(hands) then 
 				hands:DrawModel()
 				if ply:SkinCount() == ply:GetHands():SkinCount() then
-					hands:SetSkin( LocalPlayer():GetSkin() )
+					hands:SetSkin(LocalPlayer():GetSkin())
 				end
 				if ply:GetNumBodyGroups() > 0 then
 					if ply:GetNumBodyGroups() == ply:GetHands():GetNumBodyGroups() then
-						hands:SetBodyGroups( ply:GetBodygroupsAsString() )
+						hands:SetBodyGroups(ply:GetBodygroupsAsString())
 					end
 				end
 			end
 
 		end
-	end )
+	end)
 end
 
 -- Addon: https://steamcommunity.com/sharedfiles/filedetails/?id=2887450478
