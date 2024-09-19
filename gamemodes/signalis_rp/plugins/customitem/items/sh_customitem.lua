@@ -1,6 +1,7 @@
 
 ITEM.name = "Generic Item"
 ITEM.description = "Generic Description"
+ITEM.category = "Miscellaneous"
 ITEM.model = Model("models/maxofs2d/hover_rings.mdl")
 
 function ITEM:GetName()

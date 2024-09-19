@@ -29,6 +29,7 @@ local iconTab = {
 	[31] = {"Documents", "icon16/newspaper_delete.png"},
 	[32] = {"Writing", "icon16/newspaper_add.png"},
 	[33] = {"Photos", "icon16/photo.png"},
+	[34] = {"Cards", "icon16/vcard.png"},
 
 	[40] = {"Keys", "icon16/key.png"},
 	[41] = {"Tools", "icon16/wrench.png"},
