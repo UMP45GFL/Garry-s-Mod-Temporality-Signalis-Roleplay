@@ -35,13 +35,13 @@ end)
 
 
 -- cards
-netstream.Hook("ixCardSet", function(client, itemID, text)
+netstream.Hook("ixCardSet", function(client, itemID, dataName, text)
 	local character = client:GetCharacter()
 	local item = ix.item.instances[itemID]
 
 	if (character and item and item.base == "base_id_cards") then
 		local charId = item:GetData("charId", nil)
-		local charName = item:GetData("name", nil)
+		local charName = item:GetData(dataName, nil)
 
         if (charId and charId == character:GetID())
         || (charName and charName == character:GetName())
@@ -50,7 +50,7 @@ netstream.Hook("ixCardSet", function(client, itemID, text)
         || client:IsUserGroup("moderator")
         || client:IsUserGroup("gamemaster")
         then
-            item:SetData("name", string.Trim(text))
+            item:SetData(dataName, string.Trim(text))
 			item:SetData("charId", charId)
         end
 	end

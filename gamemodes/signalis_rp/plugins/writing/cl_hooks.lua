@@ -27,8 +27,10 @@ netstream.Hook("ixEditTitlePaper", function(itemID)
 end)
 
 
--- cards
-netstream.Hook("ixEditCard", function(itemID, player)
-	local panel = vgui.Create("ixCardEdit")
-	panel:SetItemID(itemID)
+netstream.Hook("ixGenericItemEdit", function(itemID, dataType, maxLength)
+	local panel = vgui.Create("ixGenericEdit")
+	panel.itemID = itemID
+	panel.dataType = dataType
+	panel.maxLength = maxLength
+	panel:AfterInit()
 end)

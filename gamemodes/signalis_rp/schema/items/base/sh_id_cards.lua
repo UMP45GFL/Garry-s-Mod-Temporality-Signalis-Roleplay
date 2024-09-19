@@ -24,9 +24,37 @@ function ITEM:OnInstanced(invID, x, y, item)
 	item:SetData("issued", Schema:GetEternalisDate())
 end
 
-ITEM.functions.Edit = {
+ITEM.functions.EditName = {
 	OnRun = function(item)
-		netstream.Start(item.player, "ixEditCard", item:GetID(), item.player)
+		netstream.Start(item.player, "ixGenericItemEdit", item:GetID(), "name", 20)
+		return false
+	end,
+	OnCanRun = function(item)
+        if item.player:IsAdmin()
+        || item.player:IsUserGroup("operator")
+        || item.player:IsUserGroup("moderator")
+        || item.player:IsUserGroup("gamemaster")
+        then
+            return true
+        end
+
+        local charId = item:GetData("charId", nil)
+        if charId != nil then
+            return charId == item.player:GetCharacter():GetID()
+        end
+
+        local charName = item:GetData("name", nil)
+        if charName != nil then
+            return charName == item.player:GetCharacter():GetName()
+        end
+
+		return false
+	end
+}
+
+ITEM.functions.UpdateIssueDate = {
+	OnRun = function(item)
+		netstream.Start(item.player, "ixGenericItemEdit", item:GetID(), "issued", 18)
 		return false
 	end,
 	OnCanRun = function(item)

@@ -48,4 +48,7 @@ LANGUAGE = {
 
 	weaponTooHeavy = "This weapon is too heavy for you to carry.",
 	cannotEquipOutfit = "You cannot equip this outfit.",
+
+	EditName = "Edit Name",
+	UpdateIssueDate = "Update Issue Date",
 }
