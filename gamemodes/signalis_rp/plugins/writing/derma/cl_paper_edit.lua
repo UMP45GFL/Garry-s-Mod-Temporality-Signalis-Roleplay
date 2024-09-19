@@ -17,7 +17,7 @@ function PANEL:Init()
 	self:Center()
 	self:SetBackgroundBlur(true)
 	self:SetDeleteOnClose(true)
-	self:SetTitle(L("paper"))
+	self:SetTitle("Edit paper text")
 
 	self.close = self:Add("DButton")
 	self.close:Dock(BOTTOM)
@@ -66,10 +66,10 @@ function PANEL:Init()
 		}, 1, 255)
 	end
 	buttonPageLeft.DoClick = function()
-		if self.page > 1 and self.page + 1 <= self.maxPages then
+		if self.page > 1 then
 			self.pages[self.page] = self.text:GetValue()
 
-			self.page = self.page -1
+			self.page = self.page - 1
 			self.text:SetValue(self.pages[self.page] or "")
 		end
 	end
@@ -89,6 +89,7 @@ function PANEL:Init()
 		}, 1, 255)
 	end
 	buttonPageRight.DoClick = function()
+		--if self.page > 1 and self.page + 1 <= self.maxPages then
 		if string.len( self.text:GetValue() ) > 0 then
 			self.pages[self.page] = self.text:GetValue()
 
@@ -101,28 +102,29 @@ function PANEL:Init()
 	self.text:SetMultiline(true)
 	self.text:SetEditable(false)
 	self.text:SetDisabled(true)
-	self.text:SetFont("SignalisDocumentsFontMedium")
+	self.text:SetFont("SignalisDocumentsFontSmall")
 	self.text:SetPaintBackground(false)
 	self.text:Dock(FILL)
 	self.text:SetTextColor(color_white)
+
+	self.text.OnTextChanged = function()
+		local text = self.text:GetValue()
+
+		if (text:len() > PLUGIN.maxLength) then
+			local newText = text:sub(1, PLUGIN.maxLength)
+	
+			self.text:SetValue(newText)
+			self.text:SetText(newText)
+			self.text:SetCaretPos(newText:len())
+	
+			surface.PlaySound("common/talk.wav")
+		end
+	end
 
 	self:MakePopup()
 
 	self.bEditable = false
 	PLUGIN.panel = self
-end
-
-function PANEL:Think()
-	local text = self.text:GetValue()
-
-	if (text:len() > PLUGIN.maxLength) then
-		local newText = text:sub(1, PLUGIN.maxLength)
-
-		self.text:SetValue(newText)
-		self.text:SetCaretPos(newText:len())
-
-		surface.PlaySound("common/talk.wav")
-	end
 end
 
 function PANEL:SetEditable(bValue)

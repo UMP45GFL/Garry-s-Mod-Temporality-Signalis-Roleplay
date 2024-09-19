@@ -5,13 +5,18 @@ local fontSettings = {
 	font = "Perfect DOS VGA 437",
 	--font = "signapoke",
 	extended = true,
-	size = ScreenScaleH(15),
+	size = ScreenScaleH(13),
 	weight = 0,
 	antialias = false,
 }
+
+fontSettings.size = math.max(ScreenScaleH(13), 14)
+surface.CreateFont("SignalisDocumentsFontSmall", fontSettings)
+
+fontSettings.size = math.max(ScreenScaleH(15), 16)
 surface.CreateFont("SignalisDocumentsFontMedium", fontSettings)
 
-fontSettings.size = ScreenScaleH(18)
+fontSettings.size = math.max(ScreenScaleH(18), 18)
 surface.CreateFont("SignalisDocumentsFontBig", fontSettings)
 
 -- Radio fonts

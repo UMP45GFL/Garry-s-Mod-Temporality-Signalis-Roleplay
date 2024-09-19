@@ -4,18 +4,18 @@ local PANEL = {}
 
 AccessorFunc(PANEL, "itemID", "ItemID", FORCE_NUMBER)
 
-local maxLength = 32
+local maxLength = 16
 
 function PANEL:Init()
 	if (IsValid(PLUGIN.panel)) then
 		PLUGIN.panel:Remove()
 	end
 
-	self:SetSize(600, 400)
+	self:SetSize(600, 200)
 	self:Center()
 	self:SetBackgroundBlur(true)
 	self:SetDeleteOnClose(true)
-	self:SetTitle("Setting title")
+	self:SetTitle("Edit id card char name")
 
 	self.saveButton = self:Add("DButton")
 	self.saveButton:Dock(BOTTOM)
@@ -25,7 +25,7 @@ function PANEL:Init()
 		local txt = string.Trim(self.text:GetValue())
 
 		if string.len(txt) < 3 then
-			ix.util.Notify("The name is too short.")
+			ix.util.Notify("The name is too short. Min 3 characters.")
 			return
 		end
 
@@ -34,12 +34,12 @@ function PANEL:Init()
 			return
 		end
 
-		netstream.Start("ixWritingSetTitle", self.itemID, txt)
+		netstream.Start("ixCardSet", self.itemID, txt)
 		self:Close()
 	end
 
 	self.text = self:Add("DTextEntry")
-	self.text:SetMultiline(true)
+	self.text:SetMultiline(false)
 	self.text:SetEditable(true)
 	self.text:SetDisabled(false)
 	self.text:SetFont("SignalisDocumentsFontSmall")
@@ -67,4 +67,4 @@ function PANEL:Init()
 	PLUGIN.panel = self
 end
 
-vgui.Register("ixPaperEditTitle", PANEL, "DFrame")
+vgui.Register("ixCardEdit", PANEL, "DFrame")

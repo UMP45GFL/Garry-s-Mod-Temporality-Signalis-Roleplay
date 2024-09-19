@@ -211,3 +211,8 @@ function Schema:GetMaxPlayerCharacter(client)
 
 	return maxch
 end
+
+
+function Schema:GetEternalisDate()
+	return ix.date.GetFormatted("%d/%m/%Y")
+end

@@ -76,12 +76,13 @@ end
 function CLASS:OnCharacterCreated(client, character)
 	local inventory = character:GetInventory()
 
-	inventory:Add("suitcase", 1)
-	inventory:Add("paper", 1)
-	inventory:Add("paper", 1)
 	inventory:Add("ration_k4", 1)
 	inventory:Add("id_adlr", 1, {
 		skin = 8,
-		name = character:GetName()
+		name = character:GetName(),
+		charId = character:GetID(),
+		issued = Schema:GetEternalisDate()
 	})
+	inventory:Add("paper", 1)
+	inventory:Add("paper", 1)
 end

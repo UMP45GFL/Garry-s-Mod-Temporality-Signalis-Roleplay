@@ -89,7 +89,9 @@ function CLASS:OnCharacterCreated(client, character)
 	inventory:Add("ration_k4", 1)
 	inventory:Add("id_lstr", 1, {
 		skin = 9,
-		name = character:GetName()
+		name = character:GetName(),
+		charId = character:GetID(),
+		issued = Schema:GetEternalisDate()
 	})
 	inventory:Add("pilotka", 1, {
 		equip = true

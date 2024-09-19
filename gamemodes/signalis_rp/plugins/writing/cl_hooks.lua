@@ -25,3 +25,10 @@ netstream.Hook("ixEditTitlePaper", function(itemID)
 	local panel = vgui.Create("ixPaperEditTitle")
 	panel:SetItemID(itemID)
 end)
+
+
+-- cards
+netstream.Hook("ixEditCard", function(itemID, player)
+	local panel = vgui.Create("ixCardEdit")
+	panel:SetItemID(itemID)
+end)
