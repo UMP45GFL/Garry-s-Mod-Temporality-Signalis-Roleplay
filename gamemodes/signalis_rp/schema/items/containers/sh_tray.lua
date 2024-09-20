@@ -8,5 +8,6 @@ ITEM.description = "A plastic tray with compartments for different types of food
 ITEM.weight = 0.3
 
 ITEM.AcceptableBases = {
-    ["base_food"] = true
+    ["base_food"] = true,
+    ["base_drinkable"] = true
 }
