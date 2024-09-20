@@ -205,16 +205,33 @@ function SWEP:StrikeThink()
 	end
 end
 
+function SWEP:LoadAmmo()
+	local ammoCount = self.Owner:GetAmmoCount(self.Primary.Ammo)
+	if ammoCount > 0 then
+		self.Owner:RemoveAmmo(ammoCount, self.Primary.Ammo)
+		self:SetClip1(self:Clip1() + ammoCount)
+	end
+end
+
+function SWEP:Deploy()
+	BaseClass.Deploy(self)
+	self:LoadAmmo()
+end
+
 SWEP.NextToggle = 0
 function SWEP:Reload()
-	if self.NextToggle < CurTime() and self:Clip1() > 0 then
-		self.StunningMode = self.StunningMode + 1
-		if self.StunningMode > 2 then
-			self.StunningMode = 0
-		end
+	if self.NextToggle < CurTime() then
+		self:LoadAmmo()
 
-		if SERVER and self.StunningMode > 0 and self:Clip1() > 0 then
-			sound.Play("weapons/stunstick/spark"..math.random(1,3)..".wav", self.Owner:GetPos(), 75, 100, 1)
+		if self:Clip1() > 0 then
+			self.StunningMode = self.StunningMode + 1
+			if self.StunningMode > 2 then
+				self.StunningMode = 0
+			end
+
+			if SERVER and self.StunningMode > 0 and self:Clip1() > 0 then
+				sound.Play("weapons/stunstick/spark"..math.random(1,3)..".wav", self.Owner:GetPos(), 75, 100, 1)
+			end
 		end
 
 		self.NextToggle = CurTime() + 1
