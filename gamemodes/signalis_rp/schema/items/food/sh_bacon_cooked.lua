@@ -13,3 +13,10 @@ ITEM.eatSound = nil
 ITEM.eatMessage = "That was tasty..."
 
 ITEM.weight = 0.1
+
+ITEM.forceRender = true
+ITEM.iconCam = {
+    pos = Vector(0, 0, -60),
+    ang = Angle(-90, 0, 0),
+    fov = 10
+}

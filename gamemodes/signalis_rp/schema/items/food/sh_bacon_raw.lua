@@ -13,3 +13,9 @@ ITEM.eatSound = nil
 ITEM.eatMessage = "That didn't feel good..."
 
 ITEM.weight = 0.1
+
+ITEM.iconCam = {
+    pos = Vector(0, 0, -60),
+    ang = Angle(-90, 0, 0),
+    fov = 20
+}
