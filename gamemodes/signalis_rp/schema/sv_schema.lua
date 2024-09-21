@@ -140,33 +140,3 @@ function Schema:GetPlayerDeathSound(ply)
 		end
 	end
 end
-
-function SuicideItemFunction(item)
-	if IsValid(item.player) then
-		local successChance = math.random(1, 100)
-
-		local eyepos = item.player:EyePos()
-		local eyeang = item.player:EyeAngles()
-		local aimvector = item.player:GetAimVector()
-
-		item:Spawn(eyepos + (aimvector * 20), eyeang)
-
-		local dmginfo = DamageInfo()
-		dmginfo:SetDamage(item.player:Health())
-		dmginfo:SetAttacker(item.player)
-		dmginfo:SetDamageType(DMG_SLASH)
-	
-		if successChance > 80 or true then
-			dmginfo:SetDamage(item.player:Health() * 0.8)
-			item.player:TakeDamageInfo(dmginfo)
-			item.player:SetRagdolled(true, 15)
-			return false
-		end
-
-		item.player:TakeDamageInfo(dmginfo)
-
-		return true
-	end
-
-	return false
-end

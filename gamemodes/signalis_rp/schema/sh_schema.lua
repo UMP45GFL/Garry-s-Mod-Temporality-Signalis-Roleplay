@@ -21,6 +21,7 @@ ix.util.Include("sh_player.lua")
 ix.util.Include("sv_money.lua")
 ix.util.Include("sh_sounds.lua")
 ix.util.Include("sh_stun.lua")
+ix.util.Include("sh_player_actions.lua")
 
 ix.flag.Add("v", "Access to light blackmarket goods.")
 ix.flag.Add("V", "Access to heavy blackmarket goods.")

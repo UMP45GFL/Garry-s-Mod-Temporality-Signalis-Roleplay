@@ -16,6 +16,10 @@ ITEM.canSlice = true
 
 ITEM.functions.Suicide = {
     icon = "icon16/cross.png",
-	OnRun = SuicideItemFunction,
+	OnClick = function(item)
+		PromptSuicide(item)
+		return false
+	end,
+	--OnRun = SuicideItemFunction,
 	OnCanRun = CanSuicide
 }
