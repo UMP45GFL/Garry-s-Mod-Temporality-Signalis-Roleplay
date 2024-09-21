@@ -130,6 +130,7 @@ if SERVER then
 	hook.Add("Think", "HandleInfection", HandleInfection)
 end
 
+/*
 if CLIENT then
 	BR_OUR_INFECTION = 0
 
@@ -143,3 +144,4 @@ if CLIENT then
 		end, Color(40, 150, 18), nil, "infection")
 	end
 end
+*/
