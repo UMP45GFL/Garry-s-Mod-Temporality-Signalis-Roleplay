@@ -8,6 +8,9 @@ ITEM.outfitCategory = "body"
 ITEM.bodyGroups = {
 	["armor"] = 1
 }
+ITEM.bodyGroupsUnequipped = {
+	["armor"] = 0
+}
 
 ITEM.weight = 4
 

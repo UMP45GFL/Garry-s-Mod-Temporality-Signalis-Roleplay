@@ -18,7 +18,6 @@ CLASS.models = {
 	}
 }
 CLASS.health = 150
-CLASS.armor = "bullet_resistant_armor_plating"
 CLASS.physical_damage_taken = 0.75
 CLASS.bullet_damage_taken = 0.65
 CLASS.mental_strength = 1.35

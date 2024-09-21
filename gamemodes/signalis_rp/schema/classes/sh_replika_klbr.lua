@@ -18,7 +18,6 @@ CLASS.models = {
 	}
 }
 CLASS.health = 115
---CLASS.armor = "bullet_resistant_armor_plating", TODO
 CLASS.physical_damage_taken = 0.9
 CLASS.bullet_damage_taken = 0.75
 CLASS.mental_strength = 0.8 -- definitely the least strong mentally replika...

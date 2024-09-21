@@ -1,5 +1,5 @@
 
-ITEM.name = "STCR Armor"
+ITEM.name = "Imperial STCR Armor"
 ITEM.description = "Bullet-Resistant Armor Plating."
 ITEM.category = "Clothing"
 ITEM.model = "models/eternalis/items/equipment/stcr_armor.mdl"
@@ -19,7 +19,7 @@ ITEM.height = 2
 
 function ITEM:CanEquipOutfit(client)
     local character = client:GetCharacter()
-    if character and character.vars.class == "replika_stcr" then
+    if character and character.vars.class == "replika_stcr_imperial" then
         return true
     end
 

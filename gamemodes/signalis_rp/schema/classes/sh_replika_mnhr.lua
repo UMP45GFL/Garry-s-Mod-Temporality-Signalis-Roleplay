@@ -18,7 +18,6 @@ CLASS.models = {
 	}
 }
 CLASS.health = 200
-CLASS.armor = 0
 CLASS.physical_damage_taken = 0.9
 CLASS.bullet_damage_taken = 0.75
 CLASS.mental_strength = 1.4 -- said to be the most stable unit

@@ -17,10 +17,25 @@ CLASS.models = {
         skin = "0",
         bodygroups = "0001",
 		gender = "female"
-	}
+	},
+	{
+		mdl = "models/citric/signalis_lstr/elster_pm.mdl",
+		hullMins = Vector(-12, -12, 0),
+		hullMaxs = Vector(12, 12, 70),
+        skin = "7",
+        bodygroups = "0001",
+		gender = "female"
+	},
+	{
+		mdl = "models/citric/signalis_lstr/elster_pm.mdl",
+		hullMins = Vector(-12, -12, 0),
+		hullMaxs = Vector(12, 12, 70),
+        skin = "10",
+        bodygroups = "0001",
+		gender = "female"
+	},
 }
 CLASS.health = 115
-CLASS.armor = nil
 CLASS.physical_damage_taken = 0.7 -- carbon fiber-reinforced shell
 CLASS.bullet_damage_taken = 0.7 -- carbon fiber-reinforced shell
 CLASS.mental_strength = 1.4 -- "tough and stoic loners"

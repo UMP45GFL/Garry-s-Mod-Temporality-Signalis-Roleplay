@@ -1,52 +1,19 @@
-CLASS.name = "EULR Replika"
-CLASS.shortName = "EULR"
-CLASS.faction = FACTION_REPLIKA
+CLASS.name = "EULR Imperial Replika"
+CLASS.shortName = "EULRI"
+CLASS.faction = FACTION_EMPIRE
 CLASS.isDefault = false
 CLASS.availableByDefault = false
 
 CLASS.isAdministration = false
 CLASS.isProtektor = false
-
 CLASS.isBioresonant = false
 
 CLASS.models = {
 	{
 		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
-        skin = "0",
-		gender = "female"
-	},
-	/*
-	{
-		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
-        skin = "2",
-		gender = "female"
-	},
-	{
-		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
-        skin = "3",
-		gender = "female"
-	},
-	{
-		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
-        skin = "4",
-		gender = "female"
-	},
-	{
-		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
-        skin = "5",
-		gender = "female"
-	},
-	{
-		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
         skin = "9",
 		gender = "female"
-	},
-	*/
-	{
-		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
-        skin = "11",
-		gender = "female"
-	},
+	}
 }
 CLASS.health = 100
 CLASS.physical_damage_taken = 0.9

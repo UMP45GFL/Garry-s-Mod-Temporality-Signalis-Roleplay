@@ -6,10 +6,10 @@ ITEM.model = "models/eternalis/items/equipment/klbr_armor.mdl"
 ITEM.outfitCategory = "body"
 
 ITEM.bodyGroups = {
-	["armor"] = 0
+	["armor"] = 1
 }
 ITEM.bodyGroupsUnequipped = {
-	["armor"] = 1
+	["armor"] = 0
 }
 
 ITEM.weight = 4

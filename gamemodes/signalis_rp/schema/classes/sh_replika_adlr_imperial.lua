@@ -1,12 +1,11 @@
-CLASS.name = "ADLR Replika"
-CLASS.shortName = "ADLR"
-CLASS.faction = FACTION_REPLIKA
+CLASS.name = "ADLR Imperial Replika"
+CLASS.shortName = "ADLRI"
+CLASS.faction = FACTION_EMPIRE
 CLASS.isDefault = false
 CLASS.availableByDefault = false
 
-CLASS.isAdministration = true
+CLASS.isAdministration = false
 CLASS.isProtektor = false
-
 CLASS.isBioresonant = false
 
 CLASS.models = {
@@ -14,6 +13,7 @@ CLASS.models = {
 		mdl = "models/citric/signalis_adlr/adler_pm.mdl",
 		hullMins = Vector(-11, -11, 0),
 		hullMaxs = Vector(11, 11, 73),
+        skin = "7",
 		gender = "male"
 	}
 }

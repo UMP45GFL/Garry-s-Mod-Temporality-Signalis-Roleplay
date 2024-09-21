@@ -2,13 +2,26 @@ CLASS.name = "Gestalt"
 CLASS.faction = FACTION_GESTALT
 CLASS.isDefault = true
 CLASS.models = {
-    /*
     {
-        mdl = "models/voxaid/alina/alina_pm.mdl",
+        mdl = "models/voxaid/isa/isa_pm.mdl",
         hullMins = Vector(-10, -10, 0),
-        hullMaxs = Vector(10, 10, 59),
+        hullMaxs = Vector(10, 10, 70),
+        skin = "3",
 		gender = "female"
     },
+    {
+        mdl = "models/voxaid/isa/isa_pm.mdl",
+        hullMins = Vector(-10, -10, 0),
+        hullMaxs = Vector(10, 10, 70),
+        skin = "3",
+        bodygroups = "11111",
+        --bodygroups = {
+        --    ["poncho"] = 1
+        --},
+		gender = "female"
+    },
+
+    /* 
     -- penrose program
     {
         mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
@@ -17,8 +30,7 @@ CLASS.models = {
         skin = "2",
 		gender = "female"
     },
-    */
-    /* polytechnical school
+    -- polytechnical school
     {
         mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
         hullMins = Vector(-10, -10, 0),
@@ -26,21 +38,12 @@ CLASS.models = {
         skin = "1",
 		gender = "female"
     },
-    */
-    /* penrose - cancer :sob:
+    -- penrose - cancer :sob:
     {
         mdl = "models/citric/signalis_ariane/ariane_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 68),
         skin = "0",
-		gender = "female"
-    },
-    */
-    /*
-    {
-        mdl = "models/voxaid/isa/isa_pm.mdl",
-        hullMins = Vector(-10, -10, 0),
-        hullMaxs = Vector(10, 10, 70),
 		gender = "female"
     },
     */
@@ -50,12 +53,14 @@ CLASS.models = {
         mdl = "models/female/f_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
+        skin = "5",
 		gender = "female"
     },
     {
         mdl = "models/female/f_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
+        skin = "5",
         bodygroups = "01",
 		gender = "female"
     },
@@ -63,6 +68,7 @@ CLASS.models = {
         mdl = "models/female/f_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
+        skin = "5",
         bodygroups = "02",
 		gender = "female"
     },
@@ -70,6 +76,7 @@ CLASS.models = {
         mdl = "models/female/f_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
+        skin = "5",
         bodygroups = "03",
 		gender = "female"
     },
@@ -77,9 +84,29 @@ CLASS.models = {
         mdl = "models/female/f_geshtalt.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
+        skin = "5",
         bodygroups = "04",
 		gender = "female"
     },
+
+
+    -- New adlr based gestalt
+    {
+        mdl = "models/citric/signalis_ADLR/Adler_pm.mdl",
+        skin = "3",
+		gender = "male"
+    },
+    {
+        mdl = "models/citric/signalis_ADLR/Adler_pm.mdl",
+        skin = "4",
+		gender = "male"
+    },
+    {
+        mdl = "models/citric/signalis_ADLR/Adler_pm.mdl",
+        skin = "9",
+		gender = "male"
+    },
+
 
     -- male gestalt - different hair
     {
@@ -123,7 +150,6 @@ CLASS.models = {
     },
 }
 CLASS.health = 75 -- amount of health the player has
-CLASS.armor = nil -- string of the classname of an armor
 CLASS.physical_damage_taken = 1 --  multiplier of how much damage the player receives from fall damage, prop damage, physical/melee attacks
 CLASS.bullet_damage_taken = 1 --  multiplier of how much damage the player receives from bullet damage
 CLASS.mental_strength = 1 -- multiplier of how strong the character is mentally, will affect persona degradation and trauma, how fast they heal
@@ -134,56 +160,19 @@ CLASS.ladder_speed = 1 -- multiplier of how fast the player can climb ladders
 CLASS.jump_power = 1 -- multiplier of how strong the player can jump
 CLASS.max_stamina = 1 -- multiplier of how much stamina the player has
 
-local breathingSounds = {
-	snd = "eternalis/player/breathing/breathing_female.wav",
-	volume = 1,
-	sndLevel = 65,
-	pitch = 105,
-    minPitch = 90,
-    maxPitch = 110
-}
+CLASS.description = {""}
 
 CLASS.breathing_sound = function(ply)
     if ply:IsFemale() then
-        return breathingSounds
+        return ETERNALIS_FEMALE_BREATHING_SOUNDS
     end
 end
 
-local maleDeathSounds = {
-    {
-        snd = "eternalis/player/death/death_gestalt_m_1.wav",
-        volume = 1,
-        sndLevel = 100,
-        pitch = 100
-    },
-    {
-        snd = "eternalis/player/death/death_gestalt_m_2.wav",
-        volume = 1,
-        sndLevel = 100,
-        pitch = 100
-    }
-}
-
-local femaleDeathSounds = {
-    {
-        snd = "eternalis/player/death/death_gestalt_f_1.wav",
-        volume = 1,
-        sndLevel = 100,
-        pitch = 100
-    },
-    {
-        snd = "eternalis/player/death/death_gestalt_f_2.wav",
-        volume = 1,
-        sndLevel = 100,
-        pitch = 100
-    }
-}
-
 CLASS.death_sounds = function(ply)
     if ply:IsFemale() then
-        return table.Random(femaleDeathSounds)
+        return table.Random(ETERNALIS_FEMALE_DEATH_SOUNDS)
     else
-        return table.Random(maleDeathSounds)
+        return table.Random(ETERNALIS_MALE_DEATH_SOUNDS)
     end
 end
 

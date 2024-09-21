@@ -6,7 +6,6 @@ CLASS.availableByDefault = false
 
 CLASS.isAdministration = false
 CLASS.isProtektor = true
-
 CLASS.isBioresonant = false
 
 CLASS.models = {
@@ -15,10 +14,30 @@ CLASS.models = {
 		hullMins = Vector(-12, -12, 0),
 		hullMaxs = Vector(12, 12, 86),
 		gender = "female"
+	},
+	{
+		mdl = "models/voxaid/signalis_star/star_pm.mdl",
+		hullMins = Vector(-12, -12, 0),
+		hullMaxs = Vector(12, 12, 86),
+        skin = "1",
+		gender = "female"
+	},
+	{
+		mdl = "models/voxaid/signalis_star/star_pm.mdl",
+		hullMins = Vector(-12, -12, 0),
+		hullMaxs = Vector(12, 12, 86),
+        skin = "6",
+		gender = "female"
+	},
+	{
+		mdl = "models/voxaid/signalis_star/star_pm.mdl",
+		hullMins = Vector(-12, -12, 0),
+		hullMaxs = Vector(12, 12, 86),
+        skin = "8",
+		gender = "female"
 	}
 }
 CLASS.health = 120 -- they are a bit more robust
-CLASS.armor = "bullet_resistant_armor_plating"
 CLASS.physical_damage_taken = 0.9
 CLASS.bullet_damage_taken = 0.75
 CLASS.mental_strength = 1.2 -- They definitely have a bit higher mental strength

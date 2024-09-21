@@ -48,3 +48,42 @@ ETERNALIS_HEADSHOT_SOUNDS = {
 	"eternalis/player/headshot/headshot_04.wav",
 	"eternalis/player/headshot/headshot_05.wav",
 }
+
+ETERNALIS_MALE_DEATH_SOUNDS = {
+    {
+        snd = "eternalis/player/death/death_gestalt_m_1.wav",
+        volume = 1,
+        sndLevel = 100,
+        pitch = 100
+    },
+    {
+        snd = "eternalis/player/death/death_gestalt_m_2.wav",
+        volume = 1,
+        sndLevel = 100,
+        pitch = 100
+    }
+}
+
+ETERNALIS_FEMALE_DEATH_SOUNDS = {
+    {
+        snd = "eternalis/player/death/death_gestalt_f_1.wav",
+        volume = 1,
+        sndLevel = 100,
+        pitch = 100
+    },
+    {
+        snd = "eternalis/player/death/death_gestalt_f_2.wav",
+        volume = 1,
+        sndLevel = 100,
+        pitch = 100
+    }
+}
+
+ETERNALIS_FEMALE_BREATHING_SOUNDS = {
+	snd = "eternalis/player/breathing/breathing_female.wav",
+	volume = 1,
+	sndLevel = 65,
+	pitch = 105,
+    minPitch = 90,
+    maxPitch = 110
+}

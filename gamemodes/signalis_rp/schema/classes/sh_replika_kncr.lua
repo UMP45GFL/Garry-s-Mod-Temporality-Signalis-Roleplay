@@ -19,7 +19,6 @@ CLASS.models = {
 	}
 }
 CLASS.health = 135 -- they are a bit more robust
-CLASS.armor = "bullet_resistant_armor_plating"
 CLASS.physical_damage_taken = 0.87 -- replikas take less physical damage by default
 CLASS.bullet_damage_taken = 0.72 -- replikas take less bullet damage by default
 CLASS.mental_strength = 0.9 -- It is said in signalis that they are more unstable

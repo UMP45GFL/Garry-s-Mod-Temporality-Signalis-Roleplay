@@ -1,12 +1,11 @@
-CLASS.name = "STCR Replika"
-CLASS.shortName = "STCR"
-CLASS.faction = FACTION_REPLIKA
+CLASS.name = "STCR Imperial Replika"
+CLASS.shortName = "STCRI"
+CLASS.faction = FACTION_EMPIRE
 CLASS.isDefault = false
 CLASS.availableByDefault = false
 
 CLASS.isAdministration = false
-CLASS.isProtektor = true
-
+CLASS.isProtektor = false
 CLASS.isBioresonant = false
 
 CLASS.models = {
@@ -14,37 +13,9 @@ CLASS.models = {
 		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",
 		hullMins = Vector(-13, -13, 0),
 		hullMaxs = Vector(13, 13, 92),
-        skin = "0",
-		gender = "female"
-	},
-	{
-		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",
-		hullMins = Vector(-13, -13, 0),
-		hullMaxs = Vector(13, 13, 92),
-        skin = "2",
-		gender = "female"
-	},
-	{
-		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",
-		hullMins = Vector(-13, -13, 0),
-		hullMaxs = Vector(13, 13, 92),
-        skin = "4",
-		gender = "female"
-	},
-	{
-		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",
-		hullMins = Vector(-13, -13, 0),
-		hullMaxs = Vector(13, 13, 92),
         skin = "6",
 		gender = "female"
-	},
-	{
-		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",
-		hullMins = Vector(-13, -13, 0),
-		hullMaxs = Vector(13, 13, 92),
-        skin = "8",
-		gender = "female"
-	},
+	}
 }
 CLASS.health = 130 -- they are a bit more robust
 CLASS.physical_damage_taken = 0.87 -- replikas take less physical damage by default
@@ -119,7 +90,7 @@ function CLASS:OnCharacterCreated(client, character)
 		charId = character:GetID(),
 		issued = Schema:GetEternalisDate()
 	})
-	inventory:Add("armor_stcr", 1, {
+	inventory:Add("armor_stcr_imperial", 1, {
 		equip = true
 	})
 	inventory:Add("baton", 1)
