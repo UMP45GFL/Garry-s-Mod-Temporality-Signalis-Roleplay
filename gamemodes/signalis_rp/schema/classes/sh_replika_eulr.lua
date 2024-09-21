@@ -42,11 +42,13 @@ CLASS.models = {
 		gender = "female"
 	},
 	*/
+	/* -- medical
 	{
 		mdl = "models/voxaid/signalis_eule/eule_pm.mdl",
         skin = "11",
 		gender = "female"
 	},
+	*/
 }
 CLASS.health = 100
 CLASS.physical_damage_taken = 0.9

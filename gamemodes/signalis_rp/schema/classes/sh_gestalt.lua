@@ -2,6 +2,7 @@ CLASS.name = "Gestalt"
 CLASS.faction = FACTION_GESTALT
 CLASS.isDefault = true
 CLASS.models = {
+    /*
     {
         mdl = "models/voxaid/isa/isa_pm.mdl",
         hullMins = Vector(-10, -10, 0),
@@ -20,6 +21,7 @@ CLASS.models = {
         --},
 		gender = "female"
     },
+    */
 
     /* 
     -- penrose program

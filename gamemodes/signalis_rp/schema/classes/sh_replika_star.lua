@@ -15,6 +15,7 @@ CLASS.models = {
 		hullMaxs = Vector(12, 12, 86),
 		gender = "female"
 	},
+	/*
 	{
 		mdl = "models/voxaid/signalis_star/star_pm.mdl",
 		hullMins = Vector(-12, -12, 0),
@@ -36,6 +37,7 @@ CLASS.models = {
         skin = "8",
 		gender = "female"
 	}
+	*/
 }
 CLASS.health = 120 -- they are a bit more robust
 CLASS.physical_damage_taken = 0.9

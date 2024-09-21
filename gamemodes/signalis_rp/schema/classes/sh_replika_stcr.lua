@@ -17,6 +17,7 @@ CLASS.models = {
         skin = "0",
 		gender = "female"
 	},
+	/*
 	{
 		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",
 		hullMins = Vector(-13, -13, 0),
@@ -35,16 +36,10 @@ CLASS.models = {
 		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",
 		hullMins = Vector(-13, -13, 0),
 		hullMaxs = Vector(13, 13, 92),
-        skin = "6",
-		gender = "female"
-	},
-	{
-		mdl = "models/citric/signalis_stcr/stcr_pm.mdl",
-		hullMins = Vector(-13, -13, 0),
-		hullMaxs = Vector(13, 13, 92),
         skin = "8",
 		gender = "female"
 	},
+	*/
 }
 CLASS.health = 130 -- they are a bit more robust
 CLASS.physical_damage_taken = 0.87 -- replikas take less physical damage by default

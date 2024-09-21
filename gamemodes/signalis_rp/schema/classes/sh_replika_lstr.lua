@@ -18,6 +18,7 @@ CLASS.models = {
         bodygroups = "0001",
 		gender = "female"
 	},
+	/*
 	{
 		mdl = "models/citric/signalis_lstr/elster_pm.mdl",
 		hullMins = Vector(-12, -12, 0),
@@ -34,6 +35,7 @@ CLASS.models = {
         bodygroups = "0001",
 		gender = "female"
 	},
+	*/
 }
 CLASS.health = 115
 CLASS.physical_damage_taken = 0.7 -- carbon fiber-reinforced shell
