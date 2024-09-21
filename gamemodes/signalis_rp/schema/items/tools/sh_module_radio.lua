@@ -156,7 +156,7 @@ ITEM.functions.Equip = {
 	OnCanRun = function(item)
 		local client = item.player
 
-		if client:Team() != FACTION_REPLIKA then
+		if !client:IsReplika() then
 			return false
 		end
 
