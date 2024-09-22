@@ -7,4 +7,4 @@ ITEM.skin = 0
 
 ITEM.weight = 0.4
 
-ITEM.maxPages = 12
+ITEM.maxPages = 600
