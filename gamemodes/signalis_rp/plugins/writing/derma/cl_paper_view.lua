@@ -97,13 +97,23 @@ function PANEL:Init()
 	pagePanel.Paint = function(this, w, h)
 		if self.page > 0 then
 			local page = self.page
+
 			local maxPages = #self.pages
 			if self.startFromPage0 then
 				page = page - 1
 				maxPages = maxPages - 1
 			end
+
+			if page < 10 then
+				page = "0" .. tostring(page)
+			end
+
+			if maxPages < 10 then
+				maxPages = "0" .. tostring(maxPages)
+			end
+
 			draw.TextShadow({
-				text = "0" .. page .. " / 0" .. (maxPages),
+				text = page .. " / " .. maxPages,
 				font = "SignalisDocumentsFontBig",
 				pos = {w / 2, h / 2},
 				xalign = TEXT_ALIGN_CENTER,
