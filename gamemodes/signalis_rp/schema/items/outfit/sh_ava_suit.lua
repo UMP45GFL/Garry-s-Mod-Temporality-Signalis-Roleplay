@@ -17,7 +17,6 @@ ITEM.weight = 8
 ITEM.width = 2
 ITEM.height = 4
 
-ITEM.forceRender = true
 ITEM.iconCam = {
     pos = Vector(-50, 0, 31),
     ang = Angle(0, 0, 0),
