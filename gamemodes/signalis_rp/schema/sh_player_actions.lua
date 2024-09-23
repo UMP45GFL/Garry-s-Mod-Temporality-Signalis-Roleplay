@@ -22,15 +22,16 @@ if SERVER then
             local aimvector = client:GetAimVector()
     
             local isEquipped = item:GetData("equip", false)
-            item:SetData("equip", false)
+            item:Unequip(client, false)
+            --item:SetData("equip", false)
 
             local droppedEnt = item:Transfer(nil, nil, nil, self)
             if isentity(droppedEnt) then
                 droppedEnt:SetPos(eyepos + (aimvector * 20))
                 droppedEnt:SetAngles(eyeang)
 
-                if isEquipped and v.class then
-                    client:StripWeapon(v.class)
+                if isEquipped and item.class then
+                    client:StripWeapon(item.class)
                 end
             end
 
