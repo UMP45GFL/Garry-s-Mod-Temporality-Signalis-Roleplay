@@ -156,9 +156,7 @@ ITEM.functions.Equip = {
 	OnCanRun = function(item)
 		local client = item.player
 
-		if !client:IsReplika() then
-			return false
-		end
+		--if !client:IsReplika() then return false end -- TODO: Make a radio for gestalts
 
 		return !IsValid(item.entity) and IsValid(client) and item:GetData("equip") != true and
 			hook.Run("CanPlayerEquipItem", client, item) != false

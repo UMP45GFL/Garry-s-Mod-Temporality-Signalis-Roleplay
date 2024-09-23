@@ -189,9 +189,7 @@ ITEM.functions.Equip = {
 	OnCanRun = function(item)
 		local client = item.player
 
-		if !client:IsReplika() then
-			return false
-		end
+		--if !client:IsReplika() then return false end -- TODO: Make a radio for gestalts
 
 		local char = client:GetCharacter()
 		local items = char:GetInventory():GetItems()
