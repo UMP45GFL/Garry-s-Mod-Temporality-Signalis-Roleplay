@@ -1,4 +1,4 @@
-//AeroMatix || https://www.youtube.com/channel/UCzA_5QTwZxQarMzwZFBJIAw || http://steamcommunity.com/profiles/76561198176907257
+--AeroMatix || https:--www.youtube.com/channel/UCzA_5QTwZxQarMzwZFBJIAw || http:--steamcommunity.com/profiles/76561198176907257
 
 SWEP.PrintName = "Cigarette"
 
@@ -73,28 +73,28 @@ function SWEP:Initialize()
 
 	if CLIENT then
 	
-		// Create a new table for every weapon instance
+		-- Create a new table for every weapon instance
 		self.VElements = table.FullCopy(self.VElements)
 		self.WElements = table.FullCopy(self.WElements)
 		self.ViewModelBoneMods = table.FullCopy(self.ViewModelBoneMods)
 
-		self:CreateModels(self.VElements) // create viewmodels
-		self:CreateModels(self.WElements) // create worldmodels
+		self:CreateModels(self.VElements) -- create viewmodels
+		self:CreateModels(self.WElements) -- create worldmodels
 		
-		// init view model bone build function
-		if IsValid(self.Owner) then
+		-- init view model bone build function
+		if IsValid(self.Owner) and self.Owner.GetViewModel then
 			local vm = self.Owner:GetViewModel()
 			if IsValid(vm) then
 				self:ResetBonePositions(vm)
 				
-				// Init viewmodel visibility
+				-- Init viewmodel visibility
 				if (self.ShowViewModel == nil or self.ShowViewModel) then
 					vm:SetColor(Color(255,255,255,255))
 				else
-					// we set the alpha to 1 instead of 0 because else ViewModelDrawn stops being called
+					-- we set the alpha to 1 instead of 0 because else ViewModelDrawn stops being called
 					vm:SetColor(Color(255,255,255,1))
-					// ^ stopped working in GMod 13 because you have to do Entity:SetRenderMode(1) for translucency to kick in
-					// however for some reason the view model resets to render mode 0 every frame so we just apply a debug material to prevent it from drawing
+					-- ^ stopped working in GMod 13 because you have to do Entity:SetRenderMode(1) for translucency to kick in
+					-- however for some reason the view model resets to render mode 0 every frame so we just apply a debug material to prevent it from drawing
 					vm:SetMaterial("Debug/hsv")			
 				end
 			end
@@ -120,7 +120,7 @@ function SWEP:Holster()
 		Releaseciga(self.Owner)
 	end
 	
-	if CLIENT and IsValid(self.Owner) then
+	if CLIENT and IsValid(self.Owner) and self.Owner.GetViewModel then
 		local vm = self.Owner:GetViewModel()
 		if IsValid(vm) then
 			self:ResetBonePositions(vm)

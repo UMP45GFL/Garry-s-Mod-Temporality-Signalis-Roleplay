@@ -631,22 +631,24 @@ function PANEL:Init()
 	end
 
 	frequencyTextEntry.OnValueChange = function(this, value)
-		changedValue = true
+		if value then
+			changedValue = true
 
-		if tonumber(value) > 200000 then
-			local caretPos = this:GetCaretPos()
-			this:SetText("200000")
-			this:SetCaretPos(caretPos - 1)
-			frequency = 200000
+			if tonumber(value) > 200000 then
+				local caretPos = this:GetCaretPos()
+				this:SetText("200000")
+				this:SetCaretPos(caretPos - 1)
+				frequency = 200000
 
-		elseif tonumber(value) < 50000 then
-			local caretPos = this:GetCaretPos()
-			this:SetText("50000")
-			this:SetCaretPos(caretPos + 1)
-			frequency = 50000
-		else
+			elseif tonumber(value) < 50000 then
+				local caretPos = this:GetCaretPos()
+				this:SetText("50000")
+				this:SetCaretPos(caretPos + 1)
+				frequency = 50000
+			else
 
-			frequency = tonumber(value)
+				frequency = tonumber(value)
+			end
 		end
 	end
 	frequencyTextEntry:SetFont("SignalisRadioFrequency")

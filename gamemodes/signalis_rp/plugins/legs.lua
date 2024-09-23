@@ -103,7 +103,7 @@ if (CLIENT) then
 	Legs.NextBreath = 0
 
 	function Legs:Think(maxSeqGroundSpeed)
-		if (!LocalPlayer():Alive()) then
+		if IsValid(LocalPlayer()) and (!LocalPlayer():Alive()) then
 			Legs:Setup()
 			return
 		end
@@ -281,7 +281,7 @@ if (CLIENT) then
 	end
 
 	function PLUGIN:PlayerWeaponChanged(client, weapon)
-		if (client == LocalPlayer() and IsValid(Legs.LegEnt)) then
+		if (IsValid(LocalPlayer()) and client == LocalPlayer() and IsValid(Legs.LegEnt)) then
 			Legs:FixBones()
 		end
 	end
@@ -297,7 +297,7 @@ if (CLIENT) then
 	end
 
 	function PLUGIN:PlayerModelChanged(client, model)
-		if (client == LocalPlayer()) then
+		if (client == LocalPlayer() and IsValid(LocalPlayer())) then
 			Legs:Setup(model)
 			Legs:FixBones()
 		end
