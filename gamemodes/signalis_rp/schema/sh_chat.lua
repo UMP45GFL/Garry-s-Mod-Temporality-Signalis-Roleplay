@@ -4,7 +4,12 @@ hook.Add("InitializedConfig", "BioresonanceTelepathy", function()
     -- Close range action
     ix.chat.Register("mec", {
         format = "** %s %s",
-        GetColor = ix.chat.classes.ic.GetColor,
+        GetColor = function(self, speaker, text)
+            local color = ix.chat.classes.ic:GetColor(speaker, text)
+
+            -- Make the whisper chat slightly darker than IC chat.
+            return Color(color.r - 35, color.g - 35, color.b - 35)
+        end,
         CanHear = ix.config.Get("chatRange", 280) * 0.5,
         prefix = {"/Mec", "/ActionClose"},
         description = "@cmdMec",
