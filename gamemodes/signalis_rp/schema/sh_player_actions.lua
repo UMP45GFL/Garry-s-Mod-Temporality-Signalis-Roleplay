@@ -8,35 +8,47 @@ if SERVER then
         if ply:Alive() then
             local item = ix.item.instances[itemId]
             if item and item.functions.Suicide then
-                item.player = ply
-                SuicideItemFunction(item)
+                SuicideItemFunction(item, ply)
             end
         end
     end)
 
-    function SuicideItemFunction(item)
-        if IsValid(item.player) then
+    function SuicideItemFunction(item, client)
+        if IsValid(client) then
             local successChance = math.random(1, 100)
     
-            local eyepos = item.player:EyePos()
-            local eyeang = item.player:EyeAngles()
-            local aimvector = item.player:GetAimVector()
+            local eyepos = client:EyePos()
+            local eyeang = client:EyeAngles()
+            local aimvector = client:GetAimVector()
     
-            item:Spawn(eyepos + (aimvector * 20), eyeang)
+            local isEquipped = item:GetData("equip", false)
+            item:SetData("equip", false)
+
+            local droppedEnt = item:Transfer(nil, nil, nil, self)
+            if isentity(droppedEnt) then
+                droppedEnt:SetPos(eyepos + (aimvector * 20))
+                droppedEnt:SetAngles(eyeang)
+
+                if isEquipped and v.class then
+                    client:StripWeapon(v.class)
+                end
+            end
+
+            --item:Spawn(eyepos + (aimvector * 20), eyeang)
     
             local dmginfo = DamageInfo()
-            dmginfo:SetDamage(item.player:Health())
-            dmginfo:SetAttacker(item.player)
+            dmginfo:SetDamage(client:Health())
+            dmginfo:SetAttacker(client)
             dmginfo:SetDamageType(DMG_SLASH)
         
             if successChance > 80 or true then
-                dmginfo:SetDamage(item.player:Health() * 0.8)
-                item.player:TakeDamageInfo(dmginfo)
-                item.player:SetRagdolled(true, 15)
+                dmginfo:SetDamage(client:Health() * 0.8)
+                client:TakeDamageInfo(dmginfo)
+                client:SetRagdolled(true, 15)
                 return false
             end
     
-            item.player:TakeDamageInfo(dmginfo)
+            client:TakeDamageInfo(dmginfo)
     
             return true
         end
@@ -52,7 +64,6 @@ if CLIENT then
             "Suicide confirmation",
             "Yes",
             function()
-                print("b wa3", item)
                 if item != nil then
                     net.Start("characterSuicide")
                         net.WriteUInt(item:GetID(), 12)
