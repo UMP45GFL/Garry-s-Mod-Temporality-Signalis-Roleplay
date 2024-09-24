@@ -15,15 +15,7 @@ CLASS.models = {
 		hullMins = Vector(-12, -12, 0),
 		hullMaxs = Vector(12, 12, 75),
 		gender = "female"
-	},
-	/*
-	{
-		mdl = "models/voxaid/araV2/araV2_pm.mdl",
-		hullMins = Vector(-12, -12, 0),
-		hullMaxs = Vector(12, 12, 75),
-		gender = "female"
 	}
-	*/
 }
 CLASS.health = 120
 CLASS.physical_damage_taken = 0.7 -- titanium reinforced shell

@@ -15,27 +15,26 @@ CLASS.models = {
 		hullMins = Vector(-12, -12, 0),
 		hullMaxs = Vector(12, 12, 70),
         skin = "0",
-        bodygroups = "0001",
+        bodygroups = "00001",
 		gender = "female"
 	},
-	/*
 	{
 		mdl = "models/citric/signalis_lstr/elster_pm.mdl",
 		hullMins = Vector(-12, -12, 0),
 		hullMaxs = Vector(12, 12, 70),
         skin = "7",
-        bodygroups = "0001",
-		gender = "female"
+		gender = "female",
+        canUse = function(ply) return ply:IsStaff() end
 	},
 	{
 		mdl = "models/citric/signalis_lstr/elster_pm.mdl",
 		hullMins = Vector(-12, -12, 0),
 		hullMaxs = Vector(12, 12, 70),
         skin = "10",
-        bodygroups = "0001",
-		gender = "female"
+        bodygroups = "00001",
+		gender = "female",
+        canUse = function(ply) return ply:IsStaff() end
 	},
-	*/
 }
 CLASS.health = 115
 CLASS.physical_damage_taken = 0.7 -- carbon fiber-reinforced shell

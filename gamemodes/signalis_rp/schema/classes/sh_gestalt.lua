@@ -2,26 +2,23 @@ CLASS.name = "Gestalt"
 CLASS.faction = FACTION_GESTALT
 CLASS.isDefault = true
 CLASS.models = {
-    /*
     {
         mdl = "models/voxaid/isa/isa_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
         skin = "3",
-		gender = "female"
+		gender = "female",
+        canUse = function(ply) return ply:IsStaff() end
     },
     {
         mdl = "models/voxaid/isa/isa_pm.mdl",
         hullMins = Vector(-10, -10, 0),
         hullMaxs = Vector(10, 10, 70),
         skin = "3",
-        bodygroups = "11111",
-        --bodygroups = {
-        --    ["poncho"] = 1
-        --},
-		gender = "female"
+        bodygroups = "00001",
+		gender = "female",
+        canUse = function(ply) return ply:IsStaff() end
     },
-    */
 
     /* 
     -- penrose program
