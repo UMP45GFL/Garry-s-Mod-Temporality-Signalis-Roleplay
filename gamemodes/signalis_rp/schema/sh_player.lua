@@ -86,5 +86,5 @@ function meta:IsReplika()
 end
 
 function meta:IsStaff()
-	return client:IsAdmin() || client:IsUserGroup("operator") || client:IsUserGroup("moderator") || client:IsUserGroup("gamemaster")
+	return self:IsAdmin() || self:IsUserGroup("operator") || self:IsUserGroup("moderator") || self:IsUserGroup("gamemaster")
 end
