@@ -30,11 +30,7 @@ ITEM.functions.EditName = {
 		return false
 	end,
 	OnCanRun = function(item)
-        if item.player:IsAdmin()
-        || item.player:IsUserGroup("operator")
-        || item.player:IsUserGroup("moderator")
-        || item.player:IsUserGroup("gamemaster")
-        then
+        if item.player:IsStaff() then
             return true
         end
 
@@ -58,11 +54,7 @@ ITEM.functions.UpdateIssueDate = {
 		return false
 	end,
 	OnCanRun = function(item)
-        if item.player:IsAdmin()
-        || item.player:IsUserGroup("operator")
-        || item.player:IsUserGroup("moderator")
-        || item.player:IsUserGroup("gamemaster")
-        then
+        if item.player:IsStaff() then
             return true
         end
 

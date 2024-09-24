@@ -77,16 +77,10 @@ ITEM.functions.Edit = {
 	end,
 	OnCanRun = function(item)
 		local client = item.player
-
-		/*
-		if client:IsAdmin()
-        || client:IsUserGroup("operator")
-        || client:IsUserGroup("moderator")
-        || client:IsUserGroup("gamemaster")
-        then
+		
+		if client:IsStaff() then
 			return true
 		end
-		*/
 		
 		-- fix
 		if item.pages and #item:GetData("pages", {}) == 0 then

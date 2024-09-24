@@ -80,3 +80,11 @@ function meta:IsBioresonant()
 
 	return false
 end
+
+function meta:IsReplika()
+	return self:Team() == FACTION_REPLIKA or string.find(self:GetCharacter().vars.class:lower(), "replika")
+end
+
+function meta:IsStaff()
+	return client:IsAdmin() || client:IsUserGroup("operator") || client:IsUserGroup("moderator") || client:IsUserGroup("gamemaster")
+end
