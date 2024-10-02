@@ -27,7 +27,7 @@ netstream.Hook("ixWritingSetTitle", function(client, itemID, text)
 	if (character and item and item.base == "base_writing") then
 		local owner = item:GetData("owner", 0)
 
-		if (owner == character:GetID()) then
+		if (owner == character:GetID() or client:IsStaff()) then
 			item:SetTitle(item, string.Trim(text))
 		end
 	end

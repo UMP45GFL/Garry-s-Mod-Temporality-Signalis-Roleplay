@@ -8,3 +8,5 @@ ITEM.skin = 0
 ITEM.weight = 0.3
 
 ITEM.maxPages = 100
+
+ITEM.canChangeTitle = true

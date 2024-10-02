@@ -9,3 +9,5 @@ ITEM.weight = 0.1
 
 ITEM.maxPages = 20
 ITEM.backgroundPhoto = "eternalis/documents/DET_GuardBooklet.png"
+
+ITEM.canChangeTitle = true
