@@ -129,14 +129,15 @@ ITEM.functions.combine = {
 
 ITEM.functions.Open = {
 	OnClick = function(item)
-        print(item:GetData("opened", false), item:GetData("sealed", false))
-
-        if !item:GetData("opened", false) and item:GetData("sealed", false) then
-            item:CreatePanel()
-        end
+        timer.Simple(0.05, function()
+            if item:GetData("opened", false) and IsValid(ix.gui.menuInventoryContainer) then
+                item:CreatePanel()
+            end
+        end)
     end,
 	OnRun = function(item)
 		item:SetData("opened", true)
+		item:SetData("sealed", false)
 		return false
 	end,
 	OnCanRun = function(item)
