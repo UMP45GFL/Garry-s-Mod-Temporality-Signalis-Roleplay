@@ -4,7 +4,7 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Adds infections."
 PLUGIN.license = [[meow]]
 
-ix.config.Add("infectionSystemEnabled", true, "Enable the infection system", nil, {
+ix.config.Add("infectionSystemEnabled", false, "Enable the infection system", nil, {
 	category = "Infection System"
 })
 

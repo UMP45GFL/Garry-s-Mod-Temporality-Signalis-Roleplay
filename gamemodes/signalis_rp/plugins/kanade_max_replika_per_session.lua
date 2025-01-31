@@ -4,7 +4,7 @@ PLUGIN.author = "Kanade"
 PLUGIN.description = "Limits the amount of replikas of certain class for a session."
 PLUGIN.license = [[meow]]
 
-ix.config.Add("MaxReplikaPerSessionEnabled", true, "Whether or to limit the amount of replikas per session.", nil, {
+ix.config.Add("MaxReplikaPerSessionEnabled", false, "Whether or to limit the amount of replikas per session.", nil, {
 	category = "Max Replika Per Session"
 })
 
