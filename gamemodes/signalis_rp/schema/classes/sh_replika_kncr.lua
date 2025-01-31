@@ -78,7 +78,7 @@ function CLASS:OnCharacterCreated(client, character)
 		skin = 6, -- TODO: NEEDS TO BE CHANGED
 		name = character:GetName(),
 		charId = character:GetID(),
-		issued = Schema:GetEternalisDate()
+		issued = Schema:GetSignalisDate()
 	})
 	inventory:Add("armor_kncr", 1, {
 		equip = true

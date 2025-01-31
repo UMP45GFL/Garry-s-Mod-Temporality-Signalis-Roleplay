@@ -87,7 +87,7 @@ function CLASS:OnCharacterCreated(client, character)
 		skin = 3,
 		name = character:GetName(),
 		charId = character:GetID(),
-		issued = Schema:GetEternalisDate()
+		issued = Schema:GetSignalisDate()
 	})
 	inventory:Add("helmet_arar", 1, {
 		equip = true

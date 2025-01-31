@@ -80,7 +80,7 @@ function CLASS:OnCharacterCreated(client, character)
 		skin = 8,
 		name = character:GetName(),
 		charId = character:GetID(),
-		issued = Schema:GetEternalisDate()
+		issued = Schema:GetSignalisDate()
 	})
 	inventory:Add("paper", 1)
 	inventory:Add("paper", 1)

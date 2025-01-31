@@ -97,7 +97,7 @@ function CLASS:OnCharacterCreated(client, character)
 		skin = 6,
 		name = character:GetName(),
 		charId = character:GetID(),
-		issued = Schema:GetEternalisDate()
+		issued = Schema:GetSignalisDate()
 	})
 	inventory:Add("armor_stcr", 1, {
 		equip = true

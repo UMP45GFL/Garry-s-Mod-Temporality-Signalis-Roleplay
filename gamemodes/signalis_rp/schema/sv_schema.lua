@@ -88,10 +88,10 @@ function Schema:ScalePlayerDamage(ply, hitgroup, dmginfo)
 			dmg_mul = dmg_mul * 1.5
 			-- Headshot sound effects
 			local bone = ply:LookupBone("ValveBiped.Bip01_Head1")
-			if bone and ETERNALIS_HEADSHOT_SOUNDS then
+			if bone and SIGNALIS_HEADSHOT_SOUNDS then
 				local headpos = ply:GetBonePosition(bone)
 				if isvector(headpos) then
-					local snd = table.Random(ETERNALIS_HEADSHOT_SOUNDS)
+					local snd = table.Random(SIGNALIS_HEADSHOT_SOUNDS)
 					if snd then
 						EmitSound(snd, headpos, 0, CHAN_BODY, 1, 75)
 						ply:SendPlaySound(snd)

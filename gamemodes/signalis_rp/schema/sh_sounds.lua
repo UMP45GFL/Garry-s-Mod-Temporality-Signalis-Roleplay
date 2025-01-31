@@ -62,7 +62,7 @@ if CLIENT then
     end)
 
     --cigarette sounds
-    hook.Add("PlayerCigarInhaleSound", "Eternalis_PlayerCigarInhaleSound", function(ply)
+    hook.Add("PlayerCigarInhaleSound", "Signalis_PlayerCigarInhaleSound", function(ply)
         local pitch = 100
 
         if ply:IsFemale() then
@@ -73,12 +73,12 @@ if CLIENT then
         return false
     end)
 
-    hook.Add("PlayerStopCigarInhaleSound", "Eternalis_PlayerStopCigarInhaleSound", function(ply)
+    hook.Add("PlayerStopCigarInhaleSound", "Signalis_PlayerStopCigarInhaleSound", function(ply)
         ply:StopSound("cigainhale.wav")
         return false
     end)
 
-    hook.Add("PlayerCigarBreath1Sound", "Eternalis_PlayerCigarBreath1Sound", function(ply, amt)
+    hook.Add("PlayerCigarBreath1Sound", "Signalis_PlayerCigarBreath1Sound", function(ply, amt)
         local pitch = 100
 
         if ply:IsFemale() then
@@ -89,7 +89,7 @@ if CLIENT then
         return false
     end)
 
-    hook.Add("PlayerCigarBreath2Sound", "Eternalis_PlayerCigarBreath2Sound", function(ply, amt)
+    hook.Add("PlayerCigarBreath2Sound", "Signalis_PlayerCigarBreath2Sound", function(ply, amt)
         local pitch = 130 - math.min(100, amt * 2), 0.4 + (amt * 0.005)
 
         if ply:IsFemale() then
@@ -111,7 +111,7 @@ else
         "eternalis/player/damage/hurt_2.wav"
     }
 
-    hook.Add("GetPlayerPainSound", "Eternalis_GetPlayerPainSound", function(client)
+    hook.Add("GetPlayerPainSound", "Signalis_GetPlayerPainSound", function(client)
         if client:IsReplika() then
             local snd = table.Random(replikaHurtSounds)
             client:SendPlaySound(snd)

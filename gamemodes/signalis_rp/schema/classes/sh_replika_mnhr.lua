@@ -85,6 +85,6 @@ function CLASS:OnCharacterCreated(client, character)
 		skin = 4,
 		name = character:GetName(),
 		charId = character:GetID(),
-		issued = Schema:GetEternalisDate()
+		issued = Schema:GetSignalisDate()
 	})
 end

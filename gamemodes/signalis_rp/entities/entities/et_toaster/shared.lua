@@ -2,7 +2,7 @@ ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 
 ENT.PrintName = "Toaster"
-ENT.Category = "Eternalis cooking"
+ENT.Category = "Signalis cooking"
 ENT.Author = "BananowyTasiemiec"
 ENT.Contact = "bananowytasiemiec3351@gmai.com"
 ENT.Purpose = ""

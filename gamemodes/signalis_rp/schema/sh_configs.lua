@@ -41,7 +41,7 @@ SIGNALIS_MODEL_HEIGHT_FIXES = {
 }
 */
 
-ETERNALIS_HEADSHOT_SOUNDS = {
+SIGNALIS_HEADSHOT_SOUNDS = {
 	"eternalis/player/headshot/headshot_01.wav",
 	"eternalis/player/headshot/headshot_02.wav",
 	"eternalis/player/headshot/headshot_03.wav",
@@ -49,7 +49,7 @@ ETERNALIS_HEADSHOT_SOUNDS = {
 	"eternalis/player/headshot/headshot_05.wav",
 }
 
-ETERNALIS_MALE_DEATH_SOUNDS = {
+SIGNALIS_MALE_DEATH_SOUNDS = {
     {
         snd = "eternalis/player/death/death_gestalt_m_1.wav",
         volume = 1,
@@ -64,7 +64,7 @@ ETERNALIS_MALE_DEATH_SOUNDS = {
     }
 }
 
-ETERNALIS_FEMALE_DEATH_SOUNDS = {
+SIGNALIS_FEMALE_DEATH_SOUNDS = {
     {
         snd = "eternalis/player/death/death_gestalt_f_1.wav",
         volume = 1,
@@ -79,11 +79,11 @@ ETERNALIS_FEMALE_DEATH_SOUNDS = {
     }
 }
 
-ETERNALIS_FEMALE_BREATHING_SOUNDS = {
-	snd = "eternalis/player/breathing/breathing_female.wav",
-	volume = 1,
-	sndLevel = 65,
-	pitch = 105,
+SIGNALIS_FEMALE_BREATHING_SOUNDS = {
+    snd = "eternalis/player/breathing/breathing_female.wav",
+    volume = 1,
+    sndLevel = 65,
+    pitch = 105,
     minPitch = 90,
     maxPitch = 110
 }

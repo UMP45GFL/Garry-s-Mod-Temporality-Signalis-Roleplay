@@ -26,11 +26,11 @@ CLASS.max_stamina = 1 -- multiplier of how much stamina the player has
 CLASS.description = {""}
 
 CLASS.breathing_sound = function(ply)
-    return ETERNALIS_FEMALE_BREATHING_SOUNDS
+    return SIGNALIS_FEMALE_BREATHING_SOUNDS
 end
 
 CLASS.death_sounds = function(ply)
-    return ETERNALIS_FEMALE_DEATH_SOUNDS
+    return SIGNALIS_FEMALE_DEATH_SOUNDS
 end
 
 CLASS.talkPitch = 105

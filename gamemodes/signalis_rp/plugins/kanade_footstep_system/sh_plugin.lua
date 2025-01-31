@@ -64,7 +64,7 @@ if CLIENT then
     hook.Remove("Tick", "Kanade_FootstepSystem_Tick")
 
     local function FindFootstepSound(mat, surface)
-        for _, sndTable in pairs(ETERNALIS_FOOTSTEP_LIST) do
+        for _, sndTable in pairs(KANADE_FOOTSTEP_LIST) do
             -- Search by MAT
             if istable(sndTable.mat) then
                 for k,v in pairs(sndTable.mat) do

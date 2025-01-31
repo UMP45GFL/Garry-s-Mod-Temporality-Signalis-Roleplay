@@ -48,7 +48,7 @@ local function checkPlayerQuizWhitelist(ply)
 end
 
 local function quizFailed(ply)
-    ply.startedEternalisQuiz = nil
+    ply.startedSignalisQuiz = nil
 
     createAfkLimitTimer(ply)
 
@@ -97,7 +97,7 @@ hook.Add("PostPlayerInitialized", "QuizModule_PostPlayerInitialized", function(p
 end)
 
 hook.Add("PlayerDisconnected", "QuizModule_PlayerDisconnected", function(ply)
-    if ply.startedEternalisQuiz != nil then
+    if ply.startedSignalisQuiz != nil then
         local banLength = ix.config.Get("QuizModuleAfkBanTime", 15)
         local niceBanTime = string.NiceTime(banLength * 60)
         local banText = "You disconnected while in the quiz. Return in " .. niceBanTime .. "."
@@ -127,7 +127,7 @@ net.Receive("startedbeingactive", function(len, ply)
 end)
 
 net.Receive("quizstarted", function(len, ply)
-    ply.startedEternalisQuiz = CurTime()
+    ply.startedSignalisQuiz = CurTime()
 
     if timer.Exists("quizTimeLimit_" .. ply:SteamID64()) then
         timer.Remove("quizTimeLimit_" .. ply:SteamID64())
@@ -193,7 +193,7 @@ net.Receive("quizsubmit", function(len, ply)
         end
     end
 
-    ply.startedEternalisQuiz = nil
+    ply.startedSignalisQuiz = nil
 
     net.Start("quizcompleted")
     net.Send(ply)

@@ -1,7 +1,7 @@
 ﻿
 local path = "eternalis/player/footsteps/"
 
-ETERNALIS_FOOTSTEP_LIST = {
+KANADE_FOOTSTEP_LIST = {
     {
         mat = MAT_DIRT,
         surface = "dirt",

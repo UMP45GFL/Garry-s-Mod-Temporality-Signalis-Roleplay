@@ -21,7 +21,7 @@ function ITEM:GetDescription()
 end
 
 function ITEM:OnInstanced(invID, x, y, item)
-	item:SetData("issued", Schema:GetEternalisDate())
+	item:SetData("issued", Schema:GetSignalisDate())
 end
 
 ITEM.functions.EditName = {

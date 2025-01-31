@@ -15,7 +15,7 @@ ix.config.Add("musicSystemEnabled", true, "Whether or not to enable the music sy
 
 local path = "eternalis/signalis_ost/"
 
-ETERNALIS_MUSIC_TRACKLIST = {
+SIGNALIS_MUSIC_TRACKLIST = {
 	-- casual ones
 	{ name = "Turned Around", 			sound = path.."1_turned_around.mp3", 			volume = 1, length = 125 },
 	{ name = "Safe Room", 				sound = path.."2_safe_room.mp3", 				volume = 1, length = 77.5 },
@@ -33,7 +33,7 @@ ETERNALIS_MUSIC_TRACKLIST = {
 
 -- Server-side: preload resources
 if SERVER then
-	for k, v in ipairs(ETERNALIS_MUSIC_TRACKLIST) do
+	for k, v in ipairs(SIGNALIS_MUSIC_TRACKLIST) do
 		resource.AddFile(v.sound)
 	end
 end
@@ -63,7 +63,7 @@ if CLIENT then
 
 	-- Reset the song queue
 	local function ResetSongQueue()
-		musicSystem.songQueue = table.Copy(ETERNALIS_MUSIC_TRACKLIST)
+		musicSystem.songQueue = table.Copy(SIGNALIS_MUSIC_TRACKLIST)
 	end
 
 	ResetMusicInfo()
@@ -155,7 +155,7 @@ if CLIENT then
 			end
 		end
 	end
-	hook.Add("Think", "Eternalis_HandleMusic", HandleMusic)
+	hook.Add("Think", "Signalis_HandleMusic", HandleMusic)
 
 	-- Options for enabling/disabling the music system and controlling volume
 	local function isHidden()

@@ -26,15 +26,15 @@ CLASS.description = {""}
 
 CLASS.breathing_sound = function(ply)
     if ply:IsFemale() then
-        return ETERNALIS_FEMALE_BREATHING_SOUNDS
+        return SIGNALIS_FEMALE_BREATHING_SOUNDS
     end
 end
 
 CLASS.death_sounds = function(ply)
     if ply:IsFemale() then
-        return table.Random(ETERNALIS_FEMALE_DEATH_SOUNDS)
+        return table.Random(SIGNALIS_FEMALE_DEATH_SOUNDS)
     else
-        return table.Random(ETERNALIS_MALE_DEATH_SOUNDS)
+        return table.Random(SIGNALIS_MALE_DEATH_SOUNDS)
     end
 end
 

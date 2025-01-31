@@ -266,7 +266,7 @@ if SERVER then
 else
     local isEWPStoggled = true
 
-    concommand.Add("eternalis_toggle_ewps_esp", function()  
+    concommand.Add("signalis_toggle_ewps_esp", function()  
         isEWPStoggled = !isEWPStoggled
     end)
 

@@ -85,7 +85,7 @@ function CLASS:OnCharacterCreated(client, character)
 		skin = 5,
 		name = character:GetName(),
 		charId = character:GetID(),
-		issued = Schema:GetEternalisDate()
+		issued = Schema:GetSignalisDate()
 	})
 	inventory:Add("pilotka", 1, {
 		equip = true
