@@ -11,7 +11,7 @@ PLUGIN.description = "Makes the healing system more advanced."
 PLUGIN.license = [[meow]]
 
 if SERVER then
-    ix.config.Add("AdvancedHealingSystemEnabled", true, "Whether or to enable the advanced healing system.", nil, {
+    ix.config.Add("AdvancedHealingSystemEnabled", false, "Whether or to enable the advanced healing system.", nil, {
         category = "Advanced Healing System"
     })
 end
