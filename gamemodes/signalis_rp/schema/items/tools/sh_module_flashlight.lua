@@ -1,7 +1,7 @@
 
 ITEM.name = "Flashlight module"
 ITEM.model = Model("models/eternalis/items/equipment/flashlight.mdl")
-ITEM.description = "Shoulder-mounted flashlight module. Uses internal battery and can connect to Replika power supply."
+ITEM.description = "Shoulder-mounted flashlight module. Uses internal battery and can connect to internal Replika power supply."
 ITEM.skin = 0
 
 ITEM.weight = 0.6
@@ -66,9 +66,9 @@ if SERVER then
 		
         if attachID > 0 then
             ply.flashlight3d:SetParent(ply)
-            ply.flashlight3d:Fire("SetParentAttachment", "eyes") -- Attach to the eyes
+            ply.flashlight3d:Fire("SetParentAttachment", "eyes") -- Attach to the eyes of the playermodel (NOT FIRST PERSON CAMERA!!!)
         else
-            -- Default positioning by request; so it will function normally
+            -- Default positioning by request; so it will function semi-normally
 	    ply.flashlight3d:SetPos(ply:EyePos() + ply:EyeAngles():Forward() * 15)
             ply.flashlight3d:SetAngles(ply:EyeAngles())
         end
