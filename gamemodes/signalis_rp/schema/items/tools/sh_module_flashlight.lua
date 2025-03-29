@@ -1,7 +1,7 @@
 
 ITEM.name = "Flashlight module"
 ITEM.model = Model("models/eternalis/items/equipment/flashlight.mdl")
-ITEM.description = "Shoulder-mounted flashlight module. Powered by internal Replika power supply when installed."
+ITEM.description = "Shoulder-mounted flashlight module. Uses internal battery and can connect to Replika power supply."
 ITEM.skin = 0
 
 ITEM.weight = 0.6
@@ -68,24 +68,9 @@ if SERVER then
             ply.flashlight3d:SetParent(ply)
             ply.flashlight3d:Fire("SetParentAttachment", "eyes") -- Attach to the eyes
         else
-            -- Fallback to parenting to a bone, like the head
-            if ply:LookupBone("ValveBiped.Bip01_L_Clavicle") then
-                ply.flashlight3d:SetParent(ply)
-                ply.flashlight3d:FollowBone(ply, ply:LookupBone("ValveBiped.Bip01_L_Clavicle"))
-				
-			elseif ply:LookupBone("ValveBiped.Bip01_R_Clavicle") then
-				ply.flashlight3d:SetParent(ply)
-				ply.flashlight3d:FollowBone(ply, ply:LookupBone("ValveBiped.Bip01_R_Clavicle"))
-				
-			elseif ply:LookupBone("ValveBiped.Bip01_Head") then
-				ply.flashlight3d:SetParent(ply)
-				ply.flashlight3d:FollowBone(ply, ply:LookupBone("ValveBiped.Bip01_Head"))
-
-            else
-                -- Default positioning if no suitable bone or attachment found
-                ply.flashlight3d:SetPos(ply:EyePos() + ply:EyeAngles():Forward() * 15)
-                ply.flashlight3d:SetAngles(ply:EyeAngles())
-            end
+            -- Default positioning by request; so it will function normally
+	    ply.flashlight3d:SetPos(ply:EyePos() + ply:EyeAngles():Forward() * 15)
+            ply.flashlight3d:SetAngles(ply:EyeAngles())
         end
 
 		ply:SetNWEntity("flashlight3d", ply.flashlight3d)
