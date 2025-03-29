@@ -1,3 +1,3 @@
-Signalis roleplay made in Helix.
+Fork of Maya's Eternalis roleplay gamemode.
 
-You will need https://github.com/Maja552/Helix-fork-for-Signalis-RP/tree/master for it to work.
+Like the original, you will need https://github.com/Maja552/Helix-fork-for-Signalis-RP/tree/master for it to work.
