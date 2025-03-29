@@ -1,7 +1,7 @@
 
 ITEM.name = "Eidetic module"
 ITEM.model = Model("models/eternalis/items/gore/eidet.mdl")
-ITEM.description = "An old photographic memory module. Allows recording of up to 6 visual memories. Incredibly outdated, but it might still be useful. When equipped, it can record up to 6 visual memories as grayscale images. Old images are automatically overwritten when taking a picture."
+ITEM.description = "Photographic memory module that allows recording of up to 6 visual memories in grayscale. WARNING: Old images will be overwritten if the limit is reached."
 ITEM.skin = 0
 
 ITEM.weight = 0.3
