@@ -21,7 +21,7 @@ SIGNALIS_MUSIC_TRACKLIST = {
 	{ name = "Safe Room", 					sound = path.."2_safe_room.mp3", 				volume = 1, length = 77.5 },
 	{ name = "Double Back", 				sound = path.."4_double_back.mp3", 				volume = 1, length = 204.27 },
 	{ name = "Double Back VHS ver.", 			sound = path.."48_double_back_vhs_ver.mp3", 			volume = 1, length = 204.27 },
-	{ name = "Mnhr", 					sound = path.."12_mnhr.mp3", 					volume = 1, length = 165.6 },
+	{ name = "MNHR", 					sound = path.."12_mnhr.mp3", 					volume = 1, length = 165.6 },
 	{ name = "Dowsing", 					sound = path.."15_dowsing.mp3", 				volume = 1, length = 72 },
 	{ name = "Crepuscular", 				sound = path.."54_crepuscular.mp3", 				volume = 1, length = 125.5 },
 	{ name = "Home", 					sound = path.."49_home.mp3", 					volume = 1, length = 121.6 },
