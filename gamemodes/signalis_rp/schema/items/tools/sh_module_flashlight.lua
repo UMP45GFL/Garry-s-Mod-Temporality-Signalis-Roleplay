@@ -66,11 +66,26 @@ if SERVER then
 		
         if attachID > 0 then
             ply.flashlight3d:SetParent(ply)
-            ply.flashlight3d:Fire("SetParentAttachment", "eyes") -- Attach to the eyes of the playermodel (NOT FIRST PERSON CAMERA!!!)
+            ply.flashlight3d:Fire("SetParentAttachment", "eyes") -- Attach to the eyes
         else
-            -- Default positioning by request; so it will function semi-normally
-	    ply.flashlight3d:SetPos(ply:EyePos() + ply:EyeAngles():Forward() * 15)
-            ply.flashlight3d:SetAngles(ply:EyeAngles())
+            -- Fallback to parenting to a bone, like the head
+            if ply:LookupBone("ValveBiped.Bip01_L_Clavicle") then
+                ply.flashlight3d:SetParent(ply)
+                ply.flashlight3d:FollowBone(ply, ply:LookupBone("ValveBiped.Bip01_L_Clavicle"))
+				
+			elseif ply:LookupBone("ValveBiped.Bip01_R_Clavicle") then
+				ply.flashlight3d:SetParent(ply)
+				ply.flashlight3d:FollowBone(ply, ply:LookupBone("ValveBiped.Bip01_R_Clavicle"))
+				
+			elseif ply:LookupBone("ValveBiped.Bip01_Head") then
+				ply.flashlight3d:SetParent(ply)
+				ply.flashlight3d:FollowBone(ply, ply:LookupBone("ValveBiped.Bip01_Head"))
+
+            else
+                -- Default positioning if no suitable bone or attachment found
+                ply.flashlight3d:SetPos(ply:EyePos() + ply:EyeAngles():Forward() * 15)
+                ply.flashlight3d:SetAngles(ply:EyeAngles())
+            end
         end
 
 		ply:SetNWEntity("flashlight3d", ply.flashlight3d)
