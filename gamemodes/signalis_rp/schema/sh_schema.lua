@@ -28,6 +28,19 @@ ix.flag.Add("V", "Access to heavy blackmarket goods.")
 
 
 ix.anim.SetModelClass("models/temporality/signalis_FKLR/falke_pm.mdl", "player")
+ix.anim.SetModelClass("models/temporality/signalis_eule/eule_pm.mdl", "player")
+ix.anim.SetModelClass("models/temporality/signalis_lstr/AVA_pm.mdl", "player")
+ix.anim.SetModelClass("models/temporality/signalis_arar/arar_pm.mdl", "player")
+ix.anim.SetModelClass("models/temporality/signalis_ADLR/adler_pm.mdl", "player")
+ix.anim.SetModelClass("models/female/f_geshtalt.mdl", "player")
+ix.anim.SetModelClass("models/temporality/signalis_kolibri/kolibri_pm.mdl", "player")
+ix.anim.SetModelClass("models/temporality/signalis_lstr/elster_pm.mdl", "player")
+ix.anim.SetModelClass("models/temporality/signalis_mynah/mynah_pm.mdl", "player")
+ix.anim.SetModelClass("models/male/m_geshtalt.mdl", "player")
+ix.anim.SetModelClass("models/temporality/signalis_star/star_pm.mdl", "player")
+ix.anim.SetModelClass("models/temporality/signalis_stcr/STCR_pm.mdl", "player")
+
+
 
 function Schema:ZeroNumber(number, length)
 	local amount = math.max(0, length - string.len(number))
