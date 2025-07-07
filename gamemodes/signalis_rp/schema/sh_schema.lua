@@ -27,7 +27,7 @@ ix.flag.Add("v", "Access to light blackmarket goods.")
 ix.flag.Add("V", "Access to heavy blackmarket goods.")
 
 
-ix.anim.SetModelClass("models/temporality/signalis_FKLR/falke_pm.mdl", player)
+ix.anim.SetModelClass("models/temporality/signalis_FKLR/falke_pm.mdl", "player")
 
 function Schema:ZeroNumber(number, length)
 	local amount = math.max(0, length - string.len(number))
