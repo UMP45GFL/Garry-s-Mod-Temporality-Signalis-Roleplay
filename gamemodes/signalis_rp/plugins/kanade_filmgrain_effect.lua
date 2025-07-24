@@ -15,7 +15,7 @@ ix.config.Add("filmgrainEffectEnabled", true, "Whether or to enable the filmgrai
 })
 
 if CLIENT then
-	ix.option.Add("filmgrainEffectEnabled", ix.type.bool, true, {
+	ix.option.Add("filmgrainEffectEnabled", ix.type.bool, false, {
 		category = "Visual Effects"
 	})
 
