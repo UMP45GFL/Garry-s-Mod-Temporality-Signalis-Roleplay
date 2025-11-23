@@ -28,7 +28,7 @@ SIGNALIS_MUSIC_TRACKLIST = {
 
 	-- side b (heartwarming/calming)
 	{ name = "Ritual (Vineta)", 				sound = path.."sb_ritual_vineta.mp3", 				volume = 1, length = 172.5 },
-	{ name = "Die Toteninsel (Shooting Stars)", 		sound = path.."sb_die_toteninsel_shooting_stars.mp3", 		volume = 1, length = 220.5 },
+	--{ name = "Die Toteninsel (Shooting Stars)", 		sound = path.."sb_die_toteninsel_shooting_stars.mp3", 		volume = 1, length = 220.5 },
 	{ name = "Home (Kamilla)", 				sound = path.."sb_home_kamilla.mp3", 				volume = 1, length = 200 },
 	{ name = "The Promise (Last Goodbye)", 			sound = path.."sb_the_promise_last_goodbye.mp3", 		volume = 1, length = 205.5 },
 	{ name = "Warm Light (Graves)", 			sound = path.."sb_warm_light_graves.mp3", 			volume = 1, length = 162.2 },
