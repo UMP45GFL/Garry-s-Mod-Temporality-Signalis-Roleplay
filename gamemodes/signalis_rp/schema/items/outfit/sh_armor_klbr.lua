@@ -1,6 +1,6 @@
 
 ITEM.name = "KLBR Armor"
-ITEM.description = "Bullet-Resistant Armor Plating."
+ITEM.description = "Bullet-resistant armor plating."
 ITEM.category = "Clothing"
 ITEM.model = "models/eternalis/items/equipment/klbr_armor.mdl"
 ITEM.outfitCategory = "body"
