@@ -1,6 +1,6 @@
 
 FACTION.name = "Gestalt"
-FACTION.description = "A human that is not a replika."
+FACTION.description = "A non-Replika humanoid."
 FACTION.color = Color(52, 146, 235, 255)
 FACTION.isDefault = true
 FACTION.availableByDefault = true
