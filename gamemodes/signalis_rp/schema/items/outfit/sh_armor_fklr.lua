@@ -1,6 +1,6 @@
 
 ITEM.name = "FKLR Armor"
-ITEM.description = "Bullet-Resistant Armor Plating."
+ITEM.description = "Bullet-resistant armor plating."
 ITEM.category = "Clothing"
 ITEM.model = "models/eternalis/items/equipment/fklr_armor.mdl"
 ITEM.outfitCategory = "body"
