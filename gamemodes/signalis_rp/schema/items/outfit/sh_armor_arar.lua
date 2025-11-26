@@ -1,6 +1,6 @@
 
 ITEM.name = "ARAR Armor"
-ITEM.description = "Bullet-Resistant Armor Plating."
+ITEM.description = "Bullet-resistant armor plating."
 ITEM.category = "Clothing"
 ITEM.model = "models/armor/arar_armor.mdl"
 ITEM.outfitCategory = "body"
