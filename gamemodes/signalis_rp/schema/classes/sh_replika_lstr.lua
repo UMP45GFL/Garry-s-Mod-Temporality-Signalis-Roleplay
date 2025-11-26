@@ -91,7 +91,8 @@ Height: 178 cm]],
 	[[A versatile combat engineer unit primarily designed for orbital service.
 These tough and stoic loners are best suited as specialist Sappers and Scouts.
 Their technical knowledge and combat capabilities make these units true survivalists, especially when in their iconic white-and-blue heavy combat configuration, which sports bullet-resistant armor plating on their chest and forearms.
-Since the original neural pattern for this unit was lost with the destruction of the central Neural Archive on Vineta, new LSTR units have been produced based on a decommissioned unit from the Penrose Program.]]
+Since the original neural pattern for this unit was lost with the destruction of the central Neural Archive on Vineta, new LSTR units have been produced based on a decommissioned unit from the Penrose Program.
+	LSTR units are not standard in M-25 Menger.]]
 }
 
 CLASS_REPLIKA_LSTR = CLASS.index
