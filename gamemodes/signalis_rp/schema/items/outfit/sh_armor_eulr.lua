@@ -1,6 +1,6 @@
 
 ITEM.name = "EULR Armor"
-ITEM.description = "Bullet-Resistant Armor Plating."
+ITEM.description = "Bullet-resistant armor plating."
 ITEM.category = "Clothing"
 ITEM.model = "models/armor/eulr_armor.mdl"
 ITEM.outfitCategory = "body"
