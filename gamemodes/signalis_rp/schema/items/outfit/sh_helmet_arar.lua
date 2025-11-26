@@ -1,15 +1,15 @@
 
-ITEM.name = "ARAR helmet"
-ITEM.description = "Helmet that protects the head from injury due to falling objects."
+ITEM.name = "ARAR Hardhat"
+ITEM.description = "Hardhat that protects the head from injury."
 ITEM.category = "Clothing"
 ITEM.model = "models/eternalis/items/equipment/arar_helmet.mdl"
 ITEM.outfitCategory = "hat"
 
 ITEM.bodyGroups = {
-	["helmet"] = 0
+	["ARARHelmet"] = 0
 }
 ITEM.bodyGroupsUnequipped = {
-	["helmet"] = 1
+	["ARARHelmet"] = 1
 }
 
 ITEM.weight = 1
