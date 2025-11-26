@@ -1,6 +1,6 @@
 
 ITEM.name = "STCR Armor"
-ITEM.description = "Bullet-Resistant Armor Plating."
+ITEM.description = "Bullet-resistant armor plating."
 ITEM.category = "Clothing"
 ITEM.model = "models/eternalis/items/equipment/stcr_armor.mdl"
 ITEM.outfitCategory = "body"
