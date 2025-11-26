@@ -1,5 +1,5 @@
 
-ITEM.name = "Pilotka hat"
+ITEM.name = "Pilotka Hat"
 ITEM.description = "A pilotka hat."
 ITEM.category = "Clothing"
 ITEM.model = "models/eternalis/items/equipment/pilotka_hat.mdl"
@@ -20,7 +20,7 @@ end
 
 ITEM.bodyGroupsUnequipped = function(item, client)
     local character = client:GetCharacter()
-    if character and character.vars.class == "replika_lstr" then
+    if character and character.vars.class == "replika_lstr" or character.vars.class == "replika_star" or character.vars.class == "replika_klbr" then
         return {
             ["hat"] = 0
         }
@@ -41,6 +41,10 @@ function ITEM:CanEquipOutfit(client)
     if character and (
         character.vars.class == "replika_eulr" or
         character.vars.class == "replika_lstr" or
+        character.vars.class == "replika_arar" or
+        character.vars.class == "replika_klbr" or
+        character.vars.class == "replika_stcr" or
+        character.vars.class == "replika_star" or
         client:GetModel() == "models/voxaid/alina/alina_pm.mdl"
    ) then
         return true
