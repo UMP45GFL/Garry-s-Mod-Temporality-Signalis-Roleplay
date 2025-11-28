@@ -5,31 +5,12 @@ ITEM.category = "Clothing"
 ITEM.model = "models/eternalis/items/equipment/pilotka_hat.mdl"
 ITEM.outfitCategory = "hat"
 
-ITEM.bodyGroups = function(item, client)
-    local character = client:GetCharacter()
-    if character and character.vars.class == "replika_lstr" then
-        return {
-            ["hat"] = 1
-        }
-    end
-
-    return {
-        ["hat"] = 0
-    }
-end
-
-ITEM.bodyGroupsUnequipped = function(item, client)
-    local character = client:GetCharacter()
-    if character and character.vars.class == "replika_lstr" or character.vars.class == "replika_star" or character.vars.class == "replika_klbr" then
-        return {
-            ["hat"] = 0
-        }
-    end
-
-    return {
-        ["hat"] = 1
-    }
-end
+ITEM.bodyGroups = {
+	["hat"] = 1
+}
+ITEM.bodyGroupsUnequipped = {
+	["hat"] = 0
+}
 
 ITEM.weight = 1
 
