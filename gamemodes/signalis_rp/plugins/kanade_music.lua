@@ -32,6 +32,13 @@ SIGNALIS_MUSIC_TRACKLIST = {
 	{ name = "Home (Kamilla)", 				sound = path.."sb_home_kamilla.mp3", 				volume = 1, length = 200 },
 	{ name = "The Promise (Last Goodbye)", 			sound = path.."sb_the_promise_last_goodbye.mp3", 		volume = 1, length = 205.5 },
 	{ name = "Warm Light (Graves)", 			sound = path.."sb_warm_light_graves.mp3", 			volume = 1, length = 162.2 },
+	-- side b update (11/28/25)
+	{ name = "Train Ride (Iris)", 			sound = path.."sb_train_ride_iris.mp3", 		volume = 1, length = 114 },
+	{ name = "3000 Cycles (Key of Love)", 			sound = path.."sb_3000cycles_keyoflove.mp3", 			volume = 1, length = 136 },
+	{ name = "Bodies (Ghosts)", 			sound = path.."sb_bodies_ghosts.mp3", 			volume = 1, length = 179 },
+	{ name = "Ewige Wiederkunft (Orbital)", 			sound = path.."sb_ewige_wiederkunft_orbital.mp3", 			volume = 1, length = 131 },
+	{ name = "Orrery (Distant Memory)", 			sound = path.."sb_orrery_distant_memory.mp3", 			volume = 1, length = 140 },
+	{ name = "The Red Gate (Waiting)", 			sound = path.."sb_the_red_gate_waiting.mp3", 			volume = 1, length = 142 },
 
 	-- more sad or scary or intense
 	{ name = "Ritual", 					sound = path.."11_ritual.mp3", 					volume = 1, length = 145.5 },
