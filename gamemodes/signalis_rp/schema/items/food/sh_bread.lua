@@ -2,7 +2,7 @@
 ITEM.name = "Loaf of bread"
 ITEM.width = 2
 ITEM.height = 1
-ITEM.model = Model("models/foodnhouseholditems/bread-1.mdl")
+ITEM.model = Model("models/foodnhouseholditems/bread-3.mdl")
 ITEM.description = "A loaf of bread, it looks delicious."
 
 ITEM.addHunger = -40
