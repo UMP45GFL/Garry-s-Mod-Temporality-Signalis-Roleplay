@@ -5,11 +5,11 @@ ITEM.height = 1
 ITEM.model = Model("models/foodnhouseholditems/bread-3.mdl")
 ITEM.description = "A loaf of bread, it looks delicious."
 
-ITEM.addHunger = -40
+ITEM.addHunger = -30
 ITEM.addThirst = 0
 ITEM.addHealth = 10
 ITEM.addStamina = 0
 ITEM.eatSound = nil
-ITEM.sliceableInto = {"bread_slice", 4}
+ITEM.sliceableInto = {"bread_slice", 9}
 
 ITEM.weight = 0.5
