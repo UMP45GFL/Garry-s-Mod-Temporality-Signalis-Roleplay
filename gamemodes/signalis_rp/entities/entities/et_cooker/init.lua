@@ -27,7 +27,7 @@ local COOKING = {
         temperature = 190
     },
     fish_bass_raw = {
-        cooked = {"fish_steak", 3},
+        cooked = {"fish_cooked", 6},
         offset = Vector(0, 0, 4),
         scale = nil,
         time = 30,
