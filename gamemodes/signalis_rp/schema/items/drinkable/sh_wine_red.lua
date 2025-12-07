@@ -2,7 +2,6 @@
 ITEM.name = "Red Wine"
 ITEM.model = Model("models/foodnhouseholditems/wine_red1.mdl")
 ITEM.description = "A bottle of red Wine. 15% alcohol by volume."
-ITEM.skin = 1
 ITEM.width = 1
 ITEM.height = 2
 
