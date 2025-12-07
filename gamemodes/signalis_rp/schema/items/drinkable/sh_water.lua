@@ -1,7 +1,7 @@
 
-ITEM.name = "Bottle of water"
+ITEM.name = "Bottled Water"
 ITEM.model = Model("models/props/cs_office/water_bottle.mdl")
-ITEM.description = "A bottle of water, it looks refreshing."
+ITEM.description = "A bottle of water."
 
 ITEM.addHunger = 0
 ITEM.addThirst = -30
