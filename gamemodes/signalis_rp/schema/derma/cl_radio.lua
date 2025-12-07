@@ -30,6 +30,16 @@ local signals = {
 		pos = Vector(203.994431, 4891.487793, -6245.80566),
 		posMaxDistance = 10000
 	},
+	{
+		frequency = 69420,
+		snd = "sound/eternalis/signalis_ost/special/badpiggies.mp3",
+		length = 161,
+		is_burst = false,
+
+		strength = 0.7,
+		pos = Vector(203.994431, 4891.487793, -6245.80566),
+		posMaxDistance = 10000
+	},
 	/*
 	{
 		frequency = 190000,
