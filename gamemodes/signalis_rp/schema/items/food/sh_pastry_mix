@@ -1,0 +1,15 @@
+
+ITEM.name = "Pastry mix"
+ITEM.model = Model("models/foodnhouseholditems/bacon.mdl")
+ITEM.width = 2
+ITEM.height = 2
+ITEM.description = "A box of pastry mix. Needs to be cooked."
+
+ITEM.addHunger = 2
+ITEM.addThirst = -15
+ITEM.addHealth = -6
+ITEM.addStamina = 0
+ITEM.eatSound = nil
+ITEM.eatMessage = "That didn't feel good..."
+
+ITEM.weight = 0.5
