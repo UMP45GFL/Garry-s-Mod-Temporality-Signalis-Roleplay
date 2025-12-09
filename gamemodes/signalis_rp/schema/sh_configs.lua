@@ -6,6 +6,10 @@ ix.currency.plural = "rationmarks"
 ix.config.SetDefault("scoreboardRecognition", true)
 ix.config.SetDefault("maxAttributes", 60)
 
+ix.config.SetDefault("walkRatio", 0.7) --multiplier for alt-walk speed, i.e walk speed is 70% slower when holding alt, default 0.5
+ix.config.SetDefault("walkSpeed", 120) --walkspeed, default 130
+ix.config.SetDefault("runSpeed", 225) --runspeed (shift), default 225
+
 ix.config.Add("rationTokens", 20, "The amount of rationmarks that a person will get from a ration", nil, {
 	data = {min = 0, max = 1000},
 	category = "economy"
