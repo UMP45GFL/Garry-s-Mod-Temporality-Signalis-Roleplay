@@ -25,6 +25,7 @@ LANGUAGE = {
 
 	voices = "Voices",
 	replikaUseOnly = "This item can only be used by a Replika.",
+	gestaltUseOnly = "This item can only be used by a Gestalt.",
 	healthTooHigh = "Your health is too high to use this.",
 	cmdChangeReplikaNextNameNumber = "Change the next number in the naming system for a specific Replika class.",
 	changedReplikaNextNameNumber = "Changed next name number for class %s to %s.",
