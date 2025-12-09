@@ -4,7 +4,7 @@ KANADE_QUIZ_FIRSTINFO = {
     "This quiz will test your knowledge of the SIGNALIS universe.",
     "You will be asked a series of questions, and you must answer them correctly.",
     "You will have limited time to answer the whole quiz.",
-    "Do not minimize the game.",
+    "Do not minimize the game or ALT-TAB.",
     "If you do not want to take the quiz now, you can retake it later."
 }
 
