@@ -9,6 +9,7 @@ ITEM.description = "Base medical item"
 ITEM.addHealth = 50
 ITEM.applySound = "items/medshot4.wav"
 ITEM.replikaOnly = false
+ITEM.gestaltOnly = false
 
 if SERVER then
 	util.AddNetworkString("ixHealingEffect")
@@ -65,6 +66,14 @@ ITEM.functions.Apply = {
 		if itemTable:GetData("replikaOnly", itemTable.replikaOnly) then
 			if not client:IsReplika() then
 				client:NotifyLocalized("replikaUseOnly")
+				client:SendErrorSound()
+				return false
+			end
+		end
+
+		if itemTable:GetData("gestaltOnly", itemTable.gestaltOnly) then
+			if client:IsReplika() then
+				client:NotifyLocalized("gestaltUseOnly")
 				client:SendErrorSound()
 				return false
 			end
