@@ -9,3 +9,4 @@ ITEM.weight = 0.6
 
 ITEM.addHealth = 35
 ITEM.applySound = "items/medshot4.wav"
+ITEM.gestaltOnly = true
