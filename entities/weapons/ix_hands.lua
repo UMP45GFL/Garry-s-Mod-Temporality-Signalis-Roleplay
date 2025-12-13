@@ -16,7 +16,7 @@ SWEP.Drop = false
 
 SWEP.ViewModelFOV = 45
 SWEP.ViewModelFlip = false
-SWEP.AnimPrefix	 = "rpg"
+SWEP.AnimPrefix	 = "normal"
 
 SWEP.ViewTranslation = 4
 if CLIENT then
