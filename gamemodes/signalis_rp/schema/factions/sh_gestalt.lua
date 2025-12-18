@@ -1,6 +1,6 @@
 
 FACTION.name = "Gestalt"
-FACTION.description = "A non-Replika humanoid."
+FACTION.description = "A non-Replika humanoid." --Gestalt names and bios are private (to varying degrees) and can be shared with surrounding players by pressing F3. Cut for now, add later if visible?
 FACTION.color = Color(52, 146, 235, 255)
 FACTION.isDefault = true
 FACTION.availableByDefault = true
