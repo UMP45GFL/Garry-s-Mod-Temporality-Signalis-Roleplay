@@ -2,7 +2,7 @@
 ITEM.name = "STAR Mask"
 ITEM.description = "Face-covering mask for STAR units."
 ITEM.category = "Clothing"
-ITEM.model = "models/eternalis/items/equipment/pilotka_hat.mdl"
+ITEM.model = "models/eternalis/items/equipment/star_mask.mdl"
 ITEM.outfitCategory = "mask"
 
 ITEM.bodyGroups = {
