@@ -20,7 +20,7 @@ ITEM.height = 1
 function ITEM:CanEquipOutfit(client)
     local character = client:GetCharacter()
     if character and (
-        character.vars.class == "replika_star" or
+        character.vars.class == "replika_star"
     ) then
         return true
     end
