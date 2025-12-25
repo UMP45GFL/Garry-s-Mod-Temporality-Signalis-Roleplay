@@ -1,6 +1,6 @@
 
 ITEM.name = "Mug of Coffee (Black)"
-ITEM.model = Model("models/eternalis/items/rations/mug.mdl")
+ITEM.model = Model("models/eternalis/items/rations/mugfilled.mdl")
 ITEM.description = "A mug of coffee, black."
 ITEM.skin = 0
 
