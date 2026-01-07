@@ -1,7 +1,7 @@
 
 ITEM.name = "Flashlight module"
 ITEM.model = Model("models/eternalis/items/equipment/flashlight.mdl")
-ITEM.description = "Shoulder-mounted flashlight module. Uses internal battery and can charge via Replika power supply."
+ITEM.description = "Shoulder-mounted flashlight module. Uses internal battery and can charge via Replika power supply.\nMust be in your main inventory to function without issue."
 ITEM.skin = 0
 
 ITEM.weight = 0.6
