@@ -1,7 +1,7 @@
 
 ITEM.name = "Radio receiver module"
 ITEM.model = Model("models/eternalis/items/equipment/radio_module.mdl")
-ITEM.description = "Radio receiver module that operates between 50 and 250 KHz. Uses internal battery and can charge via Replika power supply."
+ITEM.description = "Radio receiver module that operates between 50 and 250 KHz. Uses internal battery and can charge via Replika power supply.\nMust be in your main inventory to function correctly."
 ITEM.skin = 0
 
 ITEM.weight = 0.3
