@@ -1,6 +1,6 @@
 CLASS.name = "KNCR Replika"
 CLASS.shortName = "KNCR"
-CLASS.faction = FACTION_REPLIKA
+CLASS.faction = FACTION_EMPIRE
 CLASS.isDefault = false
 CLASS.availableByDefault = false
 
