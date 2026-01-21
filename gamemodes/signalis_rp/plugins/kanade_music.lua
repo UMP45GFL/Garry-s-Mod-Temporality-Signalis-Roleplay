@@ -17,32 +17,31 @@ local path = "eternalis/signalis_ost/"
 
 SIGNALIS_MUSIC_TRACKLIST = {
 	-- original
-	{ name = "Turned Around", 						sound = path.."1_turned_around.mp3", 					volume = 1, length = 125 	},
-	{ name = "Safe Room", 							sound = path.."2_safe_room.mp3", 						volume = 1, length = 77 	},
-	{ name = "Double Back", 						sound = path.."4_double_back.mp3", 						volume = 1, length = 204.27 },
-	{ name = "Double Back VHS ver.", 				sound = path.."48_double_back_vhs_ver.mp3", 			volume = 1, length = 204.27 },
-	{ name = "MNHR", 								sound = path.."12_mnhr.mp3", 							volume = 1, length = 165.6 	},
-	{ name = "Dowsing", 							sound = path.."15_dowsing.mp3", 						volume = 1, length = 72 	},
-	{ name = "Crepuscular", 						sound = path.."54_crepuscular.mp3", 					volume = 1, length = 125.5 	},
-	{ name = "Home", 								sound = path.."49_home.mp3", 							volume = 1, length = 121.6 	},
+	{ name = "Turned Around",						sound = path.."1_turned_around.mp3",					volume = 1, length = 125 	},
+	{ name = "Safe Room",							sound = path.."2_safe_room.mp3",						volume = 1, length = 77 	},
+	{ name = "Double Back",							sound = path.."4_double_back.mp3",						volume = 1, length = 204 	},
+	{ name = "Double Back VHS ver.",				sound = path.."48_double_back_vhs_ver.mp3",				volume = 1, length = 204 	},
+	{ name = "MNHR",								sound = path.."12_mnhr.mp3",							volume = 1, length = 165 	},
+	{ name = "Dowsing",								sound = path.."15_dowsing.mp3",							volume = 1, length = 72 	},
+	{ name = "Crepuscular",							sound = path.."54_crepuscular.mp3",						volume = 1, length = 125 	},
+	{ name = "Ritual",								sound = path.."11_ritual.mp3",							volume = 1, length = 145 	},
+	{ name = "Adler",								sound = path.."14_adler.mp3",							volume = 1, length = 168 	},
+	{ name = "Sea Smoke",							sound = path.."32_sea_smoke.mp3",						volume = 1, length = 74 	},
 
 	-- side b
-	{ name = "Ritual (Vineta)", 					sound = path.."sb_ritual_vineta.mp3", 					volume = 1, length = 172 	},
-	{ name = "Home (Kamilla)", 						sound = path.."sb_home_kamilla.mp3", 					volume = 1, length = 200 	},
-	{ name = "The Promise (Last Goodbye)", 			sound = path.."sb_the_promise_last_goodbye.mp3", 		volume = 1, length = 205 	},
-	{ name = "Warm Light (Graves)", 				sound = path.."sb_warm_light_graves.mp3", 				volume = 1, length = 162 	},
-	{ name = "Train Ride (Iris)", 					sound = path.."sb_train_ride_iris.mp3", 				volume = 1, length = 114 	},
-	{ name = "3000 Cycles (Key of Love)", 			sound = path.."sb_3000cycles_keyoflove.mp3", 			volume = 1, length = 136 	},
-	{ name = "Bodies (Ghosts)", 					sound = path.."sb_bodies_ghosts.mp3", 					volume = 1, length = 179 	},
-	{ name = "Ewige Wiederkunft (Orbital)", 		sound = path.."sb_ewige_wiederkunft_orbital.mp3", 		volume = 1, length = 131 	},
-	{ name = "Orrery (Distant Memory)", 			sound = path.."sb_orrery_distant_memory.mp3", 			volume = 1, length = 140 	},
-	{ name = "The Red Gate (Waiting)", 				sound = path.."sb_the_red_gate_waiting.mp3", 			volume = 1, length = 142 	},
+	{ name = "Ritual (Vineta)",						sound = path.."sb_ritual_vineta.mp3",					volume = 1, length = 172 	},
+	{ name = "Home (Kamilla)",						sound = path.."sb_home_kamilla.mp3",					volume = 1, length = 200 	},
+	{ name = "The Promise (Last Goodbye)",			sound = path.."sb_the_promise_last_goodbye.mp3",		volume = 1, length = 205 	},
+	{ name = "Warm Light (Graves)",					sound = path.."sb_warm_light_graves.mp3",				volume = 1, length = 162 	},
+	{ name = "Train Ride (Iris)",					sound = path.."sb_train_ride_iris.mp3",					volume = 1, length = 114 	},
+	{ name = "3000 Cycles (Key of Love)",			sound = path.."sb_3000cycles_keyoflove.mp3",			volume = 1, length = 136 	},
+	{ name = "Bodies (Ghosts)",						sound = path.."sb_bodies_ghosts.mp3",					volume = 1, length = 179 	},
+	{ name = "Ewige Wiederkunft (Orbital)",			sound = path.."sb_ewige_wiederkunft_orbital.mp3",		volume = 1, length = 131 	},
+	{ name = "Orrery (Distant Memory)",				sound = path.."sb_orrery_distant_memory.mp3",			volume = 1, length = 140 	},
+	{ name = "The Red Gate (Waiting)",				sound = path.."sb_the_red_gate_waiting.mp3",			volume = 1, length = 142 	},
 
-	-- more sad or scary or intense
-	{ name = "Ritual", 								sound = path.."11_ritual.mp3", 							volume = 1, length = 145.5 	},
-	{ name = "Adler", 								sound = path.."14_adler.mp3", 							volume = 1, length = 168.3 	},
-	{ name = "Sea Smoke", 							sound = path.."32_sea_smoke.mp3", 						volume = 1, length = 74.6 	},
-	{ name = "Warm Light", 							sound = path.."56_warm_light.mp3", 						volume = 1, length = 60 	},
+	-- my own additions outside of side-b
+	{ name = "Warm Light",							sound = path.."56_warm_light.mp3",						volume = 1, length = 60 	},
 
 
 	-- cut songs
