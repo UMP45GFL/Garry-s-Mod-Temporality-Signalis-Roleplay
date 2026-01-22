@@ -46,7 +46,7 @@ function ix.weight.BaseWeight(character)
 	local strength = ix.class.GetStrength(character.vars.class)
 	
 	if class and class.add_max_weight then
-		base = (base + class.add_max_weight) + (math.floor(strength / 6))
+		base = (base + class.add_max_weight) + (math.floor(strength / 10))
 	end
 
 	return base
