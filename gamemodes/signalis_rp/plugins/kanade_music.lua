@@ -16,36 +16,19 @@ ix.config.Add("musicSystemEnabled", true, "Whether or not to enable the music sy
 local path = "eternalis/signalis_ost/"
 
 SIGNALIS_MUSIC_TRACKLIST = {
-	-- original
-	{ name = "Turned Around",						sound = path.."1_turned_around.mp3",					volume = 1, length = 125 	},
-	{ name = "Safe Room",							sound = path.."2_safe_room.mp3",						volume = 1, length = 77 	},
-	{ name = "Double Back",							sound = path.."4_double_back.mp3",						volume = 1, length = 204 	},
-	{ name = "Double Back VHS ver.",				sound = path.."48_double_back_vhs_ver.mp3",				volume = 1, length = 204 	},
-	{ name = "MNHR",								sound = path.."12_mnhr.mp3",							volume = 1, length = 165 	},
-	{ name = "Dowsing",								sound = path.."15_dowsing.mp3",							volume = 1, length = 72 	},
-	{ name = "Crepuscular",							sound = path.."54_crepuscular.mp3",						volume = 1, length = 125 	},
-	{ name = "Ritual",								sound = path.."11_ritual.mp3",							volume = 1, length = 145 	},
-	{ name = "Adler",								sound = path.."14_adler.mp3",							volume = 1, length = 168 	},
-	{ name = "Sea Smoke",							sound = path.."32_sea_smoke.mp3",						volume = 1, length = 74 	},
+	-- casual ones
+	{ name = "Turned Around", 			sound = path.."1_turned_around.mp3", 			volume = 1, length = 125 },
+	{ name = "Safe Room", 				sound = path.."2_safe_room.mp3", 				volume = 1, length = 77.5 },
+	{ name = "Double Back", 			sound = path.."4_double_back.mp3", 				volume = 1, length = 204.27 },
+	{ name = "Double Back VHS ver.", 	sound = path.."48_double_back_vhs_ver.mp3", 	volume = 1, length = 204.27 },
+	{ name = "Mnhr", 					sound = path.."12_mnhr.mp3", 					volume = 1, length = 165.6 },
+	{ name = "Dowsing", 				sound = path.."15_dowsing.mp3", 				volume = 1, length = 72 },
+	{ name = "Crepuscular", 			sound = path.."54_crepuscular.mp3", 			volume = 1, length = 125.5 },
 
-	-- side b
-	{ name = "Ritual (Vineta)",						sound = path.."sb_ritual_vineta.mp3",					volume = 1, length = 172 	},
-	{ name = "Home (Kamilla)",						sound = path.."sb_home_kamilla.mp3",					volume = 1, length = 200 	},
-	{ name = "The Promise (Last Goodbye)",			sound = path.."sb_the_promise_last_goodbye.mp3",		volume = 1, length = 205 	},
-	{ name = "Warm Light (Graves)",					sound = path.."sb_warm_light_graves.mp3",				volume = 1, length = 162 	},
-	{ name = "Train Ride (Iris)",					sound = path.."sb_train_ride_iris.mp3",					volume = 1, length = 114 	},
-	{ name = "3000 Cycles (Key of Love)",			sound = path.."sb_3000cycles_keyoflove.mp3",			volume = 1, length = 136 	},
-	{ name = "Bodies (Ghosts)",						sound = path.."sb_bodies_ghosts.mp3",					volume = 1, length = 179 	},
-	{ name = "Ewige Wiederkunft (Orbital)",			sound = path.."sb_ewige_wiederkunft_orbital.mp3",		volume = 1, length = 131 	},
-	{ name = "Orrery (Distant Memory)",				sound = path.."sb_orrery_distant_memory.mp3",			volume = 1, length = 140 	},
-	{ name = "The Red Gate (Waiting)",				sound = path.."sb_the_red_gate_waiting.mp3",			volume = 1, length = 142 	},
-
-	-- my own additions outside of side-b
-	{ name = "Warm Light",							sound = path.."56_warm_light.mp3",						volume = 1, length = 60 	},
-
-
-	-- cut songs
-	--{ name = "Die Toteninsel (Shooting Stars)", 	sound = path.."sb_die_toteninsel_shooting_stars.mp3", 	volume = 1, length = 220 	},
+	-- more sad or scary or intense
+	{ name = "Ritual", 					sound = path.."11_ritual.mp3", 					volume = 1, length = 145.5 },
+	{ name = "Adler", 					sound = path.."14_adler.mp3", 					volume = 1, length = 168.3 },
+	{ name = "Sea Smoke", 				sound = path.."32_sea_smoke.mp3", 				volume = 1, length = 74.6 },
 }
 
 -- Server-side: preload resources
@@ -72,7 +55,7 @@ if CLIENT then
 	local function ResetMusicInfo()
 		musicSystem.musicInfo = {
 			nextPlay = 0,
-			volume = 1,
+			volume = ix.option.Get("musicSystemVolume", 0.25),
 			length = 0,
 			sound = nil,
 		}
@@ -109,7 +92,7 @@ if CLIENT then
 	local function PlayMusicTrack(fileName, defaultLength)
 		local sound
 		if not musicSystem.registeredMusic[fileName] then
-			sound = CreateSound(game.GetWorld(), fileName, nil)
+			sound = CreateSound(LocalPlayer(), fileName, nil)
 			if not sound then
 				chat.AddText("Error: Failed to load music track: " .. fileName)
 				return nil
@@ -127,10 +110,10 @@ if CLIENT then
 			local trackDuration = SoundDuration(fileName)
 			if trackDuration and trackDuration > 0 then
 				musicSystem.musicInfo.length = trackDuration
-				musicSystem.nextMusicPlay = CalculateNextPlayTime(trackDuration)
+				musicSystem.musicInfo.nextPlay = CalculateNextPlayTime(trackDuration)
 			else
 				musicSystem.musicInfo.length = defaultLength
-				musicSystem.nextMusicPlay = CalculateNextPlayTime(defaultLength)
+				musicSystem.musicInfo.nextPlay = CalculateNextPlayTime(defaultLength)
 			end
 
 			musicSystem.lastMusic = sound
@@ -146,6 +129,12 @@ if CLIENT then
 	local function HandleMusic()
 		-- Ensure the music system and options are enabled
 		if not ix.config.Get("musicSystemEnabled", true) or not ix.option.Get("musicSystemEnabled", true) then return end
+    	
+    	-- possible fix for broken music
+    	if musicSystem.lastMusic and not musicSystem.lastMusic:IsPlaying() then
+            EndCurrentTrack()
+            ResetMusicInfo()
+        end
 
 		local client = LocalPlayer()
 
@@ -154,13 +143,13 @@ if CLIENT then
 			musicSystem.nextMusicCheck = CurTime() + 1
 
 			-- Start playing music if nothing is playing and it's time to play the next track
-			if (not musicSystem.musicInfo or musicSystem.nextMusicPlay < CurTime()) and #musicSystem.songQueue > 0 then
+			if (not musicSystem.musicInfo or musicSystem.musicInfo.nextPlay < CurTime()) and #musicSystem.songQueue > 0 then
 				local nextSong = table.remove(musicSystem.songQueue, math.random(1, #musicSystem.songQueue))
 				if nextSong then
 					musicSystem.musicInfo = {
 						nextPlay = 0,
 						name = nextSong.name,
-						volume = nextSong.volume * ix.option.Get("musicSystemVolume", 0.25),
+						volume = ix.option.Get("musicSystemVolume", 0.25),
 						length = nextSong.length,
 						sound = nextSong.sound,
 					}
