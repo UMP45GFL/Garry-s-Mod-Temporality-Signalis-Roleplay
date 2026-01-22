@@ -6,6 +6,7 @@ ix.weight = ix.weight or {}
 
 ix.lang.AddTable("english", {
 	optImperial = "Use Imperial units",
+	optdImperial = "Use Imperial units when measuring weight.",
 })
 
 ix.config.Add("maxWeight", 20, "The maximum weight in Kilograms someone can carry in their inventory.", nil, {
@@ -41,9 +42,11 @@ function ix.weight.BaseWeight(character)
 	local base = ix.config.Get("maxWeight", 30)
 
 	local class = ix.class.GetClass(character.vars.class)
+
+	local strength = ix.class.GetStrength(character.vars.class)
 	
 	if class and class.add_max_weight then
-		base = base + class.add_max_weight
+		base = (base + class.add_max_weight) + (math.floor(strength / 6))
 	end
 
 	return base
