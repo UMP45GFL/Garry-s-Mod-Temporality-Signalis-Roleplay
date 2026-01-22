@@ -13,7 +13,7 @@ if CLIENT then
 	})
 
 	surface.CreateFont("prChatFont", {
-		font = altFont and "Roboto" or "Khand Regular",
+		font = altFont and "Roboto",
 		size =  altFont and (math.max(ScreenScale(7), 17) * ix.option.Get("chatFontScale", 1)) or math.max(ScreenScale(11), 32) * ix.option.Get("chatFontScale", 1),
 		extended = true,
 		weight = altFont and 600 or 100,
