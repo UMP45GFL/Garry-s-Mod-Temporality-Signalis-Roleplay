@@ -1,5 +1,5 @@
 CLASS.name = "Alina Seo"
-CLASS.faction = FACTION_GESTALT
+CLASS.faction = FACTION_IMPERIAL
 CLASS.isDefault = false
 CLASS.availableByDefault = false
 
