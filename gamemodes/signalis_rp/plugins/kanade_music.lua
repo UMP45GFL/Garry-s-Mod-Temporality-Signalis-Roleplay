@@ -151,6 +151,12 @@ if CLIENT then
             EndCurrentTrack()
             ResetMusicInfo()
         end
+		-- possible fix for broken music 2, checks if the timer for the song is over
+		-- and if not, then stop the song and reset the info
+		if musicSystem.lastMusic and CurTime() > musicSystem.musicInfo.nextPlay then
+			EndCurrentTrack()
+			ResetMusicInfo()
+		end
 
 		local client = LocalPlayer()
 
