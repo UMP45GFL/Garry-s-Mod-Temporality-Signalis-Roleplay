@@ -1,4 +1,12 @@
-﻿
+
+ix.lang.AddTable("english", {
+	optMusicSystemEnabled = "Enable typing sound",
+})
+
+ix.config.Add("typingSoundEnabled", true, "Whether or not to enable the keyboard sound that plays when typing", nil, {
+	category = "Sound"
+})
+
 -- method to play a sound on the client
 if SERVER then
     local meta = FindMetaTable("Player")
@@ -58,6 +66,7 @@ if CLIENT then
 
     -- keyboard sound
     hook.Add("ChatTextChanged", "ChatTextChangedSound", function(text)
+		if not ix.config.Get("typingSoundEnabled", true) or not ix.option.Get("typingSoundEnabled", true) then return end
         surface.PlaySound("signalis_keyboard_tap")
     end)
 
