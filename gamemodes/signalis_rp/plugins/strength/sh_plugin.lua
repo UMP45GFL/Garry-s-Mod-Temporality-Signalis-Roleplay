@@ -11,7 +11,7 @@ if (SERVER) then
 		local strength = character:GetAttribute("str", 0)
 		if (client:GetCharacter()) then
 			-- Add to the total fist damage.
-			context.damage = context.damage + strength * ix.config.Get("strengthMultiplier", 0.3))
+			context.damage = context.damage + strength * ix.config.Get("strengthMultiplier", 0.3)
 		end
 	end
 
@@ -33,7 +33,9 @@ if (SERVER) then
 	--ex: 60 strength = 3 extra rows
 	--insane right? could make it lower but that might too little reward
 
-	function PLUGIN:GetInventoryHeight()
+  
+  	--DOESNT WORK, leaving for archival purposes
+	--[[function PLUGIN:GetInventoryHeight()
 		local h = ix.config.Get("inventoryHeight")
 
 		local character = client:GetCharacter()
@@ -66,7 +68,7 @@ if (SERVER) then
 		end
 
 		return w
-	end
+	end--]]
 	
 end
 
