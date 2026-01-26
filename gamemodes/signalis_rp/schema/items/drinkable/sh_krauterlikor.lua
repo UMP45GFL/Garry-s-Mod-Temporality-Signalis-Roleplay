@@ -1,7 +1,7 @@
 
 ITEM.name = "Kräuterlikör"
 ITEM.model = Model("models/props_se/junk/bottle_4.mdl")
-ITEM.description = "A bottle of Kräuterlikör. 30% alcohol by volume."
+ITEM.description = "A bottle of Kräuterlikör. 27% alcohol by volume."
 ITEM.skin = 1
 ITEM.width = 1
 ITEM.height = 2
