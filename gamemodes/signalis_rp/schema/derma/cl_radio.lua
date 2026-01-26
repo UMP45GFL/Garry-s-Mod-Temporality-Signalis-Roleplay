@@ -18,7 +18,7 @@ local static_enabled = false
 
 local signals = {
 	{
-		frequency = 84000,
+		frequency = 94000,
 		snd = "sound/eternalis/signalis_radio/tcp_d1_12_three_note_odditiy_irdial.mp3",
 		length = 245,
 		is_burst = true,
@@ -31,7 +31,7 @@ local signals = {
 		posMaxDistance = 10000
 	},
 	{
-		frequency = 69420,
+		frequency = 450000,
 		snd = "sound/eternalis/signalis_ost/badpiggies_radio.mp3",
 		length = 162,
 		is_burst = true,
