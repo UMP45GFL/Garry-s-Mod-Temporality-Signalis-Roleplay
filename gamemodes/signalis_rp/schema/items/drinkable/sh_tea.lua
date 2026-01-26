@@ -1,7 +1,7 @@
 
 ITEM.name = "Cup of Tea"
 ITEM.model = Model("models/eternalis/items/rations/cupfilled.mdl")
-ITEM.description = "A cup of some kind of tea."
+ITEM.description = "A cup of non-descript tea."
 ITEM.skin = 6
 
 ITEM.addHunger = 0
