@@ -4,9 +4,14 @@ PLUGIN.description = "Adds a strength attribute, and makes it affect carryweight
 
 if (SERVER) then
 	function PLUGIN:GetPlayerPunchDamage(client, damage, context)
+		local character = client:GetCharacter()
+		if (not character) then
+			return
+		end
+		local strength = character:GetAttribute("str", 0)
 		if (client:GetCharacter()) then
 			-- Add to the total fist damage.
-			context.damage = context.damage + (client:GetCharacter():GetAttribute("str", 0) * ix.config.Get("strengthMultiplier"))
+			context.damage = context.damage + strength * ix.config.Get("strengthMultiplier", 0.3))
 		end
 	end
 
@@ -27,11 +32,14 @@ if (SERVER) then
 	--rounds it down to its lowest possible number (5.99 = 5)
 	--ex: 60 strength = 3 extra rows
 	--insane right? could make it lower but that might too little reward
-	
+
 	function PLUGIN:GetInventoryHeight()
 		local h = ix.config.Get("inventoryHeight")
 
-		local strength = client:GetCharacter():GetAttribute("str", 0)
+		local character = client:GetCharacter()
+		if (not character) then return end
+
+		local strength = character:GetAttribute("str", 0)
 		local strvalueinventory = (math.floor(strength / 20))
 		--checks if strength should affect inventory rows
 		if ix.config.Get("strengthAffectsInventoryRows") == 1 then
@@ -46,7 +54,10 @@ if (SERVER) then
 	function PLUGIN:GetInventoryWidth()
 		local w = ix.config.Get("inventoryWidth")
 
-		local strength = client:GetCharacter():GetAttribute("str", 0)
+		local character = client:GetCharacter()
+		if (not character) then return end
+
+		local strength = character:GetAttribute("str", 0)
 		local strvalueinventory = (math.floor(strength / 20))
 		if ix.config.Get("strengthAffectsInventoryRows") == 1 then
 			if (class and class.add_inventory_width) then
@@ -56,6 +67,7 @@ if (SERVER) then
 
 		return w
 	end
+	
 end
 
 -- Configuration for the plugin
