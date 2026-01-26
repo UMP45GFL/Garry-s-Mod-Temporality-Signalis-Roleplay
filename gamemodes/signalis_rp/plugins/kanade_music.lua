@@ -97,6 +97,17 @@ if CLIENT then
 		end
 	end
 
+	-- for the fix, without the chat message
+	local function EndCurrentTrackNoChat()
+		if musicSystem.lastMusic then
+			musicSystem.lastMusic:Stop()
+			musicSystem.registeredMusic[musicSystem.lastMusicName] = nil
+			musicSystem.lastMusic = nil
+			musicSystem.lastMusicName = nil
+			musicSystem.isMusicEnding = true
+		end
+	end
+
 	-- Refined function to calculate the next play time
 	local function CalculateNextPlayTime(length)
 		-- Add a short randomized delay between tracks for natural flow
@@ -148,13 +159,13 @@ if CLIENT then
     	
     	-- possible fix for broken music
     	if musicSystem.lastMusic and not musicSystem.lastMusic:IsPlaying() then
-            EndCurrentTrack()
+            EndCurrentTrackNoChat()
             ResetMusicInfo()
         end
 		-- possible fix for broken music 2, checks if the timer for the song is over
 		-- and if not, then stop the song and reset the info
 		if musicSystem.lastMusic and CurTime() > musicSystem.musicInfo.nextPlay then
-			EndCurrentTrack()
+			EndCurrentTrackNoChat()
 			ResetMusicInfo()
 		end
 
