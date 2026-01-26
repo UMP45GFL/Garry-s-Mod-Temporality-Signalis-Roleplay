@@ -1,7 +1,7 @@
 
 ITEM.name = "Kölschbier"
 ITEM.model = Model("models/eternalis/items/rations/beermugfilled.mdl")
-ITEM.description = "A mug of Kölsch. 5% alcohol by volume.\nContains a good amount of calories, to supplement meals for night-shift workers."
+ITEM.description = "A mug of Kölsch, also known as Tagelöhnersbier. 5% alcohol by volume.\nContains a high amount of calories compared to other alcohol."
 ITEM.skin = 1
 ITEM.width = 1
 ITEM.height = 2
