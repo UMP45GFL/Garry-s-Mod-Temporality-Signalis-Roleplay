@@ -26,6 +26,11 @@ netstream.Hook("ixEditTitlePaper", function(itemID)
 	panel:SetItemID(itemID)
 end)
 
+netstream.Hook("ixEditTitleUrn", function(itemID)
+	local panel = vgui.Create("ixUrnEditTitle")
+	panel:SetItemID(itemID)
+end)
+
 
 netstream.Hook("ixGenericItemEdit", function(itemID, dataType, maxLength)
 	local panel = vgui.Create("ixGenericEdit")
