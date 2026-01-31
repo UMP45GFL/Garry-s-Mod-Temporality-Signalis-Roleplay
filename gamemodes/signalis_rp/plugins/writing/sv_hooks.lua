@@ -55,3 +55,17 @@ netstream.Hook("ixCardSet", function(client, itemID, dataName, text)
         end
 	end
 end)
+
+netstream.Hook("ixUrnSetTitle", function(client, itemID, text)
+	local character = client:GetCharacter()
+	local item = ix.item.instances[itemID]
+
+	-- we don't check for entity since data can be changed in the player's inventory
+	if (character and item and item.base == "base_urn") then
+		local owner = item:GetData("owner", 0)
+
+		if (owner == character:GetID() or client:IsStaff()) then
+			item:SetTitle(item, string.Trim(text))
+		end
+	end
+end)
