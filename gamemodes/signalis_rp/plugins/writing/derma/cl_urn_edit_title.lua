@@ -34,7 +34,7 @@ function PANEL:Init()
 			return
 		end
 
-		netstream.Start("ixWritingSetTitle", self.itemID, txt)
+		netstream.Start("ixUrnSetTitle", self.itemID, txt)
 		self:Close()
 	end
 
