@@ -157,22 +157,10 @@ if CLIENT then
 		-- Ensure the music system and options are enabled
 		if not ix.config.Get("musicSystemEnabled", true) or not ix.option.Get("musicSystemEnabled", true) then return end
     	
-    	-- possible fix for broken music
-    	if musicSystem.lastMusic and not musicSystem.lastMusic:IsPlaying() then
-            EndCurrentTrackNoChat()
-            ResetMusicInfo()
-        end
-		-- possible fix for broken music 2, checks if the timer for the song is over
-		-- and if not, then stop the song and reset the info
-		if musicSystem.lastMusic and CurTime() > musicSystem.musicInfo.nextPlay then
-			EndCurrentTrackNoChat()
-			ResetMusicInfo()
-		end
-
 		local client = LocalPlayer()
 
 		-- Perform checks periodically
-		if client.Alive != nil and CurTime() > musicSystem.nextMusicCheck and client:Alive() and not client:IsBot() and client:Team() != TEAM_SPECTATOR then
+		if CurTime() > musicSystem.nextMusicCheck and client.Alive ~= nil and client:Alive() and not client:IsBot() and client:Team() ~= TEAM_SPECTATOR then
 			musicSystem.nextMusicCheck = CurTime() + 1
 
 			-- Start playing music if nothing is playing and it's time to play the next track
@@ -193,6 +181,19 @@ if CLIENT then
 				end
 			end
 		end
+		
+    	-- possible fix for broken music
+    	if musicSystem.lastMusic and not musicSystem.lastMusic:IsPlaying() then
+            EndCurrentTrackNoChat()
+            ResetMusicInfo()
+        end
+		-- possible fix for broken music 2, checks if the timer for the song is over
+		-- and if not, then stop the song and reset the info
+		if musicSystem.lastMusic and CurTime() > musicSystem.musicInfo.nextPlay then
+			EndCurrentTrackNoChat()
+			ResetMusicInfo()
+		end
+		
 	end
 	hook.Add("Think", "Signalis_HandleMusic", HandleMusic)
 
